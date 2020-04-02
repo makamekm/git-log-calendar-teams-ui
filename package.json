@@ -1,7 +1,23 @@
 {
   "name": "git-log-ui",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "The tool generates git calendar logs depending on teams' activities",
+  "author": "Maxim Karpov <makame@mail.ru>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makamekm/git-log-calendar-teams-ui.git"
+  },
+  "keywords": [
+    "git",
+    "log",
+    "calendar",
+    "teams",
+    "cli",
+    "ui"
+  ],
+  "productName": "Git Log Calendar Teams UI",
+  "main": "electron/main.js",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -16,10 +32,25 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "export BROWSER=none && react-scripts start",
+    "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "react-scripts build",
+    "build-electron": "mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared",
+    "build-electron:windows": "mkdir build/src && robocopy electron build/electron /S & robocopy src/shared build/src/shared /S",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js --publish never",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "repo": "git-log-calendar-teams-ui",
+      "owner": "makamekm"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +66,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "electron": "^8.2.0",
+    "electron-builder": "^22.4.1",
+    "electron-reloader": "^1.0.1"
   }
 }
