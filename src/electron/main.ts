@@ -1,8 +1,12 @@
-const { app, BrowserWindow } = require("electron");
-const path = require("path");
-const url = require("url");
+import { app, BrowserWindow, IpcRenderer } from "electron";
+import path from "path";
+import url from "url";
 
-let mainWindow;
+declare global {
+  var ipcRenderer: IpcRenderer;
+}
+
+let mainWindow: BrowserWindow | null;
 
 function createWindow() {
   const startUrl =
@@ -38,20 +42,3 @@ app.on("activate", () => {
     createWindow();
   }
 });
-
-function requireFolder(name) {
-  const normalizedPath = require("path").join(__dirname, name);
-
-  require("fs")
-    .readdirSync(normalizedPath)
-    .forEach(file => {
-      require(`./${name}/` + file);
-    });
-}
-
-requireFolder("handlers");
-requireFolder("channels");
-
-try {
-  require("electron-reloader")(module);
-} catch (_) {}
