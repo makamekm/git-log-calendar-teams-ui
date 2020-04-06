@@ -14,14 +14,15 @@ function createWindow() {
     url.format({
       pathname: path.join(__dirname, "../index.html"),
       protocol: "file:",
-      slashes: true
+      slashes: true,
     });
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
+    fullscreen: true,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js")
-    }
+      preload: path.join(__dirname, "preload.js"),
+    },
   });
   mainWindow.loadURL(startUrl);
   mainWindow.on("closed", () => {
