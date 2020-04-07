@@ -1,26 +1,34 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./app.css";
-import { ipc } from "./shared/ipc";
+import { BrowserRouter as Router } from "react-router-dom";
+import { RoutedContent } from "./routes";
+import AppLayout from "./layout";
+
+const basePath = process.env.BASE_PATH || "/";
 
 export const App = () => {
-  const [state, setState] = React.useState({
-    appName: "",
-    appVersion: "",
-  });
+  // const [state, setState] = React.useState({
+  //   appName: "",
+  //   appVersion: "",
+  // });
 
-  const askAppInfo = async () => {
-    const { appName, appVersion } = await ipc.handlers.APP_INFO();
-    setState({ appName, appVersion });
-  };
+  // const askAppInfo = async () => {
+  //   const { appName, appVersion } = await ipc.handlers.APP_INFO();
+  //   setState({ appName, appVersion });
+  // };
 
-  React.useEffect(() => {
-    askAppInfo();
-  }, []);
+  // React.useEffect(() => {
+  //   askAppInfo();
+  // }, []);
+  // <div className="main">
+  //   {state.appName} {state.appVersion}
+  // </div>
 
   return (
-    <div className="main">
-      {state.appName} {state.appVersion}
-    </div>
+    <Router basename={basePath}>
+      <AppLayout>
+        <RoutedContent />
+      </AppLayout>
+    </Router>
   );
 };

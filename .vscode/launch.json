@@ -4,16 +4,17 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Electron: Renderer",
+      "name": "Renderer",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run-script", "start"],
       "port": 9223,
       "skipFiles": ["<node_internals>/**"],
-      "timeout": 30000
+      "timeout": 30000,
+      "outputCapture": "std"
     },
     {
       "type": "node",
-      "name": "Electron: Main",
+      "name": "Electron",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "env": {
@@ -29,8 +30,8 @@
   ],
   "compounds": [
     {
-      "name": "Electron: All",
-      "configurations": ["Electron: Main", "Electron: Renderer"]
+      "name": "Application",
+      "configurations": ["Electron", "Renderer"]
     }
   ]
 }
