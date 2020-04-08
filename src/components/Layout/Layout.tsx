@@ -56,7 +56,7 @@ class Layout extends React.Component<RouteComponentProps & LayoutProps> {
     sidebarHidden: false,
     navbarHidden: false,
     footerHidden: false,
-    sidebarCollapsed: false,
+    sidebarCollapsed: true,
     screenSize: "",
     animationsDisabled: true,
 
@@ -64,7 +64,7 @@ class Layout extends React.Component<RouteComponentProps & LayoutProps> {
     pageDescription: "Default Dashboard ready for Development",
     pageKeywords: "react dashboard seed bootstrap",
   };
-  lastLgSidebarCollapsed = false;
+  lastLgSidebarCollapsed = true;
   containerRef = React.createRef<HTMLDivElement>();
   bodyElement: HTMLElement;
   documentElement: HTMLElement;

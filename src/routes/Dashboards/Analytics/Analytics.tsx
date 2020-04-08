@@ -34,7 +34,7 @@ import { Card } from "../../../components/Card/Card";
 import { CardHeader } from "../../../components/CardHeader/CardHeader";
 import { Progress } from "../../../components/Progress/Progress";
 
-import classes from "./Analytics.scss";
+import "./Analytics.scss";
 
 const LAYOUT = {
   "metric-v-target-users": { h: 6, md: 4 },
@@ -54,15 +54,13 @@ const SessionByDevice = (props: {
   valuePercent: string;
   value: string;
 }) => (
-  <div className={classes["session"]}>
-    <div className={classes["session__title"]}>{props.title}</div>
-    <div className={classes["session__values"]}>
-      <div className={`${classes["session__percentage"]} text-${props.color}`}>
+  <div className={"session"}>
+    <div className={"session__title"}>{props.title}</div>
+    <div className={"session__values"}>
+      <div className={`${"session__percentage"} text-${props.color}`}>
         {props.valuePercent}%
       </div>
-      <div className={`${classes["session__value"]} text-${props.color}`}>
-        {props.value}
-      </div>
+      <div className={`session__value text-${props.color}`}>{props.value}</div>
     </div>
   </div>
 );
@@ -397,7 +395,7 @@ export class Analytics extends React.Component {
                   by Device Type
                 </CardHeader>
                 <CardBody className="d-flex flex-column">
-                  <div className={classes["sessions"]}>
+                  <div className={"sessions"}>
                     <SessionByDevice
                       title="Desktop"
                       color="purple"
@@ -419,7 +417,7 @@ export class Analytics extends React.Component {
                   </div>
                   <Progress
                     multi
-                    className={classes["sessions-progress"]}
+                    className={"sessions-progress"}
                     style={{ height: "5px" }}
                   >
                     <Progress
@@ -442,7 +440,7 @@ export class Analytics extends React.Component {
                     />
                   </Progress>
                 </CardBody>
-                <CardFooter className={`${classes["sessions-info"]} mt-auto`}>
+                <CardFooter className={`sessions-info mt-auto`}>
                   <Media className="small">
                     <Media left>
                       <i className="fa fa-fw fa-info-circle mr-2"></i>

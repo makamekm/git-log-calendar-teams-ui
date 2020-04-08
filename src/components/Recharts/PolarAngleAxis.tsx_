@@ -1,0 +1,13 @@
+import React from "react";
+import { PolarAngleAxis as RCPolarAngleAxis } from "recharts";
+
+import styleConfig from "./config";
+
+export const PolarAngleAxis = (
+  props: React.ComponentProps<typeof RCPolarAngleAxis>
+) => {
+  return React.createElement(RCPolarAngleAxis, {
+    ...styleConfig.polarAngleAxis,
+    ...props,
+  });
+};

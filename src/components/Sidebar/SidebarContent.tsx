@@ -1,14 +1,12 @@
 import React from "react";
 import classNames from "classnames";
 import {
-  SidebarEntryAnimate,
-  SlimSidebarAnimate,
-  SlimMenuAnimate,
-} from "@owczar/dashboard-style--airframe";
-import {
   withLayoutConfigComponent,
   LayoutConfig,
 } from "../Layout/LayoutContext";
+import { SidebarEntryAnimate } from "./sidebar-entry-animate";
+import { SlimMenuAnimate } from "./slim-menu-animate";
+import { SlimSidebarAnimate } from "./slim-sidebar-animate";
 
 @withLayoutConfigComponent
 export class SidebarContent extends React.Component<{

@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import colors from "./colors.scss";
+import colors from "./styles/colors.scss";
 
 const colorKeys = _.chain(colors)
   .keys()
@@ -11,3 +11,5 @@ const colorKeys = _.chain(colors)
   .value();
 
 export default _.pick(colors, colorKeys);
+
+export { colors };

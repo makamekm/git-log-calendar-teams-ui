@@ -22,14 +22,14 @@ export class Grid extends React.Component<{
     gridSize: { w: 0, h: 0 },
     gridReady: false,
   };
-  _gridRef = React.createRef<HTMLDivElement>();
-  _resizeDebounceTimeout = 0;
+  gridRef = React.createRef<HTMLDivElement>();
+  resizeDebounceTimeout = 0;
 
   componentDidMount() {
     this.setState({
       gridSize: {
-        w: this._gridRef.current.clientWidth,
-        h: this._gridRef.current.clientHeight,
+        w: this.gridRef.current.clientWidth,
+        h: this.gridRef.current.clientHeight,
       },
     });
 
@@ -94,11 +94,11 @@ export class Grid extends React.Component<{
         }}
       >
         {active ? (
-          <div className={floatWrapClasses} ref={this._gridRef}>
+          <div className={floatWrapClasses} ref={this.gridRef}>
             {modifiedChildren}
           </div>
         ) : (
-          <div ref={this._gridRef}>
+          <div ref={this.gridRef}>
             <Container fluid={fluid} className={className} {...otherProps}>
               {modifiedChildren}
             </Container>
@@ -109,13 +109,13 @@ export class Grid extends React.Component<{
   }
 
   _resizeHandler = () => {
-    clearInterval(this._resizeDebounceTimeout);
+    clearInterval(this.resizeDebounceTimeout);
 
-    this._resizeDebounceTimeout = window.setTimeout(() => {
+    this.resizeDebounceTimeout = window.setTimeout(() => {
       this.setState({
         gridSize: {
-          w: this._gridRef.current.clientWidth,
-          h: this._gridRef.current.clientHeight,
+          w: this.gridRef.current.clientWidth,
+          h: this.gridRef.current.clientHeight,
         },
       });
     }, (1000 / 60) * 10); //Every 10 frames debounce

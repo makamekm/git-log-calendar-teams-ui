@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import { Row as BSRow } from "reactstrap";
+import { withFloatGridContextComponent, FloatGridContext } from "./context";
 
 const ResponsiveGrid = WidthProvider(Responsive);
 const responsiveBreakpoints = {
@@ -21,6 +22,7 @@ const simplifyChildrenArray = (reactChildren) =>
     key: child.key.replace(/\.\$/g, ""),
   }));
 
+@withFloatGridContextComponent
 export class Row extends React.Component<{
   children?: any;
   columns?: any;
@@ -28,6 +30,7 @@ export class Row extends React.Component<{
   rowHeight?: number;
   gridSize?: any;
   columnSizes?: any;
+  floatGridContext?: FloatGridContext;
 }> {
   _lastLayouts = {};
   state = {
@@ -48,7 +51,7 @@ export class Row extends React.Component<{
     const { children, rowHeight, onLayoutChange, ...otherProps } = this.props;
     const { trueColSizes } = this.state;
 
-    if (this.context.active) {
+    if (this.props.floatGridContext.active) {
       const layouts = (this._lastLayouts = this._calculateLayouts(children));
       const adjustedChildren = simplifyChildrenArray(
         React.Children.map(children, (child) =>
@@ -61,7 +64,6 @@ export class Row extends React.Component<{
           cols={{ xl: 12, lg: 12, md: 12, sm: 12, xs: 12 }}
           breakpoints={responsiveBreakpoints}
           layouts={layouts}
-          padding={[0, 0]}
           margin={[0, 0]}
           rowHeight={rowHeight}
           onLayoutChange={(currentLayout, allLayouts) => {
@@ -72,7 +74,7 @@ export class Row extends React.Component<{
 
             clearTimeout(this.initialDebounceTimeout);
             this.initialDebounceTimeout = window.setTimeout(() => {
-              this.context.setGridReady();
+              this.props.floatGridContext.setGridReady();
             }, 0);
           }}
           onBreakpointChange={(activeLayout) => {
@@ -82,7 +84,10 @@ export class Row extends React.Component<{
             this.setState({
               trueColSizes: {
                 ...trueColSizes,
-                [newItem.i]: this.context.gridUnitsToPx(newItem.w, newItem.h),
+                [newItem.i]: this.props.floatGridContext.gridUnitsToPx(
+                  newItem.w,
+                  newItem.h
+                ),
               },
             });
           }}
@@ -103,7 +108,10 @@ export class Row extends React.Component<{
   _updateTrueColSizes = (layout) => {
     const { trueColSizes } = this.state;
     for (let child of layout) {
-      trueColSizes[child.i] = this.context.gridUnitsToPx(child.w, child.h);
+      trueColSizes[child.i] = this.props.floatGridContext.gridUnitsToPx(
+        child.w,
+        child.h
+      );
     }
     this.setState({ trueColSizes });
   };

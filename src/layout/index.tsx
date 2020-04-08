@@ -1,11 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "../styles/bootstrap.scss";
-import "../styles/main.scss";
-import "../styles/plugins/plugins.scss";
-import "../styles/plugins/plugins.css";
-
 import { RoutedNavbars, RoutedSidebars } from "../routes";
 import { Layout } from "../components/Layout/Layout";
 import { LayoutNavbar } from "../components/Layout/LayoutNavbar";

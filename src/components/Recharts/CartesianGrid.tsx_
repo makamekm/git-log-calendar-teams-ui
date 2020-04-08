@@ -1,0 +1,13 @@
+import React from "react";
+import { CartesianGrid as ReCartesianGrid } from "recharts";
+
+import styleConfig from "./config";
+
+export const CartesianGrid = (
+  props: React.ComponentProps<typeof ReCartesianGrid>
+) => {
+  return React.createElement(ReCartesianGrid, {
+    ...styleConfig.grid,
+    ...props,
+  });
+};

@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import _ from "lodash";
 import classNames from "classnames";
-import { SideMenuAnimate } from "@owczar/dashboard-style--airframe";
+import { SideMenuAnimate } from "./side-menu-animate";
 
 import { MenuContext } from "./MenuContext";
 import { SideBarMenuEntry } from "./SideBarMenuEntry";

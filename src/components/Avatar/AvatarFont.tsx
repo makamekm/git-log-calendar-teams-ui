@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import { Avatar } from "./Avatar";
 
-import avatarColors from "./../../colors.scss";
+import { colors } from "./../../colors";
 
 const AvatarFont = (props: {
   children?: any;
@@ -27,11 +27,11 @@ const AvatarFont = (props: {
   const parentClass = classNames(
     "avatar-font",
     `avatar-font--${avatarProps.size}`,
-    bgColor && avatarColors[`bg-color--${bgColor}`]
+    bgColor && colors[`bg-color--${bgColor}`]
   );
   const childClass = classNames(
     "avatar-font__text",
-    fgColor && avatarColors[`fg-color--${fgColor}`]
+    fgColor && colors[`fg-color--${fgColor}`]
   );
   const parentCustomStyle = bgColorCustom
     ? {

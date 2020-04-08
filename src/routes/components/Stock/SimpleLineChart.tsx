@@ -8,8 +8,7 @@ import {
   ResponsiveContainer,
   Legend,
   LineChart,
-  Dot,
-} from "../../../components/Recharts";
+} from "recharts";
 
 import colors from "../../../colors";
 
@@ -23,52 +22,86 @@ const data = [
   { name: "Dec '15", uv: 3490, pv: 4300, amt: 2100 },
 ];
 
-// eslint-disable-next-line
-const generateDot = ({ stroke, ...other }) => (
-  <Dot
-    {...other}
-    fill={stroke}
-    stroke={colors["white"]}
-    r={4}
-    strokeWidth={2}
-  />
-);
-
-const generateActiveDot = (props) => (
-  <Dot {...props} stroke={colors["white"]} r={7} />
-);
-
-const SimpleLineChart = () => (
+export const SimpleLineChart = () => (
   <ResponsiveContainer width="100%" aspect={6.0 / 3.0}>
     <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-      <XAxis dataKey="name" />
-      <YAxis />
+      <XAxis
+        dataKey="name"
+        tickLine={{
+          fill: colors["500"],
+          strokeWidth: 1,
+        }}
+        axisLine={{
+          fill: colors["500"],
+          strokeWidth: 1,
+        }}
+        tick={{
+          fontSize: "12px",
+          fill: colors["900"],
+        }}
+      />
+      <YAxis
+        tickLine={{
+          fill: colors["500"],
+          strokeWidth: 1,
+        }}
+        axisLine={{
+          fill: colors["500"],
+          strokeWidth: 1,
+        }}
+        tick={{
+          fontSize: "12px",
+          fill: colors["900"],
+        }}
+      />
       <CartesianGrid strokeDasharray="3 3" />
       <Tooltip />
       <Legend />
       <Line
         dataKey="pv"
         stroke={colors["success"]}
-        dot={generateDot}
-        activeDot={generateActiveDot}
+        dot={{
+          fill: colors["blue"],
+          stroke: colors["white"],
+          r: 4,
+          strokeWidth: 2,
+        }}
+        activeDot={{
+          stroke: colors["white"],
+          r: 7,
+        }}
         name="Internistic Value"
       />
       <Line
         dataKey="uv"
         stroke={colors["purple"]}
-        dot={generateDot}
-        activeDot={generateActiveDot}
+        dot={{
+          fill: colors["blue"],
+          stroke: colors["white"],
+          r: 4,
+          strokeWidth: 2,
+        }}
+        activeDot={{
+          stroke: colors["white"],
+          r: 7,
+        }}
         name="Buy Price"
       />
       <Line
         dataKey="amt"
         stroke={colors["blue"]}
-        dot={generateDot}
-        activeDot={generateActiveDot}
+        dot={{
+          fill: colors["blue"],
+          stroke: colors["white"],
+          r: 4,
+          strokeWidth: 2,
+        }}
+        activeDot={{
+          stroke: colors["white"],
+          r: 7,
+        }}
         name="Stock Price"
       />
     </LineChart>
   </ResponsiveContainer>
 );
-
-export { SimpleLineChart };

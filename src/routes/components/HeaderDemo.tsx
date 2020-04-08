@@ -4,7 +4,7 @@ import { Media } from "reactstrap";
 const HeaderDemo = (props: {
   no?: string | number;
   title?: string;
-  subTitle?: string;
+  subTitle?: any;
   children?: any;
   className?: string;
 }) => (

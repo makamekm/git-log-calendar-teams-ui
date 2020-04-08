@@ -1,0 +1,11 @@
+import React from "react";
+import { Legend as RCLegend } from "recharts";
+
+import styleConfig from "./config";
+
+export const Legend = (props: React.ComponentProps<typeof RCLegend>) => {
+  return React.createElement(RCLegend, {
+    ...styleConfig.legend,
+    ...props,
+  });
+};

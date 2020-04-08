@@ -1,6 +1,6 @@
 import React from "react";
 
-import config from "./config";
+import colors from "../../colors";
 
 const RADIAN = Math.PI / 180;
 
@@ -24,8 +24,8 @@ export const PieValueLabel = (props: {
       y={y}
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
-      fill={color || config.pieLabel.fill}
-      fontSize={config.pieLabel.fontSize}
+      fill={color || colors[100]}
+      fontSize={12}
     >
       {`${(percent * 100).toFixed(0)}%`}
     </text>
