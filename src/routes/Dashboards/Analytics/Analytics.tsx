@@ -82,10 +82,10 @@ export class Analytics extends React.Component {
     return (
       <>
         <Container fluid={false}>
-          <div className="d-flex mt-3 mb-5">
-            <HeaderMain title="Analytics" className="mt-0" />
+          <div className="d-flex flex-wrap mt-3 mb-4">
+            <HeaderMain title="Analytics" className="mt-3 mb-0" />
             <ButtonToolbar className="ml-auto">
-              <ButtonGroup className="align-self-start mr-2">
+              <ButtonGroup className="align-self-start mr-2 mt-3 mb-0">
                 <UncontrolledButtonDropdown className="ml-auto flex-column">
                   <DropdownToggle
                     color="link"
@@ -108,7 +108,7 @@ export class Analytics extends React.Component {
                   </DropdownMenu>
                 </UncontrolledButtonDropdown>
               </ButtonGroup>
-              <ButtonGroup className="align-self-start mr-2">
+              <ButtonGroup className="align-self-start mr-2 mt-3 mb-0">
                 <UncontrolledButtonDropdown className="ml-auto flex-column">
                   <DropdownToggle
                     color="link"
@@ -130,7 +130,7 @@ export class Analytics extends React.Component {
                   </DropdownMenu>
                 </UncontrolledButtonDropdown>
               </ButtonGroup>
-              <ButtonGroup className="align-self-start mr-2">
+              <ButtonGroup className="align-self-start mr-2 mt-3 mb-0">
                 <UncontrolledButtonDropdown className="ml-auto flex-column">
                   <DropdownToggle
                     color="link"
@@ -152,12 +152,12 @@ export class Analytics extends React.Component {
                   </DropdownMenu>
                 </UncontrolledButtonDropdown>
               </ButtonGroup>
-              <ButtonGroup className="align-self-start">
+              <ButtonGroup className="align-self-start mt-3 mb-0">
                 <Button color="primary" className="mb-2 mr-2 px-3">
                   Apply
                 </Button>
               </ButtonGroup>
-              <ButtonGroup>
+              <ButtonGroup className="mt-3 mb-0">
                 <Button
                   color="link"
                   className="mb-2 text-decoration-none align-self-start"
