@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames";
 import { v4 as uuid } from "uuid";
 
-import { MenuContext } from "./MenuContext";
+import { MenuContext } from "./context";
 import { SideBarMenuEntry } from "./SideBarMenuEntry";
 
 /**

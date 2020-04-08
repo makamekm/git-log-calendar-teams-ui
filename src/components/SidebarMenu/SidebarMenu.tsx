@@ -4,7 +4,7 @@ import _ from "lodash";
 import classNames from "classnames";
 import { SideMenuAnimate } from "./side-menu-animate";
 
-import { MenuContext } from "./MenuContext";
+import { MenuContext } from "./context";
 import { SideBarMenuEntry } from "./SideBarMenuEntry";
 import {
   withLayoutConfigComponent,

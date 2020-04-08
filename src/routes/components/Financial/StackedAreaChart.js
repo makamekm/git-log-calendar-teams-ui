@@ -11,9 +11,9 @@ import {
   Dot,
   Rectangle,
   Polygon,
-} from "../../../components/Recharts";
+} from "@lib";
 
-import colors from "./../../../colors";
+import colors from "~/colors";
 
 const generateDot = ({ diameter, fill, stroke }) =>
   /* eslint-disable */

@@ -4,11 +4,11 @@ import { Route, Switch, Redirect } from "react-router";
 // ----------- Pages Imports ---------------
 import { Analytics } from "./Dashboards/Analytics/Analytics";
 import { ProjectsDashboard } from "./Dashboards/Projects/ProjectsDashboard";
-// import System from './Dashboards/System';
-// import Monitor from './Dashboards/Monitor';
-// import Financial from './Dashboards/Financial';
-// import Stock from './Dashboards/Stock';
-// import Reports from './Dashboards/Reports';
+import { System } from "./Dashboards/System/System";
+import { Monitor } from "./Dashboards/Monitor/Monitor";
+import { Financial } from "./Dashboards/Financial/Financial";
+import { Stock } from "./Dashboards/Stock/Stock";
+import { Reports } from "./Dashboards/Reports/Reports";
 
 // import Widgets from './Widgets';
 
@@ -114,6 +114,12 @@ export const RoutedContent = () => {
 
       <Route path="/dashboards/analytics" exact component={Analytics} />
       <Route path="/dashboards/projects" exact component={ProjectsDashboard} />
+      <Route path="/dashboards/system" exact component={System} />
+      <Route path="/dashboards/monitor" exact component={Monitor} />
+      <Route path="/dashboards/financial" exact component={Financial} />
+      <Route path="/dashboards/stock" exact component={Stock} />
+      <Route path="/dashboards/reports" exact component={Reports} />
+
       <Route component={Error404} path="/pages/error-404" />
 
       {/*    404    */}
@@ -121,12 +127,6 @@ export const RoutedContent = () => {
     </Switch>
   );
 };
-
-// <Route path="/dashboards/system" exact component={System} />
-// <Route path="/dashboards/monitor" exact component={Monitor} />
-// <Route path="/dashboards/financial" exact component={Financial} />
-// <Route path="/dashboards/stock" exact component={Stock} />
-// <Route path="/dashboards/reports" exact component={Reports} />
 
 // <Route path='/widgets' exact component={Widgets} />
 

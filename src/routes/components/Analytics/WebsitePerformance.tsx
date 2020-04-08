@@ -1,7 +1,7 @@
 import React from "react";
 import faker from "faker/locale/en_US";
 
-import { TinyAreaChart } from "../../Graphs/ReCharts/components/TinyAreaChart";
+import { TinyAreaChart } from "../Graphs/TinyAreaChart";
 import { Row, Col } from "reactstrap";
 
 const WebsitePerformance = (props: {

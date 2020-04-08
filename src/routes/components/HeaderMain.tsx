@@ -13,6 +13,7 @@ const HeaderMain = (props: {
     {/* END H1 Header */}
   </React.Fragment>
 );
+
 HeaderMain.defaultProps = {
   title: "Waiting for Data...",
   subTitle: "Waiting for Data...",

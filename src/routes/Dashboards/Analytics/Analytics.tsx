@@ -16,23 +16,21 @@ import {
   Table,
   ListGroup,
   ListGroupItem,
-} from "reactstrap";
-import {
   applyColumn,
   FloatGrid,
   FloatRow,
   FloatCol,
   FloatReady,
-} from "../../../components/FloatGrid";
-import { HeaderMain } from "../../components/HeaderMain";
-import { MetricVsTarget } from "../../components/Analytics/MetricVsTarget";
-import { WebsitePerformance } from "../../components/Analytics/WebsitePerformance";
-import { AudienceMetricsChart } from "../../components/Analytics/AudienceMetricsChart";
-import { TinyAreaChart } from "../../components/Analytics/TinyAreaChart";
-import { SimpleLineChart } from "../../Graphs/ReCharts/components/SimpleLineChart";
-import { Card } from "../../../components/Card/Card";
-import { CardHeader } from "../../../components/CardHeader/CardHeader";
-import { Progress } from "../../../components/Progress/Progress";
+  Progress,
+  Card,
+  CardHeader,
+} from "@lib";
+import { HeaderMain } from "@app/HeaderMain";
+import { MetricVsTarget } from "@app/Analytics/MetricVsTarget";
+import { WebsitePerformance } from "@app/Analytics/WebsitePerformance";
+import { AudienceMetricsChart } from "@app/Analytics/AudienceMetricsChart";
+import { TinyAreaChart } from "@app/Analytics/TinyAreaChart";
+import { SimpleLineChart } from "@app/Graphs/SimpleLineChart";
 
 import "./Analytics.scss";
 

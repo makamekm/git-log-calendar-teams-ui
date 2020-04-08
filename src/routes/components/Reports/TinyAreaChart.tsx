@@ -1,8 +1,8 @@
 import React from "react";
 import _ from "lodash";
-import { ResponsiveContainer, AreaChart, Area } from "@lib";
 
-import colors from "~/colors";
+import colors from "../../../colors";
+import { ResponsiveContainer, AreaChart, Area } from "recharts";
 
 const data = _.times(20, () => ({ pv: Math.random() * 100 }));
 

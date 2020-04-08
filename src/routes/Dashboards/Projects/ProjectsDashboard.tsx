@@ -2,13 +2,6 @@ import React from "react";
 import faker from "faker/locale/en_US";
 import { Link } from "react-router-dom";
 
-import { HeaderMain } from "../../components/HeaderMain";
-
-import { TasksMedia } from "../../components/ProjectsDashboards/TasksMedia";
-import { TinyDonutChart } from "../../components/ProjectsDashboards/TinyDonutChart";
-import { TinyDonutChartAllProjects } from "../../components/ProjectsDashboards/TinyDonutChartAllProjects";
-import { TimelineMini } from "../../components/Timeline/TimelineMini";
-import { DraggableProjects } from "./DraggableProjects";
 import {
   Container,
   Row,
@@ -24,8 +17,14 @@ import {
   Button,
   ListGroup,
   ListGroupItem,
-} from "reactstrap";
-import { InputGroupAddon } from "../../../components/InputGroupAddon/InputGroupAddon";
+  InputGroupAddon,
+} from "@lib";
+import { HeaderMain } from "@app/HeaderMain";
+import { TasksMedia } from "@app/ProjectsDashboards/TasksMedia";
+import { TinyDonutChart } from "@app/ProjectsDashboards/TinyDonutChart";
+import { TinyDonutChartAllProjects } from "@app/ProjectsDashboards/TinyDonutChartAllProjects";
+import { TimelineMini } from "@app/Timeline/TimelineMini";
+import { DraggableProjects } from "./DraggableProjects";
 
 export const ProjectsDashboard = () => (
   <Container>
