@@ -36,6 +36,7 @@ export class RenderingExample extends React.Component {
         props.multiple = true;
         props.renderToken = this._renderToken;
         break;
+      default:
     }
 
     return (

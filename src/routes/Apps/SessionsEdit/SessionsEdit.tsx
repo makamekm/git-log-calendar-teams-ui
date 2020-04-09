@@ -13,7 +13,7 @@ import { ProfileLeftNav } from "~/app/Profile/ProfileLeftNav";
 import { ProfileHeader } from "~/app/Profile/ProfileHeader";
 import { TrTableResponsive } from "../../Tables/Tables/components/TrTableResponsive";
 
-export const BillingEdit = () => (
+export const SessionsEdit = () => (
   <React.Fragment>
     <Container>
       <HeaderMain title="Sessions Edit" className="mb-5 mt-4" />

@@ -15,7 +15,7 @@ import { ChatLeftNav } from "~/app/Chat/ChatLeftNav";
 import { ChatCardFooter } from "~/app/Chat/ChatCardFooter";
 import { ChatCardHeader } from "~/app/Chat/ChatCardHeader";
 
-export const Clients = () => (
+export const Chat = () => (
   <React.Fragment>
     <Container>
       <HeaderMain title="Chat" className="mb-5 mt-4" />

@@ -107,7 +107,6 @@ export const SidebarMiddleNav = () => (
       title="Tables"
     >
       <SidebarMenuItem title="Tables" to="/tables/tables" />
-      <SidebarMenuItem title="Extended Tables" to="/tables/extended-table" />
       <SidebarMenuItem title="AgGrid" to="/tables/ag-grid" />
     </SidebarMenuItem>
     {/* -------- Apps ---------*/}

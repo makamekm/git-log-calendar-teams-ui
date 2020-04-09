@@ -1,6 +1,5 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
   Badge,
