@@ -9,15 +9,11 @@ import {
 } from "~/components";
 import { FooterAuth } from "../Pages/FooterAuth";
 import { FooterText } from "../FooterText";
-import { VersionSelector } from "../VersionSelector";
 
 const SidebarBottomA = () => (
   <>
     {/* START Desktop */}
     <SidebarHideSlim>
-      <SidebarSection className="pb-0">
-        <VersionSelector sidebar dashboard="Airframe" />
-      </SidebarSection>
       <SidebarSection>
         <FooterAuth className="text-muted" />
       </SidebarSection>
@@ -27,14 +23,6 @@ const SidebarBottomA = () => (
     {/* START Slim Only */}
     <SidebarShowSlim>
       <SidebarSection className="text-center">
-        {/* Slim Version Selector */}
-        <VersionSelector
-          dashboard="Airframe"
-          sidebar
-          compact
-          render={() => <i className="fa fa-fw fa-toggle-on"></i>}
-        />
-
         {/* Footer Text as Tooltip */}
         <Button
           id="UncontrolledSidebarPopoverFooter"

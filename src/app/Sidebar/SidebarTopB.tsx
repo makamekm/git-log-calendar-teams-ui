@@ -5,7 +5,6 @@ import {
   SidebarHideSlim,
   SidebarShowSlim,
 } from "~/components";
-import { VersionSelector } from "../VersionSelector";
 
 const SidebarTopB = () => (
   <React.Fragment>
@@ -24,23 +23,6 @@ const SidebarTopB = () => (
           <UncontrolledTooltip placement="right" target="tooltipBackToHome">
             Back to Home
           </UncontrolledTooltip>
-
-          <VersionSelector
-            down
-            sidebar
-            dashboard="Airframe"
-            render={(currentVersion) => (
-              <React.Fragment>
-                <div className="h4 fw-600 sidebar-logo mb-1 text-left">
-                  react.bs4{" "}
-                  <i className="fa fa-angle-down ml-1 sidebar__link--muted"></i>
-                </div>
-                <div className="job-title small text-left sidebar__link--muted">
-                  Version: {currentVersion.label}, {currentVersion.version}
-                </div>
-              </React.Fragment>
-            )}
-          />
         </div>
       </div>
     </SidebarHideSlim>
