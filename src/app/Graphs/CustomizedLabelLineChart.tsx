@@ -9,7 +9,7 @@ import {
   Legend,
   LineChart,
 } from "recharts";
-import { ValueLabel } from "~/components";
+// import { ValueLabel } from "~/components";
 import colors from "~/colors";
 
 const data = [
