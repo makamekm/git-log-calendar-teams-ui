@@ -13,7 +13,7 @@ export const DefaultNavbar = () => (
         <SidebarTrigger />
       </NavItem>
       <NavItem className="navbar-brand d-lg-none">
-        <Link to="/">
+        <Link to="/" className="nav-logo">
           <LogoThemed />
         </Link>
       </NavItem>

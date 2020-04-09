@@ -9,7 +9,7 @@ export const LogoThemed = ({
   HTMLImageElement
 >) => (
   <img
-    height={20}
+    height={15}
     src={require("~/images/logos/logo-primary.png")}
     className={classNames("d-block", className)}
     alt="Program Logo"

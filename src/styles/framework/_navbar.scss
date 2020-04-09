@@ -50,6 +50,14 @@
   }
 }
 
+.nav-item {
+  & > .nav-logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
+
 /**
     Nav Accent  =================================
 */
