@@ -1,7 +1,9 @@
 import React from "react";
-import { Badge } from "reactstrap";
+import { Badge, BadgeProps } from "reactstrap";
 
-const AvatarAddonBadge = (props: { children?: any; className?: string }) => {
+const AvatarAddonBadge = (
+  props: { children?: any; className?: string } & BadgeProps
+) => {
   const { children, ...badgeProps } = props;
 
   return <Badge {...badgeProps}>{children}</Badge>;

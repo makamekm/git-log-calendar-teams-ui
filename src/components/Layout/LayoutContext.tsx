@@ -15,7 +15,7 @@ export interface LayoutState {
 export type LayoutConfig = LayoutState & {
   sidebarSlim: boolean;
   toggleSidebar: () => void;
-  setElementsVisibility: (elements: string[]) => void;
+  setElementsVisibility: (elements: { [name: string]: boolean }) => void;
   changeMeta: (metaData: LayoutState) => void;
 };
 

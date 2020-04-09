@@ -4,7 +4,10 @@ import { Collapse, CardBody } from "reactstrap";
 
 import { AccordionConsumer } from "./context";
 
-export const AccordionBody = (props: { children: any; className: string }) => (
+export const AccordionBody = (props: {
+  children?: any;
+  className?: string;
+}) => (
   <AccordionConsumer>
     {({ isOpen }) => (
       <Collapse isOpen={isOpen}>

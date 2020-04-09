@@ -1,14 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { SidebarTrigger, Navbar, Nav, NavItem } from "~/components";
+import { LogoThemed } from "~/app/LogoThemed/LogoThemed";
 import { NavbarActivityFeed } from "./NavbarActivityFeed";
 import { NavbarMessages } from "./NavbarMessages";
 import { NavbarUser } from "./NavbarUser";
-import { LogoThemed } from "./../../routes/components/LogoThemed/LogoThemed";
-import { NavItem } from "reactstrap";
-import { SidebarTrigger } from "../../components/SidebarTrigger/SidebarTrigger";
-import { Navbar } from "../../components/Navbar/Navbar";
-import { Nav } from "../../components/Nav/Nav";
 
 export const DefaultNavbar = () => (
   <Navbar light expand="xs" fluid>

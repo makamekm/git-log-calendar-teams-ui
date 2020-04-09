@@ -1,10 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
-import { EmptyLayoutSection } from "../../../components/EmptyLayout/EmptyLayoutSection";
-import { EmptyLayout } from "../../../components/EmptyLayout/EmptyLayout";
 import {
   Form,
   FormGroup,
@@ -13,7 +8,11 @@ import {
   Input,
   InputGroupAddon,
   Button,
-} from "reactstrap";
+  EmptyLayoutSection,
+  EmptyLayout,
+} from "~/components";
+import { HeaderAuth } from "~/app/Pages/HeaderAuth";
+import { FooterAuth } from "~/app/Pages/FooterAuth";
 
 export const Error404 = () => (
   <EmptyLayout>

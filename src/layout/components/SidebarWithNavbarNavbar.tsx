@@ -1,10 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { NavbarActivityFeed } from "./NavbarActivityFeed";
-import { NavbarMessages } from "./NavbarMessages";
-import { NavbarUser } from "./NavbarUser";
-import { LogoThemed } from "./../../routes/components/LogoThemed/LogoThemed";
 import {
   Navbar,
   Nav,
@@ -12,8 +7,12 @@ import {
   UncontrolledCollapse,
   NavLink,
   NavbarToggler,
-} from "reactstrap";
-import { SidebarTrigger } from "../../components/SidebarTrigger/SidebarTrigger";
+  SidebarTrigger,
+} from "~/components";
+import { LogoThemed } from "~/app/LogoThemed/LogoThemed";
+import { NavbarActivityFeed } from "./NavbarActivityFeed";
+import { NavbarMessages } from "./NavbarMessages";
+import { NavbarUser } from "./NavbarUser";
 
 export const SidebarWithNavbarNavbar = () => (
   <React.Fragment>

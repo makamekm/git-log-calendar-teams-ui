@@ -24,13 +24,13 @@ import {
   Progress,
   Card,
   CardHeader,
-} from "@lib";
-import { HeaderMain } from "@app/HeaderMain";
-import { MetricVsTarget } from "@app/Analytics/MetricVsTarget";
-import { WebsitePerformance } from "@app/Analytics/WebsitePerformance";
-import { AudienceMetricsChart } from "@app/Analytics/AudienceMetricsChart";
-import { TinyAreaChart } from "@app/Analytics/TinyAreaChart";
-import { SimpleLineChart } from "@app/Graphs/SimpleLineChart";
+} from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
+import { MetricVsTarget } from "~/app/Analytics/MetricVsTarget";
+import { WebsitePerformance } from "~/app/Analytics/WebsitePerformance";
+import { AudienceMetricsChart } from "~/app/Analytics/AudienceMetricsChart";
+import { TinyAreaChart } from "~/app/Analytics/TinyAreaChart";
+import { SimpleLineChart } from "~/app/Graphs/SimpleLineChart";
 
 import "./Analytics.scss";
 

@@ -6,7 +6,11 @@ import {
 } from "./HolderTextProvider";
 
 const HolderIconProvider = (
-  props: { iconChar: string; children?: any } & HolderTextProviderProps
+  props: {
+    className?: string;
+    iconChar: string;
+    children?: any;
+  } & HolderTextProviderProps
 ) => {
   const { iconChar, children, ...otherProps } = props;
   return (

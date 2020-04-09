@@ -18,12 +18,12 @@ import {
   ListGroup,
   ListGroupItem,
   InputGroupAddon,
-} from "@lib";
-import { HeaderMain } from "@app/HeaderMain";
-import { TasksMedia } from "@app/ProjectsDashboards/TasksMedia";
-import { TinyDonutChart } from "@app/ProjectsDashboards/TinyDonutChart";
-import { TinyDonutChartAllProjects } from "@app/ProjectsDashboards/TinyDonutChartAllProjects";
-import { TimelineMini } from "@app/Timeline/TimelineMini";
+} from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
+import { TasksMedia } from "~/app/ProjectsDashboards/TasksMedia";
+import { TinyDonutChart } from "~/app/ProjectsDashboards/TinyDonutChart";
+import { TinyDonutChartAllProjects } from "~/app/ProjectsDashboards/TinyDonutChartAllProjects";
+import { TimelineMini } from "~/app/Timeline/TimelineMini";
 import { DraggableProjects } from "./DraggableProjects";
 
 export const ProjectsDashboard = () => (

@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "reactstrap";
+import { Button, ButtonProps } from "reactstrap";
 
 import { Consumer } from "./context";
 
-const UncontrolledModalClose = (props: { tag?: any }) => {
+const UncontrolledModalClose = (props: { tag?: any } & ButtonProps) => {
   const { tag, ...otherProps } = props;
   const Tag = tag;
 

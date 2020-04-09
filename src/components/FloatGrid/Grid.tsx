@@ -11,6 +11,7 @@ export class Grid extends React.Component<{
   fluid?: boolean;
   rowHeight?: number;
   className?: string;
+  compactType?: string;
 }> {
   static defaultProps = {
     active: true,

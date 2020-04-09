@@ -1,6 +1,5 @@
 import React from "react";
 
-import config from "./config";
 import colors from "../../colors";
 
 export const ValueLabel = (
@@ -12,7 +11,7 @@ export const ValueLabel = (
 ) => (
   <text
     x={props.x}
-    y={props.y - config.label.fontSize}
+    y={props.y - 11}
     textAnchor="middle"
     fontSize={11}
     fill={colors["900"]}

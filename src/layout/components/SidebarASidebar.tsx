@@ -1,14 +1,15 @@
+/* eslint-disable no-script-url */
 import React from "react";
-
+import {
+  Sidebar,
+  SidebarTrigger,
+  SidebarClose,
+  SidebarSection,
+  SidebarMobileFluid,
+} from "~/components";
+import { SidebarTopB } from "~/app/Sidebar/SidebarTopB";
+import { SidebarBottomB } from "~/app/Sidebar/SidebarBottomB";
 import { SidebarMiddleNav } from "./SidebarMiddleNav";
-
-import { SidebarTopB } from "../../routes/components/Sidebar/SidebarTopB";
-import { SidebarBottomB } from "../../routes/components/Sidebar/SidebarBottomB";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
-import { SidebarTrigger } from "../../components/SidebarTrigger/SidebarTrigger";
-import { SidebarClose } from "../../components/Sidebar/SidebarClose";
-import { SidebarSection } from "../../components/Sidebar/SidebarSection";
-import { SidebarMobileFluid } from "../../components/Sidebar/SidebarMobileFluid";
 
 export const SidebarASidebar = () => (
   <Sidebar>

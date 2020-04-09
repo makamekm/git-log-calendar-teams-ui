@@ -1,11 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 import _ from "lodash";
-import { NavLink } from "reactstrap";
+import { NavLink, NavLinkProps } from "reactstrap";
 
 import { Consumer } from "./context";
 
-const UncontrolledTabsNavLink = (props: { tabId?: string }) => (
+const UncontrolledTabsNavLink = (props: NavLinkProps & { tabId?: string }) => (
   <Consumer>
     {(value) => (
       <NavLink

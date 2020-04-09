@@ -1,12 +1,14 @@
 import React from "react";
 import _ from "lodash";
-import { Modal } from "reactstrap";
+import { Modal, ModalProps } from "reactstrap";
 
 import { Provider } from "./context";
 
-class UncontrolledModal extends React.Component<{
-  target: string;
-}> {
+class UncontrolledModal extends React.Component<
+  {
+    target: string;
+  } & ModalProps
+> {
   state = {
     isOpen: false,
   };

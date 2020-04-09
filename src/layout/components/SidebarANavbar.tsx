@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { Navbar, Nav, NavItem } from "reactstrap";
+import { Navbar, Nav, NavItem, SidebarTrigger } from "~/components";
 import { NavbarActivityFeed } from "./NavbarActivityFeed";
 import { NavbarMessages } from "./NavbarMessages";
 import { NavbarUser } from "./NavbarUser";
-import { SidebarTrigger } from "../../components/SidebarTrigger/SidebarTrigger";
 
 export const SidebarANavbar = () => (
   <Navbar light expand="xs" fluid>

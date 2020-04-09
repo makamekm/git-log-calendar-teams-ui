@@ -1,5 +1,5 @@
 import React from "react";
-import { VersionSelector } from "../../routes/components/VersionSelector";
+import { VersionSelector } from "~/app/VersionSelector";
 
 const { Consumer, Provider } = React.createContext<{
   openId: string;

@@ -5,11 +5,13 @@ import { Consumer } from "./context";
 
 import classes from "./CheckableTrigger.scss";
 
-const CheckableTrigger = (props: {
-  children?: any;
-  className?: string;
-  tag?: any;
-}) => {
+const CheckableTrigger = (
+  props: {
+    children?: any;
+    className?: string;
+    tag?: any;
+  } & any
+) => {
   const { children, tag, className, ...otherProps } = props;
   const Tag = tag;
   const tagClass = classNames(classes["checkable__trigger"], className);

@@ -4,11 +4,13 @@ import { UncontrolledDropdown } from "reactstrap";
 
 import { Provider } from "./context";
 
-export class NestedDropdown extends React.Component<{
-  tag?: any;
-  className?: string;
-  children?: any;
-}> {
+export class NestedDropdown extends React.Component<
+  {
+    tag?: any;
+    className?: string;
+    children?: any;
+  } & any
+> {
   static defaultProps = {
     tag: UncontrolledDropdown,
   };

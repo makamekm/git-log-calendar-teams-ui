@@ -1,17 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {
+  Layout,
+  LayoutNavbar,
+  LayoutContent,
+  LayoutSidebar,
+} from "~/components";
+import { RoutedNavbars, RoutedSidebars } from "~/routes";
 
-import { RoutedNavbars, RoutedSidebars } from "../routes";
-import { Layout } from "../components/Layout/Layout";
-import { LayoutNavbar } from "../components/Layout/LayoutNavbar";
-import { LayoutContent } from "../components/Layout/LayoutContent";
-import { LayoutSidebar } from "../components/Layout/LayoutSidebar";
-
-class AppLayout extends React.Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-
+export class AppLayout extends React.Component {
   render() {
     const { children } = this.props;
 
@@ -28,5 +24,3 @@ class AppLayout extends React.Component {
     );
   }
 }
-
-export default AppLayout;

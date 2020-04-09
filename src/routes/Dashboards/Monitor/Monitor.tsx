@@ -10,12 +10,12 @@ import {
   Table,
   Card,
   Progress,
-} from "@lib";
-import { HeaderMain } from "@app/HeaderMain";
-import { TinyDonutChart } from "@app/Monitor/TinyDonutChart";
-import { TinyDonutChartBig } from "@app/Monitor/TinyDonutChartBig";
-import { TrTableMonitor } from "@app/Monitor/TrTableMonitor";
-import { TinyAreaChart } from "@app/Monitor/TinyAreaChart";
+} from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
+import { TinyDonutChart } from "~/app/Monitor/TinyDonutChart";
+import { TinyDonutChartBig } from "~/app/Monitor/TinyDonutChartBig";
+import { TrTableMonitor } from "~/app/Monitor/TrTableMonitor";
+import { TinyAreaChart } from "~/app/Monitor/TinyAreaChart";
 
 export const Monitor = () => (
   <Container>

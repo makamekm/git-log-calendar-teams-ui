@@ -1,8 +1,8 @@
 import React from "react";
 import faker from "faker/locale/en_US";
 
-import { Container, Row, Col, Table } from "@lib";
-import { HeaderMain } from "@app/HeaderMain";
+import { Container, Row, Col, Table } from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
 import { CardSystem } from "./components/CardSystem";
 import { TrSystem } from "./components/trSystem";
 

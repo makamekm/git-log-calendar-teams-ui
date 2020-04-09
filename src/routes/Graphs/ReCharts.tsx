@@ -1,38 +1,43 @@
 import React from "react";
-
-import { HeaderMain } from "../components/HeaderMain";
-import { HeaderDemo } from "../components/HeaderDemo";
-
-import { SimpleBarChart } from "../components/Graphs/SimpleBarChart";
-import { StackedBarChart } from "../components/Graphs/StackedBarChart";
-import { MixBarChart } from "../components/Graphs/MixBarChart";
-import { PositiveAndNegativeBarChart } from "../components/Graphs/PositiveAndNegativeBarChart";
-import { BarChartStackedBySign } from "../components/Graphs/BarChartStackedBySign";
-import { BarChartHasBackground } from "../components/Graphs/BarChartHasBackground";
-import { SimpleLineChart } from "../components/Graphs/SimpleLineChart";
-import { DashedLineChart } from "../components/Graphs/DashedLineChart";
-import { VerticalLineChart } from "../components/Graphs/VerticalLineChart";
-import { CustomizedLabelLineChart } from "../components/Graphs/CustomizedLabelLineChart";
-import { SimpleAreaChart } from "../components/Graphs/SimpleAreaChart";
-import { StackedAreaChart } from "../components/Graphs/StackedAreaChart";
-import { PercentAreaChart } from "../components/Graphs/PercentAreaChart";
-import { AreaChartFillByValue } from "../components/Graphs/AreaChartFillByValue";
-import { TwoLevelPieChart } from "../components/Graphs/TwoLevelPieChart";
-import { StraightAnglePieChart } from "../components/Graphs/StraightAnglePieChart";
-import { PieChartWithCustomizedLabel } from "../components/Graphs/PieChartWithCustomizedLabel";
-import { PieChartWithPaddingAngle } from "../components/Graphs/PieChartWithPaddingAngle";
-import { PieChartWithPaddingAngleHalf } from "../components/Graphs/PieChartWithPaddingAngleHalf";
-import { SpecifiedDomainRadarChart } from "../components/Graphs/SpecifiedDomainRadarChart";
-import { SimpleRadialBarChart } from "../components/Graphs/SimpleRadialBarChart";
-import { LineBarAreaComposedChart } from "../components/Graphs/LineBarAreaComposedChart";
-import { TinyLineChart } from "../components/Graphs/TinyLineChart";
-import { TinyAreaChart } from "../components/Graphs/TinyAreaChart";
-import { TinyBarChart } from "../components/Graphs/TinyBarChart";
-import { TinyPieChart } from "../components/Graphs/TinyPieChart";
-import { TinyDonutChart } from "../components/Graphs/TinyDonutChart";
-import { VerticalComposedChart } from "../components/Graphs/VerticalComposedChart";
-import { Container, Row, Col, CardDeck, CardBody, Button } from "reactstrap";
-import { Card } from "../../components/Card/Card";
+import {
+  Container,
+  Card,
+  Row,
+  Col,
+  CardDeck,
+  CardBody,
+  Button,
+} from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
+import { HeaderDemo } from "~/app/HeaderDemo";
+import { SimpleBarChart } from "~/app/Graphs/SimpleBarChart";
+import { StackedBarChart } from "~/app/Graphs/StackedBarChart";
+import { MixBarChart } from "~/app/Graphs/MixBarChart";
+import { PositiveAndNegativeBarChart } from "~/app/Graphs/PositiveAndNegativeBarChart";
+import { BarChartStackedBySign } from "~/app/Graphs/BarChartStackedBySign";
+import { BarChartHasBackground } from "~/app/Graphs/BarChartHasBackground";
+import { SimpleLineChart } from "~/app/Graphs/SimpleLineChart";
+import { DashedLineChart } from "~/app/Graphs/DashedLineChart";
+import { VerticalLineChart } from "~/app/Graphs/VerticalLineChart";
+import { CustomizedLabelLineChart } from "~/app/Graphs/CustomizedLabelLineChart";
+import { SimpleAreaChart } from "~/app/Graphs/SimpleAreaChart";
+import { StackedAreaChart } from "~/app/Graphs/StackedAreaChart";
+import { PercentAreaChart } from "~/app/Graphs/PercentAreaChart";
+import { AreaChartFillByValue } from "~/app/Graphs/AreaChartFillByValue";
+import { TwoLevelPieChart } from "~/app/Graphs/TwoLevelPieChart";
+import { StraightAnglePieChart } from "~/app/Graphs/StraightAnglePieChart";
+import { PieChartWithCustomizedLabel } from "~/app/Graphs/PieChartWithCustomizedLabel";
+import { PieChartWithPaddingAngle } from "~/app/Graphs/PieChartWithPaddingAngle";
+import { PieChartWithPaddingAngleHalf } from "~/app/Graphs/PieChartWithPaddingAngleHalf";
+import { SpecifiedDomainRadarChart } from "~/app/Graphs/SpecifiedDomainRadarChart";
+import { SimpleRadialBarChart } from "~/app/Graphs/SimpleRadialBarChart";
+import { LineBarAreaComposedChart } from "~/app/Graphs/LineBarAreaComposedChart";
+import { TinyLineChart } from "~/app/Graphs/TinyLineChart";
+import { TinyAreaChart } from "~/app/Graphs/TinyAreaChart";
+import { TinyBarChart } from "~/app/Graphs/TinyBarChart";
+import { TinyPieChart } from "~/app/Graphs/TinyPieChart";
+import { TinyDonutChart } from "~/app/Graphs/TinyDonutChart";
+import { VerticalComposedChart } from "~/app/Graphs/VerticalComposedChart";
 
 export const ReCharts = () => (
   <Container>
@@ -904,5 +909,3 @@ export const ReCharts = () => (
     {/* START Section 7 */}
   </Container>
 );
-
-export default ReCharts;

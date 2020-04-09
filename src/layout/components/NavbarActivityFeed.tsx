@@ -9,10 +9,10 @@ import {
   ListGroupItem,
   Media,
   ListGroup,
-} from "reactstrap";
-import { ExtendedDropdown } from "../../components/ExtendedDropdown/ExtendedDropdown";
-import { IconWithBadge } from "../../components/IconWithBadge/IconWithBadge";
-import { ExtendedDropdownSection } from "../../components/ExtendedDropdown/ExtendedDropdownSection";
+  ExtendedDropdown,
+  IconWithBadge,
+  ExtendedDropdownSection,
+} from "~/components";
 
 /*eslint-disable */
 const activityFeedIcons = [

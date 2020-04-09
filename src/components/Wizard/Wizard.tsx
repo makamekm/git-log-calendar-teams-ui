@@ -4,10 +4,10 @@ import _ from "lodash";
 import "./../../styles/components/wizard.scss";
 
 export class Wizard extends React.Component<{
-  children: any;
-  onStepChanged: (id: string) => void;
-  activeStep: string;
-  initialActiveStep: string;
+  children?: any;
+  onStepChanged?: (id: string) => void;
+  activeStep?: string;
+  initialActiveStep?: string;
 }> {
   state: {
     activeStep: string;

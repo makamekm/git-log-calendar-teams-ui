@@ -4,7 +4,7 @@ import { TinyDonutChart } from "./TinyDonutChart";
 import { TinyBarChart } from "./TinyBarChart";
 
 import { randomArray } from "~/utilities";
-import { CardBody, Badge, Card } from "@lib";
+import { CardBody, Badge, Card } from "~/components";
 
 const percents = [
   "15",

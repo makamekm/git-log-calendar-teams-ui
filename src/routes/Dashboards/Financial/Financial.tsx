@@ -17,12 +17,12 @@ import {
   ListGroupItem,
   Card,
   CustomInput,
-} from "@lib";
-import { HeaderMain } from "@app/HeaderMain";
-import { TrTableInvoices } from "@app/Financial/TrTableInvoices";
-import { TinyDonutChartBig } from "@app/Financial/TinyDonutChartBig";
-import { StackedAreaChart } from "@app/Financial/StackedAreaChart";
-import { TrTableRecentFundings } from "@app/Financial/TrTableRecentFundings";
+} from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
+import { TrTableInvoices } from "~/app/Financial/TrTableInvoices";
+import { TinyDonutChartBig } from "~/app/Financial/TinyDonutChartBig";
+import { StackedAreaChart } from "~/app/Financial/StackedAreaChart";
+import { TrTableRecentFundings } from "~/app/Financial/TrTableRecentFundings";
 
 export const Financial = () => (
   <Container>

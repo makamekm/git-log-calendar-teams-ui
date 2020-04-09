@@ -5,7 +5,7 @@ import _ from "lodash";
 import { TinyAreaChart } from "./TinyAreaChart";
 
 import { randomArray } from "~/utilities";
-import { Badge, Progress } from "@lib";
+import { Badge, Progress } from "~/components";
 
 const percents = [
   "15",

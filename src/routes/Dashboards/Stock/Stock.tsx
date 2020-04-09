@@ -12,12 +12,12 @@ import {
   NavItem,
   NavLink,
   Card,
-} from "@lib";
-import { HeaderMain } from "@app/HeaderMain";
-import { SimpleLineChart } from "@app/Stock/SimpleLineChart";
-import { TrTableSummary } from "@app/Stock/TrTableSummary";
-import { TrTableStock } from "@app/Stock/TrTableStock";
-import { TrTableFavStock } from "@app/Stock/TrTableFavStock";
+} from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
+import { SimpleLineChart } from "~/app/Stock/SimpleLineChart";
+import { TrTableSummary } from "~/app/Stock/TrTableSummary";
+import { TrTableStock } from "~/app/Stock/TrTableStock";
+import { TrTableFavStock } from "~/app/Stock/TrTableFavStock";
 
 export const Stock = () => (
   <Container>

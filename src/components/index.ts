@@ -184,3 +184,5 @@ export * from "./UncontrolledTabs/UncontrolledTabsTabContent";
 
 export * from "./Wizard/Wizard";
 export * from "./Wizard/WizardStep";
+
+export * from "./agGrid";

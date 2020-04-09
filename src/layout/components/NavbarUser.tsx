@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NavItem, NavLink } from "reactstrap";
+import { NavItem, NavLink } from "~/components";
 
 const NavbarUser = (props: {
   className?: string;

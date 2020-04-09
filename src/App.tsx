@@ -1,8 +1,8 @@
 import React from "react";
 import "./app.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import { RoutedContent } from "./routes";
-import AppLayout from "./layout";
+import { RoutedContent } from "~/routes";
+import { AppLayout } from "~/layout";
 
 const basePath = process.env.BASE_PATH || "/";
 

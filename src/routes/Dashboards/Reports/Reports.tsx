@@ -19,11 +19,11 @@ import {
   Card,
   Progress,
   Nav,
-} from "@lib";
-import { HeaderMain } from "@app/HeaderMain";
-import { TinyLineChart } from "@app/Reports/TinyLineChart";
-import { TinyAreaChart } from "@app/Reports/TinyAreaChart";
-import { TinyArcChart } from "@app/Reports/TinyArcChart";
+} from "~/components";
+import { HeaderMain } from "~/app/HeaderMain";
+import { TinyLineChart } from "~/app/Reports/TinyLineChart";
+import { TinyAreaChart } from "~/app/Reports/TinyAreaChart";
+import { TinyArcChart } from "~/app/Reports/TinyArcChart";
 
 export const Reports = () => (
   <Container>

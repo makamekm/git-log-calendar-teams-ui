@@ -11,13 +11,13 @@ import {
   ListGroup,
   ListGroupItem,
   Media,
-} from "reactstrap";
-import { IconWithBadge } from "../../components/IconWithBadge/IconWithBadge";
-import { ExtendedDropdown } from "../../components/ExtendedDropdown/ExtendedDropdown";
-import { ExtendedDropdownSection } from "../../components/ExtendedDropdown/ExtendedDropdownSection";
-import { ExtendedDropdownLink } from "../../components/ExtendedDropdown/ExtendedDropdownLink";
-import { InputGroupAddon } from "../../components/InputGroupAddon/InputGroupAddon";
-import { AvatarImage } from "../../components/Avatar/AvatarImage";
+  IconWithBadge,
+  ExtendedDropdown,
+  ExtendedDropdownSection,
+  ExtendedDropdownLink,
+  InputGroupAddon,
+  AvatarImage,
+} from "~/components";
 
 const messagesColors = ["text-success", "text-danger", "text-warning"];
 
