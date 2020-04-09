@@ -10,7 +10,7 @@ function SidebarEntryAnimate(options) {
   this.config = Object.assign(
     {},
     {
-      duration: 100,
+      duration: 200,
       easing: "linear",
     },
     options

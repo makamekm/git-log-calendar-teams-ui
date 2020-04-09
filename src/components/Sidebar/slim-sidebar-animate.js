@@ -10,7 +10,7 @@ function SlimSidebarAnimate(options) {
     {
       sidebarWidth: 250,
       sidebarSlimWidth: 60,
-      animationDuration: 400,
+      animationDuration: 300,
       animationStaggerDelay: 10,
       animationEasing: "easeInQuad",
     },
