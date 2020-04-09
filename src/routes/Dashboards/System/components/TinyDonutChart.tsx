@@ -1,7 +1,7 @@
 import React from "react";
 
 import colors from "~/colors";
-import { PieChart, Pie, Cell } from "@lib";
+import { PieChart, Pie, Cell } from "recharts";
 
 const TinyDonutChart = (props: {
   pieColor?: string;

@@ -1,11 +1,8 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-
-import { Profile } from "../Profile";
-
-import { randomArray } from "../../../utilities";
-import { Card } from "../../../components/Card/Card";
+import { randomArray } from "~/utilities";
 import {
+  Card,
   CardBody,
   Button,
   UncontrolledTooltip,
@@ -14,7 +11,8 @@ import {
   DropdownMenu,
   DropdownItem,
   Badge,
-} from "reactstrap";
+} from "@lib";
+import { Profile } from "../Profile";
 
 const badgesColors = ["info", "primary", "secondary"];
 

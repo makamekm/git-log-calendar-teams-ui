@@ -1,6 +1,6 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-import { Media, UncontrolledTooltip } from "reactstrap";
+import { Media, UncontrolledTooltip } from "@lib";
 
 const TrResponsive = () => (
   <React.Fragment>

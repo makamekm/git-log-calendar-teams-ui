@@ -1,13 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import faker from "faker/locale/en_US";
-
-import { randomArray, randomAvatar } from "../../../utilities";
-import { CardBody, Media, CardFooter, CardImg } from "reactstrap";
-import { Card } from "../../../components/Card/Card";
-import { AvatarImage } from "../../../components/Avatar/AvatarImage";
-import { AvatarAddonIcon } from "../../../components/Avatar/AvatarAddonIcon";
-import { HolderIconProvider } from "../../../components/HolderProvider/HolderIconProvider";
+import { randomArray, randomAvatar } from "~/utilities";
+import {
+  Card,
+  CardBody,
+  Media,
+  CardFooter,
+  CardImg,
+  HolderIconProvider,
+  AvatarImage,
+  AvatarAddonIcon,
+} from "@lib";
 
 const status = ["danger", "success", "warning", "secondary"];
 

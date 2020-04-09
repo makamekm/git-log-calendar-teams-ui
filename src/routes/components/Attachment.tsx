@@ -1,6 +1,6 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-import { Media, Button } from "reactstrap";
+import { Media, Button } from "@lib";
 
 const Attachment = (props: {
   mediaClassName: string;

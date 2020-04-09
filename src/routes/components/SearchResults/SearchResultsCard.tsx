@@ -1,9 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import faker from "faker/locale/en_US";
-
-import { randomArray } from "../../../utilities";
-import { Card } from "../../../components/Card/Card";
-import { CardBody } from "reactstrap";
+import { CardBody, Card } from "@lib";
+import { randomArray } from "~/utilities";
 
 const stars = [
   <span key="stars5">

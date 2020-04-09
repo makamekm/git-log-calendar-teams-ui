@@ -11,8 +11,7 @@ import {
   Legend,
   ComposedChart,
 } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },

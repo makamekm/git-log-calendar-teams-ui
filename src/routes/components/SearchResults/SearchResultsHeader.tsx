@@ -1,5 +1,5 @@
 import React from "react";
-import { InputGroup, Input, InputGroupAddon, Button } from "reactstrap";
+import { InputGroup, Input, InputGroupAddon, Button } from "@lib";
 
 const SearchResultsHeader = () => (
   <React.Fragment>

@@ -1,10 +1,17 @@
 import React from "react";
 import faker from "faker/locale/en_US";
 import { NavLink as RouterNavLink } from "react-router-dom";
-import { Nav } from "../../../components/Nav/Nav";
-import { NavItem, NavLink, Badge, InputGroup, Input, Button } from "reactstrap";
-import { CustomInput } from "../../../components/CustomInput/CustomInput";
-import { InputGroupAddon } from "../../../components/InputGroupAddon/InputGroupAddon";
+import {
+  NavItem,
+  NavLink,
+  Badge,
+  InputGroup,
+  Input,
+  Button,
+  Nav,
+  CustomInput,
+  InputGroupAddon,
+} from "@lib";
 
 const SearchResultsLeftNav = () => (
   <React.Fragment>

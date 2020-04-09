@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { randomArray } from "../../../utilities";
+import { randomArray } from "~/utilities";
 
 const name = [
   <React.Fragment key="name-1">

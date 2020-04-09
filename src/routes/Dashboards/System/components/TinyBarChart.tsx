@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import colors from "~/colors";
-import { ResponsiveContainer, BarChart, Bar } from "@lib";
+import { ResponsiveContainer, BarChart, Bar } from "recharts";
 
 const TinyBarChart = (props: { barColor?: string }) => {
   const data = _.times(40, () => ({ pv: 20 + Math.random() * 100 }));

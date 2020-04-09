@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
-import { randomArray } from "../../../utilities";
-import { Badge } from "reactstrap";
+import { Badge } from "@lib";
+import { randomArray } from "~/utilities";
 
 const name = ["Action Score", "Quality Score", "Value Score", "Growth Score"];
 const badge = ["a", "q", "v", "g"];

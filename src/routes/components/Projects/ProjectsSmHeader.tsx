@@ -7,7 +7,7 @@ import {
   ButtonGroup,
   Button,
   UncontrolledTooltip,
-} from "reactstrap";
+} from "@lib";
 
 const ProjectsSmHeader = (props: {
   subTitle?: any;

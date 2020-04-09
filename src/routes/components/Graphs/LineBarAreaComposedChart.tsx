@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "lodash";
-
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -13,8 +12,7 @@ import {
   Bar,
   Line,
 } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data = [
   { name: "Page A", uv: 590, pv: 800, amt: 1400 },

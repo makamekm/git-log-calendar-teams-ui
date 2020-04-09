@@ -1,7 +1,6 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-
-import { randomArray } from "./../../../utilities";
+import { randomArray } from "~/utilities";
 
 const hour = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 

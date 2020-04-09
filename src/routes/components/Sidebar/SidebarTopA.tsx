@@ -1,19 +1,18 @@
 import React from "react";
 import faker from "faker/locale/en_US";
 import { Link } from "react-router-dom";
-
-import { randomAvatar } from "../../../utilities";
-import { SidebarHideSlim } from "../../../components/Sidebar/SidebarHideSlim";
-import { SidebarSection } from "../../../components/Sidebar/SidebarSection";
-import { AvatarImage } from "../../../components/Avatar/AvatarImage";
-import { AvatarAddonIcon } from "../../../components/Avatar/AvatarAddonIcon";
 import {
   UncontrolledButtonDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
-import { SidebarShowSlim } from "../../../components/Sidebar/SidebarShowSlim";
+  SidebarHideSlim,
+  SidebarSection,
+  AvatarImage,
+  AvatarAddonIcon,
+  SidebarShowSlim,
+} from "@lib";
+import { randomAvatar } from "~/utilities";
 
 const avatarImg = randomAvatar();
 

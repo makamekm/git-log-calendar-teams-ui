@@ -9,8 +9,7 @@ import {
   Legend,
   Bar,
 } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data = [
   { name: "Page A", uv: 4000, female: 2400, male: 2400 },

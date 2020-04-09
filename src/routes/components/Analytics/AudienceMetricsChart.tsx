@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "lodash";
 import moment from "moment";
-
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -13,8 +12,7 @@ import {
   Area,
   Bar,
 } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const CHART_LENGTH = 30;
 const CHART_START_DATE = moment().subtract(CHART_LENGTH, "months");
@@ -38,8 +36,8 @@ export const AudienceMetricsChart = ({
   height,
   className,
 }: {
-  height: string;
-  className: string;
+  height?: string;
+  className?: string;
 }) => (
   <ResponsiveContainer
     width="100%"

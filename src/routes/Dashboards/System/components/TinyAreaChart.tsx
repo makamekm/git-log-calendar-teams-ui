@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { ResponsiveContainer, AreaChart, Area } from "@lib";
+import { ResponsiveContainer, AreaChart, Area } from "recharts";
 
 import colors from "~/colors";
 

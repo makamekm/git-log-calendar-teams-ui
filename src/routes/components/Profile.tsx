@@ -1,9 +1,7 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-
-import { randomArray, randomAvatar } from "./../../utilities";
-import { AvatarAddonIcon } from "../../components/Avatar/AvatarAddonIcon";
-import { AvatarImage } from "../../components/Avatar/AvatarImage";
+import { AvatarAddonIcon, AvatarImage } from "@lib";
+import { randomArray, randomAvatar } from "~/utilities";
 
 const Profile = () => {
   const avatar = [

@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Line,
   CartesianGrid,
@@ -10,9 +9,8 @@ import {
   Legend,
   LineChart,
 } from "recharts";
-
-import colors from "../../../colors";
-import { ValueLabel } from "../../../components/Recharts/ValueLabel";
+import { ValueLabel } from "@lib";
+import colors from "~/colors";
 
 const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },

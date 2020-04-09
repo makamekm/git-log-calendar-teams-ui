@@ -1,13 +1,5 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-
-import { randomAvatar } from "../../../utilities";
-
-import { DropdownProfile } from "../Dropdowns/DropdownProfile";
-import { FooterAuth } from "../Pages/FooterAuth";
-import { FooterText } from "../FooterText";
-import { SidebarSection } from "../../../components/Sidebar/SidebarSection";
-import { SidebarHideSlim } from "../../../components/Sidebar/SidebarHideSlim";
 import {
   UncontrolledButtonDropdown,
   DropdownToggle,
@@ -15,10 +7,16 @@ import {
   Button,
   UncontrolledPopover,
   PopoverBody,
-} from "reactstrap";
-import { AvatarImage } from "../../../components/Avatar/AvatarImage";
-import { AvatarAddonIcon } from "../../../components/Avatar/AvatarAddonIcon";
-import { SidebarShowSlim } from "../../../components/Sidebar/SidebarShowSlim";
+  AvatarImage,
+  AvatarAddonIcon,
+  SidebarShowSlim,
+  SidebarHideSlim,
+  SidebarSection,
+} from "@lib";
+import { randomAvatar } from "~/utilities";
+import { DropdownProfile } from "../Dropdowns/DropdownProfile";
+import { FooterAuth } from "../Pages/FooterAuth";
+import { FooterText } from "../FooterText";
 
 const SidebarBottomB = () => (
   <>

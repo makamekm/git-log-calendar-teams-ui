@@ -8,8 +8,7 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
 } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data = [
   { subject: "Math", A: 120, B: 110, fullMark: 150 },

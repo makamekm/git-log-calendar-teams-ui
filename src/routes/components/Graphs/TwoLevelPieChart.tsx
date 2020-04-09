@@ -1,7 +1,6 @@
 import React from "react";
 import { Pie, ResponsiveContainer, PieChart } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data01 = [
   { name: "Group A", value: 400 },

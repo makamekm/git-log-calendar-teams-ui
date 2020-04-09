@@ -1,6 +1,5 @@
 import React from "react";
-import { Nav } from "../../../components/Nav/Nav";
-import { NavItem, NavLink, Badge } from "reactstrap";
+import { Nav, NavItem, NavLink, Badge } from "@lib";
 
 const UsersLeftNav = () => (
   <React.Fragment>

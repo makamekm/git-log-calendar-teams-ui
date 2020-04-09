@@ -90,8 +90,6 @@ export {
 } from "reactstrap";
 // export * from "reactstrap";
 
-export * from "recharts";
-
 export * from "./Accordion/Accordion";
 export * from "./Accordion/AccordionBody";
 export * from "./Accordion/AccordionHeader";

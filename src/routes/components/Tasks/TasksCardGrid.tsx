@@ -1,10 +1,8 @@
 import React from "react";
 import faker from "faker/locale/en_US";
 import { Link } from "react-router-dom";
-
-import { randomArray, randomAvatar } from "./../../../utilities";
-import { Card } from "../../../components/Card/Card";
 import {
+  Card,
   CardBody,
   UncontrolledButtonDropdown,
   DropdownToggle,
@@ -13,10 +11,11 @@ import {
   Media,
   Badge,
   CardFooter,
-} from "reactstrap";
-import { CustomInput } from "../../../components/CustomInput/CustomInput";
-import { AvatarImage } from "../../../components/Avatar/AvatarImage";
-import { AvatarAddonIcon } from "../../../components/Avatar/AvatarAddonIcon";
+  CustomInput,
+  AvatarImage,
+  AvatarAddonIcon,
+} from "@lib";
+import { randomArray, randomAvatar } from "~/utilities";
 
 const badgesColors = ["secondary"];
 

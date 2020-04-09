@@ -1,12 +1,15 @@
 import React from "react";
-
+import {
+  Button,
+  UncontrolledPopover,
+  PopoverBody,
+  SidebarHideSlim,
+  SidebarSection,
+  SidebarShowSlim,
+} from "@lib";
 import { FooterAuth } from "../Pages/FooterAuth";
 import { FooterText } from "../FooterText";
 import { VersionSelector } from "../VersionSelector";
-import { SidebarHideSlim } from "../../../components/Sidebar/SidebarHideSlim";
-import { SidebarSection } from "../../../components/Sidebar/SidebarSection";
-import { SidebarShowSlim } from "../../../components/Sidebar/SidebarShowSlim";
-import { Button, UncontrolledPopover, PopoverBody } from "reactstrap";
 
 const SidebarBottomA = () => (
   <>

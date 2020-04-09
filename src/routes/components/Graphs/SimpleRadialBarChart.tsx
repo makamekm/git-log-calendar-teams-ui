@@ -5,8 +5,7 @@ import {
   RadialBar,
   Legend,
 } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data = [
   { name: "18-24", uv: 31.47, pv: 2400, fill: colors["primary"] },

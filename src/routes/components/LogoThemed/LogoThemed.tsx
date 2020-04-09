@@ -7,9 +7,7 @@ export const LogoThemed = ({
 }: React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,
   HTMLImageElement
-> & {
-  className?: string;
-}) => (
+>) => (
   <img
     src={require("./../../../images/logos/logo-primary.svg")}
     className={classNames("d-block", className)}

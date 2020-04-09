@@ -1,7 +1,6 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-import { Badge } from "reactstrap";
-import { Progress } from "../../../components/Progress/Progress";
+import { Badge, Progress } from "@lib";
 
 const ProjectsList = (props: {
   title?: string;

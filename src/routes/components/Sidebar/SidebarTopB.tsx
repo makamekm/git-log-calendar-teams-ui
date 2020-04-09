@@ -1,10 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { UncontrolledTooltip, SidebarHideSlim, SidebarShowSlim } from "@lib";
 import { VersionSelector } from "../VersionSelector";
-import { SidebarHideSlim } from "../../../components/Sidebar/SidebarHideSlim";
-import { UncontrolledTooltip } from "reactstrap";
-import { SidebarShowSlim } from "../../../components/Sidebar/SidebarShowSlim";
 
 const SidebarTopB = () => (
   <React.Fragment>

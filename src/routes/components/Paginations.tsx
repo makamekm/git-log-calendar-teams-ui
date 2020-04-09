@@ -1,6 +1,5 @@
 import React from "react";
-
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import { Pagination, PaginationItem, PaginationLink } from "@lib";
 
 const Paginations = () => (
   <Pagination aria-label="Page navigation example">

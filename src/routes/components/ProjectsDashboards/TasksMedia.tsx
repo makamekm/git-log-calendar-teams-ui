@@ -1,8 +1,7 @@
 import React from "react";
 import faker from "faker/locale/en_US";
 import { Link } from "react-router-dom";
-import { CustomInput } from "../../../components/CustomInput/CustomInput";
-import { Media } from "reactstrap";
+import { Media, CustomInput } from "@lib";
 
 const TasksMedia = (props: { iconColor?: any; id?: any }) => (
   <React.Fragment>

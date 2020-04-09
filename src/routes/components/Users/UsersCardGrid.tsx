@@ -1,9 +1,7 @@
 import React from "react";
-
-import { Profile } from "../Profile";
-import { Card } from "../../../components/Card/Card";
 import {
   CardBody,
+  Card,
   ButtonGroup,
   Button,
   UncontrolledTooltip,
@@ -12,8 +10,9 @@ import {
   DropdownMenu,
   DropdownItem,
   CardFooter,
-} from "reactstrap";
-import { CustomInput } from "../../../components/CustomInput/CustomInput";
+  CustomInput,
+} from "@lib";
+import { Profile } from "../Profile";
 
 const UsersCardGrid = (props: { id?: string }) => (
   <React.Fragment>

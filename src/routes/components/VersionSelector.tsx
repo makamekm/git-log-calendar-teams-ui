@@ -9,7 +9,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
+} from "@lib";
 
 const SERVICE_URL = "http://dashboards.webkom.co:8000";
 

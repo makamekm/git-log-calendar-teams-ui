@@ -1,8 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { PieChart, Pie, Cell } from "recharts";
 
-import colors from "./../../../colors";
+import colors from "~/colors";
 
 const data = [
   { name: "Group A", value: 400 },
@@ -18,7 +17,7 @@ const COLORS = [
   colors["yellow"],
 ];
 
-const TinyDonutChartBig = (props) => (
+const TinyDonutChartBig = (props: { pieBg?: string }) => (
   <PieChart width={270} height={270}>
     <Pie
       data={data}
@@ -35,9 +34,6 @@ const TinyDonutChartBig = (props) => (
   </PieChart>
 );
 
-TinyDonutChartBig.propTypes = {
-  pieBg: PropTypes.string,
-};
 TinyDonutChartBig.defaultProps = {
   pieBg: "300",
 };

@@ -1,7 +1,6 @@
 import React from "react";
-
-import colors from "../../../colors";
 import { PieChart, Pie, Cell } from "recharts";
+import colors from "~/colors";
 
 const data = [
   { name: "Free", value: 40 },

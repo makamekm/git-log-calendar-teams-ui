@@ -1,6 +1,6 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-import { Badge } from "reactstrap";
+import { Badge } from "@lib";
 
 const TimelineMini = (props: {
   showPillDate?: boolean;

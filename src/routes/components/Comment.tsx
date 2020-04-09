@@ -1,9 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import faker from "faker/locale/en_US";
 import { randomArray, randomAvatar } from "../../utilities";
-import { Media, UncontrolledTooltip } from "reactstrap";
-import { AvatarImage } from "../../components/Avatar/AvatarImage";
-import { AvatarAddonIcon } from "../../components/Avatar/AvatarAddonIcon";
+import { Media, UncontrolledTooltip, AvatarImage, AvatarAddonIcon } from "@lib";
 
 const status = ["success", "danger", "warning", "secondary"];
 

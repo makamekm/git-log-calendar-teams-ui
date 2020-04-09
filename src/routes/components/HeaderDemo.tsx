@@ -1,5 +1,5 @@
 import React from "react";
-import { Media } from "reactstrap";
+import { Media } from "@lib";
 
 const HeaderDemo = (props: {
   no?: string | number;

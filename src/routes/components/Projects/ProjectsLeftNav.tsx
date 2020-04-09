@@ -1,7 +1,5 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-
-import { randomAvatar } from "../../../utilities";
 import {
   InputGroup,
   Input,
@@ -10,10 +8,11 @@ import {
   NavLink,
   Badge,
   Media,
-} from "reactstrap";
-import { InputGroupAddon } from "../../../components/InputGroupAddon/InputGroupAddon";
-import { Nav } from "../../../components/Nav/Nav";
-import { AvatarImage } from "../../../components/Avatar/AvatarImage";
+  InputGroupAddon,
+  Nav,
+  AvatarImage,
+} from "@lib";
+import { randomAvatar } from "~/utilities";
 
 const ProjectsLeftNav = () => (
   <React.Fragment>

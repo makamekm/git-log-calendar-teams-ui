@@ -1,8 +1,6 @@
 import React from "react";
 import faker from "faker/locale/en_US";
 import { Link } from "react-router-dom";
-
-import { randomArray, randomAvatar } from "../../../utilities";
 import {
   Badge,
   CardBody,
@@ -11,10 +9,11 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
-import { Card } from "../../../components/Card/Card";
-import { Progress } from "../../../components/Progress/Progress";
-import { AvatarImage } from "../../../components/Avatar/AvatarImage";
+  Card,
+  Progress,
+  AvatarImage,
+} from "@lib";
+import { randomArray, randomAvatar } from "~/utilities";
 
 const badges = [
   <Badge pill color="success" className="mb-2" key="badge-active">

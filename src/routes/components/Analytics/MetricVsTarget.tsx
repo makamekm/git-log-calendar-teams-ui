@@ -1,6 +1,11 @@
 import React from "react";
-import { Progress } from "../../../components/Progress/Progress";
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from "reactstrap";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
+  Progress,
+} from "@lib";
 
 const MetricVsTarget = (props: {
   title?: any;

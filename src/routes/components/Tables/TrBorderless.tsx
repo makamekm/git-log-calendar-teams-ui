@@ -1,6 +1,6 @@
 import React from "react";
 import faker from "faker/locale/en_US";
-import { UncontrolledTooltip, Badge } from "reactstrap";
+import { UncontrolledTooltip, Badge } from "@lib";
 
 const TrBorderless = () => (
   <React.Fragment>

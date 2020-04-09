@@ -9,8 +9,7 @@ import {
   Legend,
   LineChart,
 } from "recharts";
-
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data = [
   { name: "Mar '11", uv: 4000, pv: 2400, amt: 2400 },

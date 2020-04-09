@@ -1,3 +1,4 @@
+/* eslint-disable no-script-url */
 import React from "react";
 import classNames from "classnames";
 import classes from "./StarRating.scss";

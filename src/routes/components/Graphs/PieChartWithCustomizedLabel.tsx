@@ -1,8 +1,7 @@
 import React from "react";
 import { Pie, ResponsiveContainer, Cell, PieChart } from "recharts";
-
-import colors from "../../../colors";
-import { PieValueLabel } from "../../../components/Recharts/PieValueLabel";
+import colors from "~/colors";
+import { PieValueLabel } from "@lib";
 
 const data = [
   { name: "Group A", value: 400 },

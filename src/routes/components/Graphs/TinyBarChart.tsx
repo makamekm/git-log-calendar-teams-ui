@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { ResponsiveContainer, BarChart, Bar } from "recharts";
 
-import colors from "../../../colors";
+import colors from "~/colors";
 
 const data = _.times(40, () => ({ pv: Math.random() * 100 }));
 
