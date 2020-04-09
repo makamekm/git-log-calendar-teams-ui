@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { v4 as uuid } from "uuid";
 
 import { MenuContext } from "./context";
-import { SideBarMenuEntry } from "./SideBarMenuEntry";
+import { SideBarMenuEntry } from "./SidebarMenuEntry";
 
 /**
  * Renders a collapse trigger or a ReactRouter Link

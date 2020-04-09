@@ -3,9 +3,8 @@ import { withRouter } from "react-router-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import { SideMenuAnimate } from "./side-menu-animate";
-
 import { MenuContext } from "./context";
-import { SideBarMenuEntry } from "./SideBarMenuEntry";
+import { SideBarMenuEntry } from "./SidebarMenuEntry";
 import {
   withLayoutConfigComponent,
   LayoutConfig,

@@ -161,7 +161,7 @@ export * from "./Sidebar/SidebarSection";
 export * from "./Sidebar/SidebarShowSlim";
 export * from "./Sidebar/Sidebar";
 
-export * from "./SidebarMenu/SideBarMenuEntry";
+export * from "./SidebarMenu/SidebarMenuEntry";
 export * from "./SidebarMenu/SidebarMenu";
 export * from "./SidebarMenu/SidebarMenuItem";
 

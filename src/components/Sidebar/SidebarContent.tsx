@@ -5,7 +5,6 @@ import {
   LayoutConfig,
 } from "../Layout/LayoutContext";
 import { SidebarEntryAnimate } from "./sidebar-entry-animate";
-import { SlimMenuAnimate } from "./slim-menu-animate";
 import { SlimSidebarAnimate } from "./slim-sidebar-animate";
 
 @withLayoutConfigComponent
@@ -19,20 +18,17 @@ export class SidebarContent extends React.Component<{
   state = {
     entryAnimationFinished: false,
   };
-  sidebarRef = React.createRef<HTMLDivElement>();
 
+  sidebarRef = React.createRef<HTMLDivElement>();
   sidebarEntryAnimate: any;
   slimSidebarAnimate: any;
-  slimMenuAnimate: any;
 
   componentDidMount() {
     this.sidebarEntryAnimate = new SidebarEntryAnimate();
     this.slimSidebarAnimate = new SlimSidebarAnimate();
-    this.slimMenuAnimate = new SlimMenuAnimate();
 
     this.sidebarEntryAnimate.assignParentElement(this.sidebarRef.current);
     this.slimSidebarAnimate.assignParentElement(this.sidebarRef.current);
-    this.slimMenuAnimate.assignSidebarElement(this.sidebarRef.current);
 
     this.sidebarEntryAnimate.executeAnimation().then(() => {
       this.setState({ entryAnimationFinished: true });
@@ -42,7 +38,6 @@ export class SidebarContent extends React.Component<{
   componentWillUnmount() {
     this.sidebarEntryAnimate.destroy();
     this.slimSidebarAnimate.destroy();
-    this.slimMenuAnimate.destroy();
   }
 
   render() {
