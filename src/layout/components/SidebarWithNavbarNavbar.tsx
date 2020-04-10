@@ -52,14 +52,10 @@ export const SidebarWithNavbarNavbar = () => (
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://webkom.gitbook.io/spin/v/airframe/airframe-react/documentation-react">
-              Docs
-            </NavLink>
+            <NavLink href="http://www.github.com/">Docs</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://github.com/0wczar/react-dashboards">
-              Code
-            </NavLink>
+            <NavLink href="http://www.github.com/">Code</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="http://www.github.com/">About</NavLink>

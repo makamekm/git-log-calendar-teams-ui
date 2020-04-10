@@ -5,7 +5,7 @@ import { Container } from "~/components";
 export const SidebarWithNavbar = () => (
   <Container>
     <p className="mb-4 mt-3">
-      Welcome to the <b>&quot;Airframe&quot;</b> Admin Dashboard Theme based on{" "}
+      Welcome to the <b>&quot;Dashboard&quot;</b> Admin Dashboard Theme based on{" "}
       <a
         href="https://getbootstrap.com"
         className="text-primary"
@@ -52,7 +52,7 @@ export const SidebarWithNavbar = () => (
       <ul className="pl-3">
         <li>
           <a
-            href="https://webkom.gitbook.io/spin/v/airframe/airframe-react/documentation-react"
+            href="http://www.github.com/"
             className="text-primary"
             target="_blank"
             rel="noopener noreferrer"
@@ -63,7 +63,7 @@ export const SidebarWithNavbar = () => (
         </li>
         <li>
           <a
-            href="https://webkom.gitbook.io/spin/v/airframe/airframe-react/credits-react"
+            href="http://www.github.com/"
             className="text-primary"
             target="_blank"
             rel="noopener noreferrer"
@@ -74,7 +74,7 @@ export const SidebarWithNavbar = () => (
         </li>
         <li>
           <a
-            href="https://webkom.gitbook.io/spin/v/airframe/airframe-react/roadmap-react"
+            href="http://www.github.com/"
             className="text-primary"
             target="_blank"
             rel="noopener noreferrer"
@@ -91,83 +91,18 @@ export const SidebarWithNavbar = () => (
     </section>
 
     <section className="mb-5">
-      <h6>Other versions for &quot;Airframe&quot;:</h6>
-      <ul className="pl-3">
-        <li>
-          <a
-            href="http://dashboards.webkom.co/jquery/airframe"
-            className="text-primary"
-          >
-            jQuery
-          </a>{" "}
-          - based on the newest <i>Bootstrap 4.x</i>
-        </li>
-        <li>
-          <a
-            href="http://dashboards.webkom.co/react/airframe"
-            className="text-primary"
-          >
-            React
-          </a>{" "}
-          - based on the newest <i>Reactstrap</i>
-        </li>
-        <li>
-          <a
-            href="http://dashboards.webkom.co/react-next/airframe"
-            className="text-primary"
-          >
-            Next.js (React)
-          </a>{" "}
-          - based on the newest <i>Reactstrap</i> and <i>Next.js</i>
-        </li>
-        <li>
-          <a
-            href="http://dashboards.webkom.co/angular/airframe"
-            className="text-primary"
-          >
-            Angular
-          </a>{" "}
-          - based on the newest <i>ng-bootstrap</i>
-        </li>
-        <li>
-          <a
-            href="http://dashboards.webkom.co/net-mvc/airframe"
-            className="text-primary"
-          >
-            .NET MVC
-          </a>{" "}
-          - based on the newest <i>Bootstrap 4.x</i>
-        </li>
-        <li>
-          <a
-            href="http://dashboards.webkom.co/vue/airframe"
-            className="text-primary"
-          >
-            Vue.js
-          </a>{" "}
-          - based on the newest <i>BootstrapVue</i>
-        </li>
-        <li>
-          <b>Other Versions</b>, such as{" "}
-          <i>Ruby on Rails, Ember, Laravel etc.</i>, please ask for the beta
-          version via email: info@webkom.co
-        </li>
-      </ul>
-    </section>
-
-    <section className="mb-5">
       <h6>Work Orders:</h6>
       <p>
         Regarding configuration, changes under client&apos;s requirements.
         <br />
         Pleace contact us through the{" "}
         <a
-          href="http://wbkom.co/contact"
+          href="http://www.github.com/makamekm"
           className="text-primary"
           target="_blank"
           rel="noopener noreferrer"
         >
-          webkom.co/contact
+          github.com/makamekm
         </a>{" "}
         website.
       </p>
