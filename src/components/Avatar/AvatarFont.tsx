@@ -5,8 +5,6 @@ import { Avatar } from "./Avatar";
 
 import colors from "~/styles/colors.scss";
 
-console.log(colors);
-
 const AvatarFont = (props: {
   children?: any;
   bgColor?: string;
@@ -35,7 +33,6 @@ const AvatarFont = (props: {
     "avatar-font__text",
     fgColor && colors[`fg-color--${fgColor}`]
   );
-  console.log(bgColor, "|", parentClass, "|", fgColor, "|", childClass);
   const parentCustomStyle = bgColorCustom
     ? {
         backgroundColor: bgColorCustom,
