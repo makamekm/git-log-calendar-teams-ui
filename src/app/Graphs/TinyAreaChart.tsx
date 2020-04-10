@@ -8,7 +8,15 @@ const data = _.times(20, () => ({ pv: Math.random() * 100 }));
 /* 99% - some wierd HACK that makes the container resize properly */
 const TinyAreaChart = () => (
   <ResponsiveContainer width="99%" height={40}>
-    <AreaChart data={data}>
+    <AreaChart
+      data={data}
+      margin={{
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      }}
+    >
       <Area
         dataKey="pv"
         stroke={colors["primary"]}

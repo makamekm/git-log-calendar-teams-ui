@@ -477,8 +477,8 @@ export class Analytics extends React.Component {
                     <div>vs {faker.finance.amount()} (prev.)</div>
                   </div>
                 </CardBody>
-                <CardBody className="p-0">
-                  <TinyAreaChart height={70} />
+                <CardBody className="p-0 d-flex flex-row align-items-stretch align-content-stretch">
+                  <TinyAreaChart height={"100%"} />
                 </CardBody>
                 <CardFooter>
                   <Media className="small">
@@ -514,7 +514,7 @@ export class Analytics extends React.Component {
                   </ListGroupItem>
                   <ListGroupItem className="bt-0">
                     <WebsitePerformance
-                      title="Pageviews (Avg)"
+                      title="Page Views (Avg)"
                       value="2.15"
                       valuePercentColor="text-danger"
                       valuePercent="42,82"

@@ -66,6 +66,7 @@ export class Row extends React.Component<{
           layouts={layouts}
           margin={[0, 0]}
           rowHeight={rowHeight}
+          autoSize
           onLayoutChange={(currentLayout, allLayouts) => {
             // Notify the parent
             onLayoutChange(this._transformForChangeHandler(allLayouts));
@@ -172,8 +173,9 @@ export class Row extends React.Component<{
               ? rowCounter
               : child.props[`${breakPoint}X`],
             h: child.props[`${breakPoint}H`] || config.h || 1,
-            minH: config.minH || config.h || 1,
-            maxH: config.maxH || config.h || 1,
+            // minW: config.minW || config.w || 1,
+            // minH: config.minH || config.h || 1,
+            // maxH: config.maxH,
           },
           w:
             config[breakPoint] ||
