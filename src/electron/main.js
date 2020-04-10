@@ -1,7 +1,7 @@
-require('ts-node').register({
+require("ts-node").register({
   compilerOptions: {
     module: "commonjs",
-  }
+  },
 });
 
 const { ipcMain } = require("electron");

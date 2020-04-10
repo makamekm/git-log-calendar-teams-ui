@@ -30,11 +30,11 @@ export const ipc = {
         };
         ipcRenderer.on(nameofChannel("APP_INFO"), listener);
         return ipcRenderer.removeListener(nameofChannel("APP_INFO"), listener);
-      }
-    }
+      },
+    },
   },
   handlers: {
     APP_INFO: (): Promise<ReturnType<Ipc["handlers"]["APP_INFO"]>> =>
-      ipcRenderer.invoke(nameofHandler("APP_INFO"))
-  }
+      ipcRenderer.invoke(nameofHandler("APP_INFO")),
+  },
 };

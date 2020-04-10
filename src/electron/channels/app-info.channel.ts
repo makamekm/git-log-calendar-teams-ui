@@ -8,7 +8,7 @@ ipcMain.on(
   (event, ...args: Parameters<Ipc["channels"]["APP_INFO"]>) => {
     event.sender.send(nameofChannel("APP_INFO"), {
       appName: app.getName(),
-      appVersion: app.getVersion()
+      appVersion: app.getVersion(),
     } as Result);
   }
 );

@@ -7,10 +7,10 @@ ipcMain.handle(
     event,
     ...args: Parameters<Ipc["handlers"]["APP_INFO"]>
   ): Promise<ReturnType<Ipc["handlers"]["APP_INFO"]>> => {
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 1000));
     return {
       appName: app.getName(),
-      appVersion: app.getVersion()
+      appVersion: app.getVersion(),
     };
   }
 );
