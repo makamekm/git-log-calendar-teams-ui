@@ -1,5 +1,5 @@
 import React from "react";
-import uid from "uuid/v4";
+import { v4 as uid } from "uuid";
 import _ from "lodash";
 import faker from "faker/locale/en_US";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";

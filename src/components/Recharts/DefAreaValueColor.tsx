@@ -1,6 +1,6 @@
 import React from "react";
 
-import colors from "../../colors";
+import colors from "~/colors";
 
 const gradientOffset = (data) => {
   const dataMax = Math.max(...data.map((i) => i.uv));

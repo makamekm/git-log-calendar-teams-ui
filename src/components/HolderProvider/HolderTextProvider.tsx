@@ -3,7 +3,7 @@ import _ from "lodash";
 import { v4 as uid } from "uuid";
 import qs from "query-string";
 
-import colors from "../../colors";
+import colors from "~/colors";
 
 export interface HolderTextProviderProps {
   bg?: string;

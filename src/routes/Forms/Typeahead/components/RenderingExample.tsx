@@ -7,7 +7,6 @@ import {
   Token,
   Typeahead,
 } from "react-bootstrap-typeahead";
-
 import { CustomInput, FormGroup } from "~/components";
 import options from "./exampleData";
 
@@ -18,7 +17,7 @@ export class RenderingExample extends React.Component {
 
   render() {
     const { selectedOption } = this.state;
-    const props = {};
+    const newProps: any = {};
     const radios = [
       { label: "Custom menu", value: "renderMenu" },
       { label: "Custom menu item contents", value: "renderMenuItemChildren" },
@@ -27,14 +26,14 @@ export class RenderingExample extends React.Component {
 
     switch (selectedOption) {
       case radios[0].value:
-        props.renderMenu = this._renderMenu;
+        newProps.renderMenu = this._renderMenu;
         break;
       case radios[1].value:
-        props.renderMenuItemChildren = this._renderMenuItemChildren;
+        newProps.renderMenuItemChildren = this._renderMenuItemChildren;
         break;
       case radios[2].value:
-        props.multiple = true;
-        props.renderToken = this._renderToken;
+        newProps.multiple = true;
+        newProps.renderToken = this._renderToken;
         break;
       default:
     }
@@ -42,7 +41,7 @@ export class RenderingExample extends React.Component {
     return (
       <React.Fragment>
         <Typeahead
-          {...props}
+          {...newProps}
           labelKey="name"
           options={options}
           placeholder="Choose a state..."

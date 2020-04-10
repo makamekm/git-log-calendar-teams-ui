@@ -6,7 +6,7 @@ const Avatar = (props: {
   size?: string;
   children: any;
   addOns?: any;
-  style?: any;
+  style?: React.CSSProperties;
   className?: string;
 }) => {
   const avatarClass = classNames(

@@ -1,6 +1,5 @@
 import React from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
-
 import { FormGroup, CustomInput } from "~/components";
 
 export class FilteringExample extends React.Component {

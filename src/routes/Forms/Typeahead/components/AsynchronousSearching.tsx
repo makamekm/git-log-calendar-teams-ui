@@ -1,9 +1,8 @@
 import React from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
-
 import { CustomInput, FormGroup } from "~/components";
 import { GithubMenuItem } from "./GithubMenuItem";
-import { makeAndHandleRequest } from "./utils";
+import { makeAndHandleRequest } from "./utilities";
 
 export class AsyncSearch extends React.Component {
   state = {

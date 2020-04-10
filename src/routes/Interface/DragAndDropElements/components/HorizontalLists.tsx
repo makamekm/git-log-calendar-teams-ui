@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 import classNames from "classnames";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import uid from "uuid/v4";
+import { v4 as uid } from "uuid";
 import {
   Card,
   CardHeader,

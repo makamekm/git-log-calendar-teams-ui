@@ -1,11 +1,10 @@
 import React from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
-
 import { ButtonToolbar, Button } from "~/components";
 import data from "./exampleData";
 
 export class PublicMethods extends React.Component {
-  _typeahead = React.createRef();
+  _typeahead = React.createRef<Typeahead>();
 
   render() {
     return (
@@ -22,7 +21,7 @@ export class PublicMethods extends React.Component {
           <Button
             outline
             color="secondary"
-            onClick={() => this._typeahead.getInstance().clear()}
+            onClick={() => this._typeahead.current.clear()}
             className="mr-2"
           >
             Clear
@@ -30,7 +29,7 @@ export class PublicMethods extends React.Component {
           <Button
             outline
             color="secondary"
-            onClick={() => this._typeahead.getInstance().focus()}
+            onClick={() => this._typeahead.current.focus()}
             className="mr-2"
           >
             Focus
@@ -39,7 +38,7 @@ export class PublicMethods extends React.Component {
             outline
             color="secondary"
             onClick={() => {
-              const instance = this._typeahead.getInstance();
+              const instance = this._typeahead.current;
               instance.focus();
               setTimeout(() => instance.blur(), 1000);
             }}

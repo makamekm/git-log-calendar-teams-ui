@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "lodash";
 import { Typeahead } from "react-bootstrap-typeahead";
-
 import { InputGroup, InputGroupAddon, FormGroup, Button } from "~/components";
 import options from "./exampleData";
 

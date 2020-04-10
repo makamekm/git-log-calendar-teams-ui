@@ -1,5 +1,5 @@
 import React from "react";
-import v4 from "uuid/v4";
+import { v4 } from "uuid";
 import _ from "lodash";
 import faker from "faker/locale/en_US";
 import {

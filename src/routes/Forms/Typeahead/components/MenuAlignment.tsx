@@ -1,27 +1,26 @@
 import React from "react";
 import _ from "lodash";
 import { Typeahead } from "react-bootstrap-typeahead";
-
 import { CustomInput, FormGroup } from "~/components";
 import options from "./exampleData";
 
-export class InputSize extends React.Component {
+export class MenuAlignment extends React.Component {
   state = {
-    bsSize: undefined,
+    align: "justify",
   };
 
   render() {
-    const { bsSize } = this.state;
+    const { align } = this.state;
     const radios = [
-      { label: "Small", value: "small" },
-      { label: "Default", value: undefined },
-      { label: "Large", value: "large" },
+      { label: "Justify (default)", value: "justify" },
+      { label: "Align left", value: "left" },
+      { label: "Align right", value: "right" },
     ];
 
     return (
       <React.Fragment>
         <Typeahead
-          bsSize={bsSize}
+          align={align}
           labelKey="name"
           options={options}
           placeholder="Choose a state..."
@@ -29,12 +28,12 @@ export class InputSize extends React.Component {
         <FormGroup className="mt-2">
           {_.map(radios, ({ label, value }) => (
             <CustomInput
-              checked={bsSize === value}
+              checked={align === value}
               key={value || "default"}
-              onChange={() => this.setState({ bsSize: value })}
+              onChange={() => this.setState({ align: value })}
               type="radio"
               value={value}
-              id={`input-size-${label}`}
+              id={`input-align-${value}`}
               label={label}
             />
           ))}

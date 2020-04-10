@@ -3,7 +3,9 @@ import classNames from "classnames";
 
 import { Avatar } from "./Avatar";
 
-import { colors } from "./../../colors";
+import colors from "~/styles/colors.scss";
+
+console.log(colors);
 
 const AvatarFont = (props: {
   children?: any;
@@ -13,7 +15,7 @@ const AvatarFont = (props: {
   fgColorCustom?: string;
   size?: string;
   addOns?: any;
-  style?: any;
+  style?: React.CSSProperties;
   className?: string;
 }) => {
   const {
@@ -33,6 +35,7 @@ const AvatarFont = (props: {
     "avatar-font__text",
     fgColor && colors[`fg-color--${fgColor}`]
   );
+  console.log(bgColor, "|", parentClass, "|", fgColor, "|", childClass);
   const parentCustomStyle = bgColorCustom
     ? {
         backgroundColor: bgColorCustom,

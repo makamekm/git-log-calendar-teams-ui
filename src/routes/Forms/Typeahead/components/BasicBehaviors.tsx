@@ -1,18 +1,28 @@
 import React from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
 import _ from "lodash";
-
 import { CustomInput, FormGroup } from "~/components";
 import options from "./exampleData";
 
+interface BasicBehaviorsState {
+  disabled: boolean;
+  dropup: boolean;
+  flip: boolean;
+  highlightOnlyResult: boolean;
+  minLength: number;
+  selectHintOnEnter: boolean;
+  emptyLabel: boolean;
+}
+
 export class BasicBehaviors extends React.Component {
-  state = {
+  state: BasicBehaviorsState = {
     disabled: false,
     dropup: false,
     flip: false,
     highlightOnlyResult: false,
     minLength: 0,
     selectHintOnEnter: false,
+    emptyLabel: false,
   };
 
   render() {
@@ -84,12 +94,15 @@ export class BasicBehaviors extends React.Component {
 
   _handleChange = (e) => {
     const { checked, name } = e.target;
-    const newState = { [name]: checked };
+    const newState: any = { [name]: checked };
 
     if (name === "minLength") {
       newState.minLength = checked ? 2 : 0;
     }
 
-    this.setState(newState);
+    this.setState({
+      ...newState,
+      ...this.state,
+    });
   };
 }

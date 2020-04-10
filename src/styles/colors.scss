@@ -11,6 +11,8 @@
 
 :export {
   @each $name, $color in $dashboard-colors {
+    fg-color--#{$name}: fg-color--#{$name};
+    bg-color--#{$name}: bg-color--#{$name};
     #{$name}: $color;
   }
 }

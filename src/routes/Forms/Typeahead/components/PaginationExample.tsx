@@ -1,7 +1,6 @@
 import React from "react";
 import _ from "lodash";
 import { Typeahead } from "react-bootstrap-typeahead";
-
 import { CustomInput, FormGroup } from "~/components";
 
 export class PaginationExample extends React.Component {

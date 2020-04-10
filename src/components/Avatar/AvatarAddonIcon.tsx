@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-import { colors } from "./../../colors";
+import { colors } from "~/colors";
 
 const AvatarAddonIcon = (props: {
   small?: boolean;

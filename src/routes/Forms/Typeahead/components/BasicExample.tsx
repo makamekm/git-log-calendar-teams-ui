@@ -1,6 +1,5 @@
 import React from "react";
 import { Typeahead } from "react-bootstrap-typeahead";
-
 import { CustomInput, FormGroup } from "~/components";
 import options from "./exampleData";
 
