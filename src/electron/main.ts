@@ -17,9 +17,11 @@ function createWindow() {
       slashes: true,
     });
   mainWindow = new BrowserWindow({
-    width: 1024,
+    width: 1366,
     height: 768,
-    fullscreen: true,
+    minWidth: 1400,
+    minHeight: 768,
+    // fullscreen: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
