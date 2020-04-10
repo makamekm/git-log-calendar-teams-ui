@@ -29,6 +29,7 @@ import { HeaderMain } from "~/app/HeaderMain";
 import { MetricVsTarget } from "~/app/Analytics/MetricVsTarget";
 import { WebsitePerformance } from "~/app/Analytics/WebsitePerformance";
 import { AudienceMetricsChart } from "~/app/Analytics/AudienceMetricsChart";
+import { AudienceCalendarActivities } from "~/app/Analytics/AudienceCalendarActivities";
 import { TinyAreaChart } from "~/app/Analytics/TinyAreaChart";
 import { SimpleLineChart } from "~/app/Graphs/SimpleLineChart";
 
@@ -38,6 +39,7 @@ const LAYOUT = {
   "metric-v-target-users": { h: 6, md: 4 },
   "metric-v-target-sessions": { h: 6, md: 4 },
   "metric-v-target-pageviews": { h: 6, md: 4 },
+  "analytics-calendar": { h: 10, minH: 7 },
   "analytics-audience-metrics": { h: 9, minH: 7 },
   "traffic-channels": { md: 6, h: 6 },
   sessions: { md: 6, h: 6, maxH: 9, minW: 3 },
@@ -275,6 +277,37 @@ export class Analytics extends React.Component {
                 <CardBody className="d-flex flex-column">
                   <FloatReady>
                     <AudienceMetricsChart height="100%" className="flex-fill" />
+                  </FloatReady>
+                </CardBody>
+                <CardFooter>
+                  <Media className="small">
+                    <Media left>
+                      <i className="fa fa-fw fa-info-circle mr-2"></i>
+                    </Media>
+                    <Media body>
+                      How do your users (visitors), sessions (visits) and
+                      pageviews metrics for{" "}
+                      <abbr title="attribute" className="text-dark">
+                        www.webkom.com
+                      </abbr>{" "}
+                      compare to your targets over the last 30 days?
+                    </Media>
+                  </Media>
+                </CardFooter>
+              </Card>
+            </FloatCol>
+            <FloatCol {...applyColumn("analytics-calendar", layouts)}>
+              <Card>
+                <CardHeader className="bb-0 pt-3 pb-4 bg-none" tag="h6">
+                  <i className="fa fa-ellipsis-v mr-2 text-body"></i> Analytics
+                  Calendar Activities
+                </CardHeader>
+                <CardBody className="d-flex flex-column p-0">
+                  <FloatReady>
+                    <AudienceCalendarActivities
+                      height="100%"
+                      className="flex-fill"
+                    />
                   </FloatReady>
                 </CardBody>
                 <CardFooter>
