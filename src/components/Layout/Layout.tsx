@@ -272,7 +272,6 @@ class Layout extends React.Component<RouteComponentProps & LayoutProps> {
 
           {otherChildren}
         </div>
-        )}
       </LayoutProvider>
     );
   }
