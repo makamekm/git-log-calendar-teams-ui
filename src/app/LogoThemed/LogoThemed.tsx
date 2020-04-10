@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 
 export const LogoThemed = ({
   className,
@@ -8,11 +7,10 @@ export const LogoThemed = ({
   React.ImgHTMLAttributes<HTMLImageElement>,
   HTMLImageElement
 >) => (
-  <img
-    height={15}
-    src={require("~/images/logos/logo-primary.png")}
-    className={classNames("d-block", className)}
-    alt="Program Logo"
-    {...otherProps}
-  />
+  <span className="align-self-center sidebar__brand">
+    <i className="fa fa-git fa-fw fa-lg"></i>
+    <sub>
+      <strong>STATS MANAGER</strong>
+    </sub>
+  </span>
 );

@@ -177,39 +177,9 @@ export const SidebarMiddleNav = () => (
       to="/icons"
     />
     <SidebarMenuItem
-      icon={<i className="fa fa-fw fa-bookmark-o"></i>}
+      icon={<i className="fa fa-fw fa-book"></i>}
       title="Docs"
-      href="https://webkom.gitbook.io/spin/v/airframe/airframe-react/documentation-react"
+      href="https://getbootstrap.com/docs/4.0"
     />
-    {/* -------- Versions ---------*/}
-    <SidebarMenuItem
-      icon={<i className="fa fa-fw fa-folder-open-o"></i>}
-      title="Versions"
-    >
-      <SidebarMenuItem
-        title="NextJS (React)"
-        href="http://airframe.nextjs.webkom.co/"
-      />
-      <SidebarMenuItem
-        title="React"
-        href="http://dashboards.webkom.co/react/airframe"
-      />
-      <SidebarMenuItem
-        title="jQuery"
-        to="http://dashboards.webkom.co/jquery/airframe/"
-      />
-      <SidebarMenuItem
-        title="Vue"
-        to="http://dashboards.webkom.co/vue/airframe"
-      />
-      <SidebarMenuItem
-        title="Angular"
-        to="http://dashboards.webkom.co/angular/airframe"
-      />
-      <SidebarMenuItem
-        title=".NET MVC"
-        to="http://dashboards.webkom.co/net-mvc/airframe"
-      />
-    </SidebarMenuItem>
   </SidebarMenu>
 );

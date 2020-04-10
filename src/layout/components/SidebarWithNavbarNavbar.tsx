@@ -17,7 +17,7 @@ import { NavbarUser } from "./NavbarUser";
 export const SidebarWithNavbarNavbar = () => (
   <React.Fragment>
     {/*    First Navbar    */}
-    <Navbar light expand fluid className="bg-white pb-0 pb-lg-2">
+    <Navbar shadow light expand fluid className="bg-white pb-0 pb-lg-2">
       <Nav navbar>
         <NavItem>
           <SidebarTrigger />
@@ -39,6 +39,7 @@ export const SidebarWithNavbarNavbar = () => (
         <NavbarUser className="ml-2" />
       </Nav>
     </Navbar>
+
     {/*    Second Navbar    */}
     <Navbar shadow expand="lg" light fluid className="pt-0 pt-lg-2">
       <h1 className="h5 mb-0 py-2 mr-auto d-lg-none">Sidebar with Navbar</h1>
@@ -61,7 +62,7 @@ export const SidebarWithNavbarNavbar = () => (
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="http://www.webkom.co/contact/">Buy</NavLink>
+            <NavLink href="http://www.github.com/">About</NavLink>
           </NavItem>
         </Nav>
       </UncontrolledCollapse>

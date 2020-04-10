@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Button,
-  UncontrolledPopover,
+  UncontrolledTooltip,
   PopoverBody,
   SidebarHideSlim,
   SidebarSection,
@@ -31,14 +31,14 @@ const SidebarBottomA = () => (
         >
           <i className="fa fa-fw fa-question-circle-o"></i>
         </Button>
-        <UncontrolledPopover
-          placement="left-end"
+        <UncontrolledTooltip
+          placement="right-end"
           target="UncontrolledSidebarPopoverFooter"
         >
           <PopoverBody>
             <FooterText />
           </PopoverBody>
-        </UncontrolledPopover>
+        </UncontrolledTooltip>
       </SidebarSection>
     </SidebarShowSlim>
     {/* END Slim Only */}
