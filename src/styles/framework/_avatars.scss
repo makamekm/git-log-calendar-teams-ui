@@ -17,6 +17,7 @@
 
           > *:first-child {
             font-size: map-get($def, background-size);
+            margin-top: 1px;
           }
 
           > * ~ * {
@@ -42,6 +43,7 @@
 
           > *:first-child {
             font-size: map-get($def, background-size);
+            margin-top: 1px;
           }
 
           > * ~ * {
