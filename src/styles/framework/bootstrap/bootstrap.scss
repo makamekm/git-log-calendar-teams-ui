@@ -601,13 +601,17 @@ th {
   letter-spacing: 0.3px;
   padding-left: 9px;
   padding-right: 9px;
+  line-height: 1.5;
 }
+
 .badge-secondary {
   background-color: lighten($body-color, 14%);
 }
+
 .badge-purple {
   color: $white;
 }
+
 // Override code
 code {
   background-color: #eff2f7 !important;
