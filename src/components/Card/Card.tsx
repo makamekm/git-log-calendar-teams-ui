@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { Card as BsCard, CardProps } from "reactstrap";
 
-import classes from "./Card.scss";
+import "./Card.scss";
 
 const Card = (
   props: CardProps & {
@@ -13,9 +13,9 @@ const Card = (
   const { children, type, color, className, ...otherProps } = props;
   const cardClass = classNames(
     className,
-    classes["custom-card"],
-    classes[`custom-card--${type}`],
-    color && classes[`custom-card--color-${color}`]
+    "custom-card",
+    type && `custom-card--${type}`,
+    color && `custom-card--color-${color}`
   );
   return (
     <BsCard className={cardClass} {...otherProps}>

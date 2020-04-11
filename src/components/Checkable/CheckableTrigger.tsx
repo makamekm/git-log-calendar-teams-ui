@@ -1,9 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-
 import { Consumer } from "./context";
 
-import classes from "./CheckableTrigger.scss";
+import "./CheckableTrigger.scss";
 
 const CheckableTrigger = (
   props: {
@@ -14,7 +13,7 @@ const CheckableTrigger = (
 ) => {
   const { children, tag, className, ...otherProps } = props;
   const Tag = tag;
-  const tagClass = classNames(classes["checkable__trigger"], className);
+  const tagClass = classNames("checkable__trigger", className);
 
   return (
     <Consumer>

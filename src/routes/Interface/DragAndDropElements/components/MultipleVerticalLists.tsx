@@ -14,7 +14,7 @@ import {
 } from "~/components";
 import { randomAvatar, randomArray } from "~/utilities";
 import { reorder, move } from "./utilities";
-import classes from "./common.scss";
+import "./common.scss";
 
 //  Utility Functions
 //=========================================================
@@ -28,13 +28,13 @@ const generateItem = () => ({
 });
 
 const getListClass = (isDraggedOver) =>
-  classNames(classes["list"], {
-    [classes["list--drag-over"]]: isDraggedOver,
+  classNames("list", {
+    "list--drag-over": isDraggedOver,
   });
 
 const getItemClass = (isDragging) =>
-  classNames(classes["list-group-item"], {
-    [classes["list-group-item--dragging"]]: isDragging,
+  classNames("list-group-item", {
+    "list-group-item--dragging": isDragging,
   });
 
 //  Draggable List Component

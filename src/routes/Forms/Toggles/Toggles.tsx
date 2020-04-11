@@ -3,7 +3,7 @@ import { Row, Col, Table, Container, CustomInput } from "~/components";
 import Toggle from "react-toggle";
 import { HeaderMain } from "~/app/HeaderMain";
 
-import classes from "./Toggles.scss";
+import "./Toggles.scss";
 
 export class Toggles extends React.Component {
   state = {
@@ -98,7 +98,7 @@ export class Toggles extends React.Component {
                   <td className="text-right">
                     <Toggle
                       defaultChecked={this.state.aubergineIsReady}
-                      className={classes["switchCustomClass"]}
+                      className={"switch-custom"}
                       onChange={() => {
                         this.setState({
                           aubergineIsReady: !this.state.aubergineIsReady,
@@ -139,7 +139,7 @@ export class Toggles extends React.Component {
           </Col>
 
           <Col lg={6}>
-            <Table className={classes.singleTable}>
+            <Table>
               <thead>
                 <tr>
                   <th>Switch Example</th>

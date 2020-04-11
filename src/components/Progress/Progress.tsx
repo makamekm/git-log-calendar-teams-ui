@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { Progress as BsProgress, ProgressProps } from "reactstrap";
 
-import classes from "./Progress.scss";
+import "./Progress.scss";
 
 const Progress = (
   props: ProgressProps & {
@@ -13,7 +13,7 @@ const Progress = (
 ) => {
   const { children, slim, className, ...otherProps } = props;
   const progressClass = classNames(className, {
-    [classes["slim"]]: slim,
+    slim,
   });
 
   return (

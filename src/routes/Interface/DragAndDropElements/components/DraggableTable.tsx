@@ -16,7 +16,7 @@ import {
 } from "~/components";
 import { randomAvatar, randomArray } from "~/utilities";
 import { reorder } from "./utilities";
-import classes from "./common.scss";
+import "./common.scss";
 
 const allSkills = [
   "JavaScript",
@@ -48,13 +48,13 @@ const generateUser = () => ({
 });
 
 const getTableClass = (isDraggedOver) =>
-  classNames(classes["table"], {
-    [classes["table--drag-over"]]: isDraggedOver,
+  classNames("table", {
+    "table--drag-over": isDraggedOver,
   });
 
 const getRowClass = (isDragging) =>
-  classNames(classes["row"], {
-    [classes["row--dragging"]]: isDragging,
+  classNames("row", {
+    "row--dragging": isDragging,
   });
 
 // Custom Table Cell - keeps cell width when the row

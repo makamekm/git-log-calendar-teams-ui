@@ -295,25 +295,25 @@ export const Cards = () => (
         </Col>
         <Col lg={6}>
           <Card className="mb-3">
-            <CardHeader type="border" color="dark" tag="h6">
+            <CardHeader type="border" color="warning" tag="h6">
               Bottom Warning Border
             </CardHeader>
             <CardBody>{cardText({ cardNo: "4.06" })}</CardBody>
           </Card>
           <Card className="mb-3">
-            <CardHeader type="border" color="primary" tag="h6">
+            <CardHeader type="border" color="danger" tag="h6">
               Bottom Danger Border
             </CardHeader>
             <CardBody>{cardText({ cardNo: "4.07" })}</CardBody>
           </Card>
           <Card className="mb-3">
-            <CardHeader type="border" color="secondary" tag="h6">
+            <CardHeader type="border" color="dark" tag="h6">
               Bottom Dark Border
             </CardHeader>
             <CardBody>{cardText({ cardNo: "4.08" })}</CardBody>
           </Card>
           <Card className="mb-3">
-            <CardHeader type="border" color="success" tag="h6">
+            <CardHeader type="border" color="facebook" tag="h6">
               Bottom Facebook Border
             </CardHeader>
             <CardBody>{cardText({ cardNo: "4.09" })}</CardBody>

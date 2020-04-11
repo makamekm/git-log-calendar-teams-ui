@@ -12,7 +12,7 @@ import {
 } from "~/components";
 import { randomAvatar, randomArray } from "~/utilities";
 import { reorder, move } from "./utilities";
-import classes from "./common.scss";
+import "./common.scss";
 
 const generateItem = () => ({
   id: uid(),
@@ -21,8 +21,8 @@ const generateItem = () => ({
 });
 
 const getListClass = (isDraggedOver) =>
-  classNames(classes["list"], {
-    [classes["list--drag-over"]]: isDraggedOver,
+  classNames("list", {
+    "list--drag-over": isDraggedOver,
   });
 
 const RowList = (props: {

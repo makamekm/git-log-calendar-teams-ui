@@ -5,7 +5,7 @@ import numeral from "numeral";
 import moment from "moment";
 
 import { Table, Button, UncontrolledTooltip } from "~/components";
-import classes from "./common.scss";
+import "./common.scss";
 import { getFileIcon } from "../utilities";
 
 export const FilesList = ({ files, onFileRemove }) => (
@@ -24,7 +24,7 @@ export const FilesList = ({ files, onFileRemove }) => (
       {_.map(files, (file, index) => (
         <tr key={index}>
           <td className="align-middle">
-            <div className={classes["ph--small"]}>
+            <div className={"ph--small"}>
               <i className={`fa fa-fw fa-2x ${getFileIcon(file)}`} />
             </div>
           </td>

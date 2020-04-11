@@ -4,7 +4,6 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 import numeral from "numeral";
 import moment from "moment";
-
 import {
   Col,
   Row,
@@ -13,7 +12,7 @@ import {
   Button,
   UncontrolledTooltip,
 } from "~/components";
-import classes from "./common.scss";
+import "./common.scss";
 import { getFileIcon } from "../utilities";
 
 export const FilesGrid = ({ files, onFileRemove }) => (
@@ -21,7 +20,7 @@ export const FilesGrid = ({ files, onFileRemove }) => (
     {_.map(files, (file, index) => (
       <Col lg={4} md={6} key={index}>
         <Card className="mb-3">
-          <div className={classNames("card-img-top", classes["ph--large"])}>
+          <div className={classNames("card-img-top", "ph--large")}>
             <i className={`fa fa-fw fa-3x ${getFileIcon(file)}`} />
           </div>
           <CardBody className="pt-2">
