@@ -28,6 +28,7 @@
     "baseUrl": "./"
   },
   "include": [
-    "src"
+    "src",
+    "api"
   ]
 }
