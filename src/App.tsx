@@ -3,13 +3,15 @@ import "./app.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { RoutedContent } from "~/routes";
 import { AppLayout } from "~/layout";
-import { ServiceProvider } from "~/components/ServiceProvider/ServiceProvider";
+import { ServiceProviderFactory } from "~/components/ServiceProvider/ServiceProvider";
 import { AuthService } from "./app/Auth/AuthContext";
 
 const basePath = process.env.BASE_PATH || "/";
 
 export const App = () => {
-  const [ServiceRoot] = React.useState<React.FC>(ServiceProvider(AuthService));
+  const [ServiceRoot] = React.useState<React.FC>(() =>
+    ServiceProviderFactory(AuthService)
+  );
 
   // const [state, setState] = React.useState({
   //   appName: "",

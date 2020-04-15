@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
-import { observer } from "mobx-react";
 
 export type ServiceContextHook<T = any> = React.Context<T> & {
   useState: () => T;
@@ -20,12 +18,12 @@ export function createService<T>(
 
 const ServiceProviderHookRunner: React.FC<{
   services: ServiceContextHook[];
-}> = observer(({ children, services }) => {
+}> = ({ children, services }) => {
   for (const service of services) {
     service.useLogic();
   }
   return <>{children}</>;
-});
+};
 
 const createServiceProvider: (
   Parent: React.FC,
@@ -42,19 +40,21 @@ const createServiceProvider: (
   };
 };
 
-export const ServiceProvider = (...services: ServiceContextHook[]): React.FC =>
-  observer(({ children }) => {
-    const [Provider] = React.useState<React.FC>(() =>
-      services.reduce<React.FC>((Component, service) => {
-        return createServiceProvider(Component, service);
-      }, null)
-    );
+export const ServiceProviderFactory = (
+  ...services: ServiceContextHook[]
+): React.FC => ({ children }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [Provider] = React.useState<React.FC>(() =>
+    services.reduce<React.FC>((Component, service) => {
+      return createServiceProvider(Component, service);
+    }, null)
+  );
 
-    return (
-      <Provider>
-        <ServiceProviderHookRunner services={services}>
-          {children}
-        </ServiceProviderHookRunner>
-      </Provider>
-    );
-  });
+  return (
+    <Provider>
+      <ServiceProviderHookRunner services={services}>
+        {children}
+      </ServiceProviderHookRunner>
+    </Provider>
+  );
+};

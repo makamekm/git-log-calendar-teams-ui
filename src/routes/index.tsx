@@ -101,7 +101,7 @@ export const RoutedContent = () => {
     <Switch>
       <Redirect from="/" to="/dashboards/analytics" exact />
 
-      <Route path="/login" exact component={AuthScreen} />
+      <Route path="/login/:loginFrom" exact component={AuthScreen} />
 
       <ProtectedRoute
         path="/dashboards/analytics"
