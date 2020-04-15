@@ -1,17 +1,21 @@
 import React from "react";
+import { reaction } from "mobx";
 import { useLocalStore } from "mobx-react";
 import { useHistory, useLocation } from "react-router";
 import { CONFIG_PIN } from "@env/config";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
+import { LoadingService } from "~/app/Loading/LoadingService";
 
 const DEV_PASSWORD = "12345";
 
 export interface AuthState {
+  history?: ReturnType<typeof useHistory>;
   from: string;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string;
   authorize: (password: string) => Promise<string>;
+  logout: () => Promise<string>;
   redirectToFrom: () => void;
   initAuthorize: () => Promise<void>;
 }
@@ -35,7 +39,6 @@ export const useFromPath = () => {
 
 export const AuthService = createService<AuthState>(
   () => {
-    const history = useHistory();
     const state = useLocalStore<AuthState>(() => ({
       from: "",
       isAuthenticated: false,
@@ -53,9 +56,21 @@ export const AuthService = createService<AuthState>(
         state.isLoading = false;
         return state.error;
       },
+      logout: async () => {
+        state.error = "";
+        state.isLoading = true;
+        try {
+          await new Promise((r) => setTimeout(r, 5000));
+          state.isAuthenticated = false;
+        } catch (error) {
+          state.error = error.message;
+        }
+        state.isLoading = false;
+        return state.error;
+      },
       redirectToFrom: () => {
         if (state.isAuthenticated) {
-          history.push(state.from || "/");
+          state.history.push(state.from || "/");
         }
       },
       initAuthorize: async () => {
@@ -68,6 +83,10 @@ export const AuthService = createService<AuthState>(
   },
   () => {
     const context = React.useContext(AuthService);
+    const appContext = React.useContext(LoadingService);
+
+    const history = useHistory();
+    context.history = history;
 
     const from = useFromPath();
     context.from = from;
@@ -77,5 +96,16 @@ export const AuthService = createService<AuthState>(
         context.initAuthorize();
       }
     }, [context]);
+
+    React.useEffect(
+      () =>
+        reaction(
+          () => [context.isLoading],
+          ([isLoading]) => {
+            appContext.setLoading(isLoading);
+          }
+        ),
+      [context, appContext]
+    );
   }
 );

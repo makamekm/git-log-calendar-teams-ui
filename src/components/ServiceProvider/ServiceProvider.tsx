@@ -1,10 +1,5 @@
 import React from "react";
-
-export type ServiceContextHook<T = any> = React.Context<T> & {
-  useState: () => T;
-  value?: T;
-  useLogic: () => void;
-};
+import { ServiceContextHook, ServiceProviderContext } from "./context";
 
 export function createService<T>(
   useState: () => T,
@@ -16,9 +11,8 @@ export function createService<T>(
   return context;
 }
 
-const ServiceProviderHookRunner: React.FC<{
-  services: ServiceContextHook[];
-}> = ({ children, services }) => {
+export const ServiceProviderHook: React.FC = ({ children }) => {
+  const services = React.useContext(ServiceProviderContext);
   for (const service of services) {
     service.useLogic();
   }
@@ -51,10 +45,8 @@ export const ServiceProviderFactory = (
   );
 
   return (
-    <Provider>
-      <ServiceProviderHookRunner services={services}>
-        {children}
-      </ServiceProviderHookRunner>
-    </Provider>
+    <ServiceProviderContext.Provider value={services}>
+      <Provider>{children}</Provider>
+    </ServiceProviderContext.Provider>
   );
 };

@@ -94,6 +94,7 @@ import { Icons } from "./Icons/Icons";
 import { LayoutNavbar } from "./Layouts/NavbarOnly/components/LayoutNavbar";
 import { ProtectedRoute } from "~/app/Auth/ProtectedRoute";
 import { AuthScreen } from "~/app/Auth/AuthScreen";
+import { LogoutRoute } from "~/app/Auth/LogoutRoute";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
@@ -102,6 +103,7 @@ export const RoutedContent = () => {
       <Redirect from="/" to="/dashboards/analytics" exact />
 
       <Route path="/login/:loginFrom" exact component={AuthScreen} />
+      <LogoutRoute path="/logout/:loginFrom" exact />
 
       <ProtectedRoute
         path="/dashboards/analytics"
