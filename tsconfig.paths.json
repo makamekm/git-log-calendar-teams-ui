@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
+      "@env/*": ["./src/env/dev/*"],
       "~/*": ["./src/*"]
     }
   }
