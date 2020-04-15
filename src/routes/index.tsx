@@ -92,6 +92,8 @@ import { Success } from "./Pages/Success/Success";
 import { Timeline } from "./Pages/Timeline/Timeline";
 import { Icons } from "./Icons/Icons";
 import { LayoutNavbar } from "./Layouts/NavbarOnly/components/LayoutNavbar";
+import { ProtectedRoute } from "~/app/Auth/ProtectedRoute";
+import { AuthScreen } from "~/app/Auth/AuthScreen";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
@@ -99,7 +101,16 @@ export const RoutedContent = () => {
     <Switch>
       <Redirect from="/" to="/dashboards/analytics" exact />
 
-      <Route path="/dashboards/analytics" exact component={Analytics} />
+      <Route path="/login" exact component={AuthScreen} />
+
+      <ProtectedRoute
+        path="/dashboards/analytics"
+        exact
+        component={Analytics}
+      />
+
+      {/* DEV ONLY */}
+
       <Route path="/dashboards/projects" exact component={ProjectsDashboard} />
       <Route path="/dashboards/system" exact component={System} />
       <Route path="/dashboards/monitor" exact component={Monitor} />

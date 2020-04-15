@@ -1,0 +1,115 @@
+branch: master
+cleanTmp: false
+debug: true
+tmpDir: ./repositories
+statsDir: ./
+evaluate: item => item.linesChanged
+
+repositories:
+  - url: https://github.com/makamekm/git-log-calendar-teams.git
+    name: git-log-calendar-teams
+    branch: master
+  - url: https://github.com/makamekm/figma-react.git
+    name: figma-react
+    branch: develop
+    exclude:
+      - cicd
+  - url: https://github.com/facebook/react.git
+    name: react
+    branch: master
+
+users:
+  - name: Maxim Karpov
+    associations:
+      - makame
+      - makame@mail.ru
+      - Maxim Karpov
+      - Karpov Maxim
+  - name: Dan Abramov
+    associations:
+      - dan.abramov@gmail.com
+  - name: Dominic Gannaway
+    associations:
+      - dominic gannaway
+  - name: Andrew Clark
+    associations:
+      - andrew clark
+  - name: Sebastian Markbåge
+    associations:
+      - sebastian markbåge
+  - name: Brian Vaughn
+    associations:
+      - bvaughn@fb.com
+      - brian vaughn
+  - name: Sunil Pai
+    associations:
+      - threepointone@fb.com
+      - sunil pai
+  - name: Nicolas Gallagher
+    associations:
+      - necolas@fb.com
+      - nicolas gallagher
+  - name: Will Douglas
+    associations:
+      - willygdouglas@gmail.com
+      - will douglas
+
+teams:
+  - name: team
+    users:
+      - Dan Abramov
+      - Maxim Karpov
+  - name: others
+    invert: true
+    # exclude:
+    #   - cicd # if it cannon be done with repository exclude
+
+reportCalendarTeam:
+  - team: team
+    output: ./team.svg
+    compareTeams:
+      - others
+    limit: 180
+  - team: others
+    output: ./others.svg
+    compareTeams:
+      - team
+
+reportCalendarUser:
+  - user: Maxim Karpov
+    limit: 60
+    output: ./mkarpov.svg
+  - user: Maxim Karpov
+    repositories:
+      - git-log-calendar-teams
+    compareTeams:
+      - team
+    output: ./mkarpov-git-log.svg
+
+reportDonutUser:
+  - users:
+      - Maxim Karpov
+    others: true
+    output: ./mkarpov-total.svg
+  - users:
+      - Dan Abramov
+    others: true
+    repositories:
+      - react
+    output: ./danabramov-react-total.svg
+  - limit: 365
+    top: 5
+    repositories:
+      - react
+    output: ./react-year.svg
+
+reportMapUser:
+  output: ./connections.svg
+
+reportRunningRepository:
+  - limit: 30
+    # repositories:
+    #   - react
+    output: ./repositories.svg
+  - limit: 365
+    output: ./year-repositories.svg
