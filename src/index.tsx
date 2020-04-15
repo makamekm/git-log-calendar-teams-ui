@@ -15,7 +15,9 @@ const base = React.createElement;
     t === "function" &&
     type.prototype === undefined &&
     type.name &&
-    !type.name.includes("Layout")
+    !type.name.includes("Layout") &&
+    !type.name.includes("Sidebar") &&
+    !type.name.includes("Navbar")
   ) {
     type = observer(type);
   }
