@@ -68,10 +68,14 @@ export const AuthService = createService<AuthState>(
   },
   () => {
     const context = React.useContext(AuthService);
+
     const from = useFromPath();
     context.from = from;
+
     React.useEffect(() => {
-      context.initAuthorize();
+      if (process.env.NODE_ENV === "development") {
+        context.initAuthorize();
+      }
     }, [context]);
   }
 );
