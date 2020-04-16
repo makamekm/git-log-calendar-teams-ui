@@ -4,6 +4,13 @@ import { SidebarMenu, SidebarMenuItem } from "~/components";
 export const SidebarMiddleNav = () => (
   <SidebarMenu>
     <SidebarMenuItem
+      icon={<i className="fa fa-fw fa-th"></i>}
+      title="Dashboard"
+      to="/dashboard"
+    />
+
+    <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-home"></i>}
       title="Dashboards"
     >
@@ -16,17 +23,23 @@ export const SidebarMiddleNav = () => (
       <SidebarMenuItem title="Reports" to="/dashboards/reports" exact />
     </SidebarMenuItem>
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-th"></i>}
       title="Widgets"
       to="/widgets"
     />
     {/* -------- Cards ---------*/}
-    <SidebarMenuItem icon={<i className="fa fa-fw fa-clone"></i>} title="Cards">
+    <SidebarMenuItem
+      isWIP
+      icon={<i className="fa fa-fw fa-clone"></i>}
+      title="Cards"
+    >
       <SidebarMenuItem title="Cards" to="/cards/cards" exact />
       <SidebarMenuItem title="Cards Headers" to="/cards/cardsheaders" exact />
     </SidebarMenuItem>
     {/* -------- Layouts ---------*/}
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-columns"></i>}
       title="Layouts"
     >
@@ -42,6 +55,7 @@ export const SidebarMiddleNav = () => (
     </SidebarMenuItem>
     {/* -------- Interface ---------*/}
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-toggle-on"></i>}
       title="Interface"
     >
@@ -79,6 +93,7 @@ export const SidebarMiddleNav = () => (
     </SidebarMenuItem>
     {/* -------- Graphs ---------*/}
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-pie-chart"></i>}
       title="Graphs"
     >
@@ -86,6 +101,7 @@ export const SidebarMiddleNav = () => (
     </SidebarMenuItem>
     {/* -------- Forms ---------*/}
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-check-square-o"></i>}
       title="Forms"
     >
@@ -103,6 +119,7 @@ export const SidebarMiddleNav = () => (
     </SidebarMenuItem>
     {/* -------- Tables ---------*/}
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-trello"></i>}
       title="Tables"
     >
@@ -111,6 +128,7 @@ export const SidebarMiddleNav = () => (
     </SidebarMenuItem>
     {/* -------- Apps ---------*/}
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-mouse-pointer"></i>}
       title="Apps"
     >
@@ -159,7 +177,11 @@ export const SidebarMiddleNav = () => (
       <SidebarMenuItem title="Chat" to="/apps/chat" exact />
     </SidebarMenuItem>
     {/* -------- Pages ---------*/}
-    <SidebarMenuItem icon={<i className="fa fa-fw fa-copy"></i>} title="Pages">
+    <SidebarMenuItem
+      isWIP
+      icon={<i className="fa fa-fw fa-copy"></i>}
+      title="Pages"
+    >
       <SidebarMenuItem title="Register" to="/pages/register" />
       <SidebarMenuItem title="Login" to="/pages/login" />
       <SidebarMenuItem title="Forgot Password" to="/pages/forgot-password" />
@@ -172,10 +194,12 @@ export const SidebarMiddleNav = () => (
       <SidebarMenuItem title="Timeline" to="/pages/timeline" />
     </SidebarMenuItem>
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-star-o"></i>}
       title="Icons"
       to="/icons"
     />
+
     <SidebarMenuItem
       icon={<i className="fa fa-fw fa-book"></i>}
       title="Docs"

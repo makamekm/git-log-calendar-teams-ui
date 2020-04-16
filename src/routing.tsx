@@ -103,14 +103,14 @@ import { Error404 } from "./app/Error404";
 export const RoutedContent = () => {
   return (
     <Switch>
-      <Redirect from="/" to="/dashboards" exact />
+      <Redirect from="/" to="/dashboard" exact />
 
       <Route path="/login/:loginFrom" exact component={AuthScreen} />
       <LogoutRoute path="/logout/:loginFrom" exact />
 
       <Route component={Error404} path="/404" />
 
-      <ProtectedRoute path="/dashboards" exact component={Dashboard} />
+      <ProtectedRoute path="/dashboard" exact component={Dashboard} />
       <ProtectedRoute
         path="/dashboards/analytics"
         exact

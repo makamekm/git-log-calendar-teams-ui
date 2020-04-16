@@ -2,11 +2,10 @@ import React from "react";
 import { reaction } from "mobx";
 import { useLocalStore } from "mobx-react";
 import { useHistory, useLocation } from "react-router";
-import { CONFIG_PIN } from "@env/config";
+import { CONFIG_PIN, AUTO_LOGIN } from "@env/config";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { LoadingService } from "~/app/Loading/LoadingService";
 
-const DEV_PASSWORD = "12345";
 const PATH_ENCAPSULATION = "$\\";
 
 export interface AuthState {
@@ -90,7 +89,7 @@ export const AuthService = createService<AuthState>(
         }
       },
       initAuthorize: async () => {
-        await state.authorize(DEV_PASSWORD);
+        await state.authorize(CONFIG_PIN);
         state.redirectToFrom();
         removeLoadinghandler();
       },
@@ -108,7 +107,7 @@ export const AuthService = createService<AuthState>(
     context.from = from;
 
     React.useEffect(() => {
-      if (process.env.NODE_ENV === "development") {
+      if (AUTO_LOGIN) {
         context.initAuthorize();
       }
     }, [context]);

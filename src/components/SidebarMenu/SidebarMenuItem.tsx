@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 
 import { MenuContext } from "./context";
 import { SideBarMenuEntry } from "./SidebarMenuEntry";
+import { SHOW_WIP_MENU } from "@env/config";
 
 /**
  * Renders a collapse trigger or a ReactRouter Link
@@ -63,6 +64,7 @@ export class SidebarMenuItem extends React.Component<{
   href?: string;
   exact?: boolean;
   noCaret?: boolean;
+  isWIP?: boolean;
 }> {
   static defaultProps = {
     exact: true,
@@ -99,6 +101,10 @@ export class SidebarMenuItem extends React.Component<{
   }
 
   render() {
+    if (!SHOW_WIP_MENU && this.props.isWIP) {
+      return <React.Fragment />;
+    }
+
     const entry = this.getEntry();
     const classBase = this.props.isSubNode ? "sidebar-submenu" : "sidebar-menu";
     const itemClass = classNames(`${classBase}__entry`, {
