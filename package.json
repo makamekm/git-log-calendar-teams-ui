@@ -106,7 +106,8 @@
     "ts-node": "^8.8.2",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "yaml": "^1.8.3"
   },
   "devDependencies": {
     "electron": "^8.2.1",

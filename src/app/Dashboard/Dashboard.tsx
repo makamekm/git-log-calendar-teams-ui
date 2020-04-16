@@ -27,9 +27,10 @@ import { TinyDonutChart } from "~/wip/ProjectsDashboards/TinyDonutChart";
 import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutChartAllProjects";
 import { ipc } from "~/shared/ipc";
 import { CalendarActivities } from "./CalendarActivities";
+import { Config } from "~/shared/Config";
 
 interface DashboardState {
-  config: any;
+  config: Config;
   teamStats: {
     [team: string]: {
       day: string;
@@ -76,7 +77,8 @@ const PeriodValues = ({ state }: { state: DashboardState }) => {
 const TeamActivitiesCalendars = ({ state }: { state: DashboardState }) => {
   return (
     <>
-      {state.config.teams &&
+      {state.config &&
+        state.config.teams &&
         state.config.teams.map((team) => {
           return (
             <Row key={team.name}>
@@ -113,14 +115,13 @@ const TeamActivitiesCalendars = ({ state }: { state: DashboardState }) => {
 
 export const Dashboard = () => {
   const state = useLocalStore<DashboardState>(() => ({
-    config: {},
+    config: null,
     teamStats: {},
     isLoading: false,
     limit: 30,
     load: async () => {
       state.isLoading = true;
       state.config = await ipc.handlers.GET_CONFIG();
-      console.log(state.limit);
       const data = await ipc.handlers.GET_CALENDAR_DATA(state.limit);
       const prepearedData = Object.keys(data).reduce((map, team) => {
         map[team] = Object.keys(data[team]).map((day) => ({

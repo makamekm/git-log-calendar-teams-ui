@@ -1,3 +1,5 @@
+import { Config } from "./Config";
+
 export const nameof = <T>(name: keyof T) => name;
 
 export const nameofChannel = (name: keyof typeof ipc.channels) =>
@@ -27,7 +29,8 @@ export interface Ipc {
         [day: string]: number;
       };
     };
-    GET_CONFIG: () => any;
+    GET_CONFIG: (force?: boolean) => Config;
+    SAVE_CONFIG: (config: Config) => void;
     GET_DATA: () => any;
   };
   sends: {
@@ -49,18 +52,30 @@ export const ipc = {
     },
   },
   handlers: {
-    APP_INFO: (): Promise<ReturnType<Ipc["handlers"]["APP_INFO"]>> =>
-      ipcRenderer.invoke(nameofHandler("APP_INFO")),
-    COLLECT_STATS: (): Promise<ReturnType<Ipc["handlers"]["COLLECT_STATS"]>> =>
-      ipcRenderer.invoke(nameofHandler("COLLECT_STATS")),
+    APP_INFO: (
+      ...args: Parameters<Ipc["handlers"]["APP_INFO"]>
+    ): Promise<ReturnType<Ipc["handlers"]["APP_INFO"]>> =>
+      ipcRenderer.invoke(nameofHandler("APP_INFO"), ...args),
+    COLLECT_STATS: (
+      ...args: Parameters<Ipc["handlers"]["COLLECT_STATS"]>
+    ): Promise<ReturnType<Ipc["handlers"]["COLLECT_STATS"]>> =>
+      ipcRenderer.invoke(nameofHandler("COLLECT_STATS"), ...args),
     GET_CALENDAR_DATA: (
       ...args: Parameters<Ipc["handlers"]["GET_CALENDAR_DATA"]>
     ): Promise<ReturnType<Ipc["handlers"]["GET_CALENDAR_DATA"]>> =>
       ipcRenderer.invoke(nameofHandler("GET_CALENDAR_DATA"), ...args),
-    GET_CONFIG: (): Promise<ReturnType<Ipc["handlers"]["GET_CONFIG"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_CONFIG")),
-    GET_DATA: (): Promise<ReturnType<Ipc["handlers"]["GET_DATA"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_DATA")),
+    GET_CONFIG: (
+      ...args: Parameters<Ipc["handlers"]["GET_CONFIG"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_CONFIG"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_CONFIG"), ...args),
+    GET_DATA: (
+      ...args: Parameters<Ipc["handlers"]["GET_DATA"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_DATA"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_DATA"), ...args),
+    SAVE_CONFIG: (
+      ...args: Parameters<Ipc["handlers"]["SAVE_CONFIG"]>
+    ): Promise<ReturnType<Ipc["handlers"]["SAVE_CONFIG"]>> =>
+      ipcRenderer.invoke(nameofHandler("SAVE_CONFIG"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
