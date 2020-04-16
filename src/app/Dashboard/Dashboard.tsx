@@ -6,6 +6,7 @@ import { Container, Row, Col, Media, Table, Badge } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { TinyDonutChart } from "~/wip/ProjectsDashboards/TinyDonutChart";
 import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutChartAllProjects";
+import { ipc } from "~/shared/ipc";
 
 export const Dashboard = () => {
   const state = useLocalStore<{
@@ -16,6 +17,7 @@ export const Dashboard = () => {
     stats: [],
     isLoading: false,
     load: async () => {
+      state.stats = await ipc.handlers.GET_CALENDAR_TEAM();
       console.log(state.stats);
     },
   }));
