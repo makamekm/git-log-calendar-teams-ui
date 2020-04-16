@@ -12,14 +12,14 @@ import {
   EmptyLayout,
   EmptyLayoutSection,
 } from "~/components";
-import { HeaderAuth } from "~/app/Pages/HeaderAuth";
-import { FooterAuth } from "~/app/Pages/FooterAuth";
+import { HeaderPanel } from "~/app/HeaderPanel";
+import { FooterPanel } from "~/app/FooterPanel";
 
 export const ComingSoon = () => (
   <EmptyLayout>
     <EmptyLayoutSection center>
       {/* START Header */}
-      <HeaderAuth
+      <HeaderPanel
         title="Coming Soon"
         icon="clock-o"
         text="Our website is under construction. Still, the app is not ready, but we're working hard on it and will be available for around:"
@@ -78,7 +78,7 @@ export const ComingSoon = () => (
       </div>
       {/* END Bottom Links */}
       {/* START Footer */}
-      <FooterAuth />
+      <FooterPanel />
       {/* END Footer */}
     </EmptyLayoutSection>
   </EmptyLayout>

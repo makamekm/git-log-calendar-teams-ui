@@ -3,8 +3,8 @@ import faker from "faker/locale/en_US";
 
 import { Container, Row, Col, Media, Table, Badge } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { TinyDonutChart } from "~/app/ProjectsDashboards/TinyDonutChart";
-import { TinyDonutChartAllProjects } from "~/app/ProjectsDashboards/TinyDonutChartAllProjects";
+import { TinyDonutChart } from "~/wip/ProjectsDashboards/TinyDonutChart";
+import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutChartAllProjects";
 
 export const Dashboard = () => (
   <Container>

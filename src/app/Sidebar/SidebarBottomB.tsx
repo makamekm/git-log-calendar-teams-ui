@@ -14,9 +14,9 @@ import {
   SidebarSection,
 } from "~/components";
 import { randomAvatar } from "~/utilities";
-import { DropdownProfile } from "../Dropdowns/DropdownProfile";
-import { FooterAuth } from "../Pages/FooterAuth";
-import { FooterText } from "../FooterText";
+import { FooterPanel } from "~/app/FooterPanel";
+import { FooterText } from "~/app/FooterText";
+import { DropdownProfile } from "~/wip/Dropdowns/DropdownProfile";
 
 const SidebarBottomB = () => (
   <>
@@ -90,7 +90,7 @@ const SidebarBottomB = () => (
       {/* END SLIM Only View  */}
       {/* START DESKTOP View */}
       <SidebarHideSlim>
-        <FooterAuth />
+        <FooterPanel />
       </SidebarHideSlim>
       {/* END DESKTOP View */}
       {/* START SLIM Only View */}

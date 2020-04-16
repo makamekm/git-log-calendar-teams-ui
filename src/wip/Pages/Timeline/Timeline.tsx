@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { TimelineMini } from "~/app/Timeline/TimelineMini";
-import { TimelineDefault } from "~/app/Timeline/TimelineDefault";
+import { TimelineMini } from "~/wip/Timeline/TimelineMini";
+import { TimelineDefault } from "~/wip/Timeline/TimelineDefault";
 
 export const Timeline = () => (
   <React.Fragment>

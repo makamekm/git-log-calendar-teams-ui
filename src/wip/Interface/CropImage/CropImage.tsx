@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 import { ExampleProvider } from "./components/ExampleProvider";
 
 import image1 from "./images/image-1.jpg";
@@ -11,7 +11,7 @@ export const CropImage = () => (
   <Container>
     <HeaderMain title="Crop Images" className="mb-5 mt-4" />
     <div>
-      <HeaderDemo
+      <HeaderSection
         no={1}
         title="Default"
         subTitle="Default configuration of the crop component."
@@ -19,7 +19,7 @@ export const CropImage = () => (
       <ExampleProvider src={image1} />
     </div>
     <div className="mt-4">
-      <HeaderDemo
+      <HeaderSection
         no={2}
         className="mt-5"
         title="Limit Crop Size"

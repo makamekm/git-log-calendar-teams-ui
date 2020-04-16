@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SidebarTrigger, Navbar, Nav, NavItem } from "~/components";
-import { LogoThemed } from "~/app/LogoThemed/LogoThemed";
+import { LogoThemed } from "~/app/LogoThemed";
 import { NavbarActivityFeed } from "./NavbarActivityFeed";
 import { NavbarMessages } from "./NavbarMessages";
 import { NavbarUser } from "./NavbarUser";

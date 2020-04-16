@@ -4,7 +4,7 @@ import faker from "faker/locale/en_US";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
 
-import { ProjectsList } from "~/app/ProjectsDashboards/ProjectsList";
+import { ProjectsList } from "~/wip/ProjectsDashboards/ProjectsList";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);

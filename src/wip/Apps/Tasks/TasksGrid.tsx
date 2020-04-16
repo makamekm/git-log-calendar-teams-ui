@@ -1,7 +1,7 @@
 import React from "react";
 import { CardColumns } from "~/components";
-import { Paginations } from "~/app/Paginations";
-import { TasksCardGrid } from "~/app/Tasks/TasksCardGrid";
+import { Paginations } from "~/wip/Paginations";
+import { TasksCardGrid } from "~/wip/Tasks/TasksCardGrid";
 
 export const TasksGrid = () => (
   <React.Fragment>

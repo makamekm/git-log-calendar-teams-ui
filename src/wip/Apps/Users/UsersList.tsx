@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardFooter, Table } from "~/components";
 import { TrTableUsersList } from "./components/TrTableUsersList";
-import { Paginations } from "~/app/Paginations";
+import { Paginations } from "~/wip/Paginations";
 
 export const UsersList = () => (
   <Card className="mb-3">

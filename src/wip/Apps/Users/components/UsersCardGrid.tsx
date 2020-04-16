@@ -12,7 +12,7 @@ import {
   CardFooter,
   CustomInput,
 } from "~/components";
-import { Profile } from "../Profile";
+import { Profile } from "../../../Profile";
 
 const UsersCardGrid = (props: { id?: string }) => (
   <React.Fragment>

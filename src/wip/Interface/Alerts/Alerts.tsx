@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Alert, Col, Button, Media } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Alerts = () => (
   <React.Fragment>
@@ -10,7 +10,7 @@ export const Alerts = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Alerts Default"
             subTitle="Provide contextual feedback messages for typical user actions with the handful of 
@@ -110,7 +110,7 @@ export const Alerts = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Alerts Dismissing"
             className="mt-5"
@@ -207,7 +207,7 @@ export const Alerts = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Alerts Icon Small"
             className="mt-5"
@@ -322,7 +322,7 @@ export const Alerts = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Alerts Icon Big"
             className="mt-5"
@@ -461,7 +461,7 @@ export const Alerts = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Alerts Big"
             className="mt-5"

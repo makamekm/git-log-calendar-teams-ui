@@ -26,9 +26,9 @@ import {
   ExtendedDropdownSection,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
-import { Messages } from "~/app/Dropdowns/Messages";
-import { Activity } from "~/app/Dropdowns/Activity";
+import { HeaderSection } from "~/app/HeaderSection";
+import { Messages } from "~/wip/Dropdowns/Messages";
+import { Activity } from "~/wip/Dropdowns/Activity";
 
 export const Dropdowns = () => (
   <React.Fragment>
@@ -37,7 +37,7 @@ export const Dropdowns = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Dropdown States"
             subTitle={
@@ -131,7 +131,7 @@ export const Dropdowns = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Dropdown Headers"
             className="mt-5"
@@ -256,7 +256,7 @@ export const Dropdowns = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Dropdown Options"
             className="mt-5"
@@ -683,7 +683,7 @@ export const Dropdowns = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Dropdown Directions"
             className="mt-5"
@@ -794,7 +794,7 @@ export const Dropdowns = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Dropdown Custom"
             className="mt-5"

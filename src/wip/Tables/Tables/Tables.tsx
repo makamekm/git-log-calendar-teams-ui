@@ -12,7 +12,7 @@ import {
 
 import { HeaderMain } from "~/app/HeaderMain";
 
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 import { TrTableDefault } from "./components/TrTableDefault";
 import { TrTableResponsive } from "./components/TrTableResponsive";
@@ -31,7 +31,7 @@ export const Tables = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Basic Tables"
             subTitle={

@@ -17,7 +17,7 @@ import {
   UncontrolledModalClose,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Modals = () => (
   <Container>
@@ -25,7 +25,7 @@ export const Modals = () => (
     {/* START Header 1 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={1}
           title="Modal Default"
           subTitle={
@@ -116,7 +116,7 @@ export const Modals = () => (
     {/* START Header 2 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={2}
           title="Modal Sizes"
           className="mt-5"
@@ -235,7 +235,7 @@ export const Modals = () => (
     {/* START Header 3 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={3}
           title="Modal Colors"
           className="mt-5"
@@ -480,7 +480,7 @@ export const Modals = () => (
     {/* START Header 4 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={4}
           title="Modal Alerts"
           className="mt-5"

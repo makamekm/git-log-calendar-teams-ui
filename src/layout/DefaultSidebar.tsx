@@ -11,7 +11,7 @@ import {
 } from "~/components";
 import { SidebarTopA } from "~/app/Sidebar/SidebarTopA";
 import { SidebarBottomA } from "~/app/Sidebar/SidebarBottomA";
-import { LogoThemed } from "~/app/LogoThemed/LogoThemed";
+import { LogoThemed } from "~/app/LogoThemed";
 import { SidebarMiddleNav } from "./SidebarMiddleNav";
 
 export const DefaultSidebar = () => (

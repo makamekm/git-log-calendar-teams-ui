@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Table, CardFooter, Card, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ProjectsSmHeader } from "~/app/Projects/ProjectsSmHeader";
-import { Paginations } from "~/app/Paginations";
+import { ProjectsSmHeader } from "~/wip/Projects/ProjectsSmHeader";
+import { Paginations } from "~/wip/Paginations";
 import { TrTableGalleryList } from "./components/TrTableGalleryList";
 
 export const GalleryTable = () => (

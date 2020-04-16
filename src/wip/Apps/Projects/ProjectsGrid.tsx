@@ -1,8 +1,8 @@
 import React from "react";
 import _ from "lodash";
 import { CardColumns } from "~/components";
-import { ProjectsCardGrid } from "~/app/Projects/ProjectsCardGrid";
-import { Paginations } from "~/app/Paginations";
+import { ProjectsCardGrid } from "~/wip/Projects/ProjectsCardGrid";
+import { Paginations } from "~/wip/Paginations";
 
 export const ProjectsGrid = () => (
   <React.Fragment>

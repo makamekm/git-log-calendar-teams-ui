@@ -1,7 +1,7 @@
 import React from "react";
 import { Media } from "~/components";
 
-const HeaderDemo = (props: {
+const HeaderSection = (props: {
   no?: string | number;
   title?: string;
   subTitle?: any;
@@ -19,10 +19,10 @@ const HeaderDemo = (props: {
   </Media>
 );
 
-HeaderDemo.defaultProps = {
+HeaderSection.defaultProps = {
   no: 0,
   title: "Waiting for Data...",
   subTitle: "Waiting for Data...",
 };
 
-export { HeaderDemo };
+export { HeaderSection };

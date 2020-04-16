@@ -20,8 +20,8 @@ import {
 } from "~/components";
 import { randomAvatar } from "~/utilities";
 import { HeaderMain } from "~/app/HeaderMain";
-import { MailboxLeftNav } from "~/app/Mailbox/MailboxLeftNav";
-import { Attachment } from "~/app/Attachment";
+import { MailboxLeftNav } from "~/wip/Mailbox/MailboxLeftNav";
+import { Attachment } from "~/wip/Attachment";
 
 export const EmailDetails = () => (
   <React.Fragment>

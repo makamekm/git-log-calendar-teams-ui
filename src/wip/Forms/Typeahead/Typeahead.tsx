@@ -19,7 +19,7 @@ import {
   PublicMethods,
 } from "./components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Typeahead = () => (
   <Container>
@@ -27,7 +27,7 @@ export const Typeahead = () => (
     <Row>
       <Col>
         {/* START Header Example */}
-        <HeaderDemo
+        <HeaderSection
           no={1}
           title="Basic Example"
           subTitle={
@@ -53,7 +53,7 @@ export const Typeahead = () => (
       </Col>
     </Row>
     {/* START Header Example */}
-    <HeaderDemo
+    <HeaderSection
       no={2}
       title="Behaviors"
       className="mt-5"
@@ -201,7 +201,7 @@ export const Typeahead = () => (
       </Col>
     </Row>
     {/* START Header Example */}
-    <HeaderDemo
+    <HeaderSection
       no={3}
       title="Rendering"
       className="mt-5"
@@ -253,7 +253,7 @@ export const Typeahead = () => (
       </Col>
     </Row>
     {/* START Header Example */}
-    <HeaderDemo
+    <HeaderSection
       no={4}
       title="Filtering"
       className="mt-5"
@@ -309,7 +309,7 @@ export const Typeahead = () => (
       </Col>
     </Row>
     {/* START Header Example */}
-    <HeaderDemo
+    <HeaderSection
       no={5}
       title="Custom Selections"
       className="mt-5"
@@ -345,7 +345,7 @@ export const Typeahead = () => (
       </Col>
     </Row>
     {/* START Header Example */}
-    <HeaderDemo
+    <HeaderSection
       no={6}
       title="Asynchronous Searching"
       className="mt-5"

@@ -1,5 +1,5 @@
 import { useLocalStore } from "mobx-react";
-import { createService } from "../../components/ServiceProvider/ServiceProvider";
+import { createService } from "~/components/ServiceProvider/ServiceProvider";
 
 export interface LoadingStore {
   loaders: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardFooter, Table } from "~/components";
-import { Paginations } from "~/app/Paginations";
+import { Paginations } from "~/wip/Paginations";
 import { TrTableFilesList } from "./components/TrTableFilesList";
 
 export const FilesList = () => (

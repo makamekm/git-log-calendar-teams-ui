@@ -9,11 +9,11 @@ import {
   CardFooter,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ChatLeft } from "~/app/Chat/ChatLeft";
-import { ChatRight } from "~/app/Chat/ChatRight";
-import { ChatLeftNav } from "~/app/Chat/ChatLeftNav";
-import { ChatCardFooter } from "~/app/Chat/ChatCardFooter";
-import { ChatCardHeader } from "~/app/Chat/ChatCardHeader";
+import { ChatLeft } from "~/wip/Chat/ChatLeft";
+import { ChatRight } from "~/wip/Chat/ChatRight";
+import { ChatLeftNav } from "~/wip/Chat/ChatLeftNav";
+import { ChatCardFooter } from "~/wip/Chat/ChatCardFooter";
+import { ChatCardHeader } from "~/wip/Chat/ChatCardHeader";
 
 export const Chat = () => (
   <React.Fragment>

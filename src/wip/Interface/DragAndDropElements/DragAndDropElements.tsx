@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Button } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 import { MultipleVerticalLists } from "./components/MultipleVerticalLists";
 import { DraggableTable } from "./components/DraggableTable";
 import { HorizontalLists } from "./components/HorizontalLists";
@@ -38,7 +38,7 @@ export class DragAndDropElements extends React.Component {
         </div>
 
         <div className="mb-5">
-          <HeaderDemo
+          <HeaderSection
             no="1"
             title="Mutliple Verical Lists"
             subTitle="Both list are draggable horizontally and inner list elements can be swapped or reorderd"
@@ -47,7 +47,7 @@ export class DragAndDropElements extends React.Component {
         </div>
 
         <div className="mb-5">
-          <HeaderDemo
+          <HeaderSection
             no="2"
             title="Table"
             subTitle="Allows reordering of the table rows"
@@ -55,7 +55,7 @@ export class DragAndDropElements extends React.Component {
           <DraggableTable ref={this.draggableTableRef} />
         </div>
         <div>
-          <HeaderDemo
+          <HeaderSection
             no="3"
             title="Horizontal Lists"
             subTitle="Items can be reaordered and moved between lists"

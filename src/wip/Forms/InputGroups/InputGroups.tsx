@@ -20,7 +20,7 @@ import {
   Input,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const InputGroups = () => (
   <React.Fragment>
@@ -29,7 +29,7 @@ export const InputGroups = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Basic Inputs Groups"
             subTitle={
@@ -430,7 +430,7 @@ export const InputGroups = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Input Groups Buttons"
             className="mt-5"
@@ -1378,7 +1378,7 @@ export const InputGroups = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Input Groups Buttons"
             className="mt-5"

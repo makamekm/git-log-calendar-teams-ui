@@ -20,10 +20,10 @@ import {
   InputGroupAddon,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { TasksMedia } from "~/app/ProjectsDashboards/TasksMedia";
-import { TinyDonutChart } from "~/app/ProjectsDashboards/TinyDonutChart";
-import { TinyDonutChartAllProjects } from "~/app/ProjectsDashboards/TinyDonutChartAllProjects";
-import { TimelineMini } from "~/app/Timeline/TimelineMini";
+import { TasksMedia } from "~/wip/ProjectsDashboards/TasksMedia";
+import { TinyDonutChart } from "~/wip/ProjectsDashboards/TinyDonutChart";
+import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutChartAllProjects";
+import { TimelineMini } from "~/wip/Timeline/TimelineMini";
 import { DraggableProjects } from "./DraggableProjects";
 
 export const ProjectsDashboard = () => (

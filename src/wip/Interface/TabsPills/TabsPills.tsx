@@ -13,7 +13,7 @@ import {
 } from "~/components";
 
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const TabsPills = () => (
   <React.Fragment>
@@ -22,7 +22,7 @@ export const TabsPills = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Pills Designs"
             subTitle={
@@ -105,7 +105,7 @@ export const TabsPills = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Pills Variations"
             className="mt-5"
@@ -509,7 +509,7 @@ export const TabsPills = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Pills Appearance"
             className="mt-5"
@@ -1035,7 +1035,7 @@ export const TabsPills = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Tabs Design"
             className="mt-5"
@@ -1115,7 +1115,7 @@ export const TabsPills = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Tabs Variations"
             className="mt-5"

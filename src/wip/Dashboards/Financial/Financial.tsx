@@ -19,10 +19,10 @@ import {
   CustomInput,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { TrTableInvoices } from "~/app/Financial/TrTableInvoices";
-import { TinyDonutChartBig } from "~/app/Financial/TinyDonutChartBig";
-import { StackedAreaChart } from "~/app/Financial/StackedAreaChart";
-import { TrTableRecentFundings } from "~/app/Financial/TrTableRecentFundings";
+import { TrTableInvoices } from "~/wip/Financial/TrTableInvoices";
+import { TinyDonutChartBig } from "~/wip/Financial/TinyDonutChartBig";
+import { StackedAreaChart } from "~/wip/Financial/StackedAreaChart";
+import { TrTableRecentFundings } from "~/wip/Financial/TrTableRecentFundings";
 
 export const Financial = () => (
   <Container>

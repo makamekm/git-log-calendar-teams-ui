@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ProjectsLeftNav } from "~/app/Projects/ProjectsLeftNav";
-import { ProjectsSmHeader } from "~/app/Projects/ProjectsSmHeader";
+import { ProjectsLeftNav } from "~/wip/Projects/ProjectsLeftNav";
+import { ProjectsSmHeader } from "~/wip/Projects/ProjectsSmHeader";
 import { TasksList } from "./TasksList";
 import { TasksGrid } from "./TasksGrid";
 

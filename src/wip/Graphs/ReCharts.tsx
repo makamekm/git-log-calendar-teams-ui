@@ -9,35 +9,35 @@ import {
   Button,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
-import { SimpleBarChart } from "~/app/Graphs/SimpleBarChart";
-import { StackedBarChart } from "~/app/Graphs/StackedBarChart";
-import { MixBarChart } from "~/app/Graphs/MixBarChart";
-import { PositiveAndNegativeBarChart } from "~/app/Graphs/PositiveAndNegativeBarChart";
-import { BarChartStackedBySign } from "~/app/Graphs/BarChartStackedBySign";
-import { BarChartHasBackground } from "~/app/Graphs/BarChartHasBackground";
-import { SimpleLineChart } from "~/app/Graphs/SimpleLineChart";
-import { DashedLineChart } from "~/app/Graphs/DashedLineChart";
-import { VerticalLineChart } from "~/app/Graphs/VerticalLineChart";
-import { CustomizedLabelLineChart } from "~/app/Graphs/CustomizedLabelLineChart";
-import { SimpleAreaChart } from "~/app/Graphs/SimpleAreaChart";
-import { StackedAreaChart } from "~/app/Graphs/StackedAreaChart";
-import { PercentAreaChart } from "~/app/Graphs/PercentAreaChart";
-import { AreaChartFillByValue } from "~/app/Graphs/AreaChartFillByValue";
-import { TwoLevelPieChart } from "~/app/Graphs/TwoLevelPieChart";
-import { StraightAnglePieChart } from "~/app/Graphs/StraightAnglePieChart";
-import { PieChartWithCustomizedLabel } from "~/app/Graphs/PieChartWithCustomizedLabel";
-import { PieChartWithPaddingAngle } from "~/app/Graphs/PieChartWithPaddingAngle";
-import { PieChartWithPaddingAngleHalf } from "~/app/Graphs/PieChartWithPaddingAngleHalf";
-import { SpecifiedDomainRadarChart } from "~/app/Graphs/SpecifiedDomainRadarChart";
-import { SimpleRadialBarChart } from "~/app/Graphs/SimpleRadialBarChart";
-import { LineBarAreaComposedChart } from "~/app/Graphs/LineBarAreaComposedChart";
-import { TinyLineChart } from "~/app/Graphs/TinyLineChart";
-import { TinyAreaChart } from "~/app/Graphs/TinyAreaChart";
-import { TinyBarChart } from "~/app/Graphs/TinyBarChart";
-import { TinyPieChart } from "~/app/Graphs/TinyPieChart";
-import { TinyDonutChart } from "~/app/Graphs/TinyDonutChart";
-import { VerticalComposedChart } from "~/app/Graphs/VerticalComposedChart";
+import { HeaderSection } from "~/app/HeaderSection";
+import { SimpleBarChart } from "./SimpleBarChart";
+import { StackedBarChart } from "./StackedBarChart";
+import { MixBarChart } from "./MixBarChart";
+import { PositiveAndNegativeBarChart } from "./PositiveAndNegativeBarChart";
+import { BarChartStackedBySign } from "./BarChartStackedBySign";
+import { BarChartHasBackground } from "./BarChartHasBackground";
+import { SimpleLineChart } from "./SimpleLineChart";
+import { DashedLineChart } from "./DashedLineChart";
+import { VerticalLineChart } from "./VerticalLineChart";
+import { CustomizedLabelLineChart } from "./CustomizedLabelLineChart";
+import { SimpleAreaChart } from "./SimpleAreaChart";
+import { StackedAreaChart } from "./StackedAreaChart";
+import { PercentAreaChart } from "./PercentAreaChart";
+import { AreaChartFillByValue } from "./AreaChartFillByValue";
+import { TwoLevelPieChart } from "./TwoLevelPieChart";
+import { StraightAnglePieChart } from "./StraightAnglePieChart";
+import { PieChartWithCustomizedLabel } from "./PieChartWithCustomizedLabel";
+import { PieChartWithPaddingAngle } from "./PieChartWithPaddingAngle";
+import { PieChartWithPaddingAngleHalf } from "./PieChartWithPaddingAngleHalf";
+import { SpecifiedDomainRadarChart } from "./SpecifiedDomainRadarChart";
+import { SimpleRadialBarChart } from "./SimpleRadialBarChart";
+import { LineBarAreaComposedChart } from "./LineBarAreaComposedChart";
+import { TinyLineChart } from "./TinyLineChart";
+import { TinyAreaChart } from "./TinyAreaChart";
+import { TinyBarChart } from "./TinyBarChart";
+import { TinyPieChart } from "./TinyPieChart";
+import { TinyDonutChart } from "./TinyDonutChart";
+import { VerticalComposedChart } from "./VerticalComposedChart";
 
 export const ReCharts = () => (
   <Container>
@@ -64,7 +64,7 @@ export const ReCharts = () => (
     {/* START Header 1 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={1}
           title="Bar Charts"
           subTitle={
@@ -239,7 +239,7 @@ export const ReCharts = () => (
     {/* START Header 2 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={2}
           title="Line Charts"
           className="mt-5"
@@ -363,7 +363,7 @@ export const ReCharts = () => (
     {/* START Header 3 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={3}
           title="Area Charts"
           className="mt-5"
@@ -487,7 +487,7 @@ export const ReCharts = () => (
     {/* START Header 4 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={4}
           title="Pie Charts"
           className="mt-5"
@@ -632,7 +632,7 @@ export const ReCharts = () => (
     {/* START Header 5 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={5}
           title="Radar Charts"
           className="mt-5"
@@ -704,7 +704,7 @@ export const ReCharts = () => (
     {/* START Header 6 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={6}
           title="Composed Charts"
           className="mt-5"
@@ -773,7 +773,7 @@ export const ReCharts = () => (
     {/* START Header 7 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={7}
           title="Tiny Charts"
           className="mt-5"

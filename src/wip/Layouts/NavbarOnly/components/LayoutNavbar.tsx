@@ -13,12 +13,12 @@ import {
   AvatarImage,
 } from "~/components";
 import { randomAvatar } from "~/utilities";
-import { NavbarActivityFeed } from "~/layout/components/NavbarActivityFeed";
-import { NavbarMessages } from "~/layout/components/NavbarMessages";
-import { NavbarUser } from "~/layout/components/NavbarUser";
-import { DropdownProfile } from "~/app/Dropdowns/DropdownProfile";
-import { NavbarNavigation } from "~/app/Navbars/NavbarNavigation";
-import { LogoThemed } from "~/app/LogoThemed/LogoThemed";
+import { NavbarActivityFeed } from "~/layout/NavbarActivityFeed";
+import { NavbarMessages } from "~/layout/NavbarMessages";
+import { NavbarUser } from "~/layout/NavbarUser";
+import { DropdownProfile } from "~/wip/Dropdowns/DropdownProfile";
+import { NavbarNavigation } from "~/wip/Interface/Navbars/NavbarNavigation";
+import { LogoThemed } from "~/app/LogoThemed";
 
 export const LayoutNavbar = () => (
   <React.Fragment>

@@ -15,8 +15,8 @@ import {
   Form,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ProfileLeftNav } from "~/app/Profile/ProfileLeftNav";
-import { ProfileHeader } from "~/app/Profile/ProfileHeader";
+import { ProfileLeftNav } from "~/wip/Profile/ProfileLeftNav";
+import { ProfileHeader } from "~/wip/Profile/ProfileHeader";
 
 export const AccountEdit = () => (
   <React.Fragment>

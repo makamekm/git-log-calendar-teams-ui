@@ -27,7 +27,7 @@ import {
 } from "~/components";
 import { randomAvatar } from "~/utilities";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const MediaObjects = () => (
   <React.Fragment>
@@ -36,7 +36,7 @@ export const MediaObjects = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Media Options"
             subTitle={
@@ -1297,7 +1297,7 @@ export const MediaObjects = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Media Text"
             className="mt-5"
@@ -1844,7 +1844,7 @@ export const MediaObjects = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Media Layouts"
             className="mt-5"

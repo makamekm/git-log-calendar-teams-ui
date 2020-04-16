@@ -10,7 +10,7 @@ import {
   CardText,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 const cardText = ({ cardNo }: { cardNo?: any }) => (
   <CardText>
@@ -27,7 +27,7 @@ export const Cards = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Card Default Styles"
             subTitle="Available panel styles and colors"
@@ -112,7 +112,7 @@ export const Cards = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Cards Borders"
             subTitle="Provide contextual feedback messages"
@@ -181,7 +181,7 @@ export const Cards = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Cards Sides Borders"
             subTitle="Provide contextual feedback messages"
@@ -250,7 +250,7 @@ export const Cards = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Cards Sides Borders"
             subTitle="Provide contextual feedback messages"
@@ -325,7 +325,7 @@ export const Cards = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Cards Backgrounds"
             subTitle="Provide contextual feedback messages"
@@ -416,7 +416,7 @@ export const Cards = () => (
       {/* START Header 6 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={6}
             title="Cards Various"
             subTitle="Provide contextual feedback messages"

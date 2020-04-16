@@ -24,9 +24,9 @@ import {
   UncontrolledTabsTabContent,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { Profile } from "~/app/Profile";
-import { DlRowContacts } from "~/app/Profile/DlRowContacts";
-import { DlRowAddress } from "~/app/Profile/DlRowAddress";
+import { Profile } from "~/wip/Profile";
+import { DlRowContacts } from "~/wip/Profile/DlRowContacts";
+import { DlRowAddress } from "~/wip/Profile/DlRowAddress";
 import { TrTableClients } from "./components/TrTableClients";
 import { TrTableCompanies } from "./components/TrTableCompanies";
 

@@ -17,7 +17,7 @@ import {
   FormText,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const FormsLayouts = () => (
   <React.Fragment>
@@ -26,7 +26,7 @@ export const FormsLayouts = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Forms Horizontal & Vertical"
             subTitle={
@@ -403,7 +403,7 @@ export const FormsLayouts = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Forms Inline"
             className="mt-5"

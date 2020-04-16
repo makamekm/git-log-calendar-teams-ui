@@ -11,14 +11,14 @@ import {
   EmptyLayout,
   EmptyLayoutSection,
 } from "~/components";
-import { HeaderAuth } from "~/app/Pages/HeaderAuth";
-import { FooterAuth } from "~/app/Pages/FooterAuth";
+import { HeaderPanel } from "~/app/HeaderPanel";
+import { FooterPanel } from "~/app/FooterPanel";
 
 export const Register = () => (
   <EmptyLayout>
     <EmptyLayoutSection center width={480}>
       {/* START Header */}
-      <HeaderAuth title="Create Account" />
+      <HeaderPanel title="Create Account" />
       {/* END Header */}
       {/* START Form */}
       <Form className="mb-3">
@@ -89,7 +89,7 @@ export const Register = () => (
       </div>
       {/* END Bottom Links */}
       {/* START Footer */}
-      <FooterAuth />
+      <FooterPanel />
       {/* END Footer */}
     </EmptyLayoutSection>
   </EmptyLayout>

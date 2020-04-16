@@ -12,10 +12,10 @@ import {
   Progress,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { TinyDonutChart } from "~/app/Monitor/TinyDonutChart";
-import { TinyDonutChartBig } from "~/app/Monitor/TinyDonutChartBig";
-import { TrTableMonitor } from "~/app/Monitor/TrTableMonitor";
-import { TinyAreaChart } from "~/app/Monitor/TinyAreaChart";
+import { TinyDonutChart } from "~/wip/Monitor/TinyDonutChart";
+import { TinyDonutChartBig } from "~/wip/Monitor/TinyDonutChartBig";
+import { TrTableMonitor } from "~/wip/Monitor/TrTableMonitor";
+import { TinyAreaChart } from "~/wip/Monitor/TinyAreaChart";
 
 export const Monitor = () => (
   <Container>

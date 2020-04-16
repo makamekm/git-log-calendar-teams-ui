@@ -9,14 +9,14 @@ import {
   EmptyLayout,
   EmptyLayoutSection,
 } from "~/components";
-import { HeaderAuth } from "~/app/Pages/HeaderAuth";
-import { FooterAuth } from "~/app/Pages/FooterAuth";
+import { HeaderPanel } from "~/app/HeaderPanel";
+import { FooterPanel } from "~/app/FooterPanel";
 
 export const LockScreen = () => (
   <EmptyLayout>
     <EmptyLayoutSection center>
       {/* START Header */}
-      <HeaderAuth title="Your Session is Blocked" />
+      <HeaderPanel title="Your Session is Blocked" />
       {/* END Header */}
       {/* START Form */}
       <Form className="mb-3">
@@ -46,7 +46,7 @@ export const LockScreen = () => (
       </div>
       {/* END Bottom Links */}
       {/* START Footer */}
-      <FooterAuth />
+      <FooterPanel />
       {/* END Footer */}
     </EmptyLayoutSection>
   </EmptyLayout>

@@ -7,15 +7,15 @@ import {
   SidebarSection,
   SidebarShowSlim,
 } from "~/components";
-import { FooterAuth } from "../Pages/FooterAuth";
-import { FooterText } from "../FooterText";
+import { FooterPanel } from "~/app/FooterPanel";
+import { FooterText } from "~/app/FooterText";
 
 const SidebarBottomA = () => (
   <>
     {/* START Desktop */}
     <SidebarHideSlim>
       <SidebarSection>
-        <FooterAuth className="text-muted" />
+        <FooterPanel className="text-muted" />
       </SidebarSection>
     </SidebarHideSlim>
     {/* END Desktop */}

@@ -26,12 +26,12 @@ import {
   CardHeader,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { MetricVsTarget } from "~/app/Analytics/MetricVsTarget";
-import { WebsitePerformance } from "~/app/Analytics/WebsitePerformance";
-import { AudienceMetricsChart } from "~/app/Analytics/AudienceMetricsChart";
-import { AudienceCalendarActivities } from "~/app/Analytics/AudienceCalendarActivities";
-import { TinyAreaChart } from "~/app/Analytics/TinyAreaChart";
-import { SimpleLineChart } from "~/app/Graphs/SimpleLineChart";
+import { MetricVsTarget } from "~/wip/Analytics/MetricVsTarget";
+import { WebsitePerformance } from "~/wip/Analytics/WebsitePerformance";
+import { AudienceMetricsChart } from "~/wip/Analytics/AudienceMetricsChart";
+import { AudienceCalendarActivities } from "~/wip/Analytics/AudienceCalendarActivities";
+import { TinyAreaChart } from "~/wip/Analytics/TinyAreaChart";
+import { SimpleLineChart } from "~/wip/Graphs/SimpleLineChart";
 
 import "./Analytics.scss";
 

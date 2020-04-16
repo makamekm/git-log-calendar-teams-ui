@@ -1,7 +1,7 @@
 import React from "react";
 import { CardColumns } from "~/components";
-import { FilesCardGrid } from "~/app/Files/FilesCardGrid";
-import { Paginations } from "~/app/Paginations";
+import { FilesCardGrid } from "~/wip/Files/FilesCardGrid";
+import { Paginations } from "~/wip/Paginations";
 
 export const FilesGrid = () => (
   <React.Fragment>

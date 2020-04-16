@@ -2,7 +2,7 @@
 import React from "react";
 import { Container, Row, Col, Card, CardTitle, CardBody } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Typography = () => (
   <React.Fragment>
@@ -11,7 +11,7 @@ export const Typography = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Colors"
             subTitle={
@@ -261,7 +261,7 @@ export const Typography = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Headings"
             className="mt-5"
@@ -385,7 +385,7 @@ export const Typography = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Text"
             className="mt-5"
@@ -613,7 +613,7 @@ export const Typography = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Blackquotes"
             className="mt-5"
@@ -718,7 +718,7 @@ export const Typography = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Lists"
             className="mt-5"
@@ -837,7 +837,7 @@ export const Typography = () => (
       {/* START Header 6 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={6}
             title="Code"
             className="mt-5"

@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { EmptyLayout, EmptyLayoutSection } from "~/components";
-import { HeaderAuth } from "~/app/Pages/HeaderAuth";
-import { FooterAuth } from "~/app/Pages/FooterAuth";
+import { HeaderPanel } from "~/app/HeaderPanel";
+import { FooterPanel } from "~/app/FooterPanel";
 
 export const Success = () => (
   <EmptyLayout>
     <EmptyLayoutSection center>
       {/* START Header */}
-      <HeaderAuth
+      <HeaderPanel
         title="Successful Activated"
         icon="check"
         iconClassName="text-success"
@@ -30,7 +30,7 @@ export const Success = () => (
       </div>
       {/* END Bottom Links */}
       {/* START Footer */}
-      <FooterAuth />
+      <FooterPanel />
       {/* END Footer */}
     </EmptyLayoutSection>
   </EmptyLayout>

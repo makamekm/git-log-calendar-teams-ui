@@ -9,8 +9,8 @@ import {
   CardTitle,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ProfileLeftNav } from "~/app/Profile/ProfileLeftNav";
-import { ProfileHeader } from "~/app/Profile/ProfileHeader";
+import { ProfileLeftNav } from "~/wip/Profile/ProfileLeftNav";
+import { ProfileHeader } from "~/wip/Profile/ProfileHeader";
 import { TrTableResponsive } from "../../Tables/Tables/components/TrTableResponsive";
 
 export const SessionsEdit = () => (

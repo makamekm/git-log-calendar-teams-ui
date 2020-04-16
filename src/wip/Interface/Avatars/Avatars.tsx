@@ -13,7 +13,7 @@ import {
 } from "~/components";
 import { randomAvatar } from "~/utilities";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Avatars = () => (
   <React.Fragment>
@@ -22,7 +22,7 @@ export const Avatars = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Avatars Sizes"
             subTitle={
@@ -86,7 +86,7 @@ export const Avatars = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Avatars Types"
             subTitle={
@@ -163,7 +163,7 @@ export const Avatars = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Avatars Status"
             subTitle={
@@ -423,7 +423,7 @@ export const Avatars = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Avatars Badges Pills"
             subTitle={
@@ -599,7 +599,7 @@ export const Avatars = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Avatars Badges"
             subTitle={
@@ -775,7 +775,7 @@ export const Avatars = () => (
       {/* START Header 6 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={6}
             title="Avatars Icons"
             subTitle={
@@ -1176,7 +1176,7 @@ export const Avatars = () => (
       {/* START Header 7 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={7}
             title="Avatars Colors"
             subTitle={

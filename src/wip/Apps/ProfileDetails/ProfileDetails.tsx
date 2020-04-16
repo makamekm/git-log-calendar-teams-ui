@@ -26,14 +26,14 @@ import {
   UncontrolledTabsTabContent,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { Profile } from "~/app/Profile";
-import { ProfileOverviewCard } from "~/app/Profile/ProfileOverviewCard";
-import { DlRowContacts } from "~/app/Profile/DlRowContacts";
-import { DlRowAddress } from "~/app/Profile/DlRowAddress";
-import { ChatLeft } from "~/app/Chat/ChatLeft";
-import { ChatRight } from "~/app/Chat/ChatRight";
-import { ChatCardFooter } from "~/app/Chat/ChatCardFooter";
-import { TimelineDefault } from "~/app/Timeline/TimelineDefault";
+import { Profile } from "~/wip/Profile";
+import { ProfileOverviewCard } from "~/wip/Profile/ProfileOverviewCard";
+import { DlRowContacts } from "~/wip/Profile/DlRowContacts";
+import { DlRowAddress } from "~/wip/Profile/DlRowAddress";
+import { ChatLeft } from "~/wip/Chat/ChatLeft";
+import { ChatRight } from "~/wip/Chat/ChatRight";
+import { ChatCardFooter } from "~/wip/Chat/ChatCardFooter";
+import { TimelineDefault } from "~/wip/Timeline/TimelineDefault";
 import { TrTableMessages } from "./components/TrTableMessages";
 
 export const ProfileDetails = () => (

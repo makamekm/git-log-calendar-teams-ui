@@ -14,10 +14,10 @@ import {
   Card,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { SimpleLineChart } from "~/app/Stock/SimpleLineChart";
-import { TrTableSummary } from "~/app/Stock/TrTableSummary";
-import { TrTableStock } from "~/app/Stock/TrTableStock";
-import { TrTableFavStock } from "~/app/Stock/TrTableFavStock";
+import { SimpleLineChart } from "~/wip/Stock/SimpleLineChart";
+import { TrTableSummary } from "~/wip/Stock/TrTableSummary";
+import { TrTableStock } from "~/wip/Stock/TrTableStock";
+import { TrTableFavStock } from "~/wip/Stock/TrTableFavStock";
 
 export const Stock = () => (
   <Container>

@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
-import { NavbarExample } from "~/app/Navbars/NavbarExample";
+import { HeaderSection } from "~/app/HeaderSection";
+import { NavbarExample } from "~/wip/Interface/Navbars/NavbarExample";
 
 const ExampleWrap = ({ name, children }: { name?: string; children?: any }) => (
   <React.Fragment>
@@ -25,12 +25,12 @@ export const Navbars = () => (
       {/* START Light */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo no={1} title="Navbars Light">
+          <HeaderSection no={1} title="Navbars Light">
             Theming the navbar has never been easier thanks to Theme Providers.
             Wrap the <code>Navbar</code> with a <code>NavbarThemeProvider</code>{" "}
             component and set <code>style=&quot;light&quot;</code> and{" "}
             <code>color=&quot;&lt;desired color&gt;&quot;</code>.
-          </HeaderDemo>
+          </HeaderSection>
 
           <ExampleWrap name="Navbar Default #1.01">
             <NavbarExample themeColor="primary" />
@@ -50,12 +50,12 @@ export const Navbars = () => (
       {/* START Dark */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo no={2} title="Navbars Dark" className="mt-5">
+          <HeaderSection no={2} title="Navbars Dark" className="mt-5">
             Theming the navbar has never been easier thanks to Theme Providers.
             Wrap the <code>Navbar</code> with a <code>NavbarThemeProvider</code>{" "}
             component and set <code>style=&quot;dark&quot;</code> and{" "}
             <code>color=&quot;&lt;desired color&gt;&quot;</code>.
-          </HeaderDemo>
+          </HeaderSection>
 
           <ExampleWrap name="Navbar Default #2.01">
             <NavbarExample themeColor="primary" />
@@ -75,12 +75,12 @@ export const Navbars = () => (
       {/* START Color */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo no={3} title="Navbars Color" className="mt-5">
+          <HeaderSection no={3} title="Navbars Color" className="mt-5">
             Theming the navbar has never been easier thanks to Theme Providers.
             Wrap the <code>Navbar</code> with a <code>NavbarThemeProvider</code>{" "}
             component and set <code>style=&quot;color&quot;</code> and{" "}
             <code>color=&quot;&lt;desired color&gt;&quot;</code>.
-          </HeaderDemo>
+          </HeaderSection>
 
           <ExampleWrap name="Navbar Default #3.01">
             <NavbarExample themeColor="primary" />

@@ -15,11 +15,11 @@ import {
   AvatarImage,
 } from "~/components";
 import { randomAvatar } from "~/utilities";
-import { NavbarActivityFeed } from "~/layout/components/NavbarActivityFeed";
-import { NavbarMessages } from "~/layout/components/NavbarMessages";
-import { NavbarUser } from "~/layout/components/NavbarUser";
+import { NavbarActivityFeed } from "~/layout/NavbarActivityFeed";
+import { NavbarMessages } from "~/layout/NavbarMessages";
+import { NavbarUser } from "~/layout/NavbarUser";
 import { NavbarNavigation } from "./NavbarNavigation";
-import { DropdownProfile } from "./../Dropdowns/DropdownProfile";
+import { DropdownProfile } from "../../Dropdowns/DropdownProfile";
 
 const NavbarExample = ({
   themeColor,

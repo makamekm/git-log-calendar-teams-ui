@@ -11,14 +11,14 @@ import {
   EmptyLayoutSection,
   EmptyLayout,
 } from "~/components";
-import { HeaderAuth } from "~/app/Pages/HeaderAuth";
-import { FooterAuth } from "~/app/Pages/FooterAuth";
+import { HeaderPanel } from "~/app/HeaderPanel";
+import { FooterPanel } from "~/app/FooterPanel";
 
 export const Error404 = () => (
   <EmptyLayout>
     <EmptyLayoutSection center>
       {/* START Header */}
-      <HeaderAuth title="Error 404" />
+      <HeaderPanel title="Error 404" />
       {/* END Header */}
       {/* START Form */}
       <Form className="mb-3">
@@ -43,14 +43,14 @@ export const Error404 = () => (
       {/* END Form */}
       {/* START Bottom Links */}
       <div className="d-flex mb-5">
-        <Link to="/pages/login">Back to Home</Link>
-        <Link to="/" className="ml-auto text-decoration-none">
+        <Link to="/">Back to Home</Link>
+        <Link to="/help" className="ml-auto text-decoration-none">
           Support
         </Link>
       </div>
       {/* END Bottom Links */}
       {/* START Footer */}
-      <FooterAuth />
+      <FooterPanel />
       {/* END Footer */}
     </EmptyLayoutSection>
   </EmptyLayout>

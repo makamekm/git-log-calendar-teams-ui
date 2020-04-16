@@ -15,7 +15,7 @@ import {
   DropdownItem,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Buttons = () => (
   <React.Fragment>
@@ -24,7 +24,7 @@ export const Buttons = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Buttons Colors"
             subTitle="Available panel styles and colors"
@@ -171,7 +171,7 @@ export const Buttons = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Buttons Social Colors"
             className="mt-5"
@@ -404,7 +404,7 @@ export const Buttons = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Buttons Layouts"
             className="mt-5"
@@ -850,7 +850,7 @@ export const Buttons = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Buttons Styling"
             className="mt-5"
@@ -919,7 +919,7 @@ export const Buttons = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Buttons States"
             className="mt-5"
@@ -982,7 +982,7 @@ export const Buttons = () => (
       {/* START Header 6 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={6}
             title="Buttons Icons Positions"
             className="mt-5"
@@ -1103,7 +1103,7 @@ export const Buttons = () => (
       {/* START Header 7 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={7}
             title="Buttons Dropdowns"
             className="mt-5"
@@ -1569,7 +1569,7 @@ export const Buttons = () => (
       {/* START Header 8 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={8}
             title="Buttons Options"
             className="mt-5"

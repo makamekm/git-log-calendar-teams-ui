@@ -9,7 +9,7 @@ import {
   Progress,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const ProgressBars = () => (
   <React.Fragment>
@@ -18,7 +18,7 @@ export const ProgressBars = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Progress Bars Colors"
             subTitle={
@@ -192,7 +192,7 @@ export const ProgressBars = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Progress Bars Heights"
             className="mt-5"
@@ -329,7 +329,7 @@ export const ProgressBars = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Progress Bars Options"
             className="mt-5"
@@ -476,7 +476,7 @@ export const ProgressBars = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Progress Bars Layouts"
             className="mt-5"

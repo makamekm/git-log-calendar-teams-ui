@@ -9,7 +9,7 @@ import {
   Badge,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const BadgesLabels = () => (
   <React.Fragment>
@@ -18,7 +18,7 @@ export const BadgesLabels = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Badges Default"
             subTitle={
@@ -146,7 +146,7 @@ export const BadgesLabels = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Badges Options"
             className="mt-5"
@@ -272,7 +272,7 @@ export const BadgesLabels = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Badges Border"
             className="mt-5"
@@ -401,7 +401,7 @@ export const BadgesLabels = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Badges Border Options"
             className="mt-5"

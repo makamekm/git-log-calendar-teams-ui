@@ -8,14 +8,8 @@ import { Monitor } from "./wip/Dashboards/Monitor/Monitor";
 import { Financial } from "./wip/Dashboards/Financial/Financial";
 import { Stock } from "./wip/Dashboards/Stock/Stock";
 import { Reports } from "./wip/Dashboards/Reports/Reports";
-import { DefaultNavbar } from "./layout/components/DefaultNavbar";
-import { DefaultSidebar } from "./layout/components/DefaultSidebar";
-import { Error404 } from "./wip/Pages/Error404/Error404";
-import { SidebarANavbar } from "./layout/components/SidebarANavbar";
 import { NavbarOnly } from "./wip/Layouts/NavbarOnly/NavbarOnly";
 import { SidebarWithNavbar } from "./wip/Layouts/SidebarWithNavbar/SidebarWithNavbar";
-import { SidebarWithNavbarNavbar } from "./layout/components/SidebarWithNavbarNavbar";
-import { SidebarASidebar } from "./layout/components/SidebarASidebar";
 import { Widgets } from "./wip/Widgets/Widgets";
 import { Cards } from "./wip/Cards/Cards/Cards";
 import { CardsHeaders } from "./wip/Cards/CardsHeaders/CardsHeaders";
@@ -92,10 +86,18 @@ import { Success } from "./wip/Pages/Success/Success";
 import { Timeline } from "./wip/Pages/Timeline/Timeline";
 import { Icons } from "./wip/Icons/Icons";
 import { LayoutNavbar } from "./wip/Layouts/NavbarOnly/components/LayoutNavbar";
+
+import { SidebarWithNavbarNavbar } from "./layout/SidebarWithNavbarNavbar";
+import { DefaultNavbar } from "./layout/DefaultNavbar";
+import { DefaultSidebar } from "./layout/DefaultSidebar";
+import { SidebarANavbar } from "./layout/SidebarANavbar";
+import { SidebarASidebar } from "./layout/SidebarASidebar";
+
 import { ProtectedRoute } from "./app/Auth/ProtectedRoute";
 import { AuthScreen } from "./app/Auth/AuthScreen";
 import { LogoutRoute } from "./app/Auth/LogoutRoute";
 import { Dashboard } from "./app/Dashboard/Dashboard";
+import { Error404 } from "./app/Error404";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
@@ -106,15 +108,16 @@ export const RoutedContent = () => {
       <Route path="/login/:loginFrom" exact component={AuthScreen} />
       <LogoutRoute path="/logout/:loginFrom" exact />
 
-      <ProtectedRoute path="/dashboards" exact component={Dashboard} />
+      <Route component={Error404} path="/404" />
 
+      <ProtectedRoute path="/dashboards" exact component={Dashboard} />
       <ProtectedRoute
         path="/dashboards/analytics"
         exact
         component={Analytics}
       />
 
-      {/* DEV ONLY */}
+      {/* WIP */}
 
       <Route path="/dashboards/projects" exact component={ProjectsDashboard} />
       <Route path="/dashboards/system" exact component={System} />
@@ -218,7 +221,6 @@ export const RoutedContent = () => {
       <Route component={ComingSoon} path="/pages/coming-soon" />
       <Route component={Confirmation} path="/pages/confirmation" />
       <Route component={Danger} path="/pages/danger" />
-      <Route component={Error404} path="/pages/error-404" />
       <Route component={ForgotPassword} path="/pages/forgot-password" />
       <Route component={LockScreen} path="/pages/lock-screen" />
       <Route component={Login} path="/pages/login" />
@@ -229,8 +231,7 @@ export const RoutedContent = () => {
       <Route path="/icons" exact component={Icons} />
 
       {/*    404    */}
-      <Route component={Error404} path="/pages/error-404" />
-      <Redirect to="/pages/error-404" />
+      <Redirect to="/404" />
     </Switch>
   );
 };

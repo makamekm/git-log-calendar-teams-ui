@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { FilesLeftNav } from "~/app/Files/FilesLeftNav";
-import { ProjectsSmHeader } from "~/app/Projects/ProjectsSmHeader";
+import { FilesLeftNav } from "~/wip/Files/FilesLeftNav";
+import { ProjectsSmHeader } from "~/wip/Projects/ProjectsSmHeader";
 import { FilesList } from "./FilesList";
 import { FilesGrid } from "./FilesGrid";
 

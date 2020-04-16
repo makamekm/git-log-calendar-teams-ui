@@ -10,14 +10,14 @@ import {
   EmptyLayout,
   EmptyLayoutSection,
 } from "~/components";
-import { HeaderAuth } from "~/app/Pages/HeaderAuth";
-import { FooterAuth } from "~/app/Pages/FooterAuth";
+import { HeaderPanel } from "~/app/HeaderPanel";
+import { FooterPanel } from "~/app/FooterPanel";
 
 export const ForgotPassword = () => (
   <EmptyLayout>
     <EmptyLayoutSection center>
       {/* START Header */}
-      <HeaderAuth title="Forgot Password" />
+      <HeaderPanel title="Forgot Password" />
       {/* END Header */}
       {/* START Form */}
       <Form className="mb-3">
@@ -60,7 +60,7 @@ export const ForgotPassword = () => (
       </div>
       {/* END Bottom Links */}
       {/* START Footer */}
-      <FooterAuth />
+      <FooterPanel />
       {/* END Footer */}
     </EmptyLayoutSection>
   </EmptyLayout>

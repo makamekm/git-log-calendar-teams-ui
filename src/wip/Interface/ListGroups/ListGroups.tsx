@@ -17,7 +17,7 @@ import {
 } from "~/components";
 import { randomAvatar } from "~/utilities";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const ListGroups = () => (
   <React.Fragment>
@@ -26,7 +26,7 @@ export const ListGroups = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Basic Examples"
             subTitle="List groups are a flexible and powerful component for displaying a series of content."
@@ -319,7 +319,7 @@ export const ListGroups = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="UI Examples"
             className="mt-5"

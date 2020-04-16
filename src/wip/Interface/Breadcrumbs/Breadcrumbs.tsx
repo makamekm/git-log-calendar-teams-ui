@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Breadcrumbs = () => (
   <Container>
@@ -19,7 +19,7 @@ export const Breadcrumbs = () => (
     {/* START Header 1 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={1}
           title="Breadcrumbs Defaults"
           subTitle={

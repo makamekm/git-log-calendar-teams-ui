@@ -27,9 +27,9 @@ import {
 } from "~/components";
 import { randomAvatar } from "~/utilities";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ProjectsSmHeader } from "~/app/Projects/ProjectsSmHeader";
-import { Attachment } from "~/app/Attachment";
-import { Comment } from "~/app/Comment";
+import { ProjectsSmHeader } from "~/wip/Projects/ProjectsSmHeader";
+import { Attachment } from "~/wip/Attachment";
+import { Comment } from "~/wip/Comment";
 
 export const TasksDetails = () => (
   <React.Fragment>

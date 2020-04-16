@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { SearchResultsLeftNav } from "~/app/SearchResults/SearchResultsLeftNav";
-import { SearchResultsHeader } from "~/app/SearchResults/SearchResultsHeader";
-import { VideosResultsCard } from "~/app/SearchResults/VideosResultsCard";
-import { Paginations } from "~/app/Paginations";
+import { SearchResultsLeftNav } from "~/wip/SearchResults/SearchResultsLeftNav";
+import { SearchResultsHeader } from "~/wip/SearchResults/SearchResultsHeader";
+import { VideosResultsCard } from "~/wip/SearchResults/VideosResultsCard";
+import { Paginations } from "~/wip/Paginations";
 
 export const VideosResults = () => (
   <React.Fragment>

@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Row, CardColumns, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ProjectsSmHeader } from "~/app/Projects/ProjectsSmHeader";
-import { GalleryCard } from "~/app/Gallery/GalleryCard";
-import { Paginations } from "~/app/Paginations";
+import { ProjectsSmHeader } from "~/wip/Projects/ProjectsSmHeader";
+import { GalleryCard } from "~/wip/Gallery/GalleryCard";
+import { Paginations } from "~/wip/Paginations";
 
 export const GalleryGrid = () => (
   <Container>

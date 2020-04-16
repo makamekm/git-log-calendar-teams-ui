@@ -21,9 +21,9 @@ import {
   Nav,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { TinyLineChart } from "~/app/Reports/TinyLineChart";
-import { TinyAreaChart } from "~/app/Reports/TinyAreaChart";
-import { TinyArcChart } from "~/app/Reports/TinyArcChart";
+import { TinyLineChart } from "~/wip/Reports/TinyLineChart";
+import { TinyAreaChart } from "~/wip/Reports/TinyAreaChart";
+import { TinyArcChart } from "~/wip/Reports/TinyArcChart";
 
 export const Reports = () => (
   <Container>

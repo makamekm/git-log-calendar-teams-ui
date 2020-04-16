@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Row, CardColumns, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { SearchResultsLeftNav } from "~/app/SearchResults/SearchResultsLeftNav";
-import { SearchResultsHeader } from "~/app/SearchResults/SearchResultsHeader";
-import { ImagesResultsCard } from "~/app/SearchResults/ImagesResultsCard";
-import { Paginations } from "~/app/Paginations";
+import { SearchResultsLeftNav } from "~/wip/SearchResults/SearchResultsLeftNav";
+import { SearchResultsHeader } from "~/wip/SearchResults/SearchResultsHeader";
+import { ImagesResultsCard } from "~/wip/SearchResults/ImagesResultsCard";
+import { Paginations } from "~/wip/Paginations";
 
 export const ImagesResults = () => (
   <React.Fragment>

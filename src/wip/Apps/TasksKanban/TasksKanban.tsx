@@ -13,8 +13,8 @@ import {
   UncontrolledTooltip,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ProjectsSmHeader } from "~/app/Projects/ProjectsSmHeader";
-import { TasksCardGrid } from "~/app/Tasks/TasksCardGrid";
+import { ProjectsSmHeader } from "~/wip/Projects/ProjectsSmHeader";
+import { TasksCardGrid } from "~/wip/Tasks/TasksCardGrid";
 
 export const TasksKanban = () => (
   <React.Fragment>

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { LogoThemed } from "../LogoThemed/LogoThemed";
+import { LogoThemed } from "./LogoThemed";
 
-const HeaderAuth = (props: {
+const HeaderPanel = (props: {
   icon?: string;
   iconClassName?: string;
   title?: any;
@@ -24,11 +24,11 @@ const HeaderAuth = (props: {
   </div>
 );
 
-HeaderAuth.defaultProps = {
+HeaderPanel.defaultProps = {
   title: "Waiting for Data...",
   text:
     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure voluptas aperiam odit, reiciendis dicta nihil.",
   iconClassName: "text-theme",
 };
 
-export { HeaderAuth };
+export { HeaderPanel };

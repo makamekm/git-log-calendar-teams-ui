@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { LogoThemed } from "../LogoThemed/LogoThemed";
+import { LogoThemed } from "~/app/LogoThemed";
 
 const HeaderAuth = (props: {
   icon?: string;

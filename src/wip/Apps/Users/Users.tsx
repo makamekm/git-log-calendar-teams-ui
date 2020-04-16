@@ -3,8 +3,8 @@ import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { UsersList } from "./UsersList";
 import { UsersGrid } from "./UsersGrid";
-import { UsersLeftNav } from "~/app/Users/UsersLeftNav";
-import { ProjectsSmHeader } from "~/app/Projects/ProjectsSmHeader";
+import { UsersLeftNav } from "~/wip/Apps/Users/components/UsersLeftNav";
+import { ProjectsSmHeader } from "~/wip/Projects/ProjectsSmHeader";
 
 export const Users = (props: { match?: any }) => (
   <React.Fragment>

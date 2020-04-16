@@ -1,12 +1,12 @@
 import React from "react";
 import "./app.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import { RoutedContent } from "~/routing";
-import { AppLayout } from "~/layout";
+import { RoutedContent } from "./routing";
+import { AppLayout } from "./layout/AppLayout";
 import {
   ServiceProviderFactory,
   ServiceProviderHook,
-} from "~/components/ServiceProvider/ServiceProvider";
+} from "./components/ServiceProvider/ServiceProvider";
 import { AuthService } from "./app/Auth/AuthService";
 import { LoadingScreen } from "./app/Loading/LoadingScreen";
 import { LoadingService } from "./app/Loading/LoadingService";

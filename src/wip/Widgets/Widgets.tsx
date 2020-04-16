@@ -24,27 +24,27 @@ import {
   Button,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
-import { TasksCardGrid } from "~/app/Tasks/TasksCardGrid";
-import { ProfileOverviewCard } from "~/app/Profile/ProfileOverviewCard";
-import { GalleryCard } from "~/app/Gallery/GalleryCard";
-import { UsersResultsCard } from "~/app/SearchResults/UsersResultsCard";
-import { ImagesResultsCard } from "~/app/SearchResults/ImagesResultsCard";
-import { Attachment } from "~/app/Attachment";
-import { Comment } from "~/app/Comment";
-import { ChatLeft } from "~/app/Chat/ChatLeft";
-import { ChatRight } from "~/app/Chat/ChatRight";
-import { ChatCardFooter } from "~/app/Chat/ChatCardFooter";
-import { SessionsByDevice } from "~/app/Analytics/SessionsByDevice";
-import { MetricVsTarget } from "~/app/Analytics/MetricVsTarget";
-import { Activity } from "~/app/Dropdowns/Activity";
-import { WebsitePerformance } from "~/app/Analytics/WebsitePerformance";
-import { Messages } from "~/app/Dropdowns/Messages";
-import { TasksMedia } from "~/app/ProjectsDashboards/TasksMedia";
-import { ProjectsList } from "~/app/ProjectsDashboards/ProjectsList";
-import { SimpleLineChart } from "~/app/Graphs/SimpleLineChart";
-import { TinyAreaChart } from "~/app/Graphs/TinyAreaChart";
-import { TimelineMini } from "~/app/Timeline/TimelineMini";
+import { HeaderSection } from "~/app/HeaderSection";
+import { TasksCardGrid } from "~/wip/Tasks/TasksCardGrid";
+import { ProfileOverviewCard } from "~/wip/Profile/ProfileOverviewCard";
+import { GalleryCard } from "~/wip/Gallery/GalleryCard";
+import { UsersResultsCard } from "~/wip/SearchResults/UsersResultsCard";
+import { ImagesResultsCard } from "~/wip/SearchResults/ImagesResultsCard";
+import { Attachment } from "~/wip/Attachment";
+import { Comment } from "~/wip/Comment";
+import { ChatLeft } from "~/wip/Chat/ChatLeft";
+import { ChatRight } from "~/wip/Chat/ChatRight";
+import { ChatCardFooter } from "~/wip/Chat/ChatCardFooter";
+import { SessionsByDevice } from "~/wip/Analytics/SessionsByDevice";
+import { MetricVsTarget } from "~/wip/Analytics/MetricVsTarget";
+import { Activity } from "~/wip/Dropdowns/Activity";
+import { WebsitePerformance } from "~/wip/Analytics/WebsitePerformance";
+import { Messages } from "~/wip/Dropdowns/Messages";
+import { TasksMedia } from "~/wip/ProjectsDashboards/TasksMedia";
+import { ProjectsList } from "~/wip/ProjectsDashboards/ProjectsList";
+import { SimpleLineChart } from "~/wip/Graphs/SimpleLineChart";
+import { TinyAreaChart } from "~/wip/Graphs/TinyAreaChart";
+import { TimelineMini } from "~/wip/Timeline/TimelineMini";
 
 export const Widgets = () => (
   <Container>
@@ -52,7 +52,7 @@ export const Widgets = () => (
     {/* START Header 1 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={1}
           title="Widgets Metrics"
           subTitle={
@@ -141,7 +141,7 @@ export const Widgets = () => (
     {/* START Header 2 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={2}
           title="Widgets Grids"
           className="mt-5"
@@ -167,7 +167,7 @@ export const Widgets = () => (
     {/* START Header 3 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={3}
           title="Widgets Texts"
           className="mt-5"
@@ -517,7 +517,7 @@ export const Widgets = () => (
     {/* START Header 4 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={4}
           title="Widgets Graphs"
           className="mt-5"

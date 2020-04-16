@@ -11,7 +11,7 @@ import {
   PaginationLink,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Paginations = () => (
   <React.Fragment>
@@ -20,7 +20,7 @@ export const Paginations = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Paginations"
             subTitle={
@@ -136,7 +136,7 @@ export const Paginations = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Paginations with Icons"
             className="mt-5"
@@ -337,7 +337,7 @@ export const Paginations = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Paginations Sizes"
             className="mt-5"

@@ -18,8 +18,8 @@ import {
   UncontrolledTooltip,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { MailboxLeftNav } from "~/app/Mailbox/MailboxLeftNav";
-import { Paginations } from "~/app/Paginations";
+import { MailboxLeftNav } from "~/wip/Mailbox/MailboxLeftNav";
+import { Paginations } from "~/wip/Paginations";
 import { TrTableInbox } from "./components/TrTableInbox";
 
 export const Inbox = () => (

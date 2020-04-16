@@ -15,7 +15,7 @@ import {
   Container,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 import classes from "./Sliders.scss";
 
@@ -220,7 +220,7 @@ export class Sliders extends React.Component {
         <Row>
           <Col>
             {/* START Header 1 */}
-            <HeaderDemo
+            <HeaderSection
               no={1}
               title="Marks"
               subTitle={<React.Fragment>See 6 examples below:</React.Fragment>}
@@ -307,7 +307,7 @@ export class Sliders extends React.Component {
             {/* END Card Example */}
 
             {/* START Header 2 */}
-            <HeaderDemo
+            <HeaderSection
               no={2}
               title="Range"
               className="mt-5"
@@ -395,7 +395,7 @@ export class Sliders extends React.Component {
             {/* END Card Example */}
 
             {/* START Header 3 */}
-            <HeaderDemo
+            <HeaderSection
               no={3}
               title="Sliders"
               className="mt-5"
@@ -470,7 +470,7 @@ export class Sliders extends React.Component {
             </Card>
 
             {/* START Header 4 */}
-            <HeaderDemo
+            <HeaderSection
               no={4}
               title="Vertical Sliders"
               className="mt-5"

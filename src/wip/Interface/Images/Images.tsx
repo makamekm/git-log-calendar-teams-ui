@@ -21,7 +21,7 @@ import {
 } from "~/components";
 import { randomAvatar } from "~/utilities";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
+import { HeaderSection } from "~/app/HeaderSection";
 
 export const Images = () => (
   <Container>
@@ -29,7 +29,7 @@ export const Images = () => (
     {/* START Header 1 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={4}
           title="Images"
           subTitle="Documentation and examples for opting images into responsive behavior."
@@ -173,7 +173,7 @@ export const Images = () => (
     {/* START Header 2 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={2}
           title="Images: Title Options"
           className="mt-5"
@@ -254,7 +254,7 @@ export const Images = () => (
     {/* START Header 3 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={3}
           title="Images: Heading Options"
           className="mt-5"
@@ -383,7 +383,7 @@ export const Images = () => (
     {/* START Header 4 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={4}
           title="Images: Footer Options"
           className="mt-5"
@@ -602,7 +602,7 @@ export const Images = () => (
     {/* START Header 5 */}
     <Row>
       <Col lg={12}>
-        <HeaderDemo
+        <HeaderSection
           no={5}
           title="Images: Image Overlays"
           className="mt-5"

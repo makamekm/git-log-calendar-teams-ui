@@ -34,8 +34,8 @@ import {
   UncontrolledTabsTabContent,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
-import { CardTextDemo } from "~/app/CardTextDemo";
+import { HeaderSection } from "~/app/HeaderSection";
+import { CardTextDemo } from "./CardTextDemo";
 
 export const CardsHeaders = () => (
   <React.Fragment>
@@ -44,7 +44,7 @@ export const CardsHeaders = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Cards Headers - Text"
             subTitle="Provide contextual feedback messages"
@@ -190,7 +190,7 @@ export const CardsHeaders = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Cards Headers - Navs"
             className="mt-5"
@@ -385,7 +385,7 @@ export const CardsHeaders = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={3}
             title="Cards Headers - Buttons"
             className="mt-5"
@@ -783,7 +783,7 @@ export const CardsHeaders = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={4}
             title="Cards Headers - Forms"
             className="mt-5"
@@ -1257,7 +1257,7 @@ export const CardsHeaders = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={5}
             title="Cards Headers - Various"
             className="mt-5"

@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { HeaderDemo } from "~/app/HeaderDemo";
-import { CardRgbaColor } from "~/app/Colors/CardRgbaColor";
-import { CardColor } from "~/app/Colors/CardColor";
+import { HeaderSection } from "~/app/HeaderSection";
+import { CardRgbaColor } from "~/wip/Colors/CardRgbaColor";
+import { CardColor } from "~/wip/Colors/CardColor";
 
 export const Colors = () => (
   <React.Fragment>
@@ -12,7 +12,7 @@ export const Colors = () => (
       {/* START Header 1 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={1}
             title="Colors"
             subTitle="Use any of these color variables as they are or reassign them to more meaningful variables for your project."
@@ -118,7 +118,7 @@ export const Colors = () => (
       {/* START Header 2 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="All Colors"
             className="mt-5"
@@ -240,7 +240,7 @@ export const Colors = () => (
       {/* START Header 3 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="RGBA Colors"
             className="mt-5"
@@ -293,7 +293,7 @@ export const Colors = () => (
       {/* START Header 4 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="All Colors"
             className="mt-5"
@@ -445,7 +445,7 @@ export const Colors = () => (
       {/* START Header 5 */}
       <Row>
         <Col lg={12}>
-          <HeaderDemo
+          <HeaderSection
             no={2}
             title="Gray & White RGBA"
             className="mt-5"
