@@ -201,6 +201,7 @@ export const SidebarMiddleNav = () => (
     />
 
     <SidebarMenuItem
+      isWIP
       icon={<i className="fa fa-fw fa-book"></i>}
       title="Docs"
       href="https://getbootstrap.com/docs/4.0"
