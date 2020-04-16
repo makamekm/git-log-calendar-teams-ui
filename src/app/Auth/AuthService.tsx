@@ -64,7 +64,7 @@ export const AuthService = createService<AuthState>(
         state.error = "";
         state.isLoading = true;
         try {
-          await new Promise((r) => setTimeout(r, 1000));
+          // await new Promise((r) => setTimeout(r, 1000));
           state.isAuthenticated = CONFIG_PIN === password;
         } catch (error) {
           state.error = error.message;

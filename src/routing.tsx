@@ -95,15 +95,18 @@ import { LayoutNavbar } from "./routes/Layouts/NavbarOnly/components/LayoutNavba
 import { ProtectedRoute } from "~/app/Auth/ProtectedRoute";
 import { AuthScreen } from "~/app/Auth/AuthScreen";
 import { LogoutRoute } from "~/app/Auth/LogoutRoute";
+import { Dashboard } from "./app/Dashboard/Dashboard";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
   return (
     <Switch>
-      <Redirect from="/" to="/dashboards/analytics" exact />
+      <Redirect from="/" to="/dashboards" exact />
 
       <Route path="/login/:loginFrom" exact component={AuthScreen} />
       <LogoutRoute path="/logout/:loginFrom" exact />
+
+      <ProtectedRoute path="/dashboards" exact component={Dashboard} />
 
       <ProtectedRoute
         path="/dashboards/analytics"
@@ -227,7 +230,7 @@ export const RoutedContent = () => {
 
       {/*    404    */}
       <Route component={Error404} path="/pages/error-404" />
-      {/* <Redirect to="/pages/error-404" /> */}
+      <Redirect to="/pages/error-404" />
     </Switch>
   );
 };
