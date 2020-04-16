@@ -1,41 +1,189 @@
 import React from "react";
-import faker from "faker/locale/en_US";
+import { reaction } from "mobx";
 import { useLocalStore } from "mobx-react";
+import { Instagram } from "react-content-loader";
+import moment from "moment";
+import { debounce } from "underscore";
 
-import { Container, Row, Col, Media, Table, Badge } from "~/components";
+import {
+  Container,
+  Row,
+  Col,
+  Media,
+  Table,
+  Badge,
+  Card,
+  CardBody,
+  CardTitle,
+  ButtonToolbar,
+  ButtonGroup,
+  UncontrolledButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { TinyDonutChart } from "~/wip/ProjectsDashboards/TinyDonutChart";
 import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutChartAllProjects";
 import { ipc } from "~/shared/ipc";
+import { CalendarActivities } from "./CalendarActivities";
+
+interface DashboardState {
+  config: any;
+  teamStats: {
+    [team: string]: {
+      day: string;
+      value: number;
+    }[];
+  };
+  isLoading: boolean;
+  limit: number;
+  load: () => Promise<void>;
+}
+
+const periods = {
+  30: "Last Month",
+  90: "Last 3 Months",
+  180: "Last 6 Months",
+  360: "Last Year",
+};
+
+const numberWithCommas = (x: number) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+const PeriodValues = ({ state }: { state: DashboardState }) => {
+  return (
+    <>
+      {Object.keys(periods).map((key: any) => {
+        key = Number(key);
+        return (
+          <DropdownItem
+            key={key}
+            active={state.limit === key}
+            onClick={() => {
+              state.limit = key;
+            }}
+          >
+            {periods[key]}
+          </DropdownItem>
+        );
+      })}
+    </>
+  );
+};
+
+const TeamActivitiesCalendars = ({ state }: { state: DashboardState }) => {
+  return (
+    <>
+      {state.config.teams &&
+        state.config.teams.map((team) => {
+          return (
+            <Row key={team.name}>
+              <Col lg={12}>
+                <Card className="mb-3">
+                  <CardBody>
+                    <CardTitle className="mb-0 d-flex">
+                      <h6>
+                        Calendar Team Activity for <strong>{team.name}</strong>
+                      </h6>
+                    </CardTitle>
+                    <div className="d-flex justify-content-center">
+                      {state.isLoading ? (
+                        <Instagram height={"300px"} />
+                      ) : (
+                        state.teamStats[team.name] && (
+                          <CalendarActivities
+                            height={"200px"}
+                            data={state.teamStats[team.name]}
+                            limit={state.limit}
+                          />
+                        )
+                      )}
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          );
+        })}
+    </>
+  );
+};
 
 export const Dashboard = () => {
-  const state = useLocalStore<{
-    stats: any[];
-    isLoading: boolean;
-    load: () => Promise<void>;
-  }>(() => ({
-    stats: [],
+  const state = useLocalStore<DashboardState>(() => ({
+    config: {},
+    teamStats: {},
     isLoading: false,
+    limit: 30,
     load: async () => {
-      state.stats = await ipc.handlers.GET_CALENDAR_TEAM();
-      console.log(state.stats);
+      state.isLoading = true;
+      state.config = await ipc.handlers.GET_CONFIG();
+      console.log(state.limit);
+      const data = await ipc.handlers.GET_CALENDAR_DATA(state.limit);
+      const prepearedData = Object.keys(data).reduce((map, team) => {
+        map[team] = Object.keys(data[team]).map((day) => ({
+          day,
+          value: data[team][day],
+        }));
+        return map;
+      }, {});
+      state.teamStats = prepearedData;
+      state.isLoading = false;
     },
   }));
+
+  React.useEffect(
+    () =>
+      reaction(
+        () => [state.limit],
+        debounce(() => {
+          state.load();
+        }, 100)
+      ),
+    [state]
+  );
 
   React.useEffect(() => {
     state.load();
   }, [state]);
 
+  const now = moment().format("YYYY/MM/DD");
+  const past = moment().subtract(state.limit, "days").format("YYYY/MM/DD");
+
   return (
     <Container>
       <Row className="mb-5">
         <Col lg={12}>
-          <HeaderMain title="Projects" className="mb-4 mb-lg-5" />
-          <p>{faker.lorem.paragraph()}</p>
+          <div className="d-flex flex-wrap mb-4 pb-2">
+            <HeaderMain title="Dashboard" className="mt-0 mb-3" />
+            <ButtonToolbar className="ml-auto">
+              <ButtonGroup className="align-self-start mr-2 mt-0 mb-3">
+                <UncontrolledButtonDropdown className="ml-auto flex-column">
+                  <DropdownToggle
+                    color="link"
+                    className="text-right pl-0 text-decoration-none mb-2"
+                  >
+                    <i className="fa fa-calendar-o text-body mr-2"></i>
+                    {periods[state.limit]}
+                    <i className="fa fa-angle-down text-body ml-2" />
+                  </DropdownToggle>
+                  <div className="small">
+                    {past} to {now}
+                  </div>
+                  <DropdownMenu>
+                    <DropdownItem header>Select Period:</DropdownItem>
+                    <PeriodValues state={state} />
+                  </DropdownMenu>
+                </UncontrolledButtonDropdown>
+              </ButtonGroup>
+            </ButtonToolbar>
+          </div>
         </Col>
         <Col lg={3}>
           <div className="hr-text hr-text-center my-2">
-            <span>Payments</span>
+            <span>Commits</span>
           </div>
           <Row>
             <Col xs={6} className="text-center">
@@ -43,39 +191,39 @@ export const Dashboard = () => {
                 <i className="fa fa-circle text-primary mr-2"></i>
                 Today
               </p>
-              <h4 className="mt-2 mb-0">$3,267</h4>
+              <h4 className="mt-2 mb-0">3,267</h4>
             </Col>
             <Col xs={6} className="text-center">
               <p className="text-center mb-0">
                 <i className="fa fa-circle text-info mr-2"></i>
-                This Month
+                {periods[state.limit]}
               </p>
-              <h4 className="mt-2 mb-0">$8,091</h4>
+              <h4 className="mt-2 mb-0">8,091</h4>
             </Col>
           </Row>
           <div className="hr-text hr-text-center mb-2 mt-3">
-            <span>Invoices</span>
+            <span>Line Changes</span>
           </div>
           <Row className="mb-4 mb-xl-0">
             <Col xs={6} className="text-center">
               <p className="text-center mb-0">
                 <i className="fa fa-circle text-warning mr-2"></i>
-                Due
+                Today
               </p>
-              <h4 className="mt-2 mb-0">$4,007</h4>
+              <h4 className="mt-2 mb-0">4,007</h4>
             </Col>
             <Col xs={6} className="text-center">
               <p className="text-center mb-0">
                 <i className="fa fa-circle text-danger mr-2"></i>
-                Overdue
+                {periods[state.limit]}
               </p>
-              <h4 className="mt-2 mb-0">$11,091</h4>
+              <h4 className="mt-2 mb-0">11,091</h4>
             </Col>
           </Row>
         </Col>
         <Col lg={3} md={6}>
           <div className="hr-text hr-text-left my-2">
-            <span>All Tasks</span>
+            <span>Top 4 Projects</span>
           </div>
           <Media>
             <Media left className="mr-3">
@@ -94,12 +242,17 @@ export const Dashboard = () => {
                 <i className="fa fa-circle mr-1 text-success"></i>
                 <span className="text-inverse">34</span> Completed
               </div>
+              <div>
+                <i className="fa fa-circle mr-1 text-primary"></i>
+                <span className="text-inverse">24</span> Behind
+              </div>
             </Media>
           </Media>
         </Col>
+
         <Col lg={3} md={6} className="mb-4 mb-lg-0">
           <div className="hr-text hr-text-left my-2">
-            <span>All Projects</span>
+            <span>Top 4 Developers</span>
           </div>
           <Media>
             <Media left className="mr-3">
@@ -118,12 +271,16 @@ export const Dashboard = () => {
                 <i className="fa fa-circle mr-1 text-purple"></i>
                 <span className="text-inverse">2</span> Completed
               </div>
+              <div>
+                <i className="fa fa-circle mr-1 text-red"></i>
+                <span className="text-inverse">2</span> Completed
+              </div>
             </Media>
           </Media>
         </Col>
         <Col lg={3}>
           <div className="hr-text hr-text-left my-2">
-            <span>My Stats</span>
+            <span>All Stats</span>
           </div>
           <Table size="sm">
             <tbody>
@@ -136,7 +293,7 @@ export const Dashboard = () => {
                 </td>
               </tr>
               <tr>
-                <td className="text-inverse">Open Tasks</td>
+                <td className="text-inverse">Active Teams</td>
                 <td className="text-right">
                   <Badge color="primary" pill>
                     4
@@ -144,18 +301,10 @@ export const Dashboard = () => {
                 </td>
               </tr>
               <tr>
-                <td className="text-inverse">Support Tickets</td>
+                <td className="text-inverse">Active Developers</td>
                 <td className="text-right">
                   <Badge color="info" pill>
                     15
-                  </Badge>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-inverse">Active Timers</td>
-                <td className="text-right">
-                  <Badge color="secondary" pill>
-                    0
                   </Badge>
                 </td>
               </tr>
@@ -163,6 +312,7 @@ export const Dashboard = () => {
           </Table>
         </Col>
       </Row>
+      <TeamActivitiesCalendars state={state} />
     </Container>
   );
 };

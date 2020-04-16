@@ -86,6 +86,7 @@
     "react-bootstrap-table2-paginator": "^2.1.2",
     "react-bootstrap-table2-toolkit": "^2.1.2",
     "react-bootstrap-typeahead": "^4.1.0",
+    "react-content-loader": "^5.0.4",
     "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^10.2.2",

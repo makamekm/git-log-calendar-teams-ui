@@ -101,6 +101,7 @@ app.on("ready", () => {
   createTray();
   if (process.env.NODE_ENV === "development") {
     createWindow();
+    mainWindow.webContents.openDevTools();
   }
 });
 

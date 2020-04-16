@@ -20,7 +20,15 @@ export interface Ipc {
       appVersion: string;
     };
     COLLECT_STATS: () => void;
-    GET_CALENDAR_TEAM: () => any[];
+    GET_CALENDAR_DATA: (
+      limit: number
+    ) => {
+      [team: string]: {
+        [day: string]: number;
+      };
+    };
+    GET_CONFIG: () => any;
+    GET_DATA: () => any;
   };
   sends: {
     ON_COLLECT_STATS: () => void;
@@ -45,9 +53,14 @@ export const ipc = {
       ipcRenderer.invoke(nameofHandler("APP_INFO")),
     COLLECT_STATS: (): Promise<ReturnType<Ipc["handlers"]["COLLECT_STATS"]>> =>
       ipcRenderer.invoke(nameofHandler("COLLECT_STATS")),
-    GET_CALENDAR_TEAM: (): Promise<
-      ReturnType<Ipc["handlers"]["GET_CALENDAR_TEAM"]>
-    > => ipcRenderer.invoke(nameofHandler("GET_CALENDAR_TEAM")),
+    GET_CALENDAR_DATA: (
+      ...args: Parameters<Ipc["handlers"]["GET_CALENDAR_DATA"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_CALENDAR_DATA"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_CALENDAR_DATA"), ...args),
+    GET_CONFIG: (): Promise<ReturnType<Ipc["handlers"]["GET_CONFIG"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_CONFIG")),
+    GET_DATA: (): Promise<ReturnType<Ipc["handlers"]["GET_DATA"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_DATA")),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>

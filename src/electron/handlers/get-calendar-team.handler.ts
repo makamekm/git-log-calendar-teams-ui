@@ -1,17 +1,28 @@
 import { ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 
-import { readData } from "git-log-calendar-teams";
+import { normalizeCalendarData } from "git-log-calendar-teams";
 
 ipcMain.handle(
-  nameofHandler("GET_CALENDAR_TEAM"),
+  nameofHandler("GET_CALENDAR_DATA"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_CALENDAR_TEAM"]>
-  ): Promise<ReturnType<Ipc["handlers"]["GET_CALENDAR_TEAM"]>> => {
-    const { fileMap, config } = await readData();
-    console.log(4324324);
+    ...args: Parameters<Ipc["handlers"]["GET_CALENDAR_DATA"]>
+  ): Promise<ReturnType<Ipc["handlers"]["GET_CALENDAR_DATA"]>> => {
+    const [limit] = args;
 
-    return [];
+    const config = await ipc.handlers.GET_CONFIG();
+    const fileMap = await ipc.handlers.GET_DATA();
+
+    const report = {
+      limit,
+      // compareTeams: ["others"],
+      // compareUsers: ["user"],
+    };
+    console.log(report);
+
+    const { teamDates } = normalizeCalendarData(report, fileMap, config);
+
+    return teamDates;
   }
 );
