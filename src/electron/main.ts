@@ -6,10 +6,13 @@ import {
   IpcRenderer,
   ipcMain,
   MenuItem,
+  powerSaveBlocker,
 } from "electron";
 import path from "path";
 import url from "url";
 import { ipc, nameofSends } from "~/shared/ipc";
+
+powerSaveBlocker.start("prevent-app-suspension");
 
 app.dock.hide();
 

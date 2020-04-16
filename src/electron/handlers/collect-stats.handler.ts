@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { app, ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 
 import { collect, clean } from "git-log-calendar-teams";
@@ -8,9 +8,11 @@ const COLLECT_INTERVAL = 1000 * 60 * 15;
 let isCollecting = false;
 
 if (process.env.NODE_ENV !== "development") {
-  setInterval(() => {
-    ipc.handlers.COLLECT_STATS();
-  }, COLLECT_INTERVAL);
+  app.on("ready", () => {
+    setInterval(() => {
+      ipc.handlers.COLLECT_STATS();
+    }, COLLECT_INTERVAL);
+  });
 }
 
 ipcMain.handle(
