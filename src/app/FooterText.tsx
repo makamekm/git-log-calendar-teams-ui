@@ -1,20 +1,20 @@
 import React from "react";
-// import { ipc } from "~/shared/ipc";
+import { ipc } from "~/shared/ipc";
 
 const FooterText = () => {
-  // const [state, setState] = React.useState({
-  //   appName: "345",
-  //   appVersion: "5435",
-  // });
+  const [state, setState] = React.useState({
+    appName: "-",
+    appVersion: "-",
+  });
 
-  // const askAppInfo = async () => {
-  //   const { appName, appVersion } = await ipc.handlers.APP_INFO();
-  //   setState({ appName, appVersion });
-  // };
+  const askAppInfo = async () => {
+    const { appName, appVersion } = await ipc.handlers.APP_INFO();
+    setState({ appName, appVersion });
+  };
 
-  // React.useEffect(() => {
-  //   askAppInfo();
-  // }, []);
+  React.useEffect(() => {
+    askAppInfo();
+  }, []);
 
   return (
     <React.Fragment>
@@ -27,9 +27,9 @@ const FooterText = () => {
       >
         github.com/makamekm
       </a>
-      {/* <p>
+      <div>
         {state.appName} {state.appVersion}
-      </p> */}
+      </div>
     </React.Fragment>
   );
 };

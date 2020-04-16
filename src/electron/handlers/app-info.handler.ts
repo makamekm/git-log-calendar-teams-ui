@@ -1,5 +1,5 @@
 import { app, ipcMain } from "electron";
-import { nameofHandler, Ipc } from "../../shared/ipc";
+import { nameofHandler, Ipc } from "~/shared/ipc";
 
 ipcMain.handle(
   nameofHandler("APP_INFO"),

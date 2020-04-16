@@ -1,10 +1,17 @@
-import { app, BrowserWindow, Tray, Menu, IpcRenderer } from "electron";
+import {
+  app,
+  BrowserWindow,
+  Tray,
+  Menu,
+  IpcRenderer,
+  ipcMain,
+  MenuItem,
+} from "electron";
 import path from "path";
 import url from "url";
-// import { ipc } from "~/shared/ipc";
+import { ipc, nameofSends } from "~/shared/ipc";
 
 app.dock.hide();
-// app.setName("Git Log Manager");
 
 declare global {
   var ipcRenderer: IpcRenderer;
@@ -22,18 +29,25 @@ const openWindow = () => {
 };
 
 function createTray() {
-  if (tray) {
-    return;
-  }
   tray = new Tray(path.resolve("./public/iconTemplate.png"));
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: "Collect Logs",
-      type: "normal",
-      click: async () => {
-        // ipc.handlers.APP_INFO
-      },
+  const collectButton = new MenuItem({
+    label: "Collect Logs",
+    type: "normal",
+    click: async () => {
+      try {
+        await ipc.handlers.COLLECT_STATS();
+      } catch (error) {
+        console.error(error);
+      }
     },
+  });
+
+  ipcMain.on(nameofSends("ON_COLLECT_STATS"), (_, value) => {
+    collectButton.enabled = !value;
+  });
+
+  const contextMenu = Menu.buildFromTemplate([
+    collectButton,
     {
       label: "Open Log Manager",
       type: "normal",
@@ -83,7 +97,7 @@ function createWindow() {
 app.on("ready", () => {
   createTray();
   if (process.env.NODE_ENV === "development") {
-    // createWindow();
+    createWindow();
   }
 });
 
@@ -96,5 +110,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   if (mainWindow != null) {
     mainWindow.focus();
+  } else if (process.env.NODE_ENV === "development") {
+    createWindow();
   }
 });

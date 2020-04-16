@@ -22,7 +22,7 @@
   "scripts": {
     "dev": "run-p start start-electron",
     "start": "export BROWSER=none && react-app-rewired start",
-    "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && wait-for-localhost 3000 && electron --remote-debugging-port=9223 .",
+    "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && export NODE_ENV=development && wait-for-localhost 3000 && electron --remote-debugging-port=9223 .",
     "start-electron:only": "export ELECTRON_START_URL=http://localhost:3000 && electron --remote-debugging-port=9223 .",
     "build": "react-app-rewired build",
     "build-electron": "mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared",
@@ -102,6 +102,7 @@
     "recharts": "^2.0.0-beta.5",
     "text-mask-addons": "^3.8.0",
     "ts-node": "^8.8.2",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3",
     "uuid": "^7.0.3"
   },
