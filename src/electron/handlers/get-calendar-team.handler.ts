@@ -19,7 +19,6 @@ ipcMain.handle(
       // compareTeams: ["others"],
       // compareUsers: ["user"],
     };
-    console.log(report);
 
     const { teamDates } = normalizeCalendarData(report, fileMap, config);
 

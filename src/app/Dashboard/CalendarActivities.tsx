@@ -18,7 +18,6 @@ export const CalendarActivities = ({
 }) => {
   const now = moment().format("YYYY-MM-DD");
   const past = moment().subtract(limit, "days").format("YYYY-MM-DD");
-  const maxValue = Math.max(...data.map((s) => s.value));
   return (
     <div
       className={className}

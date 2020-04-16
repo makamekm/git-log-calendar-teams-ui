@@ -16,6 +16,8 @@ ipcMain.handle(
       collectUnusedUsers(config);
       date = new Date();
     }
+    console.log(config.path);
+
     return config;
   }
 );
