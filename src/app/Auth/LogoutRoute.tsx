@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalStore } from "mobx-react";
 import { Route, Redirect, RouteProps } from "react-router";
-import { AuthService, useFromPath } from "./AuthContext";
+import { AuthService, useFromPath, getEncapsulatedPath } from "./AuthService";
 
 export const LogoutRoute: React.FC<RouteProps> = ({
   component: Component,
@@ -23,7 +23,7 @@ export const LogoutRoute: React.FC<RouteProps> = ({
       render={() => (
         <>
           {isReadyToRedirect && (
-            <Redirect to={"/login/" + from.replace(/\//gi, "_")} />
+            <Redirect to={"/login/" + getEncapsulatedPath(from)} />
           )}
         </>
       )}

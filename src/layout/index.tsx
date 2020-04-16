@@ -5,7 +5,7 @@ import {
   LayoutContent,
   LayoutSidebar,
 } from "~/components";
-import { RoutedNavbars, RoutedSidebars } from "~/routes";
+import { RoutedNavbars, RoutedSidebars } from "~/routing";
 
 export class AppLayout extends React.Component {
   render() {

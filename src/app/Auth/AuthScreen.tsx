@@ -12,7 +12,7 @@ import {
 } from "~/components";
 import { HeaderAuth } from "./HeaderAuth";
 import { FooterAuth } from "./FooterAuth";
-import { AuthService } from "./AuthContext";
+import { AuthService } from "./AuthService";
 
 export const AuthScreen = () => {
   const store = useLocalStore(() => ({

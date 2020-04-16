@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router";
 import { Route, Redirect, RouteProps } from "react-router";
-import { AuthService } from "./AuthContext";
+import { AuthService, getEncapsulatedPath } from "./AuthService";
 
 export const ProtectedRoute: React.FC<RouteProps> = ({
   component: Component,
@@ -16,7 +16,7 @@ export const ProtectedRoute: React.FC<RouteProps> = ({
         authService.isAuthenticated ? (
           <Component {...props} />
         ) : (
-          <Redirect to={"/login/" + pathname.replace(/\//gi, "_")} />
+          <Redirect to={"/login/" + getEncapsulatedPath(pathname)} />
         )
       }
     />

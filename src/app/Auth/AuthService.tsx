@@ -7,6 +7,7 @@ import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { LoadingService } from "~/app/Loading/LoadingService";
 
 const DEV_PASSWORD = "12345";
+const PATH_ENCAPSULATION = "$\\";
 
 export interface AuthState {
   history?: ReturnType<typeof useHistory>;
@@ -30,10 +31,25 @@ const removeLoadinghandler = () => {
   }, 200);
 };
 
+export const getEncapsulatedPath = (pathname: string) => {
+  return pathname.replace(/\//gi, PATH_ENCAPSULATION);
+};
+
+export const quoteRegExp = (str) => {
+  return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+};
+
 export const useFromPath = () => {
   let { pathname } = useLocation();
-  pathname = pathname && pathname.substr(pathname.indexOf("_"));
-  pathname = pathname && pathname.replace(/_/gi, "/");
+  const symIndex = pathname.indexOf(PATH_ENCAPSULATION);
+  if (symIndex >= 0) {
+    pathname =
+      pathname && pathname.substr(pathname.indexOf(PATH_ENCAPSULATION));
+    pathname =
+      pathname &&
+      pathname.replace(new RegExp(quoteRegExp(PATH_ENCAPSULATION), "gi"), "/");
+  }
+
   return pathname;
 };
 
