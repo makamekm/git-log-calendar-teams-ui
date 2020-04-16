@@ -22,6 +22,6 @@ function requireFolder(name) {
 requireFolder("handlers");
 requireFolder("channels");
 
-try {
-  require("electron-reloader")(module);
-} catch (_) {}
+// try {
+//   require("electron-reloader")(module);
+// } catch (_) {}
