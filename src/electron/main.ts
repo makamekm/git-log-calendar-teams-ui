@@ -20,7 +20,9 @@ import { AppUpdater } from "./updater";
 
 powerSaveBlocker.start("prevent-app-suspension");
 
-app.dock.hide();
+if (app.dock) {
+  app.dock.hide();
+}
 
 declare global {
   var ipcRenderer: IpcRenderer;
@@ -100,10 +102,14 @@ function createWindow() {
     },
   });
   mainWindow.loadURL(startUrl);
-  app.dock.show();
+  if (app.dock) {
+    app.dock.show();
+  }
   mainWindow.on("closed", () => {
     mainWindow = null;
-    app.dock.hide();
+    if (app.dock) {
+      app.dock.hide();
+    }
   });
   if (OPEN_MAIN_WINDOW_DEV_TOOLS) {
     mainWindow.webContents.openDevTools();
