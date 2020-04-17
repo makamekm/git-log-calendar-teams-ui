@@ -108,7 +108,7 @@ function createWindow() {
     height: 600,
     minWidth: 800,
     minHeight: 600,
-    fullscreen: process.platform === "darwin",
+    fullscreen: !isWin,
     resizable: true,
     center: true,
     autoHideMenuBar: true,
