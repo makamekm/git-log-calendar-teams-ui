@@ -11,7 +11,10 @@ import {
 import path from "path";
 import url from "url";
 import { ipc, nameofSends } from "~/shared/ipc";
-import { OPEN_MAIN_WINDOW_ON_LOAD } from "@env/config";
+import {
+  OPEN_MAIN_WINDOW_ON_LOAD,
+  OPEN_MAIN_WINDOW_DEV_TOOLS,
+} from "@env/config";
 
 powerSaveBlocker.start("prevent-app-suspension");
 
@@ -96,13 +99,15 @@ function createWindow() {
     mainWindow = null;
     app.dock.hide();
   });
+  if (OPEN_MAIN_WINDOW_DEV_TOOLS) {
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 app.on("ready", () => {
   createTray();
   if (OPEN_MAIN_WINDOW_ON_LOAD) {
     createWindow();
-    mainWindow.webContents.openDevTools();
   }
 });
 
