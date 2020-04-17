@@ -28,7 +28,7 @@ import {
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
-import { useIsDirty, useDelay } from "~/hooks";
+import { useIsDirty, useDelay, useOnLoad } from "~/hooks";
 
 interface SettingsState {
   isDirty: boolean;
@@ -450,7 +450,6 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
 export const Settings = observer(() => {
   const state = useLocalStore<SettingsState>(() => ({
     isDirty: false,
-    configModel: null,
     config: null,
     isLoading: false,
     isLoadingDelay: false,
@@ -509,10 +508,7 @@ export const Settings = observer(() => {
     },
   }));
 
-  React.useEffect(() => {
-    state.load();
-  }, [state]);
-
+  useOnLoad(state.load);
   useIsDirty(state, "config");
   useDelay(state, "isLoading", "isLoadingDelay");
 

@@ -99,6 +99,7 @@ import { LogoutRoute } from "./app/Auth/LogoutRoute";
 import { Dashboard } from "./app/Dashboard/Dashboard";
 import { Error404 } from "./app/Error404";
 import { Settings } from "./app/Settings/Settings";
+import { LogsScreen } from "./app/Log/LogsScreen";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
@@ -113,13 +114,15 @@ export const RoutedContent = () => {
 
       <ProtectedRoute path="/dashboard" exact component={Dashboard} />
       <ProtectedRoute path="/settings" exact component={Settings} />
+      <Route path="/logs" exact component={LogsScreen} />
+
+      {/* WIP */}
+
       <ProtectedRoute
         path="/dashboards/analytics"
         exact
         component={Analytics}
       />
-
-      {/* WIP */}
 
       <ProtectedRoute
         isWIP

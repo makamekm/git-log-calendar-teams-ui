@@ -31,6 +31,17 @@ export interface Ipc {
     };
     GET_CONFIG: (force?: boolean) => Config;
     SAVE_CONFIG: (config: Config) => void;
+    LOG: (
+      log: any,
+      level?: "info" | "warn" | "error" | "verbose" | "debug" | "silly"
+    ) => void;
+    GET_LOGS: (
+      search: string,
+      limit?: number
+    ) => {
+      main: string[];
+      renderer: string[];
+    };
     GET_DATA: () => any;
   };
   sends: {
@@ -76,6 +87,14 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["SAVE_CONFIG"]>
     ): Promise<ReturnType<Ipc["handlers"]["SAVE_CONFIG"]>> =>
       ipcRenderer.invoke(nameofHandler("SAVE_CONFIG"), ...args),
+    LOG: (
+      ...args: Parameters<Ipc["handlers"]["LOG"]>
+    ): Promise<ReturnType<Ipc["handlers"]["LOG"]>> =>
+      ipcRenderer.invoke(nameofHandler("LOG"), ...args),
+    GET_LOGS: (
+      ...args: Parameters<Ipc["handlers"]["GET_LOGS"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_LOGS"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_LOGS"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>

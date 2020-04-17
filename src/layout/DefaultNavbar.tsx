@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { SidebarTrigger, Navbar, Nav, NavItem } from "~/components";
 import { LogoThemed } from "~/app/LogoThemed";
-import { NavbarActivityFeed } from "./NavbarActivityFeed";
-import { NavbarMessages } from "./NavbarMessages";
+// import { NavbarActivityFeed } from "./NavbarActivityFeed";
+// import { NavbarMessages } from "./NavbarMessages";
 import { NavbarUser } from "./NavbarUser";
 
 export const DefaultNavbar = () => (
@@ -23,7 +23,7 @@ export const DefaultNavbar = () => (
             <i className="fa fa-home"></i>
           </Link>
         </span>
-        <span className="navbar-text px-2">
+        {/* <span className="navbar-text px-2">
           <i className="fa fa-angle-right"></i>
         </span>
         <span className="navbar-text">
@@ -32,12 +32,12 @@ export const DefaultNavbar = () => (
         <span className="navbar-text px-2">
           <i className="fa fa-angle-right"></i>
         </span>
-        <span className="navbar-text">Page Link</span>
+        <span className="navbar-text">Page Link</span> */}
       </NavItem>
     </Nav>
     <Nav navbar className="ml-auto">
-      <NavbarActivityFeed />
-      <NavbarMessages className="ml-2" />
+      {/* <NavbarActivityFeed />
+      <NavbarMessages className="ml-2" /> */}
       <NavbarUser className="ml-2" />
     </Nav>
   </Navbar>

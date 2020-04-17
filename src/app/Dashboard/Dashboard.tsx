@@ -1,9 +1,7 @@
 import React from "react";
-import { reaction } from "mobx";
 import { useLocalStore, observer } from "mobx-react";
 import { Instagram } from "react-content-loader";
 import moment from "moment";
-import { debounce } from "underscore";
 
 import {
   Container,
@@ -28,7 +26,7 @@ import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutCha
 import { ipc } from "~/shared/ipc";
 import { CalendarActivities } from "./CalendarActivities";
 import { Config } from "~/shared/Config";
-import { useDelay } from "~/hooks";
+import { useDelay, useOnChange, useOnLoad } from "~/hooks";
 
 interface DashboardState {
   config: Config;
@@ -141,21 +139,8 @@ export const Dashboard = observer(() => {
     },
   }));
 
-  React.useEffect(
-    () =>
-      reaction(
-        () => [state.limit],
-        debounce(() => {
-          state.load();
-        }, 100)
-      ),
-    [state]
-  );
-
-  React.useEffect(() => {
-    state.load();
-  }, [state]);
-
+  useOnLoad(state.load);
+  useOnChange(state, "limit", state.load);
   useDelay(state, "isLoading", "isLoadingDelay");
 
   const now = moment().format("YYYY/MM/DD");

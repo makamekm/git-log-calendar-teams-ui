@@ -16,6 +16,12 @@ export const SidebarMiddleNav = () => (
     />
 
     <SidebarMenuItem
+      icon={<i className="fa fa-fw fa-file-text-o"></i>}
+      title="Logs"
+      to="/logs"
+    />
+
+    <SidebarMenuItem
       isWIP
       icon={<i className="fa fa-fw fa-home"></i>}
       title="Dashboards"

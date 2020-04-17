@@ -1,5 +1,5 @@
 import React from "react";
-import { autorun } from "mobx";
+import { autorun, reaction } from "mobx";
 import { debounce } from "underscore";
 
 export const useIsDirty: <T extends {
@@ -31,4 +31,29 @@ export const useDelay: <T>(
       setValue(state[name]);
     });
   }, [state, name, newName, delay]);
+};
+
+export const useOnChange: <T, K extends keyof T>(
+  state: T,
+  name: K,
+  fn: (value?: any) => any,
+  delay?: number
+) => void = (state, name, fn, delay = 100) => {
+  React.useEffect(
+    () => reaction(() => [state[name]], debounce(fn, delay, false)),
+    [state, name, fn, delay]
+  );
+};
+
+export const useOnLoad: <T>(fn: () => any, delay?: number) => void = (
+  fn,
+  delay = 0
+) => {
+  React.useEffect(() => {
+    if (delay) {
+      setTimeout(() => fn(), delay);
+    } else {
+      fn();
+    }
+  }, [fn, delay]);
 };
