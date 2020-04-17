@@ -37,9 +37,10 @@ ipcMain.handle(
     isCollecting = true;
     ipc.sends.ON_COLLECT_STATS(true);
     console.log("collecting started!");
+    const config = await ipc.handlers.GET_CONFIG();
     try {
-      await collect();
-      await clean();
+      await collect(config);
+      await clean(config);
     } catch (error) {
       console.error(error);
     }

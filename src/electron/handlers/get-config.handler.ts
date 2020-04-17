@@ -1,5 +1,5 @@
-import { ipcMain } from "electron";
-import { writeFileSync } from "fs";
+import { ipcMain, app } from "electron";
+import { writeFileSync, readFileSync, existsSync } from "fs";
 import path from "path";
 import YAML from "yaml";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
@@ -12,25 +12,42 @@ const REFRESH_CONFIG_TIMEOUT = 1000 * 10;
 let config: Config = null;
 let date = new Date();
 
+const readConfigFromHome = async () => {
+  const configPath = path.resolve(app.getPath("home"), "./git-log-config.yml");
+  let config = {
+    branch: "master",
+    cleanTmp: false,
+    debug: true,
+    tmpDir: path.resolve(app.getPath("home"), "./repositories"),
+    statsDir: path.resolve(app.getPath("home")),
+    evaluate: "item => item.linesChanged",
+    collectInterval: 15,
+    repositories: [],
+    teams: [],
+    users: [],
+    path: configPath,
+  };
+  if (existsSync(configPath)) {
+    try {
+      const file = readFileSync(configPath, "utf8");
+      config = YAML.parse(file);
+      config.path = configPath;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  // eslint-disable-next-line no-new-func
+  config.evaluate = Function('"use strict";return (' + config.evaluate + ")")();
+  return config;
+};
+
 const tryGetConfig = async () => {
   let config: Config = null;
   try {
     config = await getConfig();
   } catch (error) {
     console.error(error);
-    config = {
-      branch: "master",
-      cleanTmp: false,
-      debug: true,
-      tmpDir: path.resolve(process.cwd(), "./repositories"),
-      statsDir: path.resolve(process.cwd(), "./"),
-      evaluate: (item) => item.linesChanged,
-      collectInterval: 15,
-      repositories: [],
-      teams: [],
-      users: [],
-      path: path.resolve(process.cwd(), "./git-log-config.yml"),
-    };
+    config = await readConfigFromHome();
   }
   return config;
 };

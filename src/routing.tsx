@@ -106,6 +106,7 @@ export const RoutedContent = () => {
   return (
     <Switch>
       <Redirect from="/" to="/dashboard" exact />
+      <Redirect from="/index.html" to="/dashboard" exact />
 
       <Route path="/login/:loginFrom" exact component={AuthScreen} />
       <LogoutRoute path="/logout/:loginFrom" exact />
@@ -381,7 +382,8 @@ export const RoutedContent = () => {
       <ProtectedRoute isWIP path="/icons" exact component={Icons} />
 
       {/*    404    */}
-      <Redirect to="/404" />
+      <Route component={Error404} />
+      {/* <Redirect to="/404" /> */}
     </Switch>
   );
 };
