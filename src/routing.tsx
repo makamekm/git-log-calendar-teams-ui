@@ -98,6 +98,7 @@ import { AuthScreen } from "./app/Auth/AuthScreen";
 import { LogoutRoute } from "./app/Auth/LogoutRoute";
 import { Dashboard } from "./app/Dashboard/Dashboard";
 import { Error404 } from "./app/Error404";
+import { Settings } from "./app/Settings/Settings";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
@@ -111,6 +112,7 @@ export const RoutedContent = () => {
       <Route component={Error404} path="/404" />
 
       <ProtectedRoute path="/dashboard" exact component={Dashboard} />
+      <ProtectedRoute path="/settings" exact component={Settings} />
       <ProtectedRoute
         path="/dashboards/analytics"
         exact

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useLocalStore } from "mobx-react";
+import { useLocalStore, observer } from "mobx-react";
 import {
   Form,
   FormGroup,
@@ -14,7 +14,7 @@ import { HeaderAuth } from "./HeaderAuth";
 import { FooterAuth } from "./FooterAuth";
 import { AuthService } from "./AuthService";
 
-export const AuthScreen = () => {
+export const AuthScreen = observer(() => {
   const store = useLocalStore(() => ({
     password: "",
   }));
@@ -77,4 +77,4 @@ export const AuthScreen = () => {
       </EmptyLayoutSection>
     </EmptyLayout>
   );
-};
+});

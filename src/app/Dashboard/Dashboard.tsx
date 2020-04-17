@@ -1,6 +1,6 @@
 import React from "react";
 import { reaction } from "mobx";
-import { useLocalStore } from "mobx-react";
+import { useLocalStore, observer } from "mobx-react";
 import { Instagram } from "react-content-loader";
 import moment from "moment";
 import { debounce } from "underscore";
@@ -53,7 +53,7 @@ const numberWithCommas = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-const PeriodValues = ({ state }: { state: DashboardState }) => {
+const PeriodValues = observer(({ state }: { state: DashboardState }) => {
   return (
     <>
       {Object.keys(periods).map((key: any) => {
@@ -72,48 +72,51 @@ const PeriodValues = ({ state }: { state: DashboardState }) => {
       })}
     </>
   );
-};
+});
 
-const TeamActivitiesCalendars = ({ state }: { state: DashboardState }) => {
-  return (
-    <>
-      {state.config &&
-        state.config.teams &&
-        state.config.teams.map((team) => {
-          return (
-            <Row key={team.name}>
-              <Col lg={12}>
-                <Card className="mb-3">
-                  <CardBody>
-                    <CardTitle className="mb-0 d-flex">
-                      <h6>
-                        Calendar Team Activity for <strong>{team.name}</strong>
-                      </h6>
-                    </CardTitle>
-                    <div className="d-flex justify-content-center">
-                      {state.isLoading ? (
-                        <Instagram height={"300px"} />
-                      ) : (
-                        state.teamStats[team.name] && (
-                          <CalendarActivities
-                            height={"200px"}
-                            data={state.teamStats[team.name]}
-                            limit={state.limit}
-                          />
-                        )
-                      )}
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          );
-        })}
-    </>
-  );
-};
+const TeamActivitiesCalendars = observer(
+  ({ state }: { state: DashboardState }) => {
+    return (
+      <>
+        {state.config &&
+          state.config.teams &&
+          state.config.teams.map((team) => {
+            return (
+              <Row key={team.name}>
+                <Col lg={12}>
+                  <Card className="mb-3">
+                    <CardBody>
+                      <CardTitle className="mb-0 d-flex">
+                        <h6>
+                          Calendar Team Activity for{" "}
+                          <strong>{team.name}</strong>
+                        </h6>
+                      </CardTitle>
+                      <div className="d-flex justify-content-center">
+                        {state.isLoading ? (
+                          <Instagram height={"300px"} />
+                        ) : (
+                          state.teamStats[team.name] && (
+                            <CalendarActivities
+                              height={"200px"}
+                              data={state.teamStats[team.name]}
+                              limit={state.limit}
+                            />
+                          )
+                        )}
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            );
+          })}
+      </>
+    );
+  }
+);
 
-export const Dashboard = () => {
+export const Dashboard = observer(() => {
   const state = useLocalStore<DashboardState>(() => ({
     config: null,
     teamStats: {},
@@ -316,4 +319,4 @@ export const Dashboard = () => {
       <TeamActivitiesCalendars state={state} />
     </Container>
   );
-};
+});

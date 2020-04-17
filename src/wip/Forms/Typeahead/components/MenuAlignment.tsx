@@ -5,7 +5,9 @@ import { CustomInput, FormGroup } from "~/components";
 import options from "./exampleData";
 
 export class MenuAlignment extends React.Component {
-  state = {
+  state: {
+    align: any;
+  } = {
     align: "justify",
   };
 

@@ -4,7 +4,7 @@ import { ButtonToolbar, Button } from "~/components";
 import data from "./exampleData";
 
 export class PublicMethods extends React.Component {
-  _typeahead = React.createRef<Typeahead>();
+  _typeahead = React.createRef<any>();
 
   render() {
     return (

@@ -4,66 +4,65 @@ debug: true
 tmpDir: ./repositories
 statsDir: ./
 evaluate: item => item.linesChanged
-
 repositories:
-  - url: https://github.com/makamekm/git-log-calendar-teams.git
+  - branch: master
+    exclude: []
     name: git-log-calendar-teams
-    branch: master
-  - url: https://github.com/makamekm/figma-react.git
-    name: figma-react
-    branch: develop
+    url: https://github.com/makamekm/git-log-calendar-teams.git
+  - branch: develop
     exclude:
       - cicd
-  - url: https://github.com/facebook/react.git
+    name: figma-react
+    url: https://github.com/makamekm/figma-react.git
+  - branch: master
+    exclude: []
     name: react
-    branch: master
-
+    url: https://github.com/facebook/react.git
 users:
-  - name: Maxim Karpov
-    associations:
+  - associations:
       - makame
       - makame@mail.ru
       - Maxim Karpov
       - Karpov Maxim
-  - name: Dan Abramov
-    associations:
+    name: Maxim Karpov
+  - associations:
       - dan.abramov@gmail.com
-  - name: Dominic Gannaway
-    associations:
+    name: Dan Abramov
+  - associations:
       - dominic gannaway
-  - name: Andrew Clark
-    associations:
+    name: Dominic Gannaway
+  - associations:
       - andrew clark
-  - name: Sebastian Markbåge
-    associations:
+    name: Andrew Clark
+  - associations:
       - sebastian markbåge
-  - name: Brian Vaughn
-    associations:
+    name: Sebastian Markbåge
+  - associations:
       - bvaughn@fb.com
       - brian vaughn
-  - name: Sunil Pai
-    associations:
+    name: Brian Vaughn
+  - associations:
       - threepointone@fb.com
       - sunil pai
-  - name: Nicolas Gallagher
-    associations:
+    name: Sunil Pai
+  - associations:
       - necolas@fb.com
       - nicolas gallagher
-  - name: Will Douglas
-    associations:
+    name: Nicolas Gallagher
+  - associations:
       - willygdouglas@gmail.com
       - will douglas
-
+    name: Will Douglas
 teams:
   - name: team
     users:
       - Dan Abramov
       - Maxim Karpov
-  - name: others
-    invert: true
-    # exclude:
-    #   - cicd # if it cannon be done with repository exclude
-
+  - invert: true
+    name: others
+    users:
+      - Dan Abramov
+      - Maxim Karpov
 reportCalendarTeam:
   - team: team
     output: ./team.svg
@@ -74,7 +73,6 @@ reportCalendarTeam:
     output: ./others.svg
     compareTeams:
       - team
-
 reportCalendarUser:
   - user: Maxim Karpov
     limit: 60
@@ -85,7 +83,6 @@ reportCalendarUser:
     compareTeams:
       - team
     output: ./mkarpov-git-log.svg
-
 reportDonutUser:
   - users:
       - Maxim Karpov
@@ -102,14 +99,11 @@ reportDonutUser:
     repositories:
       - react
     output: ./react-year.svg
-
 reportMapUser:
   output: ./connections.svg
-
 reportRunningRepository:
   - limit: 30
-    # repositories:
-    #   - react
     output: ./repositories.svg
   - limit: 365
     output: ./year-repositories.svg
+path: /Users/mkarpov/projects/git-log-ui/git-log-config.yml
