@@ -11,6 +11,7 @@ import {
 import path from "path";
 import url from "url";
 import { ipc, nameofSends } from "~/shared/ipc";
+import { OPEN_MAIN_WINDOW_ON_LOAD } from "@env/config";
 
 powerSaveBlocker.start("prevent-app-suspension");
 
@@ -99,7 +100,7 @@ function createWindow() {
 
 app.on("ready", () => {
   createTray();
-  if (process.env.NODE_ENV === "development") {
+  if (OPEN_MAIN_WINDOW_ON_LOAD) {
     createWindow();
     mainWindow.webContents.openDevTools();
   }
@@ -114,7 +115,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   if (mainWindow != null) {
     mainWindow.focus();
-  } else if (process.env.NODE_ENV === "development") {
+  } else if (OPEN_MAIN_WINDOW_ON_LOAD) {
     createWindow();
   }
 });
