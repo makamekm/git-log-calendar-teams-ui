@@ -28,7 +28,7 @@
     "build": "react-app-rewired build",
     "build-electron": "mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared",
     "build-electron:windows": "mkdir build/src && robocopy electron build/electron /S & robocopy src/shared build/src/shared /S",
-    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js --publish never --icon=public/icon.win.ico",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js --publish always --icon=public/icon.win.ico",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
@@ -65,6 +65,7 @@
     "customize-cra": "^0.9.1",
     "debounce": "^1.2.0",
     "electron-log": "^4.1.1",
+    "electron-updater": "^4.2.5",
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
     "fs-backwards-stream": "^1.0.0",

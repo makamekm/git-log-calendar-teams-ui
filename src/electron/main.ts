@@ -15,6 +15,7 @@ import {
   OPEN_MAIN_WINDOW_ON_LOAD,
   OPEN_MAIN_WINDOW_DEV_TOOLS,
 } from "@env/config";
+import { AppUpdater } from "./updater";
 
 powerSaveBlocker.start("prevent-app-suspension");
 
@@ -26,6 +27,7 @@ declare global {
 
 let mainWindow: BrowserWindow;
 let tray: Tray;
+let updater: AppUpdater;
 
 const openWindow = () => {
   if (mainWindow == null) {
@@ -34,6 +36,10 @@ const openWindow = () => {
     mainWindow.focus();
   }
 };
+
+function createUpdater() {
+  updater = new AppUpdater();
+}
 
 function createTray() {
   tray = new Tray(path.resolve("./public/iconTemplate.png"));
@@ -106,6 +112,7 @@ function createWindow() {
 
 app.on("ready", () => {
   createTray();
+  createUpdater();
   if (OPEN_MAIN_WINDOW_ON_LOAD) {
     createWindow();
   }
