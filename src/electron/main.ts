@@ -27,7 +27,6 @@ declare global {
 
 let mainWindow: BrowserWindow;
 let tray: Tray;
-let updater: AppUpdater;
 
 const openWindow = () => {
   if (mainWindow == null) {
@@ -38,7 +37,7 @@ const openWindow = () => {
 };
 
 function createUpdater() {
-  updater = new AppUpdater();
+  new AppUpdater();
 }
 
 function createTray() {
@@ -60,12 +59,12 @@ function createTray() {
   });
 
   const contextMenu = Menu.buildFromTemplate([
-    collectButton,
     {
       label: "Open Log Manager",
       type: "normal",
       click: openWindow,
     },
+    collectButton,
     {
       label: "Quit",
       type: "normal",
