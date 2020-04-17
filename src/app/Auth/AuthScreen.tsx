@@ -66,8 +66,8 @@ export const AuthScreen = observer(() => {
         {/* END Form */}
         {/* START Bottom Links */}
         <div className="d-flex mb-5">
-          <Link to="/" className="ml-auto text-decoration-none">
-            <i className="fa fa-angle-left mr-2"></i> Try to back Home
+          <Link to="/logs" className="ml-auto text-decoration-none">
+            <i className="fa fa-file-text-o mr-2"></i> Open Logs
           </Link>
         </div>
         {/* END Bottom Links */}

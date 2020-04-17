@@ -15,6 +15,8 @@ export const LogoutRoute: React.FC<RouteProps> = observer(
       state.inited = true;
     }, [authService, state]);
     const isReadyToRedirect = state.inited && !authService.isLoading;
+    console.log("/login/" + getEncapsulatedPath(from));
+
     return (
       <Route
         {...rest}

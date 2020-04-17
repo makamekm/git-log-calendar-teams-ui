@@ -21,10 +21,10 @@ export interface AuthState {
 }
 
 const removeLoadinghandler = () => {
-  var bodyElement = document.querySelector("body");
-  var loaderElement = document.querySelector(".initial-loader-wrap");
+  const bodyElement = document.querySelector("body");
+  const loaderElement = document.querySelector(".initial-loader-wrap");
   bodyElement.classList.add("loaded");
-  setTimeout(function () {
+  setTimeout(() => {
     bodyElement.removeChild(loaderElement);
     bodyElement.classList.remove("loading", "loaded");
   }, 200);
@@ -75,7 +75,6 @@ export const AuthService = createService<AuthState>(
         state.error = "";
         state.isLoading = true;
         try {
-          await new Promise((r) => setTimeout(r, 5000));
           state.isAuthenticated = false;
         } catch (error) {
           state.error = error.message;
@@ -109,6 +108,8 @@ export const AuthService = createService<AuthState>(
     React.useEffect(() => {
       if (AUTO_LOGIN) {
         context.initAuthorize();
+      } else {
+        removeLoadinghandler();
       }
     }, [context]);
 
