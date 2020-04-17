@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import { writeFileSync } from "fs";
+import path from "path";
 import YAML from "yaml";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
@@ -11,6 +12,29 @@ const REFRESH_CONFIG_TIMEOUT = 1000 * 10;
 let config: Config = null;
 let date = new Date();
 
+const tryGetConfig = async () => {
+  let config: Config = null;
+  try {
+    config = await getConfig();
+  } catch (error) {
+    console.error(error);
+    config = {
+      branch: "master",
+      cleanTmp: false,
+      debug: true,
+      tmpDir: path.resolve(process.cwd(), "./repositories"),
+      statsDir: path.resolve(process.cwd(), "./"),
+      evaluate: (item) => item.linesChanged,
+      collectInterval: 15,
+      repositories: [],
+      teams: [],
+      users: [],
+      path: path.resolve(process.cwd(), "./git-log-config.yml"),
+    };
+  }
+  return config;
+};
+
 ipcMain.handle(
   nameofHandler("GET_CONFIG"),
   async (
@@ -19,7 +43,7 @@ ipcMain.handle(
   ): Promise<ReturnType<Ipc["handlers"]["GET_CONFIG"]>> => {
     const [force] = args;
     if (force || !config || +new Date() - +date > REFRESH_CONFIG_TIMEOUT) {
-      config = await getConfig();
+      config = await tryGetConfig();
       collectUnusedUsers(config);
 
       config.repositories.forEach((repository) => {
@@ -44,7 +68,7 @@ ipcMain.handle(
     ...args: Parameters<Ipc["handlers"]["SAVE_CONFIG"]>
   ): Promise<ReturnType<Ipc["handlers"]["SAVE_CONFIG"]>> => {
     const [newConfig] = args;
-    const oldConfig = await getConfig();
+    const oldConfig = await tryGetConfig();
 
     const configPath = oldConfig.path;
     const newConfigRules = {

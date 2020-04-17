@@ -7,6 +7,7 @@ import {
   ipcMain,
   MenuItem,
   powerSaveBlocker,
+  protocol,
 } from "electron";
 import path from "path";
 import url from "url";
@@ -41,7 +42,7 @@ function createUpdater() {
 }
 
 function createTray() {
-  tray = new Tray(path.resolve("./public/iconTemplate.png"));
+  tray = new Tray(path.join(__dirname, "../assets/iconTemplate.png"));
   const collectButton = new MenuItem({
     label: "Collect Logs",
     type: "normal",
@@ -82,12 +83,12 @@ function createWindow() {
   const startUrl =
     process.env.ELECTRON_START_URL ||
     url.format({
-      pathname: path.join(__dirname, "../index.html"),
-      protocol: "file:",
+      pathname: "index.html",
+      protocol: "file",
       slashes: true,
     });
   mainWindow = new BrowserWindow({
-    icon: path.join("./public/logo.png"),
+    icon: path.join(__dirname, "../assets/logo.png"),
     title: "Git Log Manager",
     width: 1366,
     height: 768,
@@ -114,6 +115,20 @@ app.on("ready", () => {
   createUpdater();
   if (OPEN_MAIN_WINDOW_ON_LOAD) {
     createWindow();
+  }
+  if (!process.env.ELECTRON_START_URL) {
+    protocol.interceptFileProtocol(
+      "file",
+      (request, callback) => {
+        const url = request.url.substr(7);
+        callback(path.normalize(`${__dirname}/../../${url}`));
+      },
+      (err) => {
+        if (err) {
+          console.error("Failed to register protocol");
+        }
+      }
+    );
   }
 });
 

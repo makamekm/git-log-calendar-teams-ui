@@ -15,5 +15,11 @@ export interface Config {
     invert?: boolean;
     users?: string[];
   }[];
-  evaluate?: string;
+  evaluate?: string | Function;
+  branch?: string;
+  cleanTmp?: boolean;
+  debug?: boolean;
+  tmpDir?: string;
+  statsDir?: string;
+  path?: string;
 }

@@ -9,18 +9,6 @@ import log from "electron-log";
 log.transports.file.level = FILE_LOG_LEVEL;
 log.transports.console.level = CONSOLE_LOG_LEVEL;
 
-log.hooks.push((message, transport) => {
-  if (transport !== log.transports.file) {
-    return message;
-  }
-
-  if (message.data[0].includes("password")) {
-    return false;
-  }
-
-  return message;
-});
-
 if (CATCH_LOGS) {
   Object.assign(console, log.functions);
 }

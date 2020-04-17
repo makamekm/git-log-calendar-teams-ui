@@ -17,7 +17,7 @@
     "ui"
   ],
   "productName": "Git Log Manager",
-  "main": "build/src/electron/index.js",
+  "main": "src/electron/dev.js",
   "scripts": {
     "dev": "run-p start start-electron",
     "start": "export BROWSER=none && react-app-rewired start",
@@ -25,7 +25,7 @@
     "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && export NODE_ENV=development && wait-for-localhost 3000 && electron .",
     "start-electron:only": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "react-app-rewired build",
-    "build-electron": "tsc -p tsconfig.electron.json && tscpaths -p tsconfig.build.paths.json -s ./build/src -o ./build/src",
+    "build-electron": "tsc -p tsconfig.electron.json && tscpaths -p tsconfig.build.paths.json -s ./build/src -o ./build/src && cp -r ./src/assets ./build/src/assets",
     "package": "electron-builder build --mac --win -c.extraMetadata.main=build/src/electron/index.js --publish never",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
