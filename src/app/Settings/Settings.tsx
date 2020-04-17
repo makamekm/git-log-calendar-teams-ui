@@ -22,6 +22,9 @@ import {
   Button,
   Input,
   DropdownMenu,
+  Form,
+  FormGroup,
+  Label,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
@@ -38,6 +41,48 @@ interface SettingsState {
   load: () => Promise<void>;
   save: () => Promise<void>;
 }
+
+const SettingsForm = observer(({ state }: { state: SettingsState }) => {
+  return (
+    <Row>
+      <Col lg={12}>
+        <Card className="mb-3">
+          <CardBody>
+            <div className="d-flex">
+              <CardTitle tag="h6">
+                Preferences
+                <span className="small ml-1 text-muted">#1.00</span>
+              </CardTitle>
+            </div>
+            {!state.config || state.isLoadingDelay ? (
+              <List height="200px" width="100%" />
+            ) : (
+              <Form>
+                <FormGroup row>
+                  <Label for="input-1" sm={4}>
+                    Collect Interval
+                  </Label>
+                  <Col sm={8}>
+                    <Input
+                      type="number"
+                      onChange={(e) => {
+                        state.config.collectInterval = Number(
+                          e.currentTarget.value
+                        );
+                      }}
+                      value={state.config.collectInterval}
+                      placeholder="Enter Minutes..."
+                    />
+                  </Col>
+                </FormGroup>
+              </Form>
+            )}
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+  );
+});
 
 const SettingsRepositories = observer(({ state }: { state: SettingsState }) => {
   return (
@@ -67,7 +112,7 @@ const SettingsRepositories = observer(({ state }: { state: SettingsState }) => {
               </Button>
             </div>
           </CardBody>
-          {state.isLoadingDelay ? (
+          {!state.config || state.isLoadingDelay ? (
             <List className="m-4" height="200px" width="100%" />
           ) : (
             <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
@@ -82,89 +127,86 @@ const SettingsRepositories = observer(({ state }: { state: SettingsState }) => {
                 </tr>
               </thead>
               <tbody>
-                {state.config &&
-                  state.config.repositories.map((repository, index) => {
-                    return (
-                      <tr key={index}>
-                        <td className="align-middle">{index + 1}.</td>
-                        <td className="align-middle">
-                          <Input
-                            type="text"
-                            onChange={(e) => {
-                              repository.name = e.currentTarget.value;
-                            }}
-                            value={repository.name}
-                            placeholder="Url..."
-                          />
-                        </td>
-                        <td className="align-middle">
-                          <Input
-                            type="text"
-                            onChange={(e) => {
-                              repository.url = e.currentTarget.value;
-                            }}
-                            value={repository.url}
-                            placeholder="Url..."
-                          />
-                        </td>
-                        <td className="align-middle">
-                          <Input
-                            type="text"
-                            onChange={(e) => {
-                              repository.branch = e.currentTarget.value;
-                            }}
-                            value={repository.branch}
-                            placeholder="Branch..."
-                          />
-                        </td>
-                        <td
-                          className="align-middle"
-                          style={{ maxWidth: "300px", overflow: "hidden" }}
-                        >
-                          <Typeahead
-                            placeholder="Add exclusions..."
-                            multiple
-                            allowNew
-                            selected={repository.exclude}
-                            onChange={(selected) => {
-                              selected = selected.map((s: any) =>
-                                typeof s === "string" ? s : s.label
-                              );
-                              (repository.exclude as any).replace(selected);
-                            }}
-                            options={state.excludes}
-                            positionFixed
-                          />
-                        </td>
-                        <td className="align-middle text-right">
-                          <UncontrolledButtonDropdown>
-                            <DropdownToggle
-                              color="link"
-                              className="text-decoration-none"
+                {state.config.repositories.map((repository, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="align-middle">{index + 1}.</td>
+                      <td className="align-middle">
+                        <Input
+                          type="text"
+                          onChange={(e) => {
+                            repository.name = e.currentTarget.value;
+                          }}
+                          value={repository.name}
+                          placeholder="Url..."
+                        />
+                      </td>
+                      <td className="align-middle">
+                        <Input
+                          type="text"
+                          onChange={(e) => {
+                            repository.url = e.currentTarget.value;
+                          }}
+                          value={repository.url}
+                          placeholder="Url..."
+                        />
+                      </td>
+                      <td className="align-middle">
+                        <Input
+                          type="text"
+                          onChange={(e) => {
+                            repository.branch = e.currentTarget.value;
+                          }}
+                          value={repository.branch}
+                          placeholder="Branch..."
+                        />
+                      </td>
+                      <td
+                        className="align-middle"
+                        style={{ maxWidth: "300px", overflow: "hidden" }}
+                      >
+                        <Typeahead
+                          placeholder="Add exclusions..."
+                          multiple
+                          allowNew
+                          selected={repository.exclude}
+                          onChange={(selected) => {
+                            selected = selected.map((s: any) =>
+                              typeof s === "string" ? s : s.label
+                            );
+                            (repository.exclude as any).replace(selected);
+                          }}
+                          options={state.excludes}
+                          positionFixed
+                        />
+                      </td>
+                      <td className="align-middle text-right">
+                        <UncontrolledButtonDropdown>
+                          <DropdownToggle
+                            color="link"
+                            className="text-decoration-none"
+                          >
+                            <i className="fa fa-gear"></i>
+                            <i className="fa fa-angle-down ml-2"></i>
+                          </DropdownToggle>
+                          <DropdownMenu right>
+                            <DropdownItem
+                              onClick={() => {
+                                state.config.repositories.splice(
+                                  state.config.repositories.indexOf(repository),
+                                  1
+                                );
+                              }}
                             >
-                              <i className="fa fa-gear"></i>
-                              <i className="fa fa-angle-down ml-2"></i>
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                              <DropdownItem
-                                onClick={() => {
-                                  state.config.repositories.splice(
-                                    state.config.repositories.indexOf(
-                                      repository
-                                    ),
-                                    1
-                                  );
-                                }}
-                              >
-                                <i className="fa fa-fw fa-trash mr-2"></i>
-                                Delete
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledButtonDropdown>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                              <i className="fa fa-fw fa-trash mr-2"></i>
+                              Delete
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledButtonDropdown>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           )}
@@ -183,7 +225,7 @@ const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
             <div className="d-flex">
               <CardTitle tag="h6">
                 Teams
-                <span className="small ml-1 text-muted">#1.01</span>
+                <span className="small ml-1 text-muted">#1.02</span>
               </CardTitle>
               <Button
                 outline
@@ -201,7 +243,7 @@ const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
               </Button>
             </div>
           </CardBody>
-          {state.isLoadingDelay ? (
+          {!state.config || state.isLoadingDelay ? (
             <List className="m-4" height="200px" width="100%" />
           ) : (
             <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
@@ -215,80 +257,79 @@ const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
                 </tr>
               </thead>
               <tbody>
-                {state.config &&
-                  state.config.teams.map((team, index) => {
-                    return (
-                      <tr key={index}>
-                        <td className="align-middle">{index + 1}.</td>
-                        <td className="align-middle">
-                          <Input
-                            type="text"
-                            onChange={(e) => {
-                              team.name = e.currentTarget.value;
+                {state.config.teams.map((team, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="align-middle">{index + 1}.</td>
+                      <td className="align-middle">
+                        <Input
+                          type="text"
+                          onChange={(e) => {
+                            team.name = e.currentTarget.value;
+                          }}
+                          value={team.name}
+                          placeholder="Url..."
+                        />
+                      </td>
+                      <td className="align-middle">
+                        <Toggle
+                          checked={team.invert}
+                          onChange={() => {
+                            team.invert = !team.invert;
+                            if (team.invert) {
+                              (team.users as any).replace([]);
+                            }
+                          }}
+                        />
+                      </td>
+                      <td
+                        className="align-middle"
+                        style={{ maxWidth: "300px", overflow: "hidden" }}
+                      >
+                        {!team.invert && (
+                          <Typeahead
+                            placeholder="Add users..."
+                            multiple
+                            allowNew
+                            selected={team.users}
+                            onChange={(selected) => {
+                              selected = selected.map((s: any) =>
+                                typeof s === "string" ? s : s.label
+                              );
+                              (team.users as any).replace(selected);
                             }}
-                            value={team.name}
-                            placeholder="Url..."
+                            options={state.users}
+                            positionFixed
                           />
-                        </td>
-                        <td className="align-middle">
-                          <Toggle
-                            checked={team.invert}
-                            onChange={() => {
-                              team.invert = !team.invert;
-                              if (team.invert) {
-                                (team.users as any).replace([]);
-                              }
-                            }}
-                          />
-                        </td>
-                        <td
-                          className="align-middle"
-                          style={{ maxWidth: "300px", overflow: "hidden" }}
-                        >
-                          {!team.invert && (
-                            <Typeahead
-                              placeholder="Add users..."
-                              multiple
-                              allowNew
-                              selected={team.users}
-                              onChange={(selected) => {
-                                selected = selected.map((s: any) =>
-                                  typeof s === "string" ? s : s.label
+                        )}
+                      </td>
+                      <td className="align-middle text-right">
+                        <UncontrolledButtonDropdown>
+                          <DropdownToggle
+                            color="link"
+                            className="text-decoration-none"
+                          >
+                            <i className="fa fa-gear"></i>
+                            <i className="fa fa-angle-down ml-2"></i>
+                          </DropdownToggle>
+                          <DropdownMenu right>
+                            <DropdownItem
+                              onClick={() => {
+                                state.config.teams.splice(
+                                  state.config.teams.indexOf(team),
+                                  1
                                 );
-                                (team.users as any).replace(selected);
                               }}
-                              options={state.users}
-                              positionFixed
-                            />
-                          )}
-                        </td>
-                        <td className="align-middle text-right">
-                          <UncontrolledButtonDropdown>
-                            <DropdownToggle
-                              color="link"
-                              className="text-decoration-none"
                             >
-                              <i className="fa fa-gear"></i>
-                              <i className="fa fa-angle-down ml-2"></i>
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                              <DropdownItem
-                                onClick={() => {
-                                  state.config.teams.splice(
-                                    state.config.teams.indexOf(team),
-                                    1
-                                  );
-                                }}
-                              >
-                                <i className="fa fa-fw fa-trash mr-2"></i>
-                                Delete
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledButtonDropdown>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                              <i className="fa fa-fw fa-trash mr-2"></i>
+                              Delete
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledButtonDropdown>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           )}
@@ -307,7 +348,7 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
             <div className="d-flex">
               <CardTitle tag="h6">
                 Users
-                <span className="small ml-1 text-muted">#1.01</span>
+                <span className="small ml-1 text-muted">#1.03</span>
               </CardTitle>
               <Button
                 outline
@@ -324,7 +365,7 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
               </Button>
             </div>
           </CardBody>
-          {state.isLoadingDelay ? (
+          {!state.config || state.isLoadingDelay ? (
             <List className="m-4" height="200px" width="100%" />
           ) : (
             <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
@@ -337,67 +378,66 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
                 </tr>
               </thead>
               <tbody>
-                {state.config &&
-                  state.config.users.map((user, index) => {
-                    return (
-                      <tr key={index}>
-                        <td className="align-middle">{index + 1}.</td>
-                        <td className="align-middle">
-                          <Input
-                            type="text"
-                            onChange={(e) => {
-                              user.name = e.currentTarget.value;
-                            }}
-                            value={user.name}
-                            placeholder="Url..."
-                          />
-                        </td>
-                        <td
-                          className="align-middle"
-                          style={{ maxWidth: "300px", overflow: "hidden" }}
-                        >
-                          <Typeahead
-                            placeholder="Add associations..."
-                            multiple
-                            allowNew
-                            selected={user.associations}
-                            onChange={(selected) => {
-                              selected = selected.map((s: any) =>
-                                typeof s === "string" ? s : s.label
-                              );
-                              (user.associations as any).replace(selected);
-                            }}
-                            options={state.associations}
-                            positionFixed
-                          />
-                        </td>
-                        <td className="align-middle text-right">
-                          <UncontrolledButtonDropdown>
-                            <DropdownToggle
-                              color="link"
-                              className="text-decoration-none"
+                {state.config.users.map((user, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="align-middle">{index + 1}.</td>
+                      <td className="align-middle">
+                        <Input
+                          type="text"
+                          onChange={(e) => {
+                            user.name = e.currentTarget.value;
+                          }}
+                          value={user.name}
+                          placeholder="Url..."
+                        />
+                      </td>
+                      <td
+                        className="align-middle"
+                        style={{ maxWidth: "300px", overflow: "hidden" }}
+                      >
+                        <Typeahead
+                          placeholder="Add associations..."
+                          multiple
+                          allowNew
+                          selected={user.associations}
+                          onChange={(selected) => {
+                            selected = selected.map((s: any) =>
+                              typeof s === "string" ? s : s.label
+                            );
+                            (user.associations as any).replace(selected);
+                          }}
+                          options={state.associations}
+                          positionFixed
+                        />
+                      </td>
+                      <td className="align-middle text-right">
+                        <UncontrolledButtonDropdown>
+                          <DropdownToggle
+                            color="link"
+                            className="text-decoration-none"
+                          >
+                            <i className="fa fa-gear"></i>
+                            <i className="fa fa-angle-down ml-2"></i>
+                          </DropdownToggle>
+                          <DropdownMenu right>
+                            <DropdownItem
+                              onClick={() => {
+                                state.config.users.splice(
+                                  state.config.users.indexOf(user),
+                                  1
+                                );
+                              }}
                             >
-                              <i className="fa fa-gear"></i>
-                              <i className="fa fa-angle-down ml-2"></i>
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                              <DropdownItem
-                                onClick={() => {
-                                  state.config.users.splice(
-                                    state.config.users.indexOf(user),
-                                    1
-                                  );
-                                }}
-                              >
-                                <i className="fa fa-fw fa-trash mr-2"></i>
-                                Delete
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledButtonDropdown>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                              <i className="fa fa-fw fa-trash mr-2"></i>
+                              Delete
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledButtonDropdown>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           )}
@@ -539,6 +579,7 @@ export const Settings = observer(() => {
         </Col>
       </Row>
 
+      <SettingsForm state={state} />
       <SettingsRepositories state={state} />
       <SettingsTeams state={state} />
       <SettingsUsers state={state} />

@@ -107,3 +107,4 @@ reportRunningRepository:
   - limit: 365
     output: ./year-repositories.svg
 path: /Users/mkarpov/projects/git-log-ui/git-log-config.yml
+collectInterval: 15

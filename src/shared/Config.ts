@@ -1,4 +1,5 @@
 export interface Config {
+  collectInterval: number;
   repositories: {
     url: string;
     name?: string;

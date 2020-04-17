@@ -49,6 +49,7 @@ ipcMain.handle(
     const configPath = oldConfig.path;
     const newConfigRules = {
       ...oldConfig,
+      collectInterval: newConfig.collectInterval || oldConfig.collectInterval,
       repositories: newConfig.repositories || oldConfig.repositories,
       users: newConfig.users || oldConfig.users,
       teams: newConfig.teams || oldConfig.teams,

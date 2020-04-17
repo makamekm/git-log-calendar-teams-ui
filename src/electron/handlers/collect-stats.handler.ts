@@ -1,17 +1,29 @@
 import { app, ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
+import { RUN_COLLECT_INTERVAL } from "@env/config";
 
 import { collect, clean } from "git-log-calendar-teams";
 
-const COLLECT_INTERVAL = 1000 * 60 * 15;
+const COLLECT_INTERVAL = 15;
 
 let isCollecting = false;
 
-if (process.env.NODE_ENV !== "development") {
+if (RUN_COLLECT_INTERVAL) {
   app.on("ready", () => {
-    setInterval(() => {
-      ipc.handlers.COLLECT_STATS();
-    }, COLLECT_INTERVAL);
+    const runTimeout = async () => {
+      let interval: number;
+      try {
+        const config = await ipc.handlers.GET_CONFIG();
+        interval = config.collectInterval;
+      } catch (error) {
+        console.error(error);
+      }
+      setTimeout(() => {
+        ipc.handlers.COLLECT_STATS();
+        runTimeout();
+      }, (interval || COLLECT_INTERVAL) * 1000 * 60);
+    };
+    runTimeout();
   });
 }
 
