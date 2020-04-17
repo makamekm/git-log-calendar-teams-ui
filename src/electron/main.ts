@@ -18,33 +18,37 @@ import {
 } from "@env/config";
 import { AppUpdater } from "./updater";
 
-powerSaveBlocker.start("prevent-app-suspension");
-
-if (app.dock) {
-  app.dock.hide();
-}
+const isWin = process.platform !== "darwin";
 
 declare global {
   var ipcRenderer: IpcRenderer;
 }
 
+powerSaveBlocker.start("prevent-app-suspension");
+
+let isQuiting;
+
+app.on("before-quit", function () {
+  isQuiting = true;
+});
+
+if (!isWin) {
+  app.dock.hide();
+}
+
 let mainWindow: BrowserWindow;
 let tray: Tray;
-
-const openWindow = () => {
-  if (mainWindow == null) {
-    createWindow();
-  } else {
-    mainWindow.focus();
-  }
-};
 
 function createUpdater() {
   new AppUpdater();
 }
 
 function createTray() {
-  tray = new Tray(path.join(__dirname, "../assets/iconTemplate.png"));
+  tray = new Tray(
+    isWin
+      ? path.join(__dirname, "../assets/icon.png")
+      : path.join(__dirname, "../assets/iconTemplate.png")
+  );
   const collectButton = new MenuItem({
     label: "Collect Logs",
     type: "normal",
@@ -65,23 +69,31 @@ function createTray() {
     {
       label: "Open Log Manager",
       type: "normal",
-      click: openWindow,
+      click: () => createWindow(),
     },
     collectButton,
     {
       label: "Quit",
       type: "normal",
       click: async () => {
+        isQuiting = true;
         app.quit();
       },
     },
   ]);
   tray.setToolTip("Git Log Manager");
   tray.setContextMenu(contextMenu);
-  tray.addListener("double-click", openWindow);
+  tray.addListener("click", () => {
+    tray.popUpContextMenu();
+  });
+  tray.addListener("double-click", () => createWindow());
 }
 
 function createWindow() {
+  if (mainWindow) {
+    mainWindow.show();
+    return;
+  }
   const startUrl =
     process.env.ELECTRON_START_URL ||
     url.format({
@@ -92,27 +104,39 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, "../assets/logo.png"),
     title: "Git Log Manager",
-    width: 1366,
-    height: 768,
-    minWidth: 1366,
-    minHeight: 768,
-    fullscreen: true,
+    width: 800,
+    height: 600,
+    minWidth: 800,
+    minHeight: 600,
+    fullscreen: process.platform === "darwin",
+    resizable: true,
+    center: true,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
   mainWindow.loadURL(startUrl);
-  if (app.dock) {
+  if (!isWin) {
     app.dock.show();
   }
   mainWindow.on("closed", () => {
     mainWindow = null;
-    if (app.dock) {
+    if (!isWin) {
       app.dock.hide();
     }
   });
   if (OPEN_MAIN_WINDOW_DEV_TOOLS) {
     mainWindow.webContents.openDevTools();
+  }
+  if (isWin) {
+    mainWindow.on("close", (event) => {
+      if (!isQuiting) {
+        event.preventDefault();
+        mainWindow.hide();
+        event.returnValue = false;
+      }
+    });
   }
 }
 

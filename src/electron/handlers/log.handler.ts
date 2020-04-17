@@ -45,15 +45,27 @@ const searchLinesFile = (
       input: fsReverse(file),
     });
 
+    let lineCursor = "";
+
     lineReader.on("close", () => {
+      if (lineCursor) {
+        if (!search || lineCursor.indexOf(search) >= 0) {
+          main.push(lineCursor);
+        }
+      }
       r(main);
     });
 
     lineReader.on("line", (line) => {
-      if (main.length > limit) {
-        lineReader.close();
-      } else if (!search || line.indexOf(search) >= 0) {
-        main.push(line);
+      if (line[0] === "[") {
+        if (main.length > limit) {
+          lineReader.close();
+        } else if (!search || lineCursor.indexOf(search) >= 0) {
+          main.push(lineCursor);
+        }
+        lineCursor = line;
+      } else {
+        lineCursor += "\n\r" + line;
       }
     });
   });
