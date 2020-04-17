@@ -28,6 +28,7 @@ import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutCha
 import { ipc } from "~/shared/ipc";
 import { CalendarActivities } from "./CalendarActivities";
 import { Config } from "~/shared/Config";
+import { useDelay } from "~/hooks";
 
 interface DashboardState {
   config: Config;
@@ -38,6 +39,7 @@ interface DashboardState {
     }[];
   };
   isLoading: boolean;
+  isLoadingDelay: boolean;
   limit: number;
   load: () => Promise<void>;
 }
@@ -49,9 +51,9 @@ const periods = {
   360: "Last Year",
 };
 
-const numberWithCommas = (x: number) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
+// const numberWithCommas = (x: number) => {
+//   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// };
 
 const PeriodValues = observer(({ state }: { state: DashboardState }) => {
   return (
@@ -93,7 +95,7 @@ const TeamActivitiesCalendars = observer(
                         </h6>
                       </CardTitle>
                       <div className="d-flex justify-content-center">
-                        {state.isLoading ? (
+                        {state.isLoadingDelay ? (
                           <Instagram height={"300px"} />
                         ) : (
                           state.teamStats[team.name] && (
@@ -121,6 +123,7 @@ export const Dashboard = observer(() => {
     config: null,
     teamStats: {},
     isLoading: false,
+    isLoadingDelay: false,
     limit: 30,
     load: async () => {
       state.isLoading = true;
@@ -152,6 +155,8 @@ export const Dashboard = observer(() => {
   React.useEffect(() => {
     state.load();
   }, [state]);
+
+  useDelay(state, "isLoading", "isLoadingDelay");
 
   const now = moment().format("YYYY/MM/DD");
   const past = moment().subtract(state.limit, "days").format("YYYY/MM/DD");

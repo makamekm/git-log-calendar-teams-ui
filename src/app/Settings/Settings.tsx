@@ -1,10 +1,9 @@
 import React from "react";
-import { autorun, toJS } from "mobx";
+import { toJS } from "mobx";
 import Toggle from "react-toggle";
 import { useLocalStore, observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Typeahead } from "react-bootstrap-typeahead";
-import { debounce } from "underscore";
 
 import {
   Container,
@@ -29,6 +28,7 @@ import {
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
+import { useIsDirty, useDelay } from "~/hooks";
 
 interface SettingsState {
   isDirty: boolean;
@@ -446,38 +446,6 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
     </Row>
   );
 });
-
-const useIsDirty: <T extends {
-  isDirty?: boolean;
-}>(
-  state: T,
-  name: keyof T
-) => void = (state, name) => {
-  React.useEffect(() => {
-    let json: string = null;
-    return autorun(() => {
-      const newJson = JSON.stringify(state[name]);
-      if (json != null && json !== newJson) {
-        state.isDirty = true;
-      }
-      json = newJson;
-    });
-  }, [state, name]);
-};
-
-const useDelay: <T>(state: T, name: keyof T, newName: keyof T) => void = (
-  state,
-  name,
-  newName,
-  delay = 500
-) => {
-  React.useEffect(() => {
-    const setValue = debounce((value) => (state[newName] = value), delay);
-    return autorun(() => {
-      setValue(state[name]);
-    });
-  }, [state, name, newName, delay]);
-};
 
 export const Settings = observer(() => {
   const state = useLocalStore<SettingsState>(() => ({
