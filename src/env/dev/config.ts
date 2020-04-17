@@ -1,9 +1,9 @@
 export const CONFIG_PIN = "12345";
-export const SHOW_WIP_MENU = true;
-export const AUTO_LOGIN = true;
+export const SHOW_WIP_MENU = false;
+export const AUTO_LOGIN = false;
 export const RUN_COLLECT_INTERVAL = false;
-export const OPEN_MAIN_WINDOW_ON_LOAD = true;
-export const OPEN_MAIN_WINDOW_DEV_TOOLS = true;
+export const OPEN_MAIN_WINDOW_ON_LOAD = false;
+export const OPEN_MAIN_WINDOW_DEV_TOOLS = false;
 export const USE_AUTO_UPDATER = false;
 export const CATCH_LOGS = true;
 export const CONSOLE_LOG_LEVEL = "debug";

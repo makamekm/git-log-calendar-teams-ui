@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.paths.json",
+  "compilerOptions": {
+    "target": "es5",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "sourceMap": false,
+    "strict": false,
+    "outDir": "./build/src",
+    "baseUrl": "./",
+    "noEmitOnError": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"]
+  },
+  "include": ["src/electron", "src/shared", "src/types"]
+}

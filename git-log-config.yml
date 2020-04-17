@@ -19,6 +19,9 @@ repositories:
     name: react
     url: https://github.com/facebook/react.git
 users:
+  - name: mmm
+    associations:
+      - test
   - associations:
       - makame
       - makame@mail.ru
@@ -54,6 +57,10 @@ users:
       - will douglas
     name: Will Douglas
 teams:
+  - name: Client Onboarding
+    invert: false
+    users:
+      - mmm
   - name: team
     users:
       - Dan Abramov
