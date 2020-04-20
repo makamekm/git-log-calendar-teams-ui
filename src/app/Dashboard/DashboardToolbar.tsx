@@ -9,8 +9,8 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "~/components";
-import { DashboardState } from "./DashboardInterface";
 import { periods } from "./Periods";
+import { DashboardState } from "./DashboardService";
 
 const PeriodValues = observer(({ state }: { state: DashboardState }) => {
   return (

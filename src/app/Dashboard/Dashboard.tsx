@@ -1,19 +1,18 @@
 import React from "react";
-import { useLocalStore, observer } from "mobx-react";
+import { observer } from "mobx-react";
 import { Instagram } from "react-content-loader";
 
 import { Container, Row, Col, Card, CardBody, CardTitle } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ipc } from "~/shared/ipc";
 import { CalendarActivities } from "./CalendarActivities";
-import { useDelay, useOnChange, useOnLoad } from "~/hooks";
+import { useOnLoad } from "~/hooks";
 import { TotalCommitsPanel } from "./TotalCommitsPanel";
 import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
 import { TopProjectsPanel } from "./TopProjectsPanel";
 import { TopDevelopersPanel } from "./TopDevelopersPanel";
 import { AllStatsPanel } from "./AllStatsPanel";
-import { DashboardState } from "./DashboardInterface";
 import { DashboardToolbar } from "./DashboardToolbar";
+import { DashboardState, DashboardService } from "./DashboardService";
 
 const TeamActivitiesCalendars = observer(
   ({ state }: { state: DashboardState }) => {
@@ -58,31 +57,8 @@ const TeamActivitiesCalendars = observer(
 );
 
 export const Dashboard = observer(() => {
-  const state = useLocalStore<DashboardState>(() => ({
-    config: null,
-    teamStats: {},
-    isLoading: false,
-    isLoadingDelay: false,
-    limit: 30,
-    load: async () => {
-      state.isLoading = true;
-      state.config = await ipc.handlers.GET_CONFIG();
-      const data = await ipc.handlers.GET_CALENDAR_DATA(state.limit);
-      const prepearedData = Object.keys(data).reduce((map, team) => {
-        map[team] = Object.keys(data[team]).map((day) => ({
-          day,
-          value: data[team][day],
-        }));
-        return map;
-      }, {});
-      state.teamStats = prepearedData;
-      state.isLoading = false;
-    },
-  }));
-
+  const state = React.useContext(DashboardService);
   useOnLoad(state.load);
-  useOnChange(state, "limit", state.load);
-  useDelay(state, "isLoading", "isLoadingDelay");
 
   return (
     <Container>

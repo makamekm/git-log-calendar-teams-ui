@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useSyncLocalStorage } from "~/hooks";
@@ -19,7 +19,7 @@ export const FavouriteService = createService<FavouriteState>(
     return state;
   },
   () => {
-    const state = React.useContext(FavouriteService);
+    const state = useContext(FavouriteService);
     useSyncLocalStorage(state, "teams");
     useSyncLocalStorage(state, "users");
     useSyncLocalStorage(state, "repositories");

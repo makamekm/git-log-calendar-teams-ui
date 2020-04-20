@@ -96,25 +96,25 @@ export const AuthService = createService<AuthState>(
     return state;
   },
   () => {
-    const context = React.useContext(AuthService);
-    const appContext = React.useContext(LoadingService);
+    const state = React.useContext(AuthService);
+    const loadingService = React.useContext(LoadingService);
 
     const history = useHistory();
-    context.history = history;
+    state.history = history;
 
     const from = useFromPath();
-    context.from = from;
+    state.from = from;
 
     React.useEffect(() => {
       if (AUTO_LOGIN) {
-        context.initAuthorize();
+        state.initAuthorize();
       } else {
         removeLoadinghandler();
       }
-    }, [context]);
+    }, [state]);
 
-    useOnChange(context, "isLoading", (isLoading) =>
-      appContext.setLoading(isLoading)
+    useOnChange(state, "isLoading", (isLoading) =>
+      loadingService.setLoading(isLoading)
     );
   }
 );
