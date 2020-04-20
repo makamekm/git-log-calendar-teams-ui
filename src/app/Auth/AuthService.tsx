@@ -1,10 +1,10 @@
 import React from "react";
-import { reaction } from "mobx";
 import { useLocalStore } from "mobx-react";
 import { useHistory, useLocation } from "react-router";
 import { CONFIG_PIN, AUTO_LOGIN } from "@env/config";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { LoadingService } from "~/app/Loading/LoadingService";
+import { useOnChange } from "~/hooks";
 
 const PATH_ENCAPSULATION = "$\\";
 
@@ -113,15 +113,8 @@ export const AuthService = createService<AuthState>(
       }
     }, [context]);
 
-    React.useEffect(
-      () =>
-        reaction(
-          () => [context.isLoading],
-          ([isLoading]) => {
-            appContext.setLoading(isLoading);
-          }
-        ),
-      [context, appContext]
+    useOnChange(context, "isLoading", (isLoading) =>
+      appContext.setLoading(isLoading)
     );
   }
 );

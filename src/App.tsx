@@ -10,12 +10,13 @@ import {
 import { AuthService } from "./app/Auth/AuthService";
 import { LoadingScreen } from "./app/Loading/LoadingScreen";
 import { LoadingService } from "./app/Loading/LoadingService";
+import { FavouriteService } from "./app/Dashboard/FavouriteService";
 
 const basePath = process.env.BASE_PATH || "/";
 
 export const App = () => {
   const [ServiceProvider] = React.useState<React.FC>(() =>
-    ServiceProviderFactory(AuthService, LoadingService)
+    ServiceProviderFactory(AuthService, LoadingService, FavouriteService)
   );
 
   return (

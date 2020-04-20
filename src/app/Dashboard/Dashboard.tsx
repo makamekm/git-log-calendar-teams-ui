@@ -1,78 +1,19 @@
 import React from "react";
 import { useLocalStore, observer } from "mobx-react";
 import { Instagram } from "react-content-loader";
-import moment from "moment";
 
-import {
-  Container,
-  Row,
-  Col,
-  Media,
-  Table,
-  Badge,
-  Card,
-  CardBody,
-  CardTitle,
-  ButtonToolbar,
-  ButtonGroup,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "~/components";
+import { Container, Row, Col, Card, CardBody, CardTitle } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { TinyDonutChart } from "~/wip/ProjectsDashboards/TinyDonutChart";
-import { TinyDonutChartAllProjects } from "~/wip/ProjectsDashboards/TinyDonutChartAllProjects";
 import { ipc } from "~/shared/ipc";
 import { CalendarActivities } from "./CalendarActivities";
-import { Config } from "~/shared/Config";
 import { useDelay, useOnChange, useOnLoad } from "~/hooks";
-
-interface DashboardState {
-  config: Config;
-  teamStats: {
-    [team: string]: {
-      day: string;
-      value: number;
-    }[];
-  };
-  isLoading: boolean;
-  isLoadingDelay: boolean;
-  limit: number;
-  load: () => Promise<void>;
-}
-
-const periods = {
-  30: "Last Month",
-  90: "Last 3 Months",
-  180: "Last 6 Months",
-  360: "Last Year",
-};
-
-// const numberWithCommas = (x: number) => {
-//   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-// };
-
-const PeriodValues = observer(({ state }: { state: DashboardState }) => {
-  return (
-    <>
-      {Object.keys(periods).map((key: any) => {
-        key = Number(key);
-        return (
-          <DropdownItem
-            key={key}
-            active={state.limit === key}
-            onClick={() => {
-              state.limit = key;
-            }}
-          >
-            {periods[key]}
-          </DropdownItem>
-        );
-      })}
-    </>
-  );
-});
+import { TotalCommitsPanel } from "./TotalCommitsPanel";
+import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
+import { TopProjectsPanel } from "./TopProjectsPanel";
+import { TopDevelopersPanel } from "./TopDevelopersPanel";
+import { AllStatsPanel } from "./AllStatsPanel";
+import { DashboardState } from "./DashboardInterface";
+import { DashboardToolbar } from "./DashboardToolbar";
 
 const TeamActivitiesCalendars = observer(
   ({ state }: { state: DashboardState }) => {
@@ -143,167 +84,35 @@ export const Dashboard = observer(() => {
   useOnChange(state, "limit", state.load);
   useDelay(state, "isLoading", "isLoadingDelay");
 
-  const now = moment().format("YYYY/MM/DD");
-  const past = moment().subtract(state.limit, "days").format("YYYY/MM/DD");
-
   return (
     <Container>
       <Row className="mb-5">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-4 pb-2">
             <HeaderMain title="Dashboard" className="mt-0 mb-3" />
-            <ButtonToolbar className="ml-auto">
-              <ButtonGroup className="align-self-start mr-2 mt-0 mb-3">
-                <UncontrolledButtonDropdown className="ml-auto flex-column">
-                  <DropdownToggle
-                    color="link"
-                    className="text-right pl-0 text-decoration-none mb-2"
-                  >
-                    <i className="fa fa-calendar-o text-body mr-2"></i>
-                    {periods[state.limit]}
-                    <i className="fa fa-angle-down text-body ml-2" />
-                  </DropdownToggle>
-                  <div className="small">
-                    {past} to {now}
-                  </div>
-                  <DropdownMenu>
-                    <DropdownItem header>Select Period:</DropdownItem>
-                    <PeriodValues state={state} />
-                  </DropdownMenu>
-                </UncontrolledButtonDropdown>
-              </ButtonGroup>
-            </ButtonToolbar>
+            <DashboardToolbar state={state} />
           </div>
         </Col>
         <Col lg={3}>
-          <div className="hr-text hr-text-center my-2">
-            <span>Commits</span>
-          </div>
-          <Row>
-            <Col xs={6} className="text-center">
-              <p className="text-center mb-0">
-                <i className="fa fa-circle text-primary mr-2"></i>
-                Today
-              </p>
-              <h4 className="mt-2 mb-0">3,267</h4>
-            </Col>
-            <Col xs={6} className="text-center">
-              <p className="text-center mb-0">
-                <i className="fa fa-circle text-info mr-2"></i>
-                {periods[state.limit]}
-              </p>
-              <h4 className="mt-2 mb-0">8,091</h4>
-            </Col>
-          </Row>
-          <div className="hr-text hr-text-center mb-2 mt-3">
-            <span>Line Changes</span>
-          </div>
-          <Row className="mb-4 mb-xl-0">
-            <Col xs={6} className="text-center">
-              <p className="text-center mb-0">
-                <i className="fa fa-circle text-warning mr-2"></i>
-                Today
-              </p>
-              <h4 className="mt-2 mb-0">4,007</h4>
-            </Col>
-            <Col xs={6} className="text-center">
-              <p className="text-center mb-0">
-                <i className="fa fa-circle text-danger mr-2"></i>
-                {periods[state.limit]}
-              </p>
-              <h4 className="mt-2 mb-0">11,091</h4>
-            </Col>
-          </Row>
+          <TotalCommitsPanel
+            valueToday={3267}
+            valueLimited={9091}
+            limit={state.limit}
+          />
+          <TotalChangedLinesPanel
+            valueToday={3267}
+            valueLimited={9091}
+            limit={state.limit}
+          />
         </Col>
         <Col lg={3} md={6}>
-          <div className="hr-text hr-text-left my-2">
-            <span>Top 4 Projects</span>
-          </div>
-          <Media>
-            <Media left className="mr-3">
-              <TinyDonutChart />
-            </Media>
-            <Media body>
-              <div>
-                <i className="fa fa-circle mr-1 text-yellow"></i>
-                <span className="text-inverse">23</span> Pending
-              </div>
-              <div>
-                <i className="fa fa-circle mr-1 text-danger"></i>
-                <span className="text-inverse">3</span> Behind
-              </div>
-              <div>
-                <i className="fa fa-circle mr-1 text-success"></i>
-                <span className="text-inverse">34</span> Completed
-              </div>
-              <div>
-                <i className="fa fa-circle mr-1 text-primary"></i>
-                <span className="text-inverse">24</span> Behind
-              </div>
-            </Media>
-          </Media>
+          <TopProjectsPanel />
         </Col>
-
-        <Col lg={3} md={6} className="mb-4 mb-lg-0">
-          <div className="hr-text hr-text-left my-2">
-            <span>Top 4 Developers</span>
-          </div>
-          <Media>
-            <Media left className="mr-3">
-              <TinyDonutChartAllProjects />
-            </Media>
-            <Media body>
-              <div>
-                <i className="fa fa-circle mr-1 text-info"></i>
-                <span className="text-inverse">14</span> Pending
-              </div>
-              <div>
-                <i className="fa fa-circle mr-1 text-primary"></i>
-                <span className="text-inverse">24</span> Behind
-              </div>
-              <div>
-                <i className="fa fa-circle mr-1 text-purple"></i>
-                <span className="text-inverse">2</span> Completed
-              </div>
-              <div>
-                <i className="fa fa-circle mr-1 text-red"></i>
-                <span className="text-inverse">2</span> Completed
-              </div>
-            </Media>
-          </Media>
+        <Col lg={3} md={6}>
+          <TopDevelopersPanel />
         </Col>
         <Col lg={3}>
-          <div className="hr-text hr-text-left my-2">
-            <span>All Stats</span>
-          </div>
-          <Table size="sm">
-            <tbody>
-              <tr>
-                <td className="text-inverse bt-0">Active Projects</td>
-                <td className="text-right bt-0">
-                  <Badge color="success" pill>
-                    6
-                  </Badge>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-inverse">Active Teams</td>
-                <td className="text-right">
-                  <Badge color="primary" pill>
-                    4
-                  </Badge>
-                </td>
-              </tr>
-              <tr>
-                <td className="text-inverse">Active Developers</td>
-                <td className="text-right">
-                  <Badge color="info" pill>
-                    15
-                  </Badge>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          <AllStatsPanel />
         </Col>
       </Row>
       <TeamActivitiesCalendars state={state} />
