@@ -3,7 +3,7 @@ import { ServiceContextHook, ServiceProviderContext } from "./context";
 
 export function createService<T>(
   useState: () => T,
-  useLogic: () => void = () => {}
+  useLogic: (state: T) => void = () => {}
 ): ServiceContextHook<T> {
   const context: any = React.createContext<T>(null);
   context.useState = useState;
@@ -14,7 +14,9 @@ export function createService<T>(
 export const ServiceProviderHook: React.FC = ({ children }) => {
   const services = React.useContext(ServiceProviderContext);
   for (const service of services) {
-    service.useLogic();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const state = React.useContext(service);
+    service.useLogic(state);
   }
   return <>{children}</>;
 };

@@ -1,64 +1,21 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { observer } from "mobx-react";
-import { Instagram } from "react-content-loader";
 
-import { Container, Row, Col, Card, CardBody, CardTitle } from "~/components";
+import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { CalendarActivities } from "./CalendarActivities";
-import { useOnLoad } from "~/hooks";
 import { TotalCommitsPanel } from "./TotalCommitsPanel";
 import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
 import { TopProjectsPanel } from "./TopProjectsPanel";
 import { TopDevelopersPanel } from "./TopDevelopersPanel";
 import { AllStatsPanel } from "./AllStatsPanel";
 import { DashboardToolbar } from "./DashboardToolbar";
-import { DashboardState, DashboardService } from "./DashboardService";
-
-const TeamActivitiesCalendars = observer(
-  ({ state }: { state: DashboardState }) => {
-    return (
-      <>
-        {state.config &&
-          state.config.teams &&
-          state.config.teams.map((team) => {
-            return (
-              <Row key={team.name}>
-                <Col lg={12}>
-                  <Card className="mb-3">
-                    <CardBody>
-                      <CardTitle className="mb-0 d-flex">
-                        <h6>
-                          Calendar Team Activity for{" "}
-                          <strong>{team.name}</strong>
-                        </h6>
-                      </CardTitle>
-                      <div className="d-flex justify-content-center">
-                        {state.isLoadingDelay ? (
-                          <Instagram height={"300px"} />
-                        ) : (
-                          state.teamStats[team.name] && (
-                            <CalendarActivities
-                              height={"200px"}
-                              data={state.teamStats[team.name]}
-                              limit={state.limit}
-                            />
-                          )
-                        )}
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            );
-          })}
-      </>
-    );
-  }
-);
+import { DashboardService } from "./DashboardService";
+import { TrackersSelector } from "./TrackerSelector";
+import { TrackerActivities } from "./TrackerActivities";
 
 export const Dashboard = observer(() => {
   const state = React.useContext(DashboardService);
-  useOnLoad(state.load);
 
   return (
     <Container>
@@ -91,7 +48,14 @@ export const Dashboard = observer(() => {
           <AllStatsPanel />
         </Col>
       </Row>
-      <TeamActivitiesCalendars state={state} />
+
+      <Row className="mb-3">
+        <Col lg={12}>
+          <TrackersSelector />
+        </Col>
+      </Row>
+
+      <TrackerActivities />
     </Container>
   );
 });

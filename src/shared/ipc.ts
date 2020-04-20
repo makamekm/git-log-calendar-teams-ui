@@ -23,7 +23,8 @@ export interface Ipc {
     };
     COLLECT_STATS: () => void;
     GET_CALENDAR_DATA: (
-      limit: number
+      limit: number,
+      mode: "users" | "repositories" | "teams"
     ) => {
       [team: string]: {
         [day: string]: number;

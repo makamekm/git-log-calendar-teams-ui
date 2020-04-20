@@ -3,6 +3,7 @@ import { autorun, reaction, isObservableArray, isObservable, toJS } from "mobx";
 import localStorage from "mobx-localstorage";
 import { debounce, isEqual } from "underscore";
 import { deepObserve } from "mobx-utils";
+import { useLocation } from "react-router";
 
 export const useIsDirty: <T extends {
   isDirty?: boolean;
@@ -62,6 +63,20 @@ export const useOnLoad: <T>(fn: () => any, delay?: number) => void = (
       fn();
     }
   }, [fn, delay]);
+};
+
+export const useOnLoadPathname: <T>(fn: () => any, delay?: number) => void = (
+  fn,
+  delay = 0
+) => {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    if (delay) {
+      setTimeout(() => fn(), delay);
+    } else {
+      fn();
+    }
+  }, [fn, delay, pathname]);
 };
 
 export const setObservable = <T, K extends keyof T>(

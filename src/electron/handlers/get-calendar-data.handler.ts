@@ -9,19 +9,27 @@ ipcMain.handle(
     event,
     ...args: Parameters<Ipc["handlers"]["GET_CALENDAR_DATA"]>
   ): Promise<ReturnType<Ipc["handlers"]["GET_CALENDAR_DATA"]>> => {
-    const [limit] = args;
+    const [limit, mode] = args;
 
     const config = await ipc.handlers.GET_CONFIG();
     const fileMap = await ipc.handlers.GET_DATA();
 
     const report = {
       limit,
-      // compareTeams: ["others"],
-      // compareUsers: ["user"],
     };
 
-    const { teamDates } = normalizeCalendarData(report, fileMap, config);
+    const { teamDates, userDates, repositoriesDates } = normalizeCalendarData(
+      report,
+      fileMap,
+      config
+    );
 
-    return teamDates;
+    if (mode === "repositories") {
+      return repositoriesDates;
+    } else if (mode === "teams") {
+      return teamDates;
+    } else if (mode === "users") {
+      return userDates;
+    }
   }
 );

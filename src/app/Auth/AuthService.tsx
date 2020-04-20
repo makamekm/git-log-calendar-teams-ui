@@ -95,8 +95,7 @@ export const AuthService = createService<AuthState>(
     }));
     return state;
   },
-  () => {
-    const state = React.useContext(AuthService);
+  (state) => {
     const loadingService = React.useContext(LoadingService);
 
     const history = useHistory();
