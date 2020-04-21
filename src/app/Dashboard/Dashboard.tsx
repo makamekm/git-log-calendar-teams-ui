@@ -2,7 +2,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Container, Row, Col } from "~/components";
+import { Container, Row, Col, WithLayoutMeta } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { TotalCommitsPanel } from "./TotalCommitsPanel";
 import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
@@ -19,6 +19,16 @@ export const Dashboard = observer(() => {
 
   return (
     <Container>
+      <WithLayoutMeta
+        meta={{
+          pageTitle: "Dashboard",
+          breadcrumbs: [
+            {
+              name: "Dashboard",
+            },
+          ],
+        }}
+      />
       <Row className="mb-5">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-3">

@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Link } from "react-router-dom";
 import {
   SidebarTrigger,
@@ -18,10 +19,16 @@ export const DefaultNavbar = () => {
   return (
     <Navbar light expand="xs" fluid>
       <Nav navbar>
-        <NavItem className="mr-3">
-          <SidebarTrigger />
-        </NavItem>
-        <NavItem className="navbar-brand d-lg-none">
+        {!context.sidebarHidden && (
+          <NavItem className="mr-3">
+            <SidebarTrigger />
+          </NavItem>
+        )}
+        <NavItem
+          className={classNames("navbar-brand", {
+            "d-lg-none": !context.sidebarHidden,
+          })}
+        >
           <Link to="/" className="nav-logo">
             <LogoThemed />
           </Link>

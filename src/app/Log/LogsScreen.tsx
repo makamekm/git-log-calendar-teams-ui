@@ -13,8 +13,8 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  EmptyLayout,
   EmptyLayoutSection,
+  WithLayoutMeta,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
@@ -109,77 +109,87 @@ export const LogsScreen = observer(() => {
   useDelay(state, "isLoading", "isLoadingDelay");
 
   return (
-    <EmptyLayout>
-      <EmptyLayoutSection>
-        <Row className="mb-2">
-          <Col lg={12}>
-            <div className="d-flex flex-wrap mb-4 pb-2">
-              <HeaderMain title="Logs" className="mt-0 mb-3" />
-              <div className="ml-auto d-flex align-self-center">
+    <>
+      <WithLayoutMeta
+        meta={{
+          sidebarHidden: true,
+          footerHidden: true,
+          pageTitle: "Logs",
+          breadcrumbs: [
+            {
+              name: "Logs",
+            },
+          ],
+        }}
+      />
+      <Row className="mb-2">
+        <Col lg={12}>
+          <div className="d-flex flex-wrap mb-4 pb-2">
+            <HeaderMain title="Logs" className="mt-0 mb-3" />
+            {/* <div className="ml-auto d-flex align-self-center">
                 <Link to="/" className="ml-auto text-decoration-none">
                   <i className="fa fa-home mr-2"></i> Back Home
                 </Link>
-              </div>
-            </div>
-          </Col>
-        </Row>
+              </div> */}
+          </div>
+        </Col>
+      </Row>
 
-        <Row>
-          <Col lg={12}>
-            <div className="mb-3">
-              <Card className="p-2">
-                <InputGroup color="white">
-                  <Input
-                    placeholder="Search Messages..."
-                    value={state.search}
-                    onChange={(e) => {
-                      state.search = e.currentTarget.value;
-                    }}
-                  />
-                  <InputGroupAddon addonType="append">
-                    <Button color="secondary" outline onClick={state.load}>
-                      <i className="fa fa-search" />
-                    </Button>
-                  </InputGroupAddon>
-                </InputGroup>
-              </Card>
+      <Row>
+        <Col lg={12}>
+          <div className="mb-3">
+            <Card className="p-2">
+              <InputGroup color="white">
+                <Input
+                  placeholder="Search Messages..."
+                  value={state.search}
+                  onChange={(e) => {
+                    state.search = e.currentTarget.value;
+                  }}
+                />
+                <InputGroupAddon addonType="append">
+                  <Button color="secondary" outline onClick={state.load}>
+                    <i className="fa fa-search" />
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </Card>
 
-              <Card className="mt-2">
-                {state.isLoadingDelay ? (
-                  <List height={"300px"} className="m-4" />
-                ) : (
-                  <Table className="m-0">
-                    <tbody>
-                      {state.aggregatedLogs.map((line, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="text-nowrap">
-                              {line.date.format("YYYY-MM-DD hh:mm:ss")}
-                            </td>
-                            <td>{line.source}</td>
-                            <td
-                              className={classNames({
-                                [`text-${
-                                  levelColorMap[line.level]
-                                }`]: levelColorMap[line.level],
-                              })}
-                            >
-                              {line.level}
-                            </td>
-                            <td>
-                              <code>{line.message}</code>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                )}
-              </Card>
-            </div>
-          </Col>
-        </Row>
-      </EmptyLayoutSection>
-    </EmptyLayout>
+            <Card className="mt-2">
+              {state.isLoadingDelay ? (
+                <List height={"300px"} className="m-4" />
+              ) : (
+                <Table className="m-0">
+                  <tbody>
+                    {state.aggregatedLogs.map((line, index) => {
+                      return (
+                        <tr key={index}>
+                          <td className="text-nowrap">
+                            {line.date.format("YYYY-MM-DD hh:mm:ss")}
+                          </td>
+                          <td>{line.source}</td>
+                          <td
+                            className={classNames({
+                              [`text-${
+                                levelColorMap[line.level]
+                              }`]: levelColorMap[line.level],
+                            })}
+                          >
+                            {line.level}
+                          </td>
+                          <td>
+                            <code>{line.message}</code>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              )}
+            </Card>
+          </div>
+        </Col>
+      </Row>
+    </>
   );
 });

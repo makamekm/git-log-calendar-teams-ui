@@ -1,4 +1,21 @@
 import React from "react";
+import { isEqual, clone } from "underscore";
+
+export interface LayoutMeta {
+  sidebarHidden?: boolean;
+  navbarHidden?: boolean;
+  footerHidden?: boolean;
+  sidebarCollapsed?: boolean;
+  screenSize?: string;
+  animationsDisabled?: boolean;
+  pageTitle?: string;
+  pageDescription?: string;
+  pageKeywords?: string;
+  breadcrumbs?: {
+    name: string;
+    url?: string;
+  }[];
+}
 
 export interface LayoutState {
   sidebarHidden: boolean;
@@ -14,17 +31,49 @@ export interface LayoutState {
     name: string;
     url?: string;
   }[];
+  meta?: LayoutMeta;
 }
+
+export const defaultLayoutMeta: LayoutMeta = {
+  breadcrumbs: [],
+  sidebarHidden: false,
+  navbarHidden: false,
+  footerHidden: false,
+  pageTitle: null,
+  pageDescription: "Default Dashboard ready for Development",
+  pageKeywords: "react dashboard seed bootstrap",
+};
+
+export const defaultLayoutState = {
+  ...defaultLayoutMeta,
+  sidebarCollapsed: true,
+  screenSize: "",
+  animationsDisabled: true,
+} as LayoutState;
 
 export type LayoutConfig = LayoutState & {
   sidebarSlim: boolean;
   toggleSidebar: () => void;
   setElementsVisibility: (elements: { [name: string]: boolean }) => void;
-  changeMeta: (metaData: LayoutState) => void;
+  changeMeta: (metaData: LayoutMeta) => void;
 };
 
 export const LayoutContext = React.createContext<LayoutConfig>(null);
 const { Provider: LayoutProvider, Consumer: LayoutConsumer } = LayoutContext;
+
+export const WithLayoutMeta: React.FC<{
+  meta: LayoutMeta;
+}> = ({ meta, children }) => {
+  const context = React.useContext(LayoutContext);
+  React.useEffect(() => {
+    const value = { ...defaultLayoutMeta, ...meta };
+    const isDifferent = !isEqual(context.meta, value);
+    if (isDifferent) {
+      context.changeMeta(value);
+    }
+  }, [context, meta]);
+  return <>{children}</>;
+};
 
 type WithLayoutConfig = <T>(
   Component:

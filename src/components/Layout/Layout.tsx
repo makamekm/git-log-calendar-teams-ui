@@ -7,7 +7,11 @@ import _ from "lodash";
 import { LayoutContent } from "./LayoutContent";
 import { LayoutNavbar } from "./LayoutNavbar";
 import { LayoutSidebar } from "./LayoutSidebar";
-import { LayoutProvider, LayoutState } from "./LayoutContext";
+import {
+  LayoutProvider,
+  LayoutState,
+  defaultLayoutState,
+} from "./LayoutContext";
 
 export interface LayoutChild {
   type: {
@@ -52,20 +56,8 @@ export interface LayoutProps {
 }
 
 class Layout extends React.Component<RouteComponentProps & LayoutProps> {
-  state: LayoutState = {
-    breadcrumbs: [],
-    sidebarHidden: false,
-    navbarHidden: false,
-    footerHidden: false,
-    sidebarCollapsed: true,
-    screenSize: "",
-    animationsDisabled: true,
-
-    pageTitle: null,
-    pageDescription: "Default Dashboard ready for Development",
-    pageKeywords: "react dashboard seed bootstrap",
-  };
-  lastLgSidebarCollapsed = true;
+  state: LayoutState = defaultLayoutState;
+  lastLgSidebarCollapsed = defaultLayoutState.sidebarCollapsed;
   containerRef = React.createRef<HTMLDivElement>();
   bodyElement: HTMLElement;
   documentElement: HTMLElement;
@@ -236,7 +228,10 @@ class Layout extends React.Component<RouteComponentProps & LayoutProps> {
           toggleSidebar: this.toggleSidebar.bind(this),
           setElementsVisibility: this.setElementsVisibility.bind(this),
           changeMeta: (metaData) => {
-            this.setState({ ...this.state, ...metaData });
+            this.setState({
+              ...metaData,
+              meta: metaData,
+            });
           },
         }}
       >

@@ -24,6 +24,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
+  WithLayoutMeta,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
@@ -45,7 +46,7 @@ interface SettingsState {
 const SettingsForm = observer(({ state }: { state: SettingsState }) => {
   return (
     <Accordion className="mb-3">
-      <AccordionHeader className="h6">
+      <AccordionHeader className="h6 cursor-pointer">
         Preferences
         <span className="small ml-1 text-muted">#1.00</span>
       </AccordionHeader>
@@ -124,7 +125,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
 const SettingsRepositories = observer(({ state }: { state: SettingsState }) => {
   return (
     <Accordion className="mb-3" initialOpen>
-      <AccordionHeader className="h6">
+      <AccordionHeader className="h6 cursor-pointer">
         <div className="d-flex justify-content-center align-items-center">
           <div>
             Repositories
@@ -255,7 +256,7 @@ const SettingsRepositories = observer(({ state }: { state: SettingsState }) => {
 const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
   return (
     <Accordion className="mb-3" initialOpen>
-      <AccordionHeader className="h6">
+      <AccordionHeader className="h6 cursor-pointer">
         <div className="d-flex justify-content-center align-items-center">
           <div>
             Teams
@@ -377,7 +378,7 @@ const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
 const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
   return (
     <Accordion className="mb-3" initialOpen>
-      <AccordionHeader className="h6">
+      <AccordionHeader className="h6 cursor-pointer">
         <div className="d-flex justify-content-center align-items-center">
           <div>
             Users
@@ -548,6 +549,16 @@ export const Settings = observer(() => {
 
   return (
     <Container>
+      <WithLayoutMeta
+        meta={{
+          pageTitle: "Settings",
+          breadcrumbs: [
+            {
+              name: "Settings",
+            },
+          ],
+        }}
+      />
       <Row className="mb-2">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-4 pb-2">
