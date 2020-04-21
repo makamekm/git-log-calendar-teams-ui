@@ -204,6 +204,7 @@ const SettingsRepositories = observer(({ state }: { state: SettingsState }) => {
                       style={{ maxWidth: "300px", overflow: "hidden" }}
                     >
                       <Typeahead
+                        id="exclusions"
                         placeholder="Add exclusions..."
                         multiple
                         allowNew
@@ -325,6 +326,7 @@ const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
                     >
                       {!team.invert && (
                         <Typeahead
+                          id="exclusions"
                           placeholder="Add users..."
                           multiple
                           allowNew
@@ -433,6 +435,7 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
                       style={{ maxWidth: "300px", overflow: "hidden" }}
                     >
                       <Typeahead
+                        id="exclusions"
                         placeholder="Add associations..."
                         multiple
                         allowNew
