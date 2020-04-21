@@ -9,9 +9,6 @@ import {
   Container,
   Row,
   Col,
-  Card,
-  CardBody,
-  CardTitle,
   Table,
   UncontrolledButtonDropdown,
   DropdownToggle,
@@ -24,6 +21,9 @@ import {
   Form,
   FormGroup,
   Label,
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
@@ -44,450 +44,440 @@ interface SettingsState {
 
 const SettingsForm = observer(({ state }: { state: SettingsState }) => {
   return (
-    <Row>
-      <Col lg={12}>
-        <Card className="mb-3">
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                Preferences
-                <span className="small ml-1 text-muted">#1.00</span>
-              </CardTitle>
-            </div>
-            {!state.config || state.isLoadingDelay ? (
-              <List height="200px" width="100%" />
-            ) : (
-              <Form className="mt-3">
-                <FormGroup row>
-                  <Label for="input-1" sm={4}>
-                    Default Branch
-                  </Label>
-                  <Col sm={8}>
-                    <Input
-                      type="text"
-                      onChange={(e) => {
-                        state.config.branch = e.currentTarget.value;
-                      }}
-                      value={state.config.branch}
-                      placeholder="Enter Default Branch..."
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Label for="input-1" sm={4}>
-                    Collect Function
-                  </Label>
-                  <Col sm={8}>
-                    <Input
-                      type="text"
-                      onChange={(e) => {
-                        state.config.evaluateStr = e.currentTarget.value;
-                      }}
-                      value={String(state.config.evaluateStr)}
-                      placeholder="Enter JS function..."
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Label for="input-1" sm={4}>
-                    Collect Interval
-                  </Label>
-                  <Col sm={8}>
-                    <Input
-                      type="number"
-                      onChange={(e) => {
-                        state.config.collectInterval = Number(
-                          e.currentTarget.value
-                        );
-                      }}
-                      value={state.config.collectInterval}
-                      placeholder="Enter Minutes..."
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Label for="input-1" sm={4}>
-                    Only Registered Users
-                  </Label>
-                  <Col sm={8}>
-                    <Toggle
-                      checked={state.config.onlyRegistered}
-                      onChange={() => {
-                        state.config.onlyRegistered = !state.config
-                          .onlyRegistered;
-                      }}
-                    />
-                  </Col>
-                </FormGroup>
-              </Form>
-            )}
-          </CardBody>
-        </Card>
-      </Col>
-    </Row>
+    <Accordion className="mb-3">
+      <AccordionHeader className="h6">
+        Preferences
+        <span className="small ml-1 text-muted">#1.00</span>
+      </AccordionHeader>
+      <AccordionBody className="pb-0">
+        {!state.config || state.isLoadingDelay ? (
+          <List height="200px" width="100%" />
+        ) : (
+          <Form className="mt-3 mb-3">
+            <FormGroup row>
+              <Label for="input-1" sm={4}>
+                Default Branch
+              </Label>
+              <Col sm={8}>
+                <Input
+                  type="text"
+                  onChange={(e) => {
+                    state.config.branch = e.currentTarget.value;
+                  }}
+                  value={state.config.branch}
+                  placeholder="Enter Default Branch..."
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="input-1" sm={4}>
+                Collect Function
+              </Label>
+              <Col sm={8}>
+                <Input
+                  type="text"
+                  onChange={(e) => {
+                    state.config.evaluateStr = e.currentTarget.value;
+                  }}
+                  value={String(state.config.evaluateStr)}
+                  placeholder="Enter JS function..."
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="input-1" sm={4}>
+                Collect Interval
+              </Label>
+              <Col sm={8}>
+                <Input
+                  type="number"
+                  onChange={(e) => {
+                    state.config.collectInterval = Number(
+                      e.currentTarget.value
+                    );
+                  }}
+                  value={state.config.collectInterval}
+                  placeholder="Enter Minutes..."
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="input-1" sm={4}>
+                Only Registered Users
+              </Label>
+              <Col sm={8}>
+                <Toggle
+                  checked={state.config.onlyRegistered}
+                  onChange={() => {
+                    state.config.onlyRegistered = !state.config.onlyRegistered;
+                  }}
+                />
+              </Col>
+            </FormGroup>
+          </Form>
+        )}
+      </AccordionBody>
+    </Accordion>
   );
 });
 
 const SettingsRepositories = observer(({ state }: { state: SettingsState }) => {
   return (
-    <Row>
-      <Col lg={12}>
-        <Card className="mb-3">
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                Repositories
-                <span className="small ml-1 text-muted">#1.01</span>
-              </CardTitle>
-              <Button
-                outline
-                size="sm"
-                className="ml-auto"
-                onClick={() => {
-                  state.config.repositories.unshift({
-                    url: "",
-                    name: "",
-                    branch: "",
-                    exclude: [],
-                  });
-                }}
-              >
-                <i className="fa fa-plus mr-2"></i>Add
-              </Button>
-            </div>
-          </CardBody>
-          {!state.config || state.isLoadingDelay ? (
-            <List className="m-4" height="200px" width="100%" />
-          ) : (
-            <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
-              <thead>
-                <tr>
-                  <th className="bt-0">#</th>
-                  <th className="bt-0">Name</th>
-                  <th className="bt-0">Url</th>
-                  <th className="bt-0">Branch</th>
-                  <th className="bt-0">Excludes</th>
-                  <th className="text-right bt-0">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.config.repositories.map((repository, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="align-middle">{index + 1}.</td>
-                      <td className="align-middle">
-                        <Input
-                          type="text"
-                          onChange={(e) => {
-                            repository.name = e.currentTarget.value;
-                          }}
-                          value={repository.name}
-                          placeholder="Url..."
-                        />
-                      </td>
-                      <td className="align-middle">
-                        <Input
-                          type="text"
-                          onChange={(e) => {
-                            repository.url = e.currentTarget.value;
-                          }}
-                          value={repository.url}
-                          placeholder="Url..."
-                        />
-                      </td>
-                      <td className="align-middle">
-                        <Input
-                          type="text"
-                          onChange={(e) => {
-                            repository.branch = e.currentTarget.value;
-                          }}
-                          value={repository.branch}
-                          placeholder="Branch..."
-                        />
-                      </td>
-                      <td
-                        className="align-middle"
-                        style={{ maxWidth: "300px", overflow: "hidden" }}
-                      >
-                        <Typeahead
-                          placeholder="Add exclusions..."
-                          multiple
-                          allowNew
-                          selected={repository.exclude}
-                          onChange={(selected) => {
-                            selected = selected.map((s: any) =>
-                              typeof s === "string" ? s : s.label
-                            );
-                            (repository.exclude as any).replace(selected);
-                          }}
-                          options={state.excludes}
-                          positionFixed
-                        />
-                      </td>
-                      <td className="align-middle text-right">
-                        <UncontrolledButtonDropdown>
-                          <DropdownToggle
-                            color="link"
-                            className="text-decoration-none"
+    <Accordion className="mb-3" initialOpen>
+      <AccordionHeader className="h6">
+        <div className="d-flex justify-content-center align-items-center">
+          <div>
+            Repositories
+            <span className="small ml-1 text-muted">#1.01</span>
+          </div>
+          <Button
+            outline
+            size="sm"
+            className="ml-auto align-self-end"
+            onClick={(e) => {
+              e.stopPropagation();
+              state.config.repositories.unshift({
+                url: "",
+                name: "",
+                branch: "",
+                exclude: [],
+              });
+            }}
+          >
+            <i className="fa fa-plus mr-2"></i>Add
+          </Button>
+        </div>
+      </AccordionHeader>
+      <AccordionBody className="p-0">
+        {!state.config || state.isLoadingDelay ? (
+          <List className="m-4" height="200px" width="100%" />
+        ) : (
+          <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
+            <thead>
+              <tr>
+                <th className="bt-0">#</th>
+                <th className="bt-0">Name</th>
+                <th className="bt-0">Url</th>
+                <th className="bt-0">Branch</th>
+                <th className="bt-0">Excludes</th>
+                <th className="text-right bt-0">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {state.config.repositories.map((repository, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="align-middle">{index + 1}.</td>
+                    <td className="align-middle">
+                      <Input
+                        type="text"
+                        onChange={(e) => {
+                          repository.name = e.currentTarget.value;
+                        }}
+                        value={repository.name}
+                        placeholder="Name (Required & Unique)..."
+                      />
+                    </td>
+                    <td className="align-middle">
+                      <Input
+                        type="text"
+                        onChange={(e) => {
+                          repository.url = e.currentTarget.value;
+                        }}
+                        value={repository.url}
+                        placeholder="Url (Required)..."
+                      />
+                    </td>
+                    <td className="align-middle">
+                      <Input
+                        type="text"
+                        onChange={(e) => {
+                          repository.branch = e.currentTarget.value;
+                        }}
+                        value={repository.branch}
+                        placeholder="Branch (Optional)..."
+                      />
+                    </td>
+                    <td
+                      className="align-middle"
+                      style={{ maxWidth: "300px", overflow: "hidden" }}
+                    >
+                      <Typeahead
+                        placeholder="Add exclusions..."
+                        multiple
+                        allowNew
+                        selected={repository.exclude}
+                        onChange={(selected) => {
+                          selected = selected.map((s: any) =>
+                            typeof s === "string" ? s : s.label
+                          );
+                          (repository.exclude as any).replace(selected);
+                        }}
+                        options={state.excludes}
+                        positionFixed
+                      />
+                    </td>
+                    <td className="align-middle text-right">
+                      <UncontrolledButtonDropdown>
+                        <DropdownToggle
+                          color="link"
+                          className="text-decoration-none"
+                        >
+                          <i className="fa fa-gear"></i>
+                          <i className="fa fa-angle-down ml-2"></i>
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          <DropdownItem
+                            onClick={() => {
+                              state.config.repositories.splice(
+                                state.config.repositories.indexOf(repository),
+                                1
+                              );
+                            }}
                           >
-                            <i className="fa fa-gear"></i>
-                            <i className="fa fa-angle-down ml-2"></i>
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              onClick={() => {
-                                state.config.repositories.splice(
-                                  state.config.repositories.indexOf(repository),
-                                  1
-                                );
-                              }}
-                            >
-                              <i className="fa fa-fw fa-trash mr-2"></i>
-                              Delete
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledButtonDropdown>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          )}
-        </Card>
-      </Col>
-    </Row>
+                            <i className="fa fa-fw fa-trash mr-2"></i>
+                            Delete
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledButtonDropdown>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
+      </AccordionBody>
+    </Accordion>
   );
 });
 
 const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
   return (
-    <Row>
-      <Col lg={12}>
-        <Card className="mb-3">
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                Teams
-                <span className="small ml-1 text-muted">#1.02</span>
-              </CardTitle>
-              <Button
-                outline
-                size="sm"
-                className="ml-auto"
-                onClick={() => {
-                  state.config.teams.unshift({
-                    name: "",
-                    invert: false,
-                    users: [],
-                  });
-                }}
-              >
-                <i className="fa fa-plus mr-2"></i>Add
-              </Button>
-            </div>
-          </CardBody>
-          {!state.config || state.isLoadingDelay ? (
-            <List className="m-4" height="200px" width="100%" />
-          ) : (
-            <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
-              <thead>
-                <tr>
-                  <th className="bt-0">#</th>
-                  <th className="bt-0">Name</th>
-                  <th className="bt-0">Inverted</th>
-                  <th className="bt-0">Users</th>
-                  <th className="text-right bt-0">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.config.teams.map((team, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="align-middle">{index + 1}.</td>
-                      <td className="align-middle">
-                        <Input
-                          type="text"
-                          onChange={(e) => {
-                            team.name = e.currentTarget.value;
+    <Accordion className="mb-3" initialOpen>
+      <AccordionHeader className="h6">
+        <div className="d-flex justify-content-center align-items-center">
+          <div>
+            Teams
+            <span className="small ml-1 text-muted">#1.02</span>
+          </div>
+          <Button
+            outline
+            size="sm"
+            className="ml-auto align-self-end"
+            onClick={(e) => {
+              e.stopPropagation();
+              state.config.teams.unshift({
+                name: "",
+                invert: false,
+                users: [],
+              });
+            }}
+          >
+            <i className="fa fa-plus mr-2"></i>Add
+          </Button>
+        </div>
+      </AccordionHeader>
+      <AccordionBody className="p-0">
+        {!state.config || state.isLoadingDelay ? (
+          <List className="m-4" height="200px" width="100%" />
+        ) : (
+          <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
+            <thead>
+              <tr>
+                <th className="bt-0">#</th>
+                <th className="bt-0">Name</th>
+                <th className="bt-0">Inverted</th>
+                <th className="bt-0">Users</th>
+                <th className="text-right bt-0">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {state.config.teams.map((team, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="align-middle">{index + 1}.</td>
+                    <td className="align-middle">
+                      <Input
+                        type="text"
+                        onChange={(e) => {
+                          team.name = e.currentTarget.value;
+                        }}
+                        value={team.name}
+                        placeholder="Name (Required & Unique)..."
+                      />
+                    </td>
+                    <td className="align-middle">
+                      <Toggle
+                        checked={team.invert}
+                        onChange={() => {
+                          team.invert = !team.invert;
+                          if (team.invert) {
+                            (team.users as any).replace([]);
+                          }
+                        }}
+                      />
+                    </td>
+                    <td
+                      className="align-middle"
+                      style={{ maxWidth: "300px", overflow: "hidden" }}
+                    >
+                      {!team.invert && (
+                        <Typeahead
+                          placeholder="Add users..."
+                          multiple
+                          allowNew
+                          selected={team.users}
+                          onChange={(selected) => {
+                            selected = selected.map((s: any) =>
+                              typeof s === "string" ? s : s.label
+                            );
+                            (team.users as any).replace(selected);
                           }}
-                          value={team.name}
-                          placeholder="Url..."
+                          options={state.users}
+                          positionFixed
                         />
-                      </td>
-                      <td className="align-middle">
-                        <Toggle
-                          checked={team.invert}
-                          onChange={() => {
-                            team.invert = !team.invert;
-                            if (team.invert) {
-                              (team.users as any).replace([]);
-                            }
-                          }}
-                        />
-                      </td>
-                      <td
-                        className="align-middle"
-                        style={{ maxWidth: "300px", overflow: "hidden" }}
-                      >
-                        {!team.invert && (
-                          <Typeahead
-                            placeholder="Add users..."
-                            multiple
-                            allowNew
-                            selected={team.users}
-                            onChange={(selected) => {
-                              selected = selected.map((s: any) =>
-                                typeof s === "string" ? s : s.label
+                      )}
+                    </td>
+                    <td className="align-middle text-right">
+                      <UncontrolledButtonDropdown>
+                        <DropdownToggle
+                          color="link"
+                          className="text-decoration-none"
+                        >
+                          <i className="fa fa-gear"></i>
+                          <i className="fa fa-angle-down ml-2"></i>
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          <DropdownItem
+                            onClick={() => {
+                              state.config.teams.splice(
+                                state.config.teams.indexOf(team),
+                                1
                               );
-                              (team.users as any).replace(selected);
                             }}
-                            options={state.users}
-                            positionFixed
-                          />
-                        )}
-                      </td>
-                      <td className="align-middle text-right">
-                        <UncontrolledButtonDropdown>
-                          <DropdownToggle
-                            color="link"
-                            className="text-decoration-none"
                           >
-                            <i className="fa fa-gear"></i>
-                            <i className="fa fa-angle-down ml-2"></i>
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              onClick={() => {
-                                state.config.teams.splice(
-                                  state.config.teams.indexOf(team),
-                                  1
-                                );
-                              }}
-                            >
-                              <i className="fa fa-fw fa-trash mr-2"></i>
-                              Delete
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledButtonDropdown>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          )}
-        </Card>
-      </Col>
-    </Row>
+                            <i className="fa fa-fw fa-trash mr-2"></i>
+                            Delete
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledButtonDropdown>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
+      </AccordionBody>
+    </Accordion>
   );
 });
 
 const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
   return (
-    <Row>
-      <Col lg={12}>
-        <Card className="mb-3">
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                Users
-                <span className="small ml-1 text-muted">#1.03</span>
-              </CardTitle>
-              <Button
-                outline
-                size="sm"
-                className="ml-auto"
-                onClick={() => {
-                  state.config.users.unshift({
-                    name: "",
-                    associations: [],
-                  });
-                }}
-              >
-                <i className="fa fa-plus mr-2"></i>Add
-              </Button>
-            </div>
-          </CardBody>
-          {!state.config || state.isLoadingDelay ? (
-            <List className="m-4" height="200px" width="100%" />
-          ) : (
-            <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
-              <thead>
-                <tr>
-                  <th className="bt-0">#</th>
-                  <th className="bt-0">Name</th>
-                  <th className="bt-0">Associations</th>
-                  <th className="text-right bt-0">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.config.users.map((user, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="align-middle">{index + 1}.</td>
-                      <td className="align-middle">
-                        <Input
-                          type="text"
-                          onChange={(e) => {
-                            user.name = e.currentTarget.value;
-                          }}
-                          value={user.name}
-                          placeholder="Url..."
-                        />
-                      </td>
-                      <td
-                        className="align-middle"
-                        style={{ maxWidth: "300px", overflow: "hidden" }}
-                      >
-                        <Typeahead
-                          placeholder="Add associations..."
-                          multiple
-                          allowNew
-                          selected={user.associations}
-                          onChange={(selected) => {
-                            selected = selected.map((s: any) =>
-                              typeof s === "string" ? s : s.label
-                            );
-                            (user.associations as any).replace(selected);
-                          }}
-                          options={state.associations}
-                          positionFixed
-                        />
-                      </td>
-                      <td className="align-middle text-right">
-                        <UncontrolledButtonDropdown>
-                          <DropdownToggle
-                            color="link"
-                            className="text-decoration-none"
+    <Accordion className="mb-3" initialOpen>
+      <AccordionHeader className="h6">
+        <div className="d-flex justify-content-center align-items-center">
+          <div>
+            Users
+            <span className="small ml-1 text-muted">#1.03</span>
+          </div>
+          <Button
+            outline
+            size="sm"
+            className="ml-auto align-self-end"
+            onClick={(e) => {
+              e.stopPropagation();
+              state.config.users.unshift({
+                name: "",
+                associations: [],
+              });
+            }}
+          >
+            <i className="fa fa-plus mr-2"></i>Add
+          </Button>
+        </div>
+      </AccordionHeader>
+      <AccordionBody className="p-0">
+        {!state.config || state.isLoadingDelay ? (
+          <List className="m-4" height="200px" width="100%" />
+        ) : (
+          <Table striped className="mb-0" style={{ maxWidth: "100%" }}>
+            <thead>
+              <tr>
+                <th className="bt-0">#</th>
+                <th className="bt-0">Name</th>
+                <th className="bt-0">Associations</th>
+                <th className="text-right bt-0">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {state.config.users.map((user, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="align-middle">{index + 1}.</td>
+                    <td className="align-middle">
+                      <Input
+                        type="text"
+                        onChange={(e) => {
+                          user.name = e.currentTarget.value;
+                        }}
+                        value={user.name}
+                        placeholder="Name (Required & Unique)..."
+                      />
+                    </td>
+                    <td
+                      className="align-middle"
+                      style={{ maxWidth: "300px", overflow: "hidden" }}
+                    >
+                      <Typeahead
+                        placeholder="Add associations..."
+                        multiple
+                        allowNew
+                        selected={user.associations}
+                        onChange={(selected) => {
+                          selected = selected.map((s: any) =>
+                            typeof s === "string" ? s : s.label
+                          );
+                          (user.associations as any).replace(selected);
+                        }}
+                        options={state.associations}
+                        positionFixed
+                      />
+                    </td>
+                    <td className="align-middle text-right">
+                      <UncontrolledButtonDropdown>
+                        <DropdownToggle
+                          color="link"
+                          className="text-decoration-none"
+                        >
+                          <i className="fa fa-gear"></i>
+                          <i className="fa fa-angle-down ml-2"></i>
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          <DropdownItem
+                            onClick={() => {
+                              state.config.users.splice(
+                                state.config.users.indexOf(user),
+                                1
+                              );
+                            }}
                           >
-                            <i className="fa fa-gear"></i>
-                            <i className="fa fa-angle-down ml-2"></i>
-                          </DropdownToggle>
-                          <DropdownMenu right>
-                            <DropdownItem
-                              onClick={() => {
-                                state.config.users.splice(
-                                  state.config.users.indexOf(user),
-                                  1
-                                );
-                              }}
-                            >
-                              <i className="fa fa-fw fa-trash mr-2"></i>
-                              Delete
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledButtonDropdown>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          )}
-        </Card>
-      </Col>
-    </Row>
+                            <i className="fa fa-fw fa-trash mr-2"></i>
+                            Delete
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledButtonDropdown>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
+      </AccordionBody>
+    </Accordion>
   );
 });
 
