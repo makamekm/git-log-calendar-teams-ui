@@ -7,13 +7,15 @@ export const TotalChangedLinesPanel = ({
   valueToday,
   valueLimited,
   limit,
+  className,
 }: {
+  className?: string;
   valueToday: number;
   valueLimited: number;
   limit: number;
 }) => {
   return (
-    <>
+    <div className={className}>
       <div className="hr-text hr-text-center mb-2 mt-3">
         <span>Line Changes</span>
       </div>
@@ -33,6 +35,6 @@ export const TotalChangedLinesPanel = ({
           <h4 className="mt-2 mb-0">{numberWithCommas(valueLimited)}</h4>
         </Col>
       </Row>
-    </>
+    </div>
   );
 };

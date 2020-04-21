@@ -8,7 +8,7 @@ export const SidebarMobileFluid = ({
   children?: any;
   className?: string;
 }) => {
-  const wrapClass = classNames("sidebar__mobile-fluid", className);
+  const wrapClass = classNames("sidebar__mobile-fluid no-print", className);
 
   return <div className={wrapClass}>{children}</div>;
 };

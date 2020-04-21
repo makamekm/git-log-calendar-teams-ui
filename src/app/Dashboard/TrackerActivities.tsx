@@ -78,7 +78,8 @@ export const TrackerActivities = observer(() => {
                       ) : (
                         stats[tracker.name] && (
                           <CalendarActivities
-                            height={"200px"}
+                            maxValue={stateDashboard.maxValue}
+                            height={200}
                             data={stats[tracker.name]}
                             limit={stateDashboard.limit}
                           />

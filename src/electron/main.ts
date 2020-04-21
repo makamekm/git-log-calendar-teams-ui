@@ -39,6 +39,10 @@ if (!isWin) {
 let mainWindow: BrowserWindow;
 let tray: Tray;
 
+export const getWindow = () => {
+  return mainWindow;
+};
+
 function createUpdater() {
   new AppUpdater();
 }

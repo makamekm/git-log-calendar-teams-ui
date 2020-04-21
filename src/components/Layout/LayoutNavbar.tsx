@@ -5,7 +5,7 @@ const LayoutNavbar = (props) => {
   const navbar = React.Children.only(props.children);
 
   return (
-    <div className="layout__navbar">
+    <div className="layout__navbar no-print">
       {React.cloneElement(navbar, { fixed: null })}
     </div>
   );

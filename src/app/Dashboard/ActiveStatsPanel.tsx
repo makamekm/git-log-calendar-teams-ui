@@ -11,7 +11,9 @@ export const ActiveStatsPanel = ({
   activeTeamsToday,
   activeUsersToday,
   limit,
+  className,
 }: {
+  className?: string;
   activeRepositories?: number;
   activeTeams?: number;
   activeUsers?: number;
@@ -21,7 +23,7 @@ export const ActiveStatsPanel = ({
   limit: number;
 }) => {
   return (
-    <>
+    <div className={className}>
       <div className="hr-text hr-text-left my-2">
         <span>Today / {periods[limit]} Active Stats</span>
       </div>
@@ -62,6 +64,6 @@ export const ActiveStatsPanel = ({
           )}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 };

@@ -604,6 +604,12 @@ th {
   line-height: 1.5;
 }
 
+@media print {
+  .badge {
+    color: inherit;
+  }
+}
+
 .badge-secondary {
   background-color: lighten($body-color, 14%);
 }

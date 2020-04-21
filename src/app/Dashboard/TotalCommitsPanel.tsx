@@ -7,13 +7,15 @@ export const TotalCommitsPanel = ({
   valueToday,
   valueLimited,
   limit,
+  className,
 }: {
+  className?: string;
   valueToday: number;
   valueLimited: number;
   limit: number;
 }) => {
   return (
-    <>
+    <div className={className}>
       <div className="hr-text hr-text-center my-2">
         <span>Commits</span>
       </div>
@@ -33,6 +35,6 @@ export const TotalCommitsPanel = ({
           <h4 className="mt-2 mb-0">{numberWithCommas(valueLimited)}</h4>
         </Col>
       </Row>
-    </>
+    </div>
   );
 };

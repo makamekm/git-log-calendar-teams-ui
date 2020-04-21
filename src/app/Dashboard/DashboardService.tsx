@@ -6,6 +6,7 @@ import { ipc, Ipc } from "~/shared/ipc";
 
 export interface DashboardState {
   config: Config;
+  maxValue: number;
   teamStats: {
     [team: string]: {
       day: string;
@@ -45,6 +46,7 @@ export const DashboardService = createService<DashboardState>(
   () => {
     const state = useLocalStore<DashboardState>(() => ({
       config: null,
+      maxValue: 0,
       teamStats: {},
       userStats: {},
       repositoriesStats: {},

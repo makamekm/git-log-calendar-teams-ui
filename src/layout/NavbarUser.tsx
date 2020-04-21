@@ -11,7 +11,11 @@ const NavbarUser = (props: {
   const { pathname } = useLocation();
   return (
     <NavItem {...props}>
-      <NavLink tag={Link} to={"/logout/" + getEncapsulatedPath(pathname)}>
+      <NavLink
+        className="cursor-pointer"
+        tag={Link}
+        to={"/logout/" + getEncapsulatedPath(pathname)}
+      >
         <i className="fa fa-power-off"></i>
       </NavLink>
     </NavItem>

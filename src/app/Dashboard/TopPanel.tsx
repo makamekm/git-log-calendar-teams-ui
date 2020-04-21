@@ -9,14 +9,16 @@ export const TopPanel = ({
   data,
   colorShift,
   name,
+  className,
 }: {
+  className?: string;
   name?: string;
   colorShift?: number;
   data: { name: string; value: number }[];
 }) => {
   return data ? (
-    <>
-      <div className="hr-text hr-text-left my-2">
+    <div className={className}>
+      <div className={"hr-text hr-text-left mb-3"}>
         <span>
           Top {data.length} {name}
         </span>
@@ -54,6 +56,6 @@ export const TopPanel = ({
           </Media>
         </Media>
       )}
-    </>
+    </div>
   ) : null;
 };

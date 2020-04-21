@@ -21,6 +21,7 @@ export interface Ipc {
       appName: string;
       appVersion: string;
     };
+    PRINT: () => void;
     COLLECT_STATS: () => void;
     GET_CALENDAR_DATA: (
       limit: number,
@@ -159,6 +160,10 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["GET_STATS_DATA"]>
     ): Promise<ReturnType<Ipc["handlers"]["GET_STATS_DATA"]>> =>
       ipcRenderer.invoke(nameofHandler("GET_STATS_DATA"), ...args),
+    PRINT: (
+      ...args: Parameters<Ipc["handlers"]["PRINT"]>
+    ): Promise<ReturnType<Ipc["handlers"]["PRINT"]>> =>
+      ipcRenderer.invoke(nameofHandler("PRINT"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>

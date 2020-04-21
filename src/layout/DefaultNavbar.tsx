@@ -5,6 +5,7 @@ import { LogoThemed } from "~/app/LogoThemed";
 // import { NavbarActivityFeed } from "./NavbarActivityFeed";
 // import { NavbarMessages } from "./NavbarMessages";
 import { NavbarUser } from "./NavbarUser";
+import { NavbarPrint } from "./NavbarPrint";
 
 export const DefaultNavbar = () => (
   <Navbar light expand="xs" fluid>
@@ -38,6 +39,7 @@ export const DefaultNavbar = () => (
     <Nav navbar className="ml-auto">
       {/* <NavbarActivityFeed />
       <NavbarMessages className="ml-2" /> */}
+      <NavbarPrint />
       <NavbarUser className="ml-2" />
     </Nav>
   </Navbar>
