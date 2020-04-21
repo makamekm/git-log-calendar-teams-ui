@@ -10,6 +10,10 @@ export interface LayoutState {
   pageTitle: string;
   pageDescription: string;
   pageKeywords: string;
+  breadcrumbs: {
+    name: string;
+    url?: string;
+  }[];
 }
 
 export type LayoutConfig = LayoutState & {
@@ -19,10 +23,8 @@ export type LayoutConfig = LayoutState & {
   changeMeta: (metaData: LayoutState) => void;
 };
 
-const {
-  Provider: LayoutProvider,
-  Consumer: LayoutConsumer,
-} = React.createContext<LayoutConfig>(null);
+export const LayoutContext = React.createContext<LayoutConfig>(null);
+const { Provider: LayoutProvider, Consumer: LayoutConsumer } = LayoutContext;
 
 type WithLayoutConfig = <T>(
   Component:

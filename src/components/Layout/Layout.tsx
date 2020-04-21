@@ -53,6 +53,7 @@ export interface LayoutProps {
 
 class Layout extends React.Component<RouteComponentProps & LayoutProps> {
   state: LayoutState = {
+    breadcrumbs: [],
     sidebarHidden: false,
     navbarHidden: false,
     footerHidden: false,
@@ -235,7 +236,7 @@ class Layout extends React.Component<RouteComponentProps & LayoutProps> {
           toggleSidebar: this.toggleSidebar.bind(this),
           setElementsVisibility: this.setElementsVisibility.bind(this),
           changeMeta: (metaData) => {
-            this.setState(metaData);
+            this.setState({ ...this.state, ...metaData });
           },
         }}
       >
