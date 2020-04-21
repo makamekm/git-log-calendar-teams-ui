@@ -3,7 +3,6 @@ import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useOnChange, useDelay, useOnLoadPathname } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc, Ipc } from "~/shared/ipc";
-import { stat } from "fs";
 
 export interface DashboardState {
   config: Config;

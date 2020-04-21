@@ -1,5 +1,5 @@
 import React from "react";
-import { Media, Alert } from "~/components";
+import { Media } from "~/components";
 import { TinyDonutChart } from "./TinyDonutChart";
 import { numberWithCommas } from "~/tools";
 
