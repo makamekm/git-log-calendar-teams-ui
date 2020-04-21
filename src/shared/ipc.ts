@@ -30,6 +30,65 @@ export interface Ipc {
         [day: string]: number;
       };
     };
+    GET_STATS_DATA: (options: {
+      limit: number;
+      mode?: "user" | "repository" | "team";
+      name?: string;
+      top?: number;
+    }) => {
+      commits: {
+        todayValue: number;
+        value: number;
+      };
+      changes: {
+        todayValue: number;
+        value: number;
+      };
+      topTeams?: {
+        todayValue: {
+          name: string;
+          value: number;
+        }[];
+        value: {
+          name: string;
+          value: number;
+        }[];
+      };
+      topUsers?: {
+        todayValue: {
+          name: string;
+          value: number;
+        }[];
+        value: {
+          name: string;
+          value: number;
+        }[];
+      };
+      topRepositories?: {
+        todayValue: {
+          name: string;
+          value: number;
+        }[];
+        value: {
+          name: string;
+          value: number;
+        }[];
+      };
+      stats: {
+        activeRepositories?: {
+          todayValue: number;
+          value: number;
+        };
+        activeUsers?: {
+          todayValue: number;
+          value: number;
+        };
+        activeTeams?: {
+          todayValue: number;
+          value: number;
+        };
+      };
+    };
     GET_CONFIG: (force?: boolean) => Config;
     SAVE_CONFIG: (config: Config) => void;
     LOG: (
@@ -96,6 +155,10 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["GET_LOGS"]>
     ): Promise<ReturnType<Ipc["handlers"]["GET_LOGS"]>> =>
       ipcRenderer.invoke(nameofHandler("GET_LOGS"), ...args),
+    GET_STATS_DATA: (
+      ...args: Parameters<Ipc["handlers"]["GET_STATS_DATA"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_STATS_DATA"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_STATS_DATA"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>

@@ -8,7 +8,7 @@ import {
   Highlighter,
 } from "react-bootstrap-typeahead";
 import { groupBy } from "underscore";
-import { FavouriteService } from "./FavouriteService";
+import { FavouriteService, trackerMap } from "./FavouriteService";
 
 const TypeaheadMenu = (
   results: {
@@ -25,7 +25,7 @@ const TypeaheadMenu = (
     .map((region) => (
       <React.Fragment key={region}>
         {index !== 0 && <Menu.Divider />}
-        <Menu.Header>{region}</Menu.Header>
+        <Menu.Header>{trackerMap[region]}</Menu.Header>
         {types[region].map((i) => {
           const item = (
             <MenuItem key={index} option={i} position={index}>

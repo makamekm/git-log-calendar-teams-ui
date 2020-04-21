@@ -57,7 +57,37 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             {!state.config || state.isLoadingDelay ? (
               <List height="200px" width="100%" />
             ) : (
-              <Form>
+              <Form className="mt-3">
+                <FormGroup row>
+                  <Label for="input-1" sm={4}>
+                    Default Branch
+                  </Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.config.branch = e.currentTarget.value;
+                      }}
+                      value={state.config.branch}
+                      placeholder="Enter Default Branch..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label for="input-1" sm={4}>
+                    Collect Function
+                  </Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.config.evaluateStr = e.currentTarget.value;
+                      }}
+                      value={String(state.config.evaluateStr)}
+                      placeholder="Enter JS function..."
+                    />
+                  </Col>
+                </FormGroup>
                 <FormGroup row>
                   <Label for="input-1" sm={4}>
                     Collect Interval
@@ -72,6 +102,20 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                       }}
                       value={state.config.collectInterval}
                       placeholder="Enter Minutes..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label for="input-1" sm={4}>
+                    Only Registered Users
+                  </Label>
+                  <Col sm={8}>
+                    <Toggle
+                      checked={state.config.onlyRegistered}
+                      onChange={() => {
+                        state.config.onlyRegistered = !state.config
+                          .onlyRegistered;
+                      }}
                     />
                   </Col>
                 </FormGroup>

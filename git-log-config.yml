@@ -19,9 +19,9 @@ repositories:
     name: react
     url: https://github.com/facebook/react.git
 users:
-  - name: jhjhjjhj
-    associations:
+  - associations:
       - hgjghjghj
+    name: jhjhjjhj
   - associations:
       - test
     name: mmm
@@ -73,6 +73,7 @@ teams:
     name: others
     users:
       - mmm
+      - jhjhjjhj
       - Dan Abramov
       - Maxim Karpov
 reportCalendarTeam:
@@ -120,3 +121,5 @@ reportRunningRepository:
     output: ./year-repositories.svg
 path: /Users/mkarpov/projects/git-log-ui/git-log-config.yml
 collectInterval: 15
+evaluateStr: item => item.commits
+onlyRegistered: null

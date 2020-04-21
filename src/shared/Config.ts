@@ -15,7 +15,9 @@ export interface Config {
     invert?: boolean;
     users?: string[];
   }[];
+  evaluateStr?: string;
   evaluate?: string | Function;
+  onlyRegistered?: boolean;
   branch?: string;
   cleanTmp?: boolean;
   debug?: boolean;

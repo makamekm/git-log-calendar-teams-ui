@@ -49,6 +49,7 @@ const tryGetConfig = async () => {
     console.error(error);
     config = await readConfigFromHome();
   }
+  config.evaluateStr = String(config.evaluate);
   return config;
 };
 
@@ -90,12 +91,14 @@ ipcMain.handle(
     const configPath = oldConfig.path;
     const newConfigRules = {
       ...oldConfig,
+      branch: newConfig.branch || oldConfig.branch,
+      onlyRegistered: newConfig.onlyRegistered || oldConfig.onlyRegistered,
       collectInterval: newConfig.collectInterval || oldConfig.collectInterval,
       repositories: newConfig.repositories || oldConfig.repositories,
       users: newConfig.users || oldConfig.users,
       teams: newConfig.teams || oldConfig.teams,
       evaluate:
-        (newConfig.evaluate && newConfig.evaluate.toString()) ||
+        (newConfig.evaluateStr && newConfig.evaluateStr.toString()) ||
         (oldConfig.evaluate && oldConfig.evaluate.toString()),
     };
 

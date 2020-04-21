@@ -2,7 +2,8 @@ import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useOnChange, useDelay, useOnLoadPathname } from "~/hooks";
 import { Config } from "~/shared/Config";
-import { ipc } from "~/shared/ipc";
+import { ipc, Ipc } from "~/shared/ipc";
+import { stat } from "fs";
 
 export interface DashboardState {
   config: Config;
@@ -24,6 +25,7 @@ export interface DashboardState {
       value: number;
     }[];
   };
+  stats: ReturnType<Ipc["handlers"]["GET_STATS_DATA"]>;
   isLoading: boolean;
   isLoadingDelay: boolean;
   limit: number;
@@ -47,6 +49,7 @@ export const DashboardService = createService<DashboardState>(
       teamStats: {},
       userStats: {},
       repositoriesStats: {},
+      stats: null,
       isLoading: false,
       isLoadingDelay: false,
       limit: 30,
@@ -65,6 +68,10 @@ export const DashboardService = createService<DashboardState>(
           state.limit,
           "users"
         );
+        const stats = await ipc.handlers.GET_STATS_DATA({
+          limit: state.limit,
+        });
+        state.stats = stats;
         state.teamStats = prepareDate(teams);
         state.repositoriesStats = prepareDate(repositories);
         state.userStats = prepareDate(users);
