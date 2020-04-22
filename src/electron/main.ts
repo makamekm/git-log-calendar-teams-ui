@@ -8,6 +8,7 @@ import {
   MenuItem,
   powerSaveBlocker,
   protocol,
+  dialog,
 } from "electron";
 import path from "path";
 import url from "url";
@@ -16,6 +17,7 @@ import {
   OPEN_MAIN_WINDOW_ON_LOAD,
   OPEN_MAIN_WINDOW_DEV_TOOLS,
 } from "@env/config";
+import commandExists from "command-exists";
 import { AppUpdater } from "./updater";
 
 const isWin = process.platform !== "darwin";
@@ -145,25 +147,35 @@ function createWindow() {
 }
 
 app.on("ready", () => {
-  createTray();
-  createUpdater();
-  if (OPEN_MAIN_WINDOW_ON_LOAD) {
-    createWindow();
-  }
-  if (!process.env.ELECTRON_START_URL) {
-    protocol.interceptFileProtocol(
-      "file",
-      (request, callback) => {
-        const url = request.url.substr(7);
-        callback(path.normalize(`${__dirname}/../../${url}`));
-      },
-      (err) => {
-        if (err) {
-          console.error("Failed to register protocol");
-        }
+  commandExists("git", (err, commandExists) => {
+    if (!commandExists) {
+      dialog.showMessageBoxSync({
+        type: "error",
+        message: "You need to install GIT first before starting Git Manager!",
+      });
+      app.exit();
+    } else {
+      createTray();
+      createUpdater();
+      if (OPEN_MAIN_WINDOW_ON_LOAD) {
+        createWindow();
       }
-    );
-  }
+      if (!process.env.ELECTRON_START_URL) {
+        protocol.interceptFileProtocol(
+          "file",
+          (request, callback) => {
+            const url = request.url.substr(7);
+            callback(path.normalize(`${__dirname}/../../${url}`));
+          },
+          (err) => {
+            if (err) {
+              console.error("Failed to register protocol");
+            }
+          }
+        );
+      }
+    }
+  });
 });
 
 app.on("window-all-closed", () => {
@@ -172,10 +184,10 @@ app.on("window-all-closed", () => {
   }
 });
 
-app.on("activate", () => {
-  if (mainWindow != null) {
-    mainWindow.focus();
-  } else if (OPEN_MAIN_WINDOW_ON_LOAD) {
-    createWindow();
-  }
-});
+// app.on("activate", () => {
+//   if (mainWindow != null) {
+//     mainWindow.focus();
+//   } else if (OPEN_MAIN_WINDOW_ON_LOAD) {
+//     createWindow();
+//   }
+// });
