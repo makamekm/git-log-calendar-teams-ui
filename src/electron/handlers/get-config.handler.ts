@@ -1,5 +1,6 @@
 import { ipcMain, app } from "electron";
 import { writeFileSync, readFileSync, existsSync } from "fs";
+import { pick } from "underscore";
 import path from "path";
 import YAML from "yaml";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
@@ -91,19 +92,15 @@ ipcMain.handle(
     const configPath = oldConfig.path;
     const newConfigRules = {
       ...oldConfig,
-      branch: newConfig.branch || oldConfig.branch,
-      onlyRegistered:
-        newConfig.onlyRegistered != null
-          ? newConfig.onlyRegistered
-          : oldConfig.onlyRegistered,
-      collectInterval: newConfig.collectInterval || oldConfig.collectInterval,
-      collectMessages:
-        newConfig.collectMessages != null
-          ? newConfig.collectMessages
-          : oldConfig.collectMessages,
-      repositories: newConfig.repositories || oldConfig.repositories,
-      users: newConfig.users || oldConfig.users,
-      teams: newConfig.teams || oldConfig.teams,
+      ...pick(newConfig, [
+        "branch",
+        "onlyRegistered",
+        "collectInterval",
+        "collectMessages",
+        "repositories",
+        "users",
+        "teams",
+      ]),
       evaluate:
         (newConfig.evaluateStr && newConfig.evaluateStr.toString()) ||
         (oldConfig.evaluate && oldConfig.evaluate.toString()),
