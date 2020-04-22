@@ -117,7 +117,11 @@ export const TeamDashboard = observer(() => {
         </Col>
       </Row>
 
-      <HeaderSection no={1} title="Overall" subTitle="Calendar Activity" />
+      <HeaderSection
+        no={"Overall"}
+        title="All Stats"
+        subTitle="Calendar Activity"
+      />
 
       <Card className="mb-3">
         <CardBody>
@@ -146,8 +150,8 @@ export const TeamDashboard = observer(() => {
 
       {state.users.length > 0 && (
         <HeaderSection
-          no={2}
-          title="Team Users Stats"
+          no={"Users"}
+          title="Team Stats"
           subTitle="Calendar Activity"
           className="mt-5"
         />
@@ -183,8 +187,8 @@ export const TeamDashboard = observer(() => {
 
       {state.repositories.length > 0 && (
         <HeaderSection
-          no={2}
-          title="Team Repositories Stats"
+          no={"Repositories"}
+          title="Team Stats"
           subTitle="Calendar Activity"
           className="mt-5"
         />

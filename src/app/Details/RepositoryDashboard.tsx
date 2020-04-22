@@ -115,7 +115,11 @@ export const RepositoryDashboard = observer(() => {
         </Col>
       </Row>
 
-      <HeaderSection no={1} title="Overall" subTitle="Calendar Activity" />
+      <HeaderSection
+        no={"Overall"}
+        title="All Stats"
+        subTitle="Calendar Activity"
+      />
 
       <Card className="mb-3">
         <CardBody>
@@ -145,8 +149,8 @@ export const RepositoryDashboard = observer(() => {
 
       {state.teams.length > 0 && (
         <HeaderSection
-          no={2}
-          title="Repoitory Teams Stats"
+          no={"Teams"}
+          title="Repository Stats"
           subTitle="Calendar Activity"
           className="mt-5"
         />
@@ -182,8 +186,8 @@ export const RepositoryDashboard = observer(() => {
 
       {state.users.length > 0 && (
         <HeaderSection
-          no={2}
-          title="Repoitory User Stats"
+          no={"Users"}
+          title="Repository Stats"
           subTitle="Calendar Activity"
           className="mt-5"
         />
