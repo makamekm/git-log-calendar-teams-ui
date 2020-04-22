@@ -1,5 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { Instagram, List } from "react-content-loader";
+import { Link } from "react-router-dom";
 
 import {
   Container,
@@ -21,9 +23,7 @@ import { TotalChangedLinesPanel } from "../Dashboard/TotalChangedLinesPanel";
 import { TotalCommitsPanel } from "../Dashboard/TotalCommitsPanel";
 import { ActiveStatsPanel } from "../Dashboard/ActiveStatsPanel";
 import { CalendarActivities } from "../Dashboard/CalendarActivities";
-import { Instagram } from "react-content-loader";
 import { HeaderSection } from "../HeaderSection";
-import { Link } from "react-router-dom";
 
 export const TeamDashboard = observer(() => {
   const { teamName } = useParams();
@@ -65,56 +65,64 @@ export const TeamDashboard = observer(() => {
             <DashboardToolbar state={state} />
           </div>
         </Col>
-        <Col lg={4}>
-          <TotalCommitsPanel
-            className="mt-4"
-            valueToday={state.stats?.commits.todayValue}
-            valueLimited={state.stats?.commits.value}
-            limit={state.limit}
-          />
-          <TotalChangedLinesPanel
-            className="mt-4"
-            valueToday={state.stats?.changes.todayValue}
-            valueLimited={state.stats?.changes.value}
-            limit={state.limit}
-          />
-          <ActiveStatsPanel
-            className="mt-4"
-            activeRepositories={state.stats?.stats.activeRepositories?.value}
-            activeUsers={state.stats?.stats.activeUsers?.value}
-            activeRepositoriesToday={
-              state.stats?.stats.activeRepositories?.todayValue
-            }
-            activeUsersToday={state.stats?.stats.activeUsers?.todayValue}
-            limit={state.limit}
-          />
-        </Col>
-        <Col lg={4} md={12}>
-          <TopPanel
-            className="mt-4"
-            name={`Repositories ${periods[state.limit]}`}
-            data={state.stats?.topRepositories?.value}
-          />
-          <TopPanel
-            className="mt-4"
-            name={`Users ${periods[state.limit]}`}
-            colorShift={2}
-            data={state.stats?.topUsers?.value}
-          />
-        </Col>
-        <Col lg={4} md={12}>
-          <TopPanel
-            className="mt-4"
-            name="Repositories Today"
-            data={state.stats?.topRepositories?.todayValue}
-          />
-          <TopPanel
-            className="mt-4"
-            name="Users Today"
-            colorShift={2}
-            data={state.stats?.topUsers?.todayValue}
-          />
-        </Col>
+        {state.isLoadingDelay ? (
+          <List height="300px" />
+        ) : (
+          <>
+            <Col lg={4}>
+              <TotalCommitsPanel
+                className="mt-4"
+                valueToday={state.stats?.commits.todayValue}
+                valueLimited={state.stats?.commits.value}
+                limit={state.limit}
+              />
+              <TotalChangedLinesPanel
+                className="mt-4"
+                valueToday={state.stats?.changes.todayValue}
+                valueLimited={state.stats?.changes.value}
+                limit={state.limit}
+              />
+              <ActiveStatsPanel
+                className="mt-4"
+                activeRepositories={
+                  state.stats?.stats.activeRepositories?.value
+                }
+                activeUsers={state.stats?.stats.activeUsers?.value}
+                activeRepositoriesToday={
+                  state.stats?.stats.activeRepositories?.todayValue
+                }
+                activeUsersToday={state.stats?.stats.activeUsers?.todayValue}
+                limit={state.limit}
+              />
+            </Col>
+            <Col lg={4} md={12}>
+              <TopPanel
+                className="mt-4"
+                name={`Repositories ${periods[state.limit]}`}
+                data={state.stats?.topRepositories?.value}
+              />
+              <TopPanel
+                className="mt-4"
+                name={`Users ${periods[state.limit]}`}
+                colorShift={2}
+                data={state.stats?.topUsers?.value}
+              />
+            </Col>
+            <Col lg={4} md={12}>
+              <TopPanel
+                className="mt-4"
+                name="Repositories Today"
+                data={state.stats?.topRepositories?.todayValue}
+              />
+              <TopPanel
+                className="mt-4"
+                name="Users Today"
+                colorShift={2}
+                data={state.stats?.topUsers?.todayValue}
+              />
+            </Col>
+          </>
+        )}
       </Row>
 
       <HeaderSection
