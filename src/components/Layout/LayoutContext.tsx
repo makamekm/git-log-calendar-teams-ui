@@ -1,5 +1,5 @@
 import React from "react";
-import { isEqual, clone } from "underscore";
+import { isEqual } from "underscore";
 
 export interface LayoutMeta {
   sidebarHidden?: boolean;

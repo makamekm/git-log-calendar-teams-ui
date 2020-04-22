@@ -49,7 +49,7 @@ export const TrackersSelector = observer(() => {
     <Typeahead
       id="trackers-input"
       ref={ref}
-      placeholder="Add trackers..."
+      placeholder="Add favourites..."
       renderMenu={TypeaheadMenu as any}
       selected={[]}
       labelKey="name"

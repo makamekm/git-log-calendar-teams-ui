@@ -14,15 +14,16 @@ const HeaderSection = (props: {
     </Media>
     <Media body>
       <h4 className="mt-1">{props.title}</h4>
-      <p>{props.children || props.subTitle}</p>
+      {(props.children || props.subTitle) && (
+        <p>{props.children || props.subTitle}</p>
+      )}
     </Media>
   </Media>
 );
 
 HeaderSection.defaultProps = {
   no: 0,
-  title: "Waiting for Data...",
-  subTitle: "Waiting for Data...",
+  title: "",
 };
 
 export { HeaderSection };

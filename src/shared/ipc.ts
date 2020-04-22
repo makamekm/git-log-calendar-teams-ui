@@ -24,8 +24,12 @@ export interface Ipc {
     PRINT: () => void;
     COLLECT_STATS: () => void;
     GET_CALENDAR_DATA: (
-      limit: number,
-      mode: "users" | "repositories" | "teams"
+      mode: "users" | "repositories" | "teams",
+      options: {
+        limit: number;
+        mode?: "user" | "repository" | "team";
+        name?: string;
+      }
     ) => {
       [team: string]: {
         [day: string]: number;

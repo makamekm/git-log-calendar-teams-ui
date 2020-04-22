@@ -100,6 +100,9 @@ import { Dashboard } from "./app/Dashboard/Dashboard";
 import { Error404 } from "./app/Error404";
 import { Settings } from "./app/Settings/Settings";
 import { LogsScreen } from "./app/Log/LogsScreen";
+import { TeamDashboard } from "./app/Details/TeamDashboard";
+import { UserDashboard } from "./app/Details/UserDashboard";
+import { RepositoryDashboard } from "./app/Details/RepositoryDashboard";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
@@ -114,6 +117,14 @@ export const RoutedContent = () => {
       <Route component={Error404} path="/404" />
 
       <ProtectedRoute path="/dashboard" exact component={Dashboard} />
+      <ProtectedRoute path="/team/:teamName" exact component={TeamDashboard} />
+      <ProtectedRoute path="/user/:userName" exact component={UserDashboard} />
+      <ProtectedRoute
+        path="/repository/:repositoryName"
+        exact
+        component={RepositoryDashboard}
+      />
+
       <ProtectedRoute path="/settings" exact component={Settings} />
       <Route path="/logs" exact component={LogsScreen} />
 

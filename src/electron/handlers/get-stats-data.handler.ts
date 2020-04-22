@@ -18,21 +18,16 @@ function processData(data) {
 }
 
 function normalizeCommitsAndLineChanges(report, fileMap, config) {
-  return normalizeDataReduce(
-    report,
-    fileMap,
-    config,
-    (data, value, author, repository) => {
-      if (!data.commits) {
-        data.commits = 0;
-      }
-      if (!data.linesChanged) {
-        data.linesChanged = 0;
-      }
-      data.commits += author.commits;
-      data.linesChanged += author.linesChanged;
+  return normalizeDataReduce(report, fileMap, config, ({ data, author }) => {
+    if (!data.commits) {
+      data.commits = 0;
     }
-  );
+    if (!data.linesChanged) {
+      data.linesChanged = 0;
+    }
+    data.commits += author.commits;
+    data.linesChanged += author.linesChanged;
+  });
 }
 
 const cache: {

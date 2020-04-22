@@ -13,13 +13,11 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  EmptyLayoutSection,
   WithLayoutMeta,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useDelay, useOnChange, useOnLoad } from "~/hooks";
-import { Link } from "react-router-dom";
 
 const matchLogReg = /\[(\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d\d\d)\] \[(\w*)\] ([\d\w\W]*)/m;
 

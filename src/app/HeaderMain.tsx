@@ -1,7 +1,7 @@
 import React from "react";
 
 const HeaderMain = (props: {
-  title?: string;
+  title?: any;
   subTitle?: any;
   className?: string;
 }) => (

@@ -13,12 +13,13 @@ import { LogoThemed } from "~/app/LogoThemed";
 // import { NavbarMessages } from "./NavbarMessages";
 import { NavbarUser } from "./NavbarUser";
 import { NavbarPrint } from "./NavbarPrint";
+import { SearchBar } from "~/app/SearchBar/SearchBar";
 
 export const DefaultNavbar = () => {
   const context = React.useContext(LayoutContext);
   return (
     <Navbar light expand="xs" fluid>
-      <Nav navbar>
+      <Nav navbar className="text-nowrap" style={{ flexWrap: "unset" }}>
         {!context.sidebarHidden && (
           <NavItem className="mr-3">
             <SidebarTrigger />
@@ -55,7 +56,8 @@ export const DefaultNavbar = () => {
           ))}
         </NavItem>
       </Nav>
-      <Nav navbar className="ml-auto">
+      <SearchBar />
+      <Nav navbar className="text-nowrap" style={{ flexWrap: "unset" }}>
         {/* <NavbarActivityFeed />
         <NavbarMessages className="ml-2" /> */}
         <NavbarPrint />

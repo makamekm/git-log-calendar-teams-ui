@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { observer } from "mobx-react";
 
@@ -13,9 +12,16 @@ import { DashboardService } from "./DashboardService";
 import { TrackersSelector } from "./TrackerSelector";
 import { TrackerActivities } from "./TrackerActivities";
 import { periods } from "./Periods";
+import { useOnLoad } from "~/hooks";
 
 export const Dashboard = observer(() => {
   const state = React.useContext(DashboardService);
+  const onLoad = React.useCallback(() => {
+    state.mode = null;
+    state.name = null;
+    state.load();
+  }, [state]);
+  useOnLoad(onLoad);
 
   return (
     <Container>
@@ -51,14 +57,14 @@ export const Dashboard = observer(() => {
           />
           <ActiveStatsPanel
             className="mt-4"
-            activeRepositories={state.stats?.stats.activeRepositories.value}
-            activeTeams={state.stats?.stats.activeTeams.value}
-            activeUsers={state.stats?.stats.activeUsers.value}
+            activeRepositories={state.stats?.stats.activeRepositories?.value}
+            activeTeams={state.stats?.stats.activeTeams?.value}
+            activeUsers={state.stats?.stats.activeUsers?.value}
             activeRepositoriesToday={
-              state.stats?.stats.activeRepositories.todayValue
+              state.stats?.stats.activeRepositories?.todayValue
             }
-            activeTeamsToday={state.stats?.stats.activeTeams.todayValue}
-            activeUsersToday={state.stats?.stats.activeUsers.todayValue}
+            activeTeamsToday={state.stats?.stats.activeTeams?.todayValue}
+            activeUsersToday={state.stats?.stats.activeUsers?.todayValue}
             limit={state.limit}
           />
         </Col>
@@ -66,38 +72,38 @@ export const Dashboard = observer(() => {
           <TopPanel
             className="mt-4"
             name={`Repositories ${periods[state.limit]}`}
-            data={state.stats?.topRepositories.value}
+            data={state.stats?.topRepositories?.value}
           />
           <TopPanel
             className="mt-4"
             name={`Teams ${periods[state.limit]}`}
             colorShift={1}
-            data={state.stats?.topTeams.value}
+            data={state.stats?.topTeams?.value}
           />
           <TopPanel
             className="mt-4"
             name={`Users ${periods[state.limit]}`}
             colorShift={2}
-            data={state.stats?.topUsers.value}
+            data={state.stats?.topUsers?.value}
           />
         </Col>
         <Col lg={4} md={12}>
           <TopPanel
             className="mt-4"
             name="Repositories Today"
-            data={state.stats?.topRepositories.todayValue}
+            data={state.stats?.topRepositories?.todayValue}
           />
           <TopPanel
             className="mt-4"
             name="Teams Today"
             colorShift={1}
-            data={state.stats?.topTeams.todayValue}
+            data={state.stats?.topTeams?.todayValue}
           />
           <TopPanel
             className="mt-4"
             name="Users Today"
             colorShift={2}
-            data={state.stats?.topUsers.todayValue}
+            data={state.stats?.topUsers?.todayValue}
           />
         </Col>
       </Row>
