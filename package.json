@@ -75,6 +75,7 @@
     "fs-backwards-stream": "^1.0.0",
     "git-log-calendar-teams": "^1.0.10",
     "holderjs": "^2.9.7",
+    "hyperdrive": "^9.16.0",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
     "mobx-localstorage": "^1.2.0",

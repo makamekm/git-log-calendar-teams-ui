@@ -19,6 +19,7 @@ import {
 } from "@env/config";
 import commandExists from "command-exists";
 import { AppUpdater } from "./updater";
+import { createDrive } from "./drive";
 
 const isWin = process.platform !== "darwin";
 
@@ -155,6 +156,7 @@ app.on("ready", () => {
       });
       app.exit();
     } else {
+      createDrive();
       createTray();
       createUpdater();
       if (OPEN_MAIN_WINDOW_ON_LOAD) {
