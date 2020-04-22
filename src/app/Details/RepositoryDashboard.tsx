@@ -18,7 +18,7 @@ import {
   Input,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { DashboardService } from "../Dashboard/DashboardService";
+import { DashboardService } from "../DashboardService";
 import { useParams } from "react-router";
 import { useOnLoad } from "~/hooks";
 import { DashboardToolbar } from "../Dashboard/DashboardToolbar";
@@ -31,9 +31,10 @@ import { CalendarActivities } from "../Dashboard/CalendarActivities";
 import { HeaderSection } from "../HeaderSection";
 import { numberWithCommas } from "~/tools";
 import { LatestMessages } from "./LastMessages";
+import { RepositoryUserService } from "../RepositoryUserService";
 
 const RepositoryUsers = observer(() => {
-  const state = React.useContext(DashboardService);
+  const state = React.useContext(RepositoryUserService);
   const onSearchChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       state.usersQuery = e.currentTarget.value;

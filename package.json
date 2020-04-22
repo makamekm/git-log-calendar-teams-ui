@@ -73,7 +73,7 @@
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
     "fs-backwards-stream": "^1.0.0",
-    "git-log-calendar-teams": "^1.0.9",
+    "git-log-calendar-teams": "^1.0.10",
     "holderjs": "^2.9.7",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",

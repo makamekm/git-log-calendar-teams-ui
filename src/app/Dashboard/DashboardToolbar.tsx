@@ -11,7 +11,7 @@ import {
   Input,
 } from "~/components";
 import { periods } from "./Periods";
-import { DashboardState } from "./DashboardService";
+import { DashboardState } from "../DashboardService";
 
 const PeriodValues = observer(({ state }: { state: DashboardState }) => {
   return (

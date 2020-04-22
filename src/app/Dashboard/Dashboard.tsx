@@ -9,7 +9,7 @@ import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
 import { TopPanel } from "./TopPanel";
 import { ActiveStatsPanel } from "./ActiveStatsPanel";
 import { DashboardToolbar } from "./DashboardToolbar";
-import { DashboardService } from "./DashboardService";
+import { DashboardService } from "../DashboardService";
 import { TrackersSelector } from "./TrackerSelector";
 import { TrackerActivities } from "./TrackerActivities";
 import { periods } from "./Periods";

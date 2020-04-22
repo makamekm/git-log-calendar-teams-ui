@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { DashboardService } from "../Dashboard/DashboardService";
+import { DashboardService } from "../DashboardService";
 import { useParams } from "react-router";
 import { useOnLoad } from "~/hooks";
 import { DashboardToolbar } from "../Dashboard/DashboardToolbar";

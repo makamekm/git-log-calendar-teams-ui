@@ -10,10 +10,11 @@ import {
 import { AuthService } from "./app/Auth/AuthService";
 import { LoadingScreen } from "./app/Loading/LoadingScreen";
 import { LoadingService } from "./app/Loading/LoadingService";
-import { FavouriteService } from "./app/Dashboard/FavouriteService";
-import { DashboardService } from "./app/Dashboard/DashboardService";
+import { FavouriteService } from "./app/FavouriteService";
+import { DashboardService } from "./app/DashboardService";
 import { SearchService } from "./app/SearchService";
-import { MessageService } from "./app/Dashboard/MessageService";
+import { MessageService } from "./app/MessageService";
+import { RepositoryUserService } from "./app/RepositoryUserService";
 
 const basePath = process.env.BASE_PATH || "/";
 
@@ -25,7 +26,8 @@ export const App = () => {
       FavouriteService,
       DashboardService,
       SearchService,
-      MessageService
+      MessageService,
+      RepositoryUserService
     )
   );
 

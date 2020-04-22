@@ -13,8 +13,8 @@ import {
   DropdownItem,
 } from "~/components";
 import { CalendarActivities } from "./CalendarActivities";
-import { DashboardService } from "./DashboardService";
-import { FavouriteService } from "./FavouriteService";
+import { DashboardService } from "../DashboardService";
+import { FavouriteService } from "../FavouriteService";
 import { Link } from "react-router-dom";
 import { HeaderSection } from "../HeaderSection";
 

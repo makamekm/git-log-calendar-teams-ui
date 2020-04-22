@@ -8,7 +8,7 @@ import {
   Highlighter,
 } from "react-bootstrap-typeahead";
 import { groupBy } from "underscore";
-import { FavouriteService, trackerMap } from "./FavouriteService";
+import { FavouriteService, trackerMap } from "../FavouriteService";
 
 const TypeaheadMenu = (
   results: {

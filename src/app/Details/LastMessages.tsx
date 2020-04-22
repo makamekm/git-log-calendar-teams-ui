@@ -11,9 +11,9 @@ import {
   Table,
   Input,
 } from "~/components";
-import { DashboardService } from "../Dashboard/DashboardService";
+import { DashboardService } from "../DashboardService";
 import { numberWithCommas } from "~/tools";
-import { MessageService } from "../Dashboard/MessageService";
+import { MessageService } from "../MessageService";
 
 export const LatestMessages = observer(() => {
   const stateDashboard = React.useContext(DashboardService);

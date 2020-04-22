@@ -5,33 +5,18 @@ import { useOnChange, useDelay } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc, Ipc } from "~/shared/ipc";
 import { MessageState, MessageService } from "./MessageService";
+import {
+  RepositoryUserState,
+  RepositoryUserService,
+} from "./RepositoryUserService";
 
 export interface DashboardState {
   messageService?: MessageState;
+  repositoryUserService?: RepositoryUserState;
   config: Config;
   maxValue: number;
   mode: "team" | "repository" | "user";
   name: string;
-  repositoryUsers: {
-    userKey: string;
-    user?: {
-      name: string;
-    };
-    email: string;
-    name: string;
-    value: number;
-  }[];
-  usersQuery: string;
-  usersQueryDelay: string;
-  tableRepositoryUsers: {
-    userKey: string;
-    user?: {
-      name: string;
-    };
-    email: string;
-    name: string;
-    value: number;
-  }[];
   teamStats: {
     [team: string]: {
       day: string;
@@ -80,22 +65,10 @@ export const DashboardService = createService<DashboardState>(
       teamStats: {},
       userStats: {},
       repositoriesStats: {},
-      repositoryUsers: [],
       stats: null,
       isLoading: false,
       isLoadingDelay: false,
       limit: 30,
-      usersQuery: "",
-      usersQueryDelay: "",
-      get tableRepositoryUsers() {
-        return state.usersQueryDelay
-          ? state.repositoryUsers.filter((user) => {
-              return user.userKey
-                .toLowerCase()
-                .includes(state.usersQueryDelay.toLowerCase());
-            })
-          : state.repositoryUsers;
-      },
       get users() {
         const result: string[] = [];
         state.config &&
@@ -175,11 +148,7 @@ export const DashboardService = createService<DashboardState>(
             name: state.name,
           })
         );
-        if (state.mode === "repository") {
-          state.repositoryUsers = await ipc.handlers.GET_REPOSITORY_USERS([
-            state.name,
-          ]);
-        }
+        await state.repositoryUserService.load();
         await state.messageService.load();
         state.isLoading = false;
       },
@@ -188,8 +157,8 @@ export const DashboardService = createService<DashboardState>(
   },
   (state) => {
     state.messageService = React.useContext(MessageService);
+    state.repositoryUserService = React.useContext(RepositoryUserService);
     useOnChange(state, "limit", state.load);
     useDelay(state, "isLoading", "isLoadingDelay");
-    useDelay(state, "usersQuery", "usersQueryDelay");
   }
 );
