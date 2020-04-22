@@ -13,6 +13,7 @@ import { LoadingService } from "./app/Loading/LoadingService";
 import { FavouriteService } from "./app/Dashboard/FavouriteService";
 import { DashboardService } from "./app/Dashboard/DashboardService";
 import { SearchService } from "./app/SearchService";
+import { MessageService } from "./app/Dashboard/MessageService";
 
 const basePath = process.env.BASE_PATH || "/";
 
@@ -23,7 +24,8 @@ export const App = () => {
       LoadingService,
       FavouriteService,
       DashboardService,
-      SearchService
+      SearchService,
+      MessageService
     )
   );
 

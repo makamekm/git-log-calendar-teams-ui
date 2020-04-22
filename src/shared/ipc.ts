@@ -35,6 +35,19 @@ export interface Ipc {
         [day: string]: number;
       };
     };
+    GET_MESSAGES: (options: {
+      query: string;
+      limit: number;
+      maxMessages: number;
+      mode?: "user" | "repository" | "team";
+      name?: string;
+    }) => {
+      message: string;
+      user: string;
+      date: string;
+      repository: string;
+      value: number;
+    }[];
     GET_STATS_DATA: (options: {
       limit: number;
       mode?: "user" | "repository" | "team";
@@ -107,6 +120,17 @@ export interface Ipc {
       main: string[];
       renderer: string[];
     };
+    GET_REPOSITORY_USERS: (
+      name?: string[]
+    ) => {
+      userKey: string;
+      user?: {
+        name: string;
+      };
+      email: string;
+      name: string;
+      value: number;
+    }[];
     GET_DATA: () => any;
   };
   sends: {
@@ -168,6 +192,14 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["PRINT"]>
     ): Promise<ReturnType<Ipc["handlers"]["PRINT"]>> =>
       ipcRenderer.invoke(nameofHandler("PRINT"), ...args),
+    GET_REPOSITORY_USERS: (
+      ...args: Parameters<Ipc["handlers"]["GET_REPOSITORY_USERS"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_REPOSITORY_USERS"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_REPOSITORY_USERS"), ...args),
+    GET_MESSAGES: (
+      ...args: Parameters<Ipc["handlers"]["GET_MESSAGES"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_MESSAGES"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_MESSAGES"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>

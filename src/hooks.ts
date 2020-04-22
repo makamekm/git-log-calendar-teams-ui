@@ -26,7 +26,8 @@ export const useIsDirty: <T extends {
 export const useDelay: <T>(
   state: T,
   name: keyof T,
-  newName: keyof T
+  newName: keyof T,
+  delay?: number
 ) => void = (state, name, newName, delay = 500) => {
   React.useEffect(() => {
     const setValue = debounce((value) => (state[newName] = value), delay);

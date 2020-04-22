@@ -14,14 +14,15 @@ let date = new Date();
 
 const readConfigFromHome = async () => {
   const configPath = path.resolve(app.getPath("home"), "./git-log-config.yml");
-  let config = {
+  let config: Config = {
     branch: "master",
+    onlyRegistered: false,
     cleanTmp: false,
     collectMessages: false,
     debug: true,
     tmpDir: path.resolve(app.getPath("home"), "./repositories"),
     statsDir: path.resolve(app.getPath("home")),
-    evaluate: "item => item.linesChanged",
+    evaluate: (item) => item.linesChanged,
     collectInterval: 15,
     repositories: [],
     teams: [],
@@ -37,8 +38,6 @@ const readConfigFromHome = async () => {
       console.error(error);
     }
   }
-  // eslint-disable-next-line no-new-func
-  config.evaluate = Function('"use strict";return (' + config.evaluate + ")")();
   return config;
 };
 
@@ -93,9 +92,15 @@ ipcMain.handle(
     const newConfigRules = {
       ...oldConfig,
       branch: newConfig.branch || oldConfig.branch,
-      onlyRegistered: newConfig.onlyRegistered || oldConfig.onlyRegistered,
+      onlyRegistered:
+        newConfig.onlyRegistered != null
+          ? newConfig.onlyRegistered
+          : oldConfig.onlyRegistered,
       collectInterval: newConfig.collectInterval || oldConfig.collectInterval,
-      collectMessages: newConfig.collectMessages || oldConfig.collectMessages,
+      collectMessages:
+        newConfig.collectMessages != null
+          ? newConfig.collectMessages
+          : oldConfig.collectMessages,
       repositories: newConfig.repositories || oldConfig.repositories,
       users: newConfig.users || oldConfig.users,
       teams: newConfig.teams || oldConfig.teams,

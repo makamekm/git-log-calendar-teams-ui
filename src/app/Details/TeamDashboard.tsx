@@ -24,6 +24,7 @@ import { TotalCommitsPanel } from "../Dashboard/TotalCommitsPanel";
 import { ActiveStatsPanel } from "../Dashboard/ActiveStatsPanel";
 import { CalendarActivities } from "../Dashboard/CalendarActivities";
 import { HeaderSection } from "../HeaderSection";
+import { LatestMessages } from "./LastMessages";
 
 export const TeamDashboard = observer(() => {
   const { teamName } = useParams();
@@ -46,7 +47,10 @@ export const TeamDashboard = observer(() => {
               url: "/dashboard",
             },
             {
-              name: `${teamName} #team`,
+              name: "Team",
+            },
+            {
+              name: `${teamName}`,
             },
           ],
         }}
@@ -128,6 +132,8 @@ export const TeamDashboard = observer(() => {
           </>
         )}
       </Row>
+
+      <LatestMessages />
 
       <HeaderSection
         no={"Overall"}

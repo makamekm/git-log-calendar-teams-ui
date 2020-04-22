@@ -24,6 +24,7 @@ import { TotalCommitsPanel } from "../Dashboard/TotalCommitsPanel";
 import { ActiveStatsPanel } from "../Dashboard/ActiveStatsPanel";
 import { CalendarActivities } from "../Dashboard/CalendarActivities";
 import { HeaderSection } from "../HeaderSection";
+import { LatestMessages } from "./LastMessages";
 
 export const UserDashboard = observer(() => {
   const { userName } = useParams();
@@ -46,7 +47,10 @@ export const UserDashboard = observer(() => {
               url: "/dashboard",
             },
             {
-              name: `${userName} #user`,
+              name: "User",
+            },
+            {
+              name: `${userName}`,
             },
           ],
         }}
@@ -128,6 +132,8 @@ export const UserDashboard = observer(() => {
           </>
         )}
       </Row>
+
+      <LatestMessages />
 
       <HeaderSection
         no={"Overall"}

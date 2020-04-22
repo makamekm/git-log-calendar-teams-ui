@@ -38,6 +38,16 @@ interface SettingsState {
   isLoadingDelay: boolean;
   excludes: string[];
   users: string[];
+  allUsers: {
+    userKey: string;
+    user?: {
+      name: string;
+    };
+    email: string;
+    name: string;
+    value: number;
+  }[];
+  usedAssociations: string[];
   associations: string[];
   load: () => Promise<void>;
   save: () => Promise<void>;
@@ -383,7 +393,7 @@ const SettingsTeams = observer(({ state }: { state: SettingsState }) => {
 
 const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
   return (
-    <Accordion className="mb-3" initialOpen>
+    <Accordion className="mb-3">
       <AccordionHeader className="h6 cursor-pointer">
         <div className="d-flex justify-content-center align-items-center">
           <div>
@@ -443,7 +453,7 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
                         placeholder="Add associations..."
                         multiple
                         allowNew
-                        selected={user.associations}
+                        selected={user.associations as any}
                         onChange={(selected) => {
                           selected = selected.map((s: any) =>
                             typeof s === "string" ? s : s.label
@@ -495,6 +505,7 @@ export const Settings = observer(() => {
     config: null,
     isLoading: false,
     isLoadingDelay: false,
+    allUsers: [],
     get excludes() {
       let arr: string[] = [];
       if (state.config) {
@@ -519,7 +530,7 @@ export const Settings = observer(() => {
       }
       return arr;
     },
-    get associations() {
+    get usedAssociations() {
       let arr: string[] = [];
       if (state.config) {
         state.config.users.forEach((user) => {
@@ -532,9 +543,28 @@ export const Settings = observer(() => {
       }
       return arr;
     },
+    get associations() {
+      let arr: string[] = [];
+      state.allUsers.forEach((user) => {
+        if (
+          !state.usedAssociations.includes(user.email) &&
+          !arr.includes(user.email)
+        ) {
+          arr.push(user.email);
+        }
+        if (
+          !state.usedAssociations.includes(user.name) &&
+          !arr.includes(user.name)
+        ) {
+          arr.push(user.name);
+        }
+      });
+      return arr;
+    },
     load: async () => {
       state.isLoading = true;
       state.config = await ipc.handlers.GET_CONFIG(true);
+      state.allUsers = await ipc.handlers.GET_REPOSITORY_USERS();
       state.isDirty = false;
       state.isLoading = false;
     },
@@ -545,6 +575,7 @@ export const Settings = observer(() => {
       state.isLoading = true;
       await ipc.handlers.SAVE_CONFIG(toJS(state.config));
       state.config = await ipc.handlers.GET_CONFIG(true);
+      state.allUsers = await ipc.handlers.GET_REPOSITORY_USERS();
       state.isDirty = false;
       state.isLoading = false;
     },
