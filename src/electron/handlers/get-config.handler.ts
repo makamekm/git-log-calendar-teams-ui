@@ -17,6 +17,7 @@ const readConfigFromHome = async () => {
   let config = {
     branch: "master",
     cleanTmp: false,
+    collectMessages: false,
     debug: true,
     tmpDir: path.resolve(app.getPath("home"), "./repositories"),
     statsDir: path.resolve(app.getPath("home")),
@@ -94,6 +95,7 @@ ipcMain.handle(
       branch: newConfig.branch || oldConfig.branch,
       onlyRegistered: newConfig.onlyRegistered || oldConfig.onlyRegistered,
       collectInterval: newConfig.collectInterval || oldConfig.collectInterval,
+      collectMessages: newConfig.collectMessages || oldConfig.collectMessages,
       repositories: newConfig.repositories || oldConfig.repositories,
       users: newConfig.users || oldConfig.users,
       teams: newConfig.teams || oldConfig.teams,

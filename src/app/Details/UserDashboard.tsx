@@ -98,11 +98,13 @@ export const UserDashboard = observer(() => {
             <Col lg={4} md={12}>
               <TopPanel
                 className="mt-4"
+                type="repository"
                 name={`Repositories ${periods[state.limit]}`}
                 data={state.stats?.topRepositories?.value}
               />
               <TopPanel
                 className="mt-4"
+                type="team"
                 name={`Teams ${periods[state.limit]}`}
                 colorShift={2}
                 data={state.stats?.topTeams?.value}
@@ -111,11 +113,13 @@ export const UserDashboard = observer(() => {
             <Col lg={4} md={12}>
               <TopPanel
                 className="mt-4"
+                type="repository"
                 name="Repositories Today"
                 data={state.stats?.topRepositories?.todayValue}
               />
               <TopPanel
                 className="mt-4"
+                type="team"
                 name="Teams Today"
                 colorShift={2}
                 data={state.stats?.topTeams?.todayValue}
@@ -156,43 +160,6 @@ export const UserDashboard = observer(() => {
         </CardBody>
       </Card>
 
-      {state.teams.length > 0 && (
-        <HeaderSection
-          no={"Teams"}
-          title="User Stats"
-          subTitle="Calendar Activity"
-          className="mt-5"
-        />
-      )}
-
-      {state.teams.map((team, index) => (
-        <Card className="mb-3" key={index}>
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                <Link to={`/team/${team}`}>
-                  <i className="fa fa-link mr-1"></i>
-                  <strong>{team}</strong>
-                </Link>
-                <span className="small ml-1 text-muted">#team</span>
-              </CardTitle>
-            </div>
-            <div className="d-flex justify-content-center">
-              {state.isLoadingDelay ? (
-                <Instagram height={"300px"} />
-              ) : (
-                <CalendarActivities
-                  maxValue={state.maxValue}
-                  height={200}
-                  limit={state.limit}
-                  data={state.teamStats[team] || []}
-                />
-              )}
-            </div>
-          </CardBody>
-        </Card>
-      ))}
-
       {state.repositories.length > 0 && (
         <HeaderSection
           no={"Repositories"}
@@ -223,6 +190,43 @@ export const UserDashboard = observer(() => {
                   height={200}
                   limit={state.limit}
                   data={state.repositoriesStats[repository] || []}
+                />
+              )}
+            </div>
+          </CardBody>
+        </Card>
+      ))}
+
+      {state.teams.length > 0 && (
+        <HeaderSection
+          no={"Teams"}
+          title="User Stats"
+          subTitle="Calendar Activity"
+          className="mt-5"
+        />
+      )}
+
+      {state.teams.map((team, index) => (
+        <Card className="mb-3" key={index}>
+          <CardBody>
+            <div className="d-flex">
+              <CardTitle tag="h6">
+                <Link to={`/team/${team}`}>
+                  <i className="fa fa-link mr-1"></i>
+                  <strong>{team}</strong>
+                </Link>
+                <span className="small ml-1 text-muted">#team</span>
+              </CardTitle>
+            </div>
+            <div className="d-flex justify-content-center">
+              {state.isLoadingDelay ? (
+                <Instagram height={"300px"} />
+              ) : (
+                <CalendarActivities
+                  maxValue={state.maxValue}
+                  height={200}
+                  limit={state.limit}
+                  data={state.teamStats[team] || []}
                 />
               )}
             </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Media } from "~/components";
 import { TinyDonutChart } from "./TinyDonutChart";
 import { numberWithCommas } from "~/tools";
@@ -10,8 +11,10 @@ export const TopPanel = ({
   colorShift,
   name,
   className,
+  type,
 }: {
   className?: string;
+  type: string;
   name?: string;
   colorShift?: number;
   data: { name: string; value: number }[];
@@ -42,15 +45,17 @@ export const TopPanel = ({
           <Media body>
             {data.map((entry, index) => (
               <div key={index}>
-                <i
-                  className={`fa fa-circle mr-1 text-${
-                    colors[(index + (colorShift || 0)) % colors.length]
-                  }`}
-                ></i>
-                <span className="text-inverse">
-                  {numberWithCommas(entry.value)}
-                </span>{" "}
-                {entry.name}
+                <Link to={`/${type}/${entry.name}`} className="text-secondary">
+                  <i
+                    className={`fa fa-circle mr-1 text-${
+                      colors[(index + (colorShift || 0)) % colors.length]
+                    }`}
+                  ></i>
+                  <span className="text-inverse">
+                    {numberWithCommas(entry.value)}
+                  </span>{" "}
+                  {entry.name}
+                </Link>
               </div>
             ))}
           </Media>

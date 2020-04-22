@@ -56,9 +56,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
         ) : (
           <Form className="mt-3 mb-3">
             <FormGroup row>
-              <Label for="input-1" sm={4}>
-                Default Branch
-              </Label>
+              <Label sm={4}>Default Branch</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -71,9 +69,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="input-1" sm={4}>
-                Collect Function
-              </Label>
+              <Label sm={4}>Collect Function</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -86,9 +82,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="input-1" sm={4}>
-                Collect Interval
-              </Label>
+              <Label sm={4}>Collect Interval</Label>
               <Col sm={8}>
                 <Input
                   type="number"
@@ -103,14 +97,24 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="input-1" sm={4}>
-                Only Registered Users
-              </Label>
+              <Label sm={4}>Only Registered Users</Label>
               <Col sm={8}>
                 <Toggle
                   checked={state.config.onlyRegistered}
                   onChange={() => {
                     state.config.onlyRegistered = !state.config.onlyRegistered;
+                  }}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label sm={4}>Collect Messages</Label>
+              <Col sm={8}>
+                <Toggle
+                  checked={state.config.collectMessages}
+                  onChange={() => {
+                    state.config.collectMessages = !state.config
+                      .collectMessages;
                   }}
                 />
               </Col>

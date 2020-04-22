@@ -78,17 +78,20 @@ export const Dashboard = observer(() => {
             <Col lg={4} md={12}>
               <TopPanel
                 className="mt-4"
+                type="repository"
                 name={`Repositories ${periods[state.limit]}`}
                 data={state.stats?.topRepositories?.value}
               />
               <TopPanel
                 className="mt-4"
+                type="repositteamory"
                 name={`Teams ${periods[state.limit]}`}
                 colorShift={1}
                 data={state.stats?.topTeams?.value}
               />
               <TopPanel
                 className="mt-4"
+                type="user"
                 name={`Users ${periods[state.limit]}`}
                 colorShift={2}
                 data={state.stats?.topUsers?.value}
@@ -97,17 +100,20 @@ export const Dashboard = observer(() => {
             <Col lg={4} md={12}>
               <TopPanel
                 className="mt-4"
+                type="repository"
                 name="Repositories Today"
                 data={state.stats?.topRepositories?.todayValue}
               />
               <TopPanel
                 className="mt-4"
+                type="team"
                 name="Teams Today"
                 colorShift={1}
                 data={state.stats?.topTeams?.todayValue}
               />
               <TopPanel
                 className="mt-4"
+                type="user"
                 name="Users Today"
                 colorShift={2}
                 data={state.stats?.topUsers?.todayValue}

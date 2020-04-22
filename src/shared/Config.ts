@@ -23,5 +23,6 @@ export interface Config {
   debug?: boolean;
   tmpDir?: string;
   statsDir?: string;
+  collectMessages?: boolean;
   path?: string;
 }

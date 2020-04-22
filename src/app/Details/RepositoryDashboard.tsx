@@ -94,11 +94,13 @@ export const RepositoryDashboard = observer(() => {
             <Col lg={4} md={12}>
               <TopPanel
                 className="mt-4"
+                type="user"
                 name={`Users ${periods[state.limit]}`}
                 data={state.stats?.topUsers?.value}
               />
               <TopPanel
                 className="mt-4"
+                type="team"
                 name={`Teams ${periods[state.limit]}`}
                 colorShift={2}
                 data={state.stats?.topTeams?.value}
@@ -107,11 +109,13 @@ export const RepositoryDashboard = observer(() => {
             <Col lg={4} md={12}>
               <TopPanel
                 className="mt-4"
+                type="user"
                 name="Users Today"
                 data={state.stats?.topUsers?.todayValue}
               />
               <TopPanel
                 className="mt-4"
+                type="team"
                 name="Teams Today"
                 colorShift={2}
                 data={state.stats?.topTeams?.todayValue}
