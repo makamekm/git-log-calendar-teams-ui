@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 
-import { readData } from "git-log-calendar-teams";
+import { readData } from "../git";
 
 const REFRESH_DATA_TIMEOUT = 1000 * 60;
 

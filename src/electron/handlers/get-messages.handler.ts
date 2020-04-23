@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 
-import { searchCommitMessages } from "git-log-calendar-teams";
+import { searchCommitMessages } from "../git";
 
 ipcMain.handle(
   nameofHandler("GET_MESSAGES"),

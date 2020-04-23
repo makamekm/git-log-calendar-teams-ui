@@ -20,6 +20,7 @@ import {
 import commandExists from "command-exists";
 import { AppUpdater } from "./updater";
 import { createDrive } from "./drive";
+import settings from "electron-settings";
 
 const isWin = process.platform !== "darwin";
 
@@ -156,6 +157,7 @@ app.on("ready", () => {
       });
       app.exit();
     } else {
+      settings.setPath(path.resolve(app.getPath("userData"), "settings.json"));
       createDrive();
       createTray();
       createUpdater();

@@ -57,6 +57,7 @@
     }
   },
   "dependencies": {
+    "@hyperswarm/replicator": "^1.7.1",
     "@nivo/calendar": "^0.61.1",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.2",
@@ -69,13 +70,15 @@
     "command-exists": "^1.2.9",
     "debounce": "^1.2.0",
     "electron-log": "^4.1.1",
+    "electron-settings": "^3.2.0",
     "electron-updater": "^4.2.5",
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
     "fs-backwards-stream": "^1.0.0",
-    "git-log-calendar-teams": "^1.0.10",
+    "fs-extra": "^9.0.0",
     "holderjs": "^2.9.7",
     "hyperdrive": "^9.16.0",
+    "hyperswarm": "^2.13.0",
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
     "mobx-localstorage": "^1.2.0",
@@ -112,6 +115,7 @@
     "react-toggle": "^4.1.1",
     "reactstrap": "^8.4.1",
     "recharts": "^2.0.0-beta.5",
+    "spawnback": "^1.0.0",
     "text-mask-addons": "^3.8.0",
     "uuid": "^7.0.3",
     "yaml": "^1.8.3"

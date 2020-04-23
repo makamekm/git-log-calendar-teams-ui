@@ -5,8 +5,8 @@ import {
   normalizeUserData,
   normalizeRepositoryData,
   normalizeTeamData,
-  normalizeDataReduce,
-} from "git-log-calendar-teams";
+  normalizeCommitsAndLineChanges,
+} from "../git";
 
 type Stats = ReturnType<Ipc["handlers"]["GET_STATS_DATA"]>;
 
@@ -15,19 +15,6 @@ function processData(data) {
     name: key,
     value: data[key],
   }));
-}
-
-function normalizeCommitsAndLineChanges(report, fileMap, config) {
-  return normalizeDataReduce(report, fileMap, config, ({ data, author }) => {
-    if (!data.commits) {
-      data.commits = 0;
-    }
-    if (!data.linesChanged) {
-      data.linesChanged = 0;
-    }
-    data.commits += author.commits;
-    data.linesChanged += author.linesChanged;
-  });
 }
 
 const cache: {

@@ -132,6 +132,16 @@ export interface Ipc {
       value: number;
     }[];
     GET_DATA: () => any;
+    GET_DRIVE_CONFIG: () => {
+      publicKey: string;
+      secretKey: string;
+      useDriveSwarm: boolean;
+    };
+    SAVE_DRIVE_CONFIG: (config: {
+      publicKey: string;
+      secretKey: string;
+      useDriveSwarm: boolean;
+    }) => void;
   };
   sends: {
     ON_COLLECT_STATS: () => void;
@@ -200,6 +210,14 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["GET_MESSAGES"]>
     ): Promise<ReturnType<Ipc["handlers"]["GET_MESSAGES"]>> =>
       ipcRenderer.invoke(nameofHandler("GET_MESSAGES"), ...args),
+    GET_DRIVE_CONFIG: (
+      ...args: Parameters<Ipc["handlers"]["GET_DRIVE_CONFIG"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_DRIVE_CONFIG"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_DRIVE_CONFIG"), ...args),
+    SAVE_DRIVE_CONFIG: (
+      ...args: Parameters<Ipc["handlers"]["SAVE_DRIVE_CONFIG"]>
+    ): Promise<ReturnType<Ipc["handlers"]["SAVE_DRIVE_CONFIG"]>> =>
+      ipcRenderer.invoke(nameofHandler("SAVE_DRIVE_CONFIG"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>

@@ -8,3 +8,4 @@ export const USE_AUTO_UPDATER = false;
 export const CATCH_LOGS = true;
 export const CONSOLE_LOG_LEVEL = "debug";
 export const FILE_LOG_LEVEL = "debug";
+export const DEV_CONFIG = "./git-log-config.yml";

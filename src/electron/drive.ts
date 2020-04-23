@@ -1,10 +1,37 @@
 import hyperdrive from "hyperdrive";
 import path from "path";
+import fs from "fs";
+import fsExtra from "fs-extra";
 import { app } from "electron";
+import crypto from "hypercore-crypto";
+import replicate from "@hyperswarm/replicator";
+import settings from "electron-settings";
 
-const BASE_FOLDER = path.resolve("./test") || app.getPath("temp");
+export const generateDriveKeys = () => {
+  const keyPair = crypto.keyPair();
+  return {
+    publicKey: keyPair.publicKey.toString("hex"),
+    secretKey: keyPair.secretKey.toString("hex"),
+  };
+};
+
+const getBaseFolder = () => {
+  return path.resolve(
+    path.resolve("./test") || path.resolve(app.getPath("temp"), "drive"),
+    settings.get("publicKey")
+  );
+};
 
 let drive;
+let swarm;
+
+export const parseKey = (key) => {
+  return Buffer.from(key, "hex");
+};
+
+export const readKeyFile = (file) => {
+  return parseKey(fs.readFileSync(file, "utf8"));
+};
 
 export const getDrive = () => drive;
 
@@ -69,6 +96,97 @@ export const unlink = (file) =>
     });
   });
 
+export const isExist = (file) =>
+  new Promise<boolean>((r, e) => {
+    drive.exists(file, (result) => {
+      r(result);
+    });
+  });
+
+export const closeDrive = () => {
+  if (drive) {
+    try {
+      drive.close();
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      swarm.destroy();
+    } catch (error) {
+      console.error(error);
+    }
+    drive = null;
+    swarm = null;
+  }
+};
+
+let inited = false;
+const SWARM_INIT_TIMEOUT = 3000;
+
+export const waitForDrive = async () => {
+  if (settings.get("useDriveSwarm") && !inited) {
+    await new Promise((r) => setTimeout(r, SWARM_INIT_TIMEOUT));
+  }
+  inited = true;
+  return void 0;
+};
+
+export const getDriveConfig = () => {
+  return {
+    publicKey: settings.get("publicKey"),
+    secretKey: settings.get("secretKey"),
+    useDriveSwarm: settings.get("useDriveSwarm"),
+  };
+};
+
+export const loadDriveKeys = () => {
+  if (!settings.has("publicKey") || !settings.has("secretKey")) {
+    const keyPair = generateDriveKeys();
+    settings.set("publicKey", keyPair.publicKey);
+    settings.set("secretKey", keyPair.secretKey);
+    if (fs.existsSync(getBaseFolder())) {
+      fsExtra.removeSync(getBaseFolder());
+    }
+  }
+  const publicKey = settings.get("publicKey");
+  const secretKey = settings.get("secretKey");
+  return {
+    publicKey: parseKey(publicKey),
+    secretKey: parseKey(secretKey),
+    useDriveSwarm: settings.get("useDriveSwarm"),
+  };
+};
+
+export const saveDriveConfig = (
+  publicKey: string,
+  secretKey: string,
+  useDriveSwarm: boolean
+) => {
+  closeDrive();
+  settings.set("publicKey", publicKey);
+  settings.set("secretKey", secretKey);
+  settings.set("useDriveSwarm", useDriveSwarm);
+  if (fs.existsSync(getBaseFolder())) {
+    fsExtra.removeSync(getBaseFolder());
+  }
+  createDrive();
+};
+
 export const createDrive = () => {
-  drive = hyperdrive(BASE_FOLDER);
+  inited = false;
+  closeDrive();
+  const { publicKey, secretKey, useDriveSwarm } = loadDriveKeys();
+  drive = hyperdrive(getBaseFolder(), publicKey.toString("hex"), {
+    secretKey: secretKey,
+  });
+  if (useDriveSwarm) {
+    swarm = replicate(drive, {
+      live: true,
+      upload: true,
+      download: true,
+      encrypt: true,
+      announce: true,
+      lookup: true,
+    });
+  }
 };

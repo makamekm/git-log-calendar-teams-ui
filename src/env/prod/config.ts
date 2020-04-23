@@ -8,3 +8,4 @@ export const USE_AUTO_UPDATER = true;
 export const CATCH_LOGS = true;
 export const CONSOLE_LOG_LEVEL = "error";
 export const FILE_LOG_LEVEL = "error";
+export const DEV_CONFIG = "";

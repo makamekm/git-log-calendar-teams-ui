@@ -2,7 +2,7 @@ import { app, ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 import { RUN_COLLECT_INTERVAL } from "@env/config";
 
-import { collect, clean } from "git-log-calendar-teams";
+import { collect } from "../git";
 
 const COLLECT_INTERVAL = 15;
 
@@ -40,7 +40,6 @@ ipcMain.handle(
     const config = await ipc.handlers.GET_CONFIG();
     try {
       await collect(config);
-      await clean(config);
     } catch (error) {
       console.error(error);
     }

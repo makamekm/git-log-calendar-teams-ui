@@ -1,5 +1,11 @@
 export interface Config {
   collectInterval: number;
+  evaluateStr?: string;
+  tmpDir?: string;
+  evaluate?: Function;
+  onlyRegistered?: boolean;
+  branch?: string;
+  collectMessages?: boolean;
   repositories: {
     url: string;
     name?: string;
@@ -15,14 +21,4 @@ export interface Config {
     invert?: boolean;
     users?: string[];
   }[];
-  evaluateStr?: string;
-  evaluate?: string | Function;
-  onlyRegistered?: boolean;
-  branch?: string;
-  cleanTmp?: boolean;
-  debug?: boolean;
-  tmpDir?: string;
-  statsDir?: string;
-  collectMessages?: boolean;
-  path?: string;
 }
