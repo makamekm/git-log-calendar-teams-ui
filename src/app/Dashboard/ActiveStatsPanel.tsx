@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Table, Badge } from "~/components";
 import { numberWithCommas } from "~/tools";
 import { periods } from "./Periods";
@@ -23,7 +24,7 @@ export const ActiveStatsPanel = ({
   limit: number;
 }) => {
   return (
-    <div className={className}>
+    <div className={classNames("no-print-break", className)}>
       <div className="hr-text hr-text-left my-2">
         <span>Today / {periods[limit]} Active Stats</span>
       </div>

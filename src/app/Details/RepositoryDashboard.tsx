@@ -220,7 +220,7 @@ export const RepositoryDashboard = observer(() => {
         subTitle="Calendar Activity"
       />
 
-      <Card className="mb-3">
+      <Card className="no-print-break mb-3">
         <CardBody>
           <div className="d-flex">
             <CardTitle tag="h6">
@@ -256,7 +256,7 @@ export const RepositoryDashboard = observer(() => {
       )}
 
       {state.teams.map((team, index) => (
-        <Card className="mb-3" key={index}>
+        <Card className="no-print-break mb-3" key={index}>
           <CardBody>
             <div className="d-flex">
               <CardTitle tag="h6">
@@ -293,7 +293,7 @@ export const RepositoryDashboard = observer(() => {
       )}
 
       {state.users.map((user, index) => (
-        <Card className="mb-3" key={index}>
+        <Card className="no-print-break mb-3" key={index}>
           <CardBody>
             <div className="d-flex">
               <CardTitle tag="h6">

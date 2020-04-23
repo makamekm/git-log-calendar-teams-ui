@@ -44,7 +44,7 @@ export const TrackerActivities = observer(() => {
       )}
 
       {groupped.user?.map(({ name }, index) => (
-        <Card className="mb-3" key={index}>
+        <Card className="no-print-break mb-3" key={index}>
           <CardBody>
             <div className="d-flex">
               <CardTitle tag="h6">
@@ -99,7 +99,7 @@ export const TrackerActivities = observer(() => {
       )}
 
       {groupped.team?.map(({ name }, index) => (
-        <Card className="mb-3" key={index}>
+        <Card className="no-print-break mb-3" key={index}>
           <CardBody>
             <div className="d-flex">
               <CardTitle tag="h6">
@@ -154,7 +154,7 @@ export const TrackerActivities = observer(() => {
       )}
 
       {groupped.repository?.map(({ name }, index) => (
-        <Card className="mb-3" key={index}>
+        <Card className="no-print-break mb-3" key={index}>
           <CardBody>
             <div className="d-flex">
               <CardTitle tag="h6">
