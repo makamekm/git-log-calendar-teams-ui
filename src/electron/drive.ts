@@ -6,7 +6,6 @@ import { app } from "electron";
 import hyperswarm from "hyperswarm";
 import pump from "pump";
 import crypto from "hypercore-crypto";
-// import replicate from "@hyperswarm/replicator";
 import settings from "electron-settings";
 import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 

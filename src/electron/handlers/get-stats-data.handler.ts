@@ -7,6 +7,7 @@ import {
   normalizeTeamData,
   normalizeCommitsAndLineChanges,
 } from "../git";
+import { CACHE_LIFETIME } from "@env/config";
 
 type Stats = ReturnType<Ipc["handlers"]["GET_STATS_DATA"]>;
 
@@ -23,7 +24,6 @@ let cache: {
     value: Stats;
   };
 } = {};
-const CACHE_LIFETIME = 1000 * 10;
 
 app.on("ready", () => {
   ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {

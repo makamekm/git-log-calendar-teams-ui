@@ -1,9 +1,8 @@
 import { ipcMain, app } from "electron";
 import { nameofHandler, Ipc, ipc, nameofSends } from "~/shared/ipc";
+import { CACHE_LIFETIME } from "@env/config";
 
 import { readData } from "../git";
-
-const REFRESH_DATA_TIMEOUT = 1000 * 60;
 
 let fileMap = null;
 let date = +new Date();
@@ -20,7 +19,7 @@ app.on("ready", () => {
 ipcMain.handle(
   nameofHandler("GET_DATA"),
   async (): Promise<ReturnType<Ipc["handlers"]["GET_DATA"]>> => {
-    if (!fileMap || +new Date() > REFRESH_DATA_TIMEOUT + date) {
+    if (!fileMap || +new Date() > CACHE_LIFETIME + date) {
       const config = await ipc.handlers.GET_CONFIG();
       fileMap = (await readData(config)).fileMap;
       date = +new Date();

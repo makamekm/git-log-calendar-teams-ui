@@ -1,10 +1,9 @@
 import { ipcMain, app } from "electron";
-import { nameofHandler, Ipc, ipc, nameofSends } from "~/shared/ipc";
+import { nameofHandler, Ipc, nameofSends } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
+import { CACHE_LIFETIME } from "@env/config";
 
 import { getConfig, saveConfig } from "../git";
-
-const REFRESH_CONFIG_TIMEOUT = 1000 * 10;
 
 let config: Config = null;
 let date = +new Date();
@@ -25,7 +24,7 @@ ipcMain.handle(
     ...args: Parameters<Ipc["handlers"]["GET_CONFIG"]>
   ): Promise<ReturnType<Ipc["handlers"]["GET_CONFIG"]>> => {
     const [force] = args;
-    if (force || !config || +new Date() > REFRESH_CONFIG_TIMEOUT + date) {
+    if (force || !config || +new Date() > CACHE_LIFETIME + date) {
       config = await getConfig();
 
       config.repositories.forEach((repository) => {
