@@ -3,8 +3,10 @@ import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
 import { app } from "electron";
+import hyperswarm from "hyperswarm";
+import pump from "pump";
 import crypto from "hypercore-crypto";
-import replicate from "@hyperswarm/replicator";
+// import replicate from "@hyperswarm/replicator";
 import settings from "electron-settings";
 import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 
@@ -114,7 +116,9 @@ export const closeDrive = () => {
       console.error(error);
     }
     try {
-      swarm.destroy();
+      if (swarm) {
+        swarm.destroy();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -187,13 +191,25 @@ export const createDrive = () => {
     secretKey: secretKey,
   });
   if (useDriveSwarm) {
-    swarm = replicate(drive, {
-      live: true,
-      upload: true,
-      download: true,
-      encrypt: true,
-      announce: true,
-      lookup: true,
+    swarm = hyperswarm();
+
+    drive.on("ready", () => {
+      swarm.join(publicKey, {
+        announce: true,
+        lookup: true,
+      });
+    });
+
+    swarm.on("connection", (connection, info) => {
+      const stream = drive.replicate({
+        initiator: info.client,
+        live: true,
+        upload: true,
+        download: true,
+        encrypt: true,
+      });
+
+      pump(connection, stream, connection);
     });
   }
 };
