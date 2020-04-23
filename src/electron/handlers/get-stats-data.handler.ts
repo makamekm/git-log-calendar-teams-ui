@@ -45,7 +45,7 @@ ipcMain.handle(
 
     const key = [limit, mode, name, top].join("__");
     const time = +new Date();
-    if (cache[key] && cache[key].time + CACHE_LIFETIME < time) {
+    if (cache[key] && cache[key].time + CACHE_LIFETIME > time) {
       return cache[key].value;
     }
 
