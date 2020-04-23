@@ -49,7 +49,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
         ) : (
           <Form className="mt-3 mb-3">
             <FormGroup row>
-              <Label sm={4}>Default Branch</Label>
+              <Label sm={4}>Public Key</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -62,7 +62,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label sm={4}>Default Branch</Label>
+              <Label sm={4}>Secret Key</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -85,6 +85,21 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 />
               </Col>
             </FormGroup>
+            <FormGroup row>
+              <Label sm={4}>Remount Drive & Reload All</Label>
+              <Col sm={8}>
+                <ButtonGroup className="align-self-start mt-0 mb-3">
+                  <Button
+                    disabled={state.isDirty}
+                    color="danger"
+                    className="mb-2 mr-2 px-3"
+                    onClick={state.save}
+                  >
+                    Remount Drive
+                  </Button>
+                </ButtonGroup>
+              </Col>
+            </FormGroup>
           </Form>
         )}
       </AccordionBody>
@@ -105,9 +120,6 @@ export const Settings = observer(() => {
       state.isLoading = false;
     },
     save: async () => {
-      if (!state.isDirty) {
-        return;
-      }
       state.isLoading = true;
       await ipc.handlers.SAVE_DRIVE_CONFIG(toJS(state.config));
       state.config = await ipc.handlers.GET_DRIVE_CONFIG();
