@@ -23,7 +23,7 @@ const cache: {
     value: Stats;
   };
 } = {};
-const CACHE_LIFETIME = 1000 * 60;
+const CACHE_LIFETIME = 1000 * 10;
 
 ipcMain.handle(
   nameofHandler("GET_STATS_DATA"),
