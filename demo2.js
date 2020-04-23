@@ -23,18 +23,73 @@ const drive = hyperdrive(path.resolve("./test"), publicKey.toString("hex"), {
   secretKey,
 });
 
-const swarm = replicate(drive, {
-  announceLocalAddress: true,
-  live: true,
-  upload: true,
-  download: true,
-  encrypt: true,
-  announce: true,
-  lookup: true,
-  keyPair: {
-    publicKey,
-    secretKey,
-  },
+// (() => {
+//   const hyperswarm = require("hyperswarm");
+//   const crypto = require("crypto");
+
+//   const swarm = hyperswarm();
+
+//   // look for peers listed under this topic
+//   const topic = crypto.createHash("sha256").update("testmakame").digest();
+
+//   swarm.join(topic, {
+//     lookup: true, // find & connect to peers
+//     announce: true, // optional- announce self as a connection target
+//   });
+
+//   swarm.on("connection", (socket, details) => {
+//     console.log("new connection!", details.peer);
+
+//     // you can now use the socket as a stream, eg:
+//     // process.stdin.pipe(socket).pipe(process.stdout)
+//   });
+// })();
+
+const hyperswarm = require("hyperswarm");
+const pump = require("pump");
+
+const swarm = hyperswarm();
+
+// const crypto = require("crypto");
+// look for peers listed under this topic
+// const topic = crypto.createHash("sha256").update("testmakame").digest();
+
+drive.on("ready", () => {
+  swarm.join(publicKey, {
+    announce: true,
+    lookup: true,
+  });
+});
+
+swarm.on("connection", function (connection, info) {
+  const stream = drive.replicate({
+    initiator: info.client,
+    live: true,
+    upload: true,
+    download: true,
+    encrypt: true,
+  });
+
+  pump(connection, stream, connection);
+});
+
+// const swarm = replicate(drive, {
+//   discoveryKey: topic,
+//   live: true,
+//   upload: true,
+//   download: true,
+//   encrypt: true,
+//   announce: true,
+//   lookup: true,
+//   includeLength: true,
+//   // keyPair: {
+//   //   publicKey,
+//   //   secretKey,
+//   // },
+// });
+
+swarm.on("connection", (socket, details) => {
+  console.log("new connection!", details.peer);
 });
 
 const writeFile = (file, content) =>
@@ -74,7 +129,7 @@ drive.on("ready", async () => {
   setTimeout(async () => {
     console.log(drive.writable);
     console.log("try to write a file!");
-    // await writeFile("/test.txt", "hello");
+    await writeFile("/test.txt", "hello");
     // console.log(await readFile("/test.txt"));
     console.log(await readDir("/"));
     // console.log(await readFile("/git-log-config.yml"));
