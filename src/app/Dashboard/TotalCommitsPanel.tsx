@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Row, Col } from "~/components";
 import { periods } from "./Periods";
 import { numberWithCommas } from "~/tools";
@@ -15,7 +16,7 @@ export const TotalCommitsPanel = ({
   limit: number;
 }) => {
   return (
-    <div className={className}>
+    <div className={classNames("no-print-break", className)}>
       <div className="hr-text hr-text-center my-2">
         <span>Commits</span>
       </div>

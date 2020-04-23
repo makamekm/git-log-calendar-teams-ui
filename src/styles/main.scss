@@ -8,6 +8,14 @@
   .no-print * {
     display: none !important;
   }
+
+  .no-print-break {
+    page-break-inside: avoid !important;
+  }
+
+  a {
+    text-decoration: none !important;
+  }
 }
 
 .cursor-pointer {

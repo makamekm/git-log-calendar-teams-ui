@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Link } from "react-router-dom";
 import { Media } from "~/components";
 import { TinyDonutChart } from "./TinyDonutChart";
@@ -20,7 +21,7 @@ export const TopPanel = ({
   data: { name: string; value: number }[];
 }) => {
   return data ? (
-    <div className={className}>
+    <div className={classNames("no-print-break", className)}>
       <div className={"hr-text hr-text-left mb-3"}>
         <span>
           Top {data.length} {name}

@@ -27,7 +27,7 @@ export const LatestMessages = observer(() => {
   return !stateDashboard.config || !stateDashboard.config.collectMessages ? (
     <></>
   ) : (
-    <Accordion className="mb-3">
+    <Accordion className="no-print-break mb-3">
       <AccordionHeader className="h6 cursor-pointer">
         <div className="d-flex justify-content-center align-items-center">
           <span>
