@@ -1,6 +1,5 @@
 const hyperdrive = require("hyperdrive");
 const path = require("path");
-const fs = require("fs");
 const replicate = require("@hyperswarm/replicator");
 
 // const crypto = require("hypercore-crypto");
@@ -11,32 +10,32 @@ const replicate = require("@hyperswarm/replicator");
 // const crypto = require("crypto");
 // const key = crypto.randomBytes(32);
 
-const readKeyFile = (file) => {
-  return Buffer.from(fs.readFileSync(file, "utf8"), "hex");
-};
-
-const drive = hyperdrive(
-  path.resolve("./test"),
-  readKeyFile(path.resolve("pub.key")).toString("hex"),
-  {
-    secretKey: readKeyFile(path.resolve("sec.key")),
-  }
+const publicKey = Buffer.from(
+  "7a4337bda407e493aa252a159847838c4983e1ba2cbb127223455dfa54955d50",
+  "hex"
+);
+const secretKey = Buffer.from(
+  "9a923eddf9ed815184dd00cf828bc9bce7816e85b094be2390a2517c16608bd17a4337bda407e493aa252a159847838c4983e1ba2cbb127223455dfa54955d50",
+  "hex"
 );
 
+const drive = hyperdrive(path.resolve("./test"), publicKey.toString("hex"), {
+  secretKey,
+});
+
 const swarm = replicate(drive, {
+  announceLocalAddress: true,
   live: true,
   upload: true,
   download: true,
   encrypt: true,
   announce: true,
   lookup: true,
+  keyPair: {
+    publicKey,
+    secretKey,
+  },
 });
-
-// swarm.join(topic, {
-//   // bootstrap: [],
-//   lookup: true, // find & connect to peers
-//   announce: true, // optional- announce self as a connection target
-// });
 
 const writeFile = (file, content) =>
   new Promise((r, e) => {
@@ -60,11 +59,26 @@ const readFile = (file, encoding = "utf-8") =>
     });
   });
 
+const readDir = (dir) =>
+  new Promise((r, e) => {
+    drive.readdir(dir, (err, list) => {
+      if (err) {
+        e(err);
+      } else {
+        r(list);
+      }
+    });
+  });
+
 drive.on("ready", async () => {
-  console.log(drive.writable);
-  console.log("try to write a file!");
-  // await writeFile("/test.txt", "hello");
-  console.log(await readFile("/test.txt"));
-  console.log("file written!");
-  fs.writeFileSync(path.resolve(".key"), drive.key);
+  setTimeout(async () => {
+    console.log(drive.writable);
+    console.log("try to write a file!");
+    // await writeFile("/test.txt", "hello");
+    // console.log(await readFile("/test.txt"));
+    console.log(await readDir("/"));
+    // console.log(await readFile("/git-log-config.yml"));
+    // console.log("file written!");
+    // fs.writeFileSync(path.resolve(".key"), drive.key);
+  }, 1000);
 });

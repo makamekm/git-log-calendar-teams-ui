@@ -3,17 +3,18 @@ const path = require("path");
 const fs = require("fs");
 const replicate = require("@hyperswarm/replicator");
 
-const readKeyFile = (file) => {
-  return Buffer.from(fs.readFileSync(file, "utf8"), "hex");
-};
-
-const drive = hyperdrive(
-  path.resolve("./my-cloned-hyperdrive"),
-  readKeyFile(path.resolve("pub.key")).toString("hex"),
-  {
-    secretKey: readKeyFile(path.resolve("sec.key")),
-  }
+const publicKey = Buffer.from(
+  "7a4337bda407e493aa252a159847838c4983e1ba2cbb127223455dfa54955d50",
+  "hex"
 );
+const secretKey = Buffer.from(
+  "9a923eddf9ed815184dd00cf828bc9bce7816e85b094be2390a2517c16608bd17a4337bda407e493aa252a159847838c4983e1ba2cbb127223455dfa54955d50",
+  "hex"
+);
+
+const drive = hyperdrive(path.resolve("./test2"), publicKey.toString("hex"), {
+  secretKey,
+});
 
 const swarm = replicate(drive, {
   live: true,
@@ -22,6 +23,10 @@ const swarm = replicate(drive, {
   encrypt: true,
   announce: true,
   lookup: true,
+  keyPair: {
+    publicKey,
+    secretKey,
+  },
 });
 
 const writeFile = (file, content) =>
@@ -50,7 +55,7 @@ drive.on("ready", () => {
   setTimeout(async () => {
     console.log(drive.writable);
     console.log("try to read a file");
-    console.log(await readFile("/test.txt"));
+    // console.log(await readFile("/test.txt"));
     console.log("try to write a file");
     await writeFile("/test.txt", "dfgdfga!");
     console.log(await readFile("/test.txt"));
