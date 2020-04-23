@@ -1,5 +1,5 @@
-import { ipcMain } from "electron";
-import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
+import { ipcMain, app } from "electron";
+import { nameofHandler, Ipc, ipc, nameofSends } from "~/shared/ipc";
 
 import { readData } from "../git";
 
@@ -7,6 +7,15 @@ const REFRESH_DATA_TIMEOUT = 1000 * 60;
 
 let fileMap = null;
 let date = new Date();
+
+app.on("ready", () => {
+  ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
+    fileMap = null;
+  });
+  ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
+    fileMap = null;
+  });
+});
 
 ipcMain.handle(
   nameofHandler("GET_DATA"),

@@ -145,6 +145,8 @@ export interface Ipc {
   };
   sends: {
     ON_COLLECT_STATS: () => void;
+    ON_DRIVE_CONFIG_UPDATE_FINISH: () => void;
+    ON_COLLECT_FINISH: () => void;
   };
 }
 
@@ -222,5 +224,8 @@ export const ipc = {
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
       ipcRenderer.send(nameofSends("ON_COLLECT_STATS"), value),
+    ON_DRIVE_CONFIG_UPDATE_FINISH: () =>
+      ipcRenderer.send(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH")),
+    ON_COLLECT_FINISH: () => ipcRenderer.send(nameofSends("ON_COLLECT_FINISH")),
   },
 };

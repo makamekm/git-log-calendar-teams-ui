@@ -1,5 +1,5 @@
-import { ipcMain } from "electron";
-import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
+import { ipcMain, app } from "electron";
+import { nameofHandler, Ipc, ipc, nameofSends } from "~/shared/ipc";
 
 import {
   normalizeUserData,
@@ -17,13 +17,22 @@ function processData(data) {
   }));
 }
 
-const cache: {
+let cache: {
   [key: string]: {
     time: number;
     value: Stats;
   };
 } = {};
 const CACHE_LIFETIME = 1000 * 10;
+
+app.on("ready", () => {
+  ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
+    cache = {};
+  });
+  ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
+    cache = {};
+  });
+});
 
 ipcMain.handle(
   nameofHandler("GET_STATS_DATA"),

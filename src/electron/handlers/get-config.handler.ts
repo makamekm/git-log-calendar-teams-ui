@@ -1,5 +1,5 @@
-import { ipcMain } from "electron";
-import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
+import { ipcMain, app } from "electron";
+import { nameofHandler, Ipc, ipc, nameofSends } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
 
 import { getConfig, saveConfig } from "../git";
@@ -8,6 +8,15 @@ const REFRESH_CONFIG_TIMEOUT = 1000 * 10;
 
 let config: Config = null;
 let date = new Date();
+
+app.on("ready", () => {
+  ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
+    config = null;
+  });
+  ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
+    config = null;
+  });
+});
 
 ipcMain.handle(
   nameofHandler("GET_CONFIG"),

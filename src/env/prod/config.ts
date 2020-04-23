@@ -7,5 +7,5 @@ export const CATCH_LOGS = true;
 export const CONSOLE_LOG_LEVEL = "error";
 export const FILE_LOG_LEVEL = "error";
 export const DEV_CONFIG = "";
-export const SWARM_INIT_TIMEOUT = 3000;
+export const SWARM_INIT_TIMEOUT = 10000;
 export const DRIVE_BASE_FOLDER = "";

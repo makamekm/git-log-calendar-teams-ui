@@ -1,7 +1,8 @@
 import { ipcMain } from "electron";
-import { nameofHandler, Ipc } from "~/shared/ipc";
+import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 
 import { saveDriveConfig, getDriveConfig } from "../drive";
+import { getCollectPromise } from "./collect-stats.handler";
 
 ipcMain.handle(
   nameofHandler("GET_DRIVE_CONFIG"),
@@ -20,11 +21,12 @@ ipcMain.handle(
     ...args: Parameters<Ipc["handlers"]["SAVE_DRIVE_CONFIG"]>
   ): Promise<ReturnType<Ipc["handlers"]["SAVE_DRIVE_CONFIG"]>> => {
     const [newConfig] = args;
-
+    await getCollectPromise();
     saveDriveConfig(
       newConfig.publicKey,
       newConfig.secretKey,
       newConfig.useDriveSwarm
     );
+    ipc.sends.ON_DRIVE_CONFIG_UPDATE_FINISH();
   }
 );

@@ -7,6 +7,9 @@ import { collect } from "../git";
 const COLLECT_INTERVAL = 15;
 
 let isCollecting = false;
+let collectingPromise = Promise.resolve();
+
+export const getCollectPromise = () => collectingPromise;
 
 if (RUN_COLLECT_INTERVAL) {
   app.on("ready", () => {
@@ -34,6 +37,11 @@ ipcMain.handle(
       return;
     }
 
+    let resolve;
+    collectingPromise = new Promise((r) => {
+      resolve = r;
+    });
+
     isCollecting = true;
     ipc.sends.ON_COLLECT_STATS(true);
     console.log("collecting started!");
@@ -46,5 +54,9 @@ ipcMain.handle(
     console.log("collecting finished!");
     ipc.sends.ON_COLLECT_STATS(false);
     isCollecting = false;
+
+    resolve();
+
+    ipc.sends.ON_COLLECT_FINISH();
   }
 );
