@@ -98,10 +98,11 @@ import { AuthScreen } from "./app/Auth/AuthScreen";
 import { LogoutRoute } from "./app/Auth/LogoutRoute";
 import { Dashboard } from "./app/Dashboard/Dashboard";
 import { Error404 } from "./app/Error404";
-import { Settings } from "./app/Settings/Settings";
+import { Configuration } from "./app/Configuration/Configuration";
 import { LogsScreen } from "./app/Log/LogsScreen";
 import { TeamDashboard } from "./app/Details/TeamDashboard";
 import { UserDashboard } from "./app/Details/UserDashboard";
+import { Settings } from "./app/Settings/Settings";
 import { RepositoryDashboard } from "./app/Details/RepositoryDashboard";
 
 //------ Route Definitions --------
@@ -125,7 +126,8 @@ export const RoutedContent = () => {
         component={RepositoryDashboard}
       />
 
-      <ProtectedRoute path="/settings" exact component={Settings} />
+      <ProtectedRoute path="/configuration" exact component={Configuration} />
+      <Route path="/settings" exact component={Settings} />
       <Route path="/logs" exact component={LogsScreen} />
 
       {/* WIP */}

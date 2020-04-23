@@ -89,6 +89,7 @@ export async function saveConfig(newConfig: Config) {
     },
     [
       "branch",
+      "password",
       "onlyRegistered",
       "collectInterval",
       "collectMessages",

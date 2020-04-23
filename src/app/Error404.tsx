@@ -2,15 +2,17 @@ import React from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import {
-  Form,
-  FormGroup,
-  Label,
-  InputGroup,
-  Input,
-  InputGroupAddon,
-  Button,
+  // Form,
+  // FormGroup,
+  // Label,
+  // InputGroup,
+  // Input,
+  // InputGroupAddon,
+  // Button,
   EmptyLayoutSection,
-  EmptyLayout,
+  // EmptyLayout,
+  WithLayoutMeta,
+  Container,
 } from "~/components";
 import { HeaderPanel } from "~/app/HeaderPanel";
 import { FooterPanel } from "~/app/FooterPanel";
@@ -18,7 +20,8 @@ import { FooterPanel } from "~/app/FooterPanel";
 export const Error404 = () => {
   let { pathname } = useLocation();
   return (
-    <EmptyLayout>
+    <Container>
+      <WithLayoutMeta meta={{}} />
       <EmptyLayoutSection center>
         {/* START Header */}
         <HeaderPanel title="Error 404" />
@@ -27,7 +30,7 @@ export const Error404 = () => {
 
         <div className="mb-3">{pathname}</div>
 
-        <Form className="mb-3">
+        {/* <Form className="mb-3">
           <FormGroup>
             <Label for="search">Search</Label>
             <InputGroup>
@@ -45,7 +48,8 @@ export const Error404 = () => {
               </InputGroupAddon>
             </InputGroup>
           </FormGroup>
-        </Form>
+        </Form> */}
+
         {/* END Form */}
         {/* START Bottom Links */}
         <div className="d-flex mb-5">
@@ -59,6 +63,6 @@ export const Error404 = () => {
         <FooterPanel />
         {/* END Footer */}
       </EmptyLayoutSection>
-    </EmptyLayout>
+    </Container>
   );
 };

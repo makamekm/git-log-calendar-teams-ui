@@ -10,6 +10,12 @@ export const SidebarMiddleNav = () => (
     />
 
     <SidebarMenuItem
+      icon={<i className="fa fa-fw fa-file"></i>}
+      title="Configuration"
+      to="/configuration"
+    />
+
+    <SidebarMenuItem
       icon={<i className="fa fa-fw fa-gear"></i>}
       title="Settings"
       to="/settings"

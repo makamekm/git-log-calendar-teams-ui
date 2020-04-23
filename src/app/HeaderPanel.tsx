@@ -25,9 +25,7 @@ const HeaderPanel = (props: {
 );
 
 HeaderPanel.defaultProps = {
-  title: "Waiting for Data...",
-  text:
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure voluptas aperiam odit, reiciendis dicta nihil.",
+  title: "",
   iconClassName: "text-theme",
 };
 

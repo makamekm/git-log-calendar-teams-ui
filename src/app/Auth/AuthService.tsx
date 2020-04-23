@@ -1,10 +1,10 @@
 import React from "react";
 import { useLocalStore } from "mobx-react";
 import { useHistory, useLocation } from "react-router";
-import { CONFIG_PIN, AUTO_LOGIN } from "@env/config";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { LoadingService } from "~/app/Loading/LoadingService";
 import { useOnChange } from "~/hooks";
+import { ipc } from "~/shared/ipc";
 
 const PATH_ENCAPSULATION = "$\\";
 
@@ -63,8 +63,9 @@ export const AuthService = createService<AuthState>(
         state.error = "";
         state.isLoading = true;
         try {
-          // await new Promise((r) => setTimeout(r, 1000));
-          state.isAuthenticated = CONFIG_PIN === password;
+          const config = await ipc.handlers.GET_CONFIG();
+          state.isAuthenticated =
+            !config.password || config.password === password;
         } catch (error) {
           state.error = error.message;
         }
@@ -88,8 +89,11 @@ export const AuthService = createService<AuthState>(
         }
       },
       initAuthorize: async () => {
-        await state.authorize(CONFIG_PIN);
-        state.redirectToFrom();
+        const config = await ipc.handlers.GET_CONFIG();
+        if (!config.password) {
+          await state.authorize(config.password);
+          state.redirectToFrom();
+        }
         removeLoadinghandler();
       },
     }));
@@ -105,11 +109,7 @@ export const AuthService = createService<AuthState>(
     state.from = from;
 
     React.useEffect(() => {
-      if (AUTO_LOGIN) {
-        state.initAuthorize();
-      } else {
-        removeLoadinghandler();
-      }
+      state.initAuthorize();
     }, [state]);
 
     useOnChange(state, "isLoading", (isLoading) =>

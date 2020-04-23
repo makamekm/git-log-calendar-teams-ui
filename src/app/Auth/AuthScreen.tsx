@@ -7,8 +7,9 @@ import {
   Input,
   Button,
   Label,
-  EmptyLayout,
   EmptyLayoutSection,
+  Container,
+  WithLayoutMeta,
 } from "~/components";
 import { HeaderAuth } from "./HeaderAuth";
 import { FooterAuth } from "./FooterAuth";
@@ -37,7 +38,17 @@ export const AuthScreen = observer(() => {
   );
 
   return (
-    <EmptyLayout>
+    <Container>
+      <WithLayoutMeta
+        meta={{
+          pageTitle: "Login",
+          breadcrumbs: [
+            {
+              name: "Login",
+            },
+          ],
+        }}
+      />
       <EmptyLayoutSection center>
         {/* START Header */}
         <HeaderAuth
@@ -75,6 +86,6 @@ export const AuthScreen = observer(() => {
         <FooterAuth />
         {/* END Footer */}
       </EmptyLayoutSection>
-    </EmptyLayout>
+    </Container>
   );
 });

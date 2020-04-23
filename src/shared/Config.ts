@@ -5,6 +5,7 @@ export interface Config {
   evaluate?: Function;
   onlyRegistered?: boolean;
   branch?: string;
+  password?: string;
   collectMessages?: boolean;
   repositories: {
     url: string;

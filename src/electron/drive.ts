@@ -6,6 +6,7 @@ import { app } from "electron";
 import crypto from "hypercore-crypto";
 import replicate from "@hyperswarm/replicator";
 import settings from "electron-settings";
+import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 
 export const generateDriveKeys = () => {
   const keyPair = crypto.keyPair();
@@ -17,7 +18,9 @@ export const generateDriveKeys = () => {
 
 const getBaseFolder = () => {
   return path.resolve(
-    path.resolve("./test") || path.resolve(app.getPath("temp"), "drive"),
+    DRIVE_BASE_FOLDER
+      ? path.resolve(DRIVE_BASE_FOLDER)
+      : path.resolve(app.getPath("temp"), "drive"),
     settings.get("publicKey")
   );
 };
@@ -121,7 +124,6 @@ export const closeDrive = () => {
 };
 
 let inited = false;
-const SWARM_INIT_TIMEOUT = 3000;
 
 export const waitForDrive = async () => {
   if (settings.get("useDriveSwarm") && !inited) {
@@ -163,6 +165,11 @@ export const saveDriveConfig = (
   useDriveSwarm: boolean
 ) => {
   closeDrive();
+  if (!publicKey || !secretKey) {
+    const keyPair = generateDriveKeys();
+    publicKey = keyPair.publicKey;
+    secretKey = keyPair.secretKey;
+  }
   settings.set("publicKey", publicKey);
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
