@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 
-import { saveDriveConfig, getDriveConfig } from "../drive";
+import { saveDriveConfig, getDriveConfig, emptyDir } from "../drive";
 import { getCollectPromise } from "./collect-stats.handler";
 
 ipcMain.handle(
@@ -27,6 +27,17 @@ ipcMain.handle(
       newConfig.secretKey,
       newConfig.useDriveSwarm
     );
+    ipc.sends.ON_DRIVE_CONFIG_UPDATE_FINISH();
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("EMPTY_DRIVE_CONFIG"),
+  async (
+    event,
+    ...args: Parameters<Ipc["handlers"]["EMPTY_DRIVE_CONFIG"]>
+  ): Promise<ReturnType<Ipc["handlers"]["EMPTY_DRIVE_CONFIG"]>> => {
+    await emptyDir("/");
     ipc.sends.ON_DRIVE_CONFIG_UPDATE_FINISH();
   }
 );

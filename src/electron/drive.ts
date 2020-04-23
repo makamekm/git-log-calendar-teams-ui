@@ -72,22 +72,22 @@ export const readDir = (dir) =>
     });
   });
 
-export const rmDir = (dir) =>
-  new Promise<void>((r, e) => {
-    drive.rmdir(
-      dir,
-      {
-        recursive: true,
-      },
-      (err) => {
-        if (err) {
-          e(err);
-        } else {
-          r();
-        }
-      }
-    );
-  });
+// export const rmDir = (dir) =>
+//   new Promise<void>((r, e) => {
+//     drive.rmdir(
+//       dir,
+//       {
+//         recursive: true,
+//       },
+//       (err) => {
+//         if (err) {
+//           e(err);
+//         } else {
+//           r();
+//         }
+//       }
+//     );
+//   });
 
 export const unlink = (file) =>
   new Promise<void>((r, e) => {
@@ -106,6 +106,45 @@ export const isExist = (file) =>
       r(result);
     });
   });
+
+export const rmDir = (file) =>
+  new Promise<void>((r, e) => {
+    drive.rmdir(file, (err) => {
+      if (err) {
+        e(err);
+      } else {
+        r();
+      }
+    });
+  });
+
+export const stat = (file) =>
+  new Promise<any>((r, e) => {
+    drive.stat(file, (err, stats) => {
+      if (err) {
+        e(err);
+      } else {
+        r(stats);
+      }
+    });
+  });
+
+export const emptyDir = async (dirPath) => {
+  const files = await readDir(dirPath);
+  if (files.length > 0)
+    for (let file of files) {
+      const filePath = (dirPath === "/" ? dirPath : dirPath + "/") + file;
+      const stats = await stat(filePath);
+      if (stats.isFile()) {
+        await unlink(filePath);
+      } else {
+        await emptyDir(filePath);
+      }
+    }
+  if (dirPath !== "/") {
+    await rmDir(dirPath);
+  }
+};
 
 export const closeDrive = () => {
   if (drive) {

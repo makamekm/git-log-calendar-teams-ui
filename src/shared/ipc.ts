@@ -142,6 +142,7 @@ export interface Ipc {
       secretKey: string;
       useDriveSwarm: boolean;
     }) => void;
+    EMPTY_DRIVE_CONFIG: () => void;
   };
   sends: {
     ON_COLLECT_STATS: () => void;
@@ -220,6 +221,10 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["SAVE_DRIVE_CONFIG"]>
     ): Promise<ReturnType<Ipc["handlers"]["SAVE_DRIVE_CONFIG"]>> =>
       ipcRenderer.invoke(nameofHandler("SAVE_DRIVE_CONFIG"), ...args),
+    EMPTY_DRIVE_CONFIG: (
+      ...args: Parameters<Ipc["handlers"]["EMPTY_DRIVE_CONFIG"]>
+    ): Promise<ReturnType<Ipc["handlers"]["EMPTY_DRIVE_CONFIG"]>> =>
+      ipcRenderer.invoke(nameofHandler("EMPTY_DRIVE_CONFIG"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>

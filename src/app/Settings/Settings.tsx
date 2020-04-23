@@ -35,6 +35,7 @@ interface SettingsState {
   isLoadingDelay: boolean;
   load: () => Promise<void>;
   save: () => Promise<void>;
+  empty: () => Promise<void>;
 }
 
 const SettingsForm = observer(({ state }: { state: SettingsState }) => {
@@ -98,6 +99,16 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                     Remount Drive
                   </Button>
                 </ButtonGroup>
+                <ButtonGroup className="align-self-start mt-0 mb-3">
+                  <Button
+                    disabled={state.isDirty}
+                    color="danger"
+                    className="mb-2 mr-2 px-3"
+                    onClick={state.empty}
+                  >
+                    Empty Drive
+                  </Button>
+                </ButtonGroup>
               </Col>
             </FormGroup>
           </Form>
@@ -124,6 +135,11 @@ export const Settings = observer(() => {
       await ipc.handlers.SAVE_DRIVE_CONFIG(toJS(state.config));
       state.config = await ipc.handlers.GET_DRIVE_CONFIG();
       state.isDirty = false;
+      state.isLoading = false;
+    },
+    empty: async () => {
+      state.isLoading = true;
+      await ipc.handlers.EMPTY_DRIVE_CONFIG();
       state.isLoading = false;
     },
   }));
