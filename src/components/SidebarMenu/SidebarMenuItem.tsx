@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { v4 as uuid } from "uuid";
 
 import { MenuContext } from "./context";
-import { SideBarMenuEntry } from "./SidebarMenuEntry";
+import { SideBarMenuEntry } from "./SideBarMenuEntry";
 import { SHOW_WIP_MENU } from "@env/config";
 
 /**
