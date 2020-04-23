@@ -56,7 +56,10 @@ export const TrackerActivities = observer(() => {
               </CardTitle>
 
               <UncontrolledButtonDropdown className="ml-auto">
-                <DropdownToggle color="link" className="text-decoration-none">
+                <DropdownToggle
+                  color="link"
+                  className="text-decoration-none no-print"
+                >
                   <i className="fa fa-gear"></i>
                   <i className="fa fa-angle-down ml-2"></i>
                 </DropdownToggle>
@@ -111,7 +114,10 @@ export const TrackerActivities = observer(() => {
               </CardTitle>
 
               <UncontrolledButtonDropdown className="ml-auto">
-                <DropdownToggle color="link" className="text-decoration-none">
+                <DropdownToggle
+                  color="link"
+                  className="text-decoration-none no-print"
+                >
                   <i className="fa fa-gear"></i>
                   <i className="fa fa-angle-down ml-2"></i>
                 </DropdownToggle>
@@ -166,7 +172,10 @@ export const TrackerActivities = observer(() => {
               </CardTitle>
 
               <UncontrolledButtonDropdown className="ml-auto">
-                <DropdownToggle color="link" className="text-decoration-none">
+                <DropdownToggle
+                  color="link"
+                  className="text-decoration-none no-print"
+                >
                   <i className="fa fa-gear"></i>
                   <i className="fa fa-angle-down ml-2"></i>
                 </DropdownToggle>
