@@ -7,7 +7,7 @@ import { getConfig, saveConfig } from "../git";
 const REFRESH_CONFIG_TIMEOUT = 1000 * 10;
 
 let config: Config = null;
-let date = new Date();
+let date = +new Date();
 
 app.on("ready", () => {
   ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
@@ -25,7 +25,7 @@ ipcMain.handle(
     ...args: Parameters<Ipc["handlers"]["GET_CONFIG"]>
   ): Promise<ReturnType<Ipc["handlers"]["GET_CONFIG"]>> => {
     const [force] = args;
-    if (force || !config || +new Date() - +date > REFRESH_CONFIG_TIMEOUT) {
+    if (force || !config || +new Date() > REFRESH_CONFIG_TIMEOUT + date) {
       config = await getConfig();
 
       config.repositories.forEach((repository) => {
@@ -38,7 +38,7 @@ ipcMain.handle(
         users.associations = users.associations || [];
       });
 
-      date = new Date();
+      date = +new Date();
     }
     return config;
   }
