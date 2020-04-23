@@ -88,6 +88,7 @@
     "node-fetch": "^2.6.0",
     "numeral": "^2.0.6",
     "prop-types": "^15.7.2",
+    "pump": "^3.0.0",
     "query-string": "^6.12.1",
     "rc-slider": "^9.2.4",
     "react": "^16.13.1",
