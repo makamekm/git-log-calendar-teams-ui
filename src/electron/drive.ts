@@ -8,6 +8,7 @@ import pump from "pump";
 import crypto from "hypercore-crypto";
 import settings from "electron-settings";
 import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
+import { Chat } from "./chat/chat";
 
 export const generateDriveKeys = () => {
   const keyPair = crypto.keyPair();
@@ -28,6 +29,9 @@ const getBaseFolder = () => {
 
 let drive;
 let swarm;
+let chat: Chat;
+
+export const getChat = () => chat;
 
 export const parseKey = (key) => {
   return Buffer.from(key, "hex");
@@ -71,23 +75,6 @@ export const readDir = (dir) =>
       }
     });
   });
-
-// export const rmDir = (dir) =>
-//   new Promise<void>((r, e) => {
-//     drive.rmdir(
-//       dir,
-//       {
-//         recursive: true,
-//       },
-//       (err) => {
-//         if (err) {
-//           e(err);
-//         } else {
-//           r();
-//         }
-//       }
-//     );
-//   });
 
 export const unlink = (file) =>
   new Promise<void>((r, e) => {
@@ -160,8 +147,16 @@ export const closeDrive = () => {
     } catch (error) {
       console.error(error);
     }
+    try {
+      if (chat) {
+        chat.destroy();
+      }
+    } catch (error) {
+      console.error(error);
+    }
     drive = null;
     swarm = null;
+    chat = null;
   }
 };
 
@@ -226,9 +221,10 @@ export const createDrive = () => {
   closeDrive();
   const { publicKey, secretKey, useDriveSwarm } = loadDriveKeys();
   drive = hyperdrive(getBaseFolder(), publicKey.toString("hex"), {
-    secretKey: secretKey,
+    secretKey,
   });
   if (useDriveSwarm) {
+    chat = new Chat(publicKey.toString("hex") + secretKey.toString("hex"));
     swarm = hyperswarm();
 
     drive.on("ready", () => {
