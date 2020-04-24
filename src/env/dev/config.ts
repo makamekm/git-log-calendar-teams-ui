@@ -7,6 +7,6 @@ export const CATCH_LOGS = true;
 export const CONSOLE_LOG_LEVEL = "debug";
 export const FILE_LOG_LEVEL = "debug";
 export const DEV_CONFIG = "./git-log-config.yml";
-export const SWARM_INIT_TIMEOUT = 3000;
+export const SWARM_INIT_TIMEOUT = 1000;
 export const DRIVE_BASE_FOLDER = "./test";
 export const CACHE_LIFETIME = 10000;
