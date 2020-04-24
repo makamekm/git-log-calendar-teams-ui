@@ -41,7 +41,7 @@ export const ActiveStatsPanel = ({
               </td>
             </tr>
           )}
-          {activeTeams && (
+          {activeTeams != null && (
             <tr>
               <td className="text-inverse">Active Teams</td>
               <td className="text-right">
