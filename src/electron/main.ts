@@ -83,7 +83,7 @@ function createTray() {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "Open Log Manager",
+      label: "Open Stats Manager",
       type: "normal",
       click: () => createWindow(),
     },
@@ -97,7 +97,7 @@ function createTray() {
       },
     },
   ]);
-  tray.setToolTip("Git Log Manager");
+  tray.setToolTip("Git Stats Manager");
   tray.setContextMenu(contextMenu);
   tray.addListener("click", () => {
     tray.popUpContextMenu();
@@ -119,7 +119,7 @@ function createWindow() {
     });
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, "../assets/logo.png"),
-    title: "Git Log Manager",
+    title: "Git Stats Manager",
     width: 800,
     height: 600,
     minWidth: 800,

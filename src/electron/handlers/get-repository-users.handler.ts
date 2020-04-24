@@ -9,11 +9,18 @@ ipcMain.handle(
     event,
     ...args: Parameters<Ipc["handlers"]["GET_REPOSITORY_USERS"]>
   ): Promise<ReturnType<Ipc["handlers"]["GET_REPOSITORY_USERS"]>> => {
-    const [names] = args;
+    const [names, limit] = args;
 
     const config = await ipc.handlers.GET_CONFIG();
     const fileMap = await ipc.handlers.GET_DATA();
 
-    return getAllRepositoryUsers(names, fileMap, config);
+    return getAllRepositoryUsers(
+      {
+        repositories: names,
+        limit,
+      },
+      fileMap,
+      config
+    );
   }
 );

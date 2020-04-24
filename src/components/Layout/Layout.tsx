@@ -238,7 +238,7 @@ class Layout extends React.Component<RouteComponentProps & LayoutProps> {
         <Helmet>
           <meta charSet="utf-8" />
           <title>
-            {"Git Log Manager" +
+            {"Git Stats Manager" +
               (this.state.pageTitle ? ` - ${this.state.pageTitle}` : "")}
           </title>
           <link rel="canonical" href={"/"} />

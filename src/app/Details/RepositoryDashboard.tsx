@@ -76,6 +76,7 @@ const RepositoryUsers = observer(() => {
                 <th className="bt-0">Key</th>
                 <th className="bt-0">Name</th>
                 <th className="bt-0">Email</th>
+                <th className="text-right bt-0">Activity</th>
                 <th className="text-right bt-0">Total Activity</th>
               </tr>
             </thead>
@@ -95,8 +96,11 @@ const RepositoryUsers = observer(() => {
                     </td>
                     <td className="align-middle">{user.name}</td>
                     <td className="align-middle">{user.email}</td>
-                    <td className="align-middle">
+                    <td className="text-right align-middle">
                       {numberWithCommas(user.value)}
+                    </td>
+                    <td className="text-right align-middle">
+                      {numberWithCommas(user.valueTotal)}
                     </td>
                   </tr>
                 );

@@ -84,7 +84,7 @@ export const Dashboard = observer(() => {
               />
               <TopPanel
                 className="mt-4"
-                type="repositteamory"
+                type="team"
                 name={`Teams ${periods[state.limit]}`}
                 colorShift={1}
                 data={state.stats?.topTeams?.value}

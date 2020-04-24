@@ -119,7 +119,8 @@ export interface Ipc {
       renderer: string[];
     };
     GET_REPOSITORY_USERS: (
-      name?: string[]
+      name?: string[],
+      limit?: number
     ) => {
       userKey: string;
       user?: {
@@ -128,6 +129,7 @@ export interface Ipc {
       email: string;
       name: string;
       value: number;
+      valueTotal: number;
     }[];
     GET_DATA: () => any;
     GET_DRIVE_CONFIG: () => {

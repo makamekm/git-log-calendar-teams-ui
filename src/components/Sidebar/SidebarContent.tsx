@@ -49,13 +49,18 @@ export class SidebarContent extends React.Component<{
       children,
     } = this.props;
 
-    const sidebarClass = classNames("sidebar", "sidebar--animations-enabled", {
-      "sidebar--slim": slim || layoutConfig.sidebarSlim,
-      "sidebar--collapsed": collapsed || layoutConfig.sidebarCollapsed,
-      "sidebar--animations-disabled":
-        animationsDisabled || layoutConfig.animationsDisabled,
-      "sidebar--animate-entry-complete": this.state.entryAnimationFinished,
-    });
+    const sidebarClass = classNames(
+      "sidebar",
+      "no-print",
+      "sidebar--animations-enabled",
+      {
+        "sidebar--slim": slim || layoutConfig.sidebarSlim,
+        "sidebar--collapsed": collapsed || layoutConfig.sidebarCollapsed,
+        "sidebar--animations-disabled":
+          animationsDisabled || layoutConfig.animationsDisabled,
+        "sidebar--animate-entry-complete": this.state.entryAnimationFinished,
+      }
+    );
 
     return (
       <div className={sidebarClass} ref={this.sidebarRef}>

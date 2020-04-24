@@ -40,8 +40,8 @@ export const defaultLayoutMeta: LayoutMeta = {
   navbarHidden: false,
   footerHidden: false,
   pageTitle: null,
-  pageDescription: "Default Dashboard ready for Development",
-  pageKeywords: "react dashboard seed bootstrap",
+  pageDescription: "Git Stats Manager",
+  pageKeywords: "git team manager dashboard",
 };
 
 export const defaultLayoutState = {

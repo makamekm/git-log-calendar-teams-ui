@@ -66,7 +66,7 @@ export const SearchService = createService<SearchState>(
         state.config = await ipc.handlers.GET_CONFIG();
         state.isLoading = false;
       },
-      reload: debounce(() => state.load, 1000, false),
+      reload: debounce(() => state.load(), 1000, false),
     }));
     return state;
   },

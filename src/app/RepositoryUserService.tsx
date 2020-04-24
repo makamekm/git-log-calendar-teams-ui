@@ -15,9 +15,12 @@ export interface RepositoryUserState {
     email: string;
     name: string;
     value: number;
+    valueTotal: number;
   }[];
   usersQuery: string;
   usersQueryDelay: string;
+  sortBy: string;
+  sortDirectionDesc: boolean;
   tableRepositoryUsers: {
     userKey: string;
     user?: {
@@ -26,6 +29,7 @@ export interface RepositoryUserState {
     email: string;
     name: string;
     value: number;
+    valueTotal: number;
   }[];
   isLoading: boolean;
   isLoadingDelay: boolean;
@@ -41,21 +45,30 @@ export const RepositoryUserService = createService<RepositoryUserState>(
         isLoadingDelay: false,
         usersQuery: "",
         usersQueryDelay: "",
+        sortBy: "value",
+        sortDirectionDesc: true,
         get tableRepositoryUsers() {
-          return state.usersQueryDelay
+          let values = state.usersQueryDelay
             ? state.repositoryUsers.filter((user) => {
                 return user.userKey
                   .toLowerCase()
                   .includes(state.usersQueryDelay.toLowerCase());
               })
             : state.repositoryUsers;
+          values = values.sort(
+            (a, b) =>
+              (a[state.sortBy] - b[state.sortBy]) *
+              (state.sortDirectionDesc ? -1 : 1)
+          );
+          return values;
         },
         load: async () => {
           if (state.dashboardService.mode === "repository") {
             state.isLoading = true;
-            state.repositoryUsers = await ipc.handlers.GET_REPOSITORY_USERS([
-              state.dashboardService.name,
-            ]);
+            state.repositoryUsers = await ipc.handlers.GET_REPOSITORY_USERS(
+              [state.dashboardService.name],
+              state.dashboardService.limit
+            );
             state.isLoading = false;
           }
         },

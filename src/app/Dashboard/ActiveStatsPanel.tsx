@@ -32,8 +32,8 @@ export const ActiveStatsPanel = ({
         <tbody>
           {activeRepositories != null && (
             <tr>
-              <td className="text-inverse bt-0">Active Repositories</td>
-              <td className="text-right bt-0">
+              <td className="text-inverse">Active Repositories</td>
+              <td className="text-right">
                 <Badge color="success" pill>
                   {numberWithCommas(activeRepositoriesToday)} /{" "}
                   {numberWithCommas(activeRepositories)}
@@ -41,7 +41,7 @@ export const ActiveStatsPanel = ({
               </td>
             </tr>
           )}
-          {activeTeams && (
+          {activeTeams != null && (
             <tr>
               <td className="text-inverse">Active Teams</td>
               <td className="text-right">
