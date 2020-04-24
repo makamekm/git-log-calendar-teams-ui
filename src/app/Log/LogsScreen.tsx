@@ -110,8 +110,6 @@ export const LogsScreen = observer(() => {
     <>
       <WithLayoutMeta
         meta={{
-          sidebarHidden: true,
-          footerHidden: true,
           pageTitle: "Logs",
           breadcrumbs: [
             {

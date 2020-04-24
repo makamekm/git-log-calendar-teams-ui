@@ -60,3 +60,10 @@ ipcMain.handle(
     ipc.sends.ON_COLLECT_FINISH();
   }
 );
+
+ipcMain.handle(
+  nameofHandler("IS_COLLECTING_STATS"),
+  async (): Promise<ReturnType<Ipc["handlers"]["IS_COLLECTING_STATS"]>> => {
+    return isCollecting;
+  }
+);

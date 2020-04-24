@@ -23,6 +23,7 @@ global.ipcRenderer.invoke = async (channel, ...args) => {
 };
 
 global.ipcRenderer.send = (channel, ...args) => {
+  global.mainWindow && global.mainWindow.webContents.send(channel, ...args);
   return ipcMain.emit(channel, {}, ...args);
 };
 
@@ -39,4 +40,3 @@ function requireFolder(name) {
 }
 
 requireFolder("handlers");
-requireFolder("channels");

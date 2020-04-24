@@ -33,7 +33,7 @@ export async function readData(config) {
 const getDefaultConfig = (): Config => {
   const homeConfigPath = DEV_CONFIG
     ? path.resolve(DEV_CONFIG)
-    : path.resolve(app.getPath("home"), "git-log-config.yml");
+    : path.resolve(app.getPath("exe"), "git-log-config.yml");
   if (fs.existsSync(homeConfigPath)) {
     return YAML.parse(fs.readFileSync(homeConfigPath, "utf-8"));
   }

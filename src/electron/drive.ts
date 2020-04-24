@@ -22,7 +22,7 @@ const getBaseFolder = () => {
   return path.resolve(
     DRIVE_BASE_FOLDER
       ? path.resolve(DRIVE_BASE_FOLDER)
-      : path.resolve(app.getPath("temp"), "drive"),
+      : path.resolve(app.getPath("appData"), "drive"),
     settings.get("publicKey")
   );
 };

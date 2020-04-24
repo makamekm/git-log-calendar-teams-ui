@@ -14,6 +14,7 @@ import { LogoThemed } from "~/app/LogoThemed";
 import { NavbarUser } from "./NavbarUser";
 import { NavbarPrint } from "./NavbarPrint";
 import { SearchBar } from "~/app/SearchBar/SearchBar";
+import { NavbarCollect } from "./NavbarCollect";
 
 export const DefaultNavbar = () => {
   const context = React.useContext(LayoutContext);
@@ -57,10 +58,15 @@ export const DefaultNavbar = () => {
         </NavItem>
       </Nav>
       <SearchBar />
-      <Nav navbar className="text-nowrap" style={{ flexWrap: "unset" }}>
+      <Nav
+        navbar
+        className="no-print text-nowrap"
+        style={{ flexWrap: "unset" }}
+      >
         {/* <NavbarActivityFeed />
         <NavbarMessages className="ml-2" /> */}
-        <NavbarPrint />
+        <NavbarCollect />
+        <NavbarPrint className="ml-2" />
         <NavbarUser className="ml-2" />
       </Nav>
     </Navbar>
