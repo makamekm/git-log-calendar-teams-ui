@@ -316,15 +316,15 @@ function sortMapDataTop(data, top) {
 }
 
 export function normalizeCommitsAndLineChanges(report, fileMap, config): any {
-  return normalizeDataReduce(report, fileMap, config, ({ data, author }) => {
+  return normalizeDataReduce(report, fileMap, config, ({ data, state }) => {
     if (!data.commits) {
       data.commits = 0;
     }
     if (!data.linesChanged) {
       data.linesChanged = 0;
     }
-    data.commits += author.commits;
-    data.linesChanged += author.linesChanged;
+    data.commits += state.commits;
+    data.linesChanged += state.linesChanged;
   });
 }
 
@@ -389,6 +389,7 @@ function normalizeDataReduce(report, fileMap, config, callback) {
                     callback({
                       data,
                       value: config.evaluate(map[dateString]),
+                      state: map[dateString],
                       author,
                       repository,
                       userKey,
