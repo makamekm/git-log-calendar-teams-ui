@@ -370,6 +370,8 @@ function normalizeDataReduce(report, fileMap, config, callback) {
                 repository,
                 userKey,
                 repositoryName,
+                email,
+                name,
               });
             } else {
               const limit = new Date();
@@ -397,6 +399,8 @@ function normalizeDataReduce(report, fileMap, config, callback) {
                       dateString,
                       repositoryName,
                       message: map[dateString].message,
+                      email,
+                      name,
                     });
                   }
                 }
@@ -415,35 +419,29 @@ function normalizeDataReduce(report, fileMap, config, callback) {
   return data;
 }
 
-export function getAllRepositoryUsers(repositories, fileMap, config): any {
-  const result = {};
-  for (let repository of config.repositories) {
-    const repositoryName = getRepositoryName(repository);
-    if (
-      fileMap[repositoryName] &&
-      (!repositories || repositories.includes(repository.name))
-    ) {
-      for (let author of fileMap[repositoryName].data) {
-        const user = getAuthor(config.users, author.email, author.name);
-        const email = author.email.toLowerCase();
-        const name = author.name.toLowerCase();
-        let userKey =
-          (user && user.name) || `${email} ${name} ${UNREGISTERED_SYMBOL}`;
-        if (!result[userKey]) {
-          result[userKey] = {
+export function getAllRepositoryUsers(report, fileMap, config): any {
+  return Object.values(
+    normalizeDataReduce(
+      { ...report, onlyRegistered: false },
+      fileMap,
+      config,
+      ({ data, userKey, user, author, email, name, repository, value }) => {
+        if (!data[userKey]) {
+          data[userKey] = {
             userKey,
             user,
             email,
             name,
-            value: config.evaluate(author),
+            value,
+            repository: repository.name,
+            valueTotal: config.evaluate(author),
           };
         } else {
-          result[userKey].value += config.evaluate(author);
+          data[userKey].value += value;
         }
       }
-    }
-  }
-  return Object.values(result);
+    )
+  );
 }
 
 export function searchCommitMessages(report, fileMap, config) {
