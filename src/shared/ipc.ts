@@ -1,4 +1,5 @@
 import { Config } from "./Config";
+import { Json } from "./Json";
 
 export const nameof = <T>(name: keyof T) => name;
 
@@ -10,9 +11,9 @@ export const nameofSends = (name: keyof typeof ipc.sends) =>
   nameof<typeof ipc.sends>(name);
 
 export interface Ipc {
-  channels: {
-    ON_COLLECT_STATS: (value: boolean) => void;
-  };
+  // channels: {
+  //   ON_COLLECT_STATS: (value: boolean) => void;
+  // };
   handlers: {
     APP_INFO: () => {
       appName: string;
@@ -107,6 +108,10 @@ export interface Ipc {
     };
     GET_CONFIG: (force?: boolean) => Config;
     SAVE_CONFIG: (config: Config) => void;
+    GET_SETTINGS: () => { useCommunications: boolean };
+    SAVE_SETTINGS: (config: { useCommunications: boolean }) => void;
+    GET_USER: () => { email: string; name: string };
+    SAVE_USER: (user: { email: string; name: string }) => void;
     LOG: (
       log: any,
       level?: "info" | "warn" | "error" | "verbose" | "debug" | "silly"
@@ -144,26 +149,29 @@ export interface Ipc {
     }) => void;
     EMPTY_DRIVE_CONFIG: () => void;
   };
-  sends: {
-    ON_COLLECT_STATS: () => void;
-    ON_DRIVE_CONFIG_UPDATE_FINISH: () => void;
-    ON_COLLECT_FINISH: () => void;
-  };
+  // sends: {
+  //   ON_COLLECT_STATS: () => void;
+  //   ON_DRIVE_CONFIG_UPDATE_FINISH: () => void;
+  //   ON_COLLECT_FINISH: () => void;
+  //   ON_CHANGE_SETTING: () => void;
+  //   ON_CHANGE_USER: () => void;
+  // };
 }
+
+const channelFactory = <T = any[], K = void>(name: string) => (
+  callback: (...args: any[]) => void
+) => {
+  const listener = (event: any, ...args) => {
+    callback(...args);
+  };
+  ipcRenderer.on(name, listener);
+  return () => ipcRenderer.removeListener(name, listener);
+};
 
 export const ipc = {
   channels: {
-    ON_COLLECT_STATS: (callback: (...args: any[]) => void) => {
-      const listener = (
-        event: any,
-        ...args: Parameters<Ipc["channels"]["ON_COLLECT_STATS"]>
-      ) => {
-        callback(...args);
-      };
-      ipcRenderer.on(nameofChannel("ON_COLLECT_STATS"), listener);
-      return () =>
-        ipcRenderer.removeListener(nameofChannel("ON_COLLECT_STATS"), listener);
-    },
+    ON_COLLECT_STATS: channelFactory("ON_COLLECT_STATS"),
+    ON_CHANNEL_MESSAGE: channelFactory("ON_CHANNEL_MESSAGE"),
   },
   handlers: {
     APP_INFO: (
@@ -230,12 +238,33 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["EMPTY_DRIVE_CONFIG"]>
     ): Promise<ReturnType<Ipc["handlers"]["EMPTY_DRIVE_CONFIG"]>> =>
       ipcRenderer.invoke(nameofHandler("EMPTY_DRIVE_CONFIG"), ...args),
+    GET_USER: (
+      ...args: Parameters<Ipc["handlers"]["GET_USER"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_USER"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_USER"), ...args),
+    SAVE_USER: (
+      ...args: Parameters<Ipc["handlers"]["SAVE_USER"]>
+    ): Promise<ReturnType<Ipc["handlers"]["SAVE_USER"]>> =>
+      ipcRenderer.invoke(nameofHandler("SAVE_USER"), ...args),
+    GET_SETTINGS: (
+      ...args: Parameters<Ipc["handlers"]["GET_SETTINGS"]>
+    ): Promise<ReturnType<Ipc["handlers"]["GET_SETTINGS"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_SETTINGS"), ...args),
+    SAVE_SETTINGS: (
+      ...args: Parameters<Ipc["handlers"]["SAVE_SETTINGS"]>
+    ): Promise<ReturnType<Ipc["handlers"]["SAVE_SETTINGS"]>> =>
+      ipcRenderer.invoke(nameofHandler("SAVE_SETTINGS"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
       ipcRenderer.send(nameofSends("ON_COLLECT_STATS"), value),
     ON_DRIVE_CONFIG_UPDATE_FINISH: () =>
       ipcRenderer.send(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH")),
+    ON_DRIVE_UPDATE: () => ipcRenderer.send(nameofSends("ON_DRIVE_UPDATE")),
     ON_COLLECT_FINISH: () => ipcRenderer.send(nameofSends("ON_COLLECT_FINISH")),
+    ON_CHANGE_SETTING: () => ipcRenderer.send(nameofSends("ON_CHANGE_SETTING")),
+    ON_CHANGE_USER: () => ipcRenderer.send(nameofSends("ON_CHANGE_USER")),
+    ON_CHANNEL_MESSAGE: (peer, data: Json) =>
+      ipcRenderer.send(nameofSends("ON_CHANNEL_MESSAGE"), peer, data),
   },
 };

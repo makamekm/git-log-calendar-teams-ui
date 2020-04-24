@@ -9,6 +9,7 @@ import crypto from "hypercore-crypto";
 import settings from "electron-settings";
 import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 import { Chat } from "./chat/chat";
+import { ipc } from "~/shared/ipc";
 
 export const generateDriveKeys = () => {
   const keyPair = crypto.keyPair();
@@ -224,14 +225,20 @@ export const createDrive = () => {
     secretKey,
   });
   if (useDriveSwarm) {
-    chat = new Chat(publicKey.toString("hex") + secretKey.toString("hex"));
     swarm = hyperswarm();
+    if (settings.get("useCommunications")) {
+      chat = new Chat(publicKey.toString("hex") + secretKey.toString("hex"));
+    }
 
     drive.on("ready", () => {
       swarm.join(publicKey, {
         announce: true,
         lookup: true,
       });
+    });
+
+    drive.on("update", () => {
+      ipc.sends.ON_DRIVE_UPDATE();
     });
 
     swarm.on("connection", (connection, info) => {

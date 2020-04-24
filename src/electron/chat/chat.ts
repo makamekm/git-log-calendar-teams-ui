@@ -5,13 +5,18 @@ import ndjson from "ndjson";
 import { Json, JsonCompatible } from "~/shared/Json";
 
 export class Chat extends EventEmitter {
-  private swarm = hyperswarm();
+  private swarm;
   private channels = new Set<Channel>();
   private baseKey: string;
 
-  constructor(baseKey: string) {
+  constructor(baseKey: string, swarm?) {
     super();
     this.baseKey = baseKey;
+    if (swarm) {
+      this.swarm = swarm;
+    } else {
+      this.swarm = hyperswarm();
+    }
     this.swarm.on("connection", this.handleConnection);
   }
 
@@ -58,6 +63,10 @@ export class Channel extends EventEmitter {
 
   getKey() {
     return this.key;
+  }
+
+  getName() {
+    return this.name;
   }
 
   constructor(chat: Chat, key: string, name: string) {

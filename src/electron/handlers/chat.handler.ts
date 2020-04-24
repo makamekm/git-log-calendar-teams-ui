@@ -3,45 +3,44 @@ import settings from "electron-settings";
 // import { nameofHandler, Ipc } from "~/shared/ipc";
 import { getChat } from "../drive";
 import { Channel } from "../chat/chat";
-import { UNREGISTERED_SYMBOL, getAuthor } from "../git";
-import { ipc } from "~/shared/ipc";
+import { ipc, nameofSends } from "~/shared/ipc";
 
 let channels: Channel[] = [];
 
-const getUser = async () => {
-  const name = settings.get("name");
-  const email = settings.get("email");
-  if (!name || !email) {
-    return null;
-  }
-  const config = await ipc.handlers.GET_CONFIG();
-  const user = getAuthor(config.users, email, name);
-  return (
-    (user && user.name) ||
-    `${email.toLowerCase()} ${name.toLowerCase()} ${UNREGISTERED_SYMBOL}`
+const setChannels = (arr: Channel[]) => {
+  settings.set(
+    "channels",
+    JSON.stringify(arr.map((channel) => channel.getName()))
   );
+  channels = arr;
 };
 
-ipcMain.handle(
-  "SET_USER",
-  async (event, ...args: any[]): Promise<void> => {
-    const [name, email] = args;
-    settings.set("name", name);
-    settings.set("email", email);
-  }
-);
+app.on("ready", () => {
+  ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
+    setChannels([]);
+  });
+  ipcMain.on(nameofSends("ON_CHANGE_USER"), () => {
+    getChannels().forEach((channel) => channel.close());
+    setChannels([]);
+  });
+});
 
 const getChannels = (): Channel[] => {
   const chat = getChat();
-  if (chat) {
-    return channels;
-  } else {
-    channels = [];
-    return [];
+  if (!chat) {
+    setChannels([]);
   }
+  return channels;
 };
-const getChannel = (key: string): Channel => {
-  return getChannels().find((channel) => channel.getKey() === key);
+
+const findChannel = (name: string): Channel => {
+  return getChannels().find((channel) => channel.getName() === name);
+};
+
+const removeChannel = (name: string) => {
+  return setChannels(
+    getChannels().filter((channel) => channel.getName() !== name)
+  );
 };
 
 ipcMain.handle(
@@ -54,12 +53,46 @@ ipcMain.handle(
 ipcMain.handle(
   "SEND_MESSAGE",
   async (event, ...args: any[]): Promise<any> => {
-    const [key, message] = args;
+    const [name, message] = args;
     const chat = getChat();
-    const channel = getChannel(key);
-    const user = await getUser();
+    const channel = findChannel(name);
+    const user = await ipc.handlers.GET_USER();
     if (chat && channel && user) {
-      await channel.send({ author: user, message });
+      channel.send({ author: user, ...message });
     }
+  }
+);
+
+ipcMain.handle(
+  "CREATE_CHANNEL",
+  async (event, ...args: any[]): Promise<any> => {
+    const [name] = args;
+    const chat = getChat();
+    const user = await ipc.handlers.GET_USER();
+    const existChannel = findChannel(name);
+    if (!existChannel && chat && user) {
+      const channel = chat.channel(name);
+      channels.push(channel);
+      channel.on("message", (peer, data) => {
+        ipc.sends.ON_CHANNEL_MESSAGE(peer, data);
+      });
+      return channel.getKey();
+    }
+    return null;
+  }
+);
+
+ipcMain.handle(
+  "CLOSE_CHANNEL",
+  async (event, ...args: any[]): Promise<any> => {
+    const [name] = args;
+    const chat = getChat();
+    const channel = findChannel(name);
+    if (chat && channel) {
+      channel.close();
+      removeChannel(name);
+      return true;
+    }
+    return false;
   }
 );
