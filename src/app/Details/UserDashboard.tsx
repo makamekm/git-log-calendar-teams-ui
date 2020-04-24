@@ -152,14 +152,14 @@ export const UserDashboard = observer(() => {
             </CardTitle>
           </div>
           <div className="d-flex justify-content-center">
-            {state.isLoadingDelay || !state.userStats[userName] ? (
+            {state.isLoadingDelay ? (
               <Instagram height={"300px"} />
             ) : (
               <CalendarActivities
                 maxValue={state.maxValue}
                 height={200}
                 limit={state.limit}
-                data={state.userStats[userName]}
+                data={state.userStats[userName] || []}
               />
             )}
           </div>
