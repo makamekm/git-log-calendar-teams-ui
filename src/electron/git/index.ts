@@ -354,7 +354,8 @@ function normalizeDataReduce(report, fileMap, config, callback) {
             isAllUsers ||
             (user
               ? report.users.includes(user.name)
-              : report.users.includes(email) || report.users.includes(name));
+              : report.users.includes(email) || report.users.includes(name)) ||
+            report.users.includes(userKey);
           if (!shouldLogUser && isOthers) {
             userKey = report.othersLabel || OTHERS_LABEL;
             shouldLogUser = true;
