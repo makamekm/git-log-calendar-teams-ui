@@ -29,7 +29,7 @@ const SidebarBottomA = () => (
           color="link"
           className="sidebar__link p-0 mt-3"
         >
-          <i className="fa fa-fw fa-question-circle-o"></i>
+          <i className="far fa-question-circle"></i>
         </Button>
         <UncontrolledTooltip
           placement="right-end"

@@ -18,7 +18,7 @@ const SidebarTopB = () => (
             className="align-self-center sidebar__brand"
             id="tooltipBackToHome"
           >
-            <i className="fa fa-git fa-fw fa-2x"></i>
+            <i className="fab fa-git fa-fw fa-2x"></i>
             <strong className="pb-2">STATS MANAGER</strong>
           </Link>
           <UncontrolledTooltip placement="right" target="tooltipBackToHome">
@@ -34,7 +34,7 @@ const SidebarTopB = () => (
       <div className="text-center">
         <Link to="/">
           <i
-            className="fa fa-git fa-fw text-primary"
+            className="fab fa-git fa-fw text-primary"
             id="tooltipBackToHomeSlim"
           ></i>
         </Link>

@@ -11,10 +11,7 @@ export const nameofSends = (name: keyof typeof ipc.sends) =>
 
 export interface Ipc {
   channels: {
-    APP_INFO: () => {
-      appName: string;
-      appVersion: string;
-    };
+    ON_COLLECT_STATS: (value: boolean) => void;
   };
   handlers: {
     APP_INFO: () => {
@@ -23,6 +20,7 @@ export interface Ipc {
     };
     PRINT: () => void;
     COLLECT_STATS: () => void;
+    IS_COLLECTING_STATS: () => boolean;
     GET_CALENDAR_DATA: (
       mode: "users" | "repositories" | "teams",
       options: {
@@ -153,15 +151,16 @@ export interface Ipc {
 
 export const ipc = {
   channels: {
-    APP_INFO: {
-      ask: () => ipcRenderer.send(nameofChannel("APP_INFO")),
-      subscribe: (callback: (...args: any[]) => void) => {
-        const listener = (event: any, ...args: any[]) => {
-          callback(...args);
-        };
-        ipcRenderer.on(nameofChannel("APP_INFO"), listener);
-        return ipcRenderer.removeListener(nameofChannel("APP_INFO"), listener);
-      },
+    ON_COLLECT_STATS: (callback: (...args: any[]) => void) => {
+      const listener = (
+        event: any,
+        ...args: Parameters<Ipc["channels"]["ON_COLLECT_STATS"]>
+      ) => {
+        callback(...args);
+      };
+      ipcRenderer.on(nameofChannel("ON_COLLECT_STATS"), listener);
+      return () =>
+        ipcRenderer.removeListener(nameofChannel("ON_COLLECT_STATS"), listener);
     },
   },
   handlers: {
@@ -173,6 +172,10 @@ export const ipc = {
       ...args: Parameters<Ipc["handlers"]["COLLECT_STATS"]>
     ): Promise<ReturnType<Ipc["handlers"]["COLLECT_STATS"]>> =>
       ipcRenderer.invoke(nameofHandler("COLLECT_STATS"), ...args),
+    IS_COLLECTING_STATS: (
+      ...args: Parameters<Ipc["handlers"]["IS_COLLECTING_STATS"]>
+    ): Promise<ReturnType<Ipc["handlers"]["IS_COLLECTING_STATS"]>> =>
+      ipcRenderer.invoke(nameofHandler("IS_COLLECTING_STATS"), ...args),
     GET_CALENDAR_DATA: (
       ...args: Parameters<Ipc["handlers"]["GET_CALENDAR_DATA"]>
     ): Promise<ReturnType<Ipc["handlers"]["GET_CALENDAR_DATA"]>> =>

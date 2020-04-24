@@ -8,14 +8,13 @@ export const NavbarPrint = (props: {
   style?: React.CSSProperties;
 }) => {
   return (
-    <NavItem
-      {...props}
-      className={classNames("no-print", "cursor-pointer", props.className)}
-      onClick={() => {
-        ipc.handlers.PRINT();
-      }}
-    >
-      <span className="navbar-text">
+    <NavItem {...props} className={classNames(props.className)}>
+      <span
+        className="cursor-pointer nav-link"
+        onClick={() => {
+          ipc.handlers.PRINT();
+        }}
+      >
         <i className="fa fa-print"></i>
       </span>
     </NavItem>

@@ -4,25 +4,25 @@ import { SidebarMenu, SidebarMenuItem } from "~/components";
 export const SidebarMiddleNav = () => (
   <SidebarMenu>
     <SidebarMenuItem
-      icon={<i className="fa fa-fw fa-th"></i>}
+      icon={<i className="fa fa-th"></i>}
       title="Dashboard"
       to="/dashboard"
     />
 
     <SidebarMenuItem
-      icon={<i className="fa fa-fw fa-file"></i>}
+      icon={<i className="fa fa-cog"></i>}
       title="Configuration"
       to="/configuration"
     />
 
     <SidebarMenuItem
-      icon={<i className="fa fa-fw fa-gear"></i>}
+      icon={<i className="fas fa-cogs"></i>}
       title="Settings"
       to="/settings"
     />
 
     <SidebarMenuItem
-      icon={<i className="fa fa-fw fa-file-text-o"></i>}
+      icon={<i className="fas fa-file"></i>}
       title="Logs"
       to="/logs"
     />

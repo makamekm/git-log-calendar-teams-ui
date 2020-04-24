@@ -28,6 +28,14 @@ declare global {
   var ipcRenderer: IpcRenderer;
 }
 
+declare global {
+  namespace NodeJS {
+    interface Global {
+      mainWindow: BrowserWindow;
+    }
+  }
+}
+
 powerSaveBlocker.start("prevent-app-suspension");
 
 let isQuiting;
@@ -130,6 +138,7 @@ function createWindow() {
   }
   mainWindow.on("closed", () => {
     mainWindow = null;
+    global.mainWindow = null;
     if (!isWin) {
       app.dock.hide();
     }
@@ -146,6 +155,7 @@ function createWindow() {
       }
     });
   }
+  global.mainWindow = mainWindow;
 }
 
 app.on("ready", () => {

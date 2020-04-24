@@ -8,7 +8,7 @@ export const LogoThemed = ({
   HTMLImageElement
 >) => (
   <span className="align-self-center sidebar__brand">
-    <i className="fa fa-git fa-fw fa-lg"></i>
+    <i className="fab fa-git fa-fw fa-lg"></i>
     <sub>
       <strong>STATS MANAGER</strong>
     </sub>

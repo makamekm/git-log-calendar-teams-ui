@@ -14,7 +14,7 @@ const SidebarTopA = () => (
         <div className="text-center">
           <Link to="/">
             <i
-              className="fa fa-git fa-fw text-primary"
+              className="fab fa-git fa-fw text-primary"
               id="tooltipBackToHomeSlim"
             ></i>
           </Link>
