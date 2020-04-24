@@ -85,7 +85,10 @@ export const DashboardService = createService<DashboardState>(
                 result.push(user.name);
               }
             } else if (state.mode === "repository" && state.userStats) {
-              if (Object.keys(state.userStats).find((n) => n === user.name)) {
+              if (
+                state.userStats[user.name] &&
+                state.userStats[user.name].length > 0
+              ) {
                 result.push(user.name);
               }
             }
@@ -105,7 +108,10 @@ export const DashboardService = createService<DashboardState>(
                 result.push(team.name);
               }
             } else if (state.mode === "repository" && state.teamStats) {
-              if (Object.keys(state.teamStats).find((n) => n === team.name)) {
+              if (
+                state.teamStats[team.name] &&
+                state.teamStats[team.name].length > 0
+              ) {
                 result.push(team.name);
               }
             }
