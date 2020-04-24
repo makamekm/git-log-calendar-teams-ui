@@ -56,6 +56,10 @@ export class Channel extends EventEmitter {
   private name: string;
   private peers = new Set<Peer>();
 
+  getKey() {
+    return this.key;
+  }
+
   constructor(chat: Chat, key: string, name: string) {
     super();
 

@@ -10,7 +10,7 @@ export const SidebarMiddleNav = () => (
     />
 
     <SidebarMenuItem
-      icon={<i className="fa fa-comments fa-th"></i>}
+      icon={<i className="fa fa-comments"></i>}
       title="Chat"
       to="/chat"
       exact

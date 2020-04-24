@@ -7,13 +7,13 @@ const ChatCardFooter = () => (
     <InputGroup>
       <InputGroupAddon addonType="prepend">
         <Button color="secondary" outline>
-          <i className="fa fa fa-paperclip"></i>
+          <i className="fa fa-paperclip"></i>
         </Button>
       </InputGroupAddon>
       <Input placeholder="Your message..." />
       <InputGroupAddon addonType="append">
         <Button color="primary" tag={Link} to="/apps/chat">
-          <i className="fa fa fa-send"></i>
+          <i className="fas fa-paper-plane"></i>
         </Button>
       </InputGroupAddon>
     </InputGroup>

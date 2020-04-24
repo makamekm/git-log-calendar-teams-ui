@@ -13,7 +13,7 @@ import { DEV_CONFIG } from "@env/config";
 const STATS_FILE_POSTFIX = ".stats.json";
 
 // Normalize Data
-const UNREGISTERED_SYMBOL = "*";
+export const UNREGISTERED_SYMBOL = "*";
 const OTHERS_LABEL = "*";
 
 const CONFIG_PATH = "/git-log-config.yml";
@@ -267,7 +267,7 @@ function isAuthorBelongToRepository(
 }
 
 // Check if the pair of email & name belongs to a reposoroty & team, but excluding the specifyed occurrences
-function getAuthor(users, email, name) {
+export function getAuthor(users, email, name) {
   name = name.toLowerCase();
   email = email.toLowerCase();
   return users.find(
