@@ -90,7 +90,7 @@ const RepositoryUsers = observer(() => {
                           {user.user.name}
                         </Link>
                       ) : (
-                        user.userKey
+                        <Link to={`/user/${user.userKey}`}>{user.userKey}</Link>
                       )}
                     </td>
                     <td className="align-middle">{user.name}</td>
@@ -231,15 +231,14 @@ export const RepositoryDashboard = observer(() => {
             </CardTitle>
           </div>
           <div className="d-flex justify-content-center">
-            {state.isLoadingDelay ||
-            !state.repositoriesStats[repositoryName] ? (
+            {state.isLoadingDelay ? (
               <Instagram height={"300px"} />
             ) : (
               <CalendarActivities
                 maxValue={state.maxValue}
                 height={200}
                 limit={state.limit}
-                data={state.repositoriesStats[repositoryName]}
+                data={state.repositoriesStats[repositoryName] || []}
               />
             )}
           </div>
