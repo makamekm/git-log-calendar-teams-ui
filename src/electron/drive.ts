@@ -253,8 +253,6 @@ export const createDrive = () => {
     });
 
     drive.on("update", () => {
-      console.log("HERERERE!!!!");
-
       ipc.sends.ON_DRIVE_UPDATE();
     });
 
