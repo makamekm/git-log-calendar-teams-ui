@@ -27,7 +27,7 @@ const ConfigurationTableRepositories = ConfigurationTable as React.FC<
 export const ConfigurationRepositories = observer(
   ({ state }: { state: ConfigurationState }) => {
     return (
-      <Accordion className="mb-3">
+      <Accordion className="mb-3" initialOpen>
         <AccordionHeader className="h6 cursor-pointer">
           <div className="d-flex justify-content-center align-items-center">
             <div>
