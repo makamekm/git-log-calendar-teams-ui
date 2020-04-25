@@ -1,5 +1,5 @@
 import { ipcMain, app } from "electron";
-import { nameofHandler, Ipc, ipc, nameofSends } from "~/shared/ipc";
+import { nameofHandler, IpcHandler, ipc, nameofSends } from "~/shared/ipc";
 
 import {
   normalizeUserData,
@@ -9,7 +9,7 @@ import {
 } from "../git";
 import { CACHE_LIFETIME } from "@env/config";
 
-type Stats = ReturnType<Ipc["handlers"]["GET_STATS_DATA"]>;
+type Stats = ReturnType<IpcHandler["GET_STATS_DATA"]>;
 
 function processData(data) {
   return Object.keys(data).map((key) => ({
@@ -26,7 +26,7 @@ let cache: {
 } = {};
 
 app.on("ready", () => {
-  ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
+  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     cache = {};
   });
   ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
@@ -38,7 +38,7 @@ ipcMain.handle(
   nameofHandler("GET_STATS_DATA"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_STATS_DATA"]>
+    ...args: Parameters<IpcHandler["GET_STATS_DATA"]>
   ): Promise<Stats> => {
     let [{ limit, mode, name, top }] = args;
     top = top || 5;

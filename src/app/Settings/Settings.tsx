@@ -127,25 +127,25 @@ export const Settings = observer(() => {
     isLoadingDelay: false,
     load: async () => {
       state.isLoading = true;
-      state.config = await ipc.handlers.GET_DRIVE_CONFIG();
+      state.config = await ipc.handlers.GET_SETTINGS();
       state.isDirty = false;
       state.isLoading = false;
     },
     save: async () => {
       state.isLoading = true;
-      await ipc.handlers.SAVE_DRIVE_CONFIG(toJS(state.config));
-      state.config = await ipc.handlers.GET_DRIVE_CONFIG();
+      await ipc.handlers.SAVE_SETTINGS(toJS(state.config));
+      state.config = await ipc.handlers.GET_SETTINGS();
       state.isDirty = false;
       state.isLoading = false;
     },
     remount: async () => {
       state.isLoading = true;
-      await ipc.handlers.REMOUNT_DRIVE_CONFIG();
+      await ipc.handlers.REMOUNT_DRIVE();
       state.isLoading = false;
     },
     empty: async () => {
       state.isLoading = true;
-      await ipc.handlers.EMPTY_DRIVE_CONFIG();
+      await ipc.handlers.EMPTY_DRIVE();
       state.isLoading = false;
     },
   }));

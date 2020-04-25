@@ -3,7 +3,7 @@ import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useOnChange, useDelay } from "~/hooks";
 import { Config } from "~/shared/Config";
-import { ipc, Ipc } from "~/shared/ipc";
+import { ipc, IpcHandler } from "~/shared/ipc";
 import { MessageState, MessageService } from "./MessageService";
 import {
   RepositoryUserState,
@@ -38,7 +38,7 @@ export interface DashboardState {
   users: string[];
   repositories: string[];
   teams: string[];
-  stats: ReturnType<Ipc["handlers"]["GET_STATS_DATA"]>;
+  stats: ReturnType<IpcHandler["GET_STATS_DATA"]>;
   isLoading: boolean;
   isLoadingDelay: boolean;
   limit: number;

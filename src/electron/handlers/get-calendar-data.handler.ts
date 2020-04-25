@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
+import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 
 import { normalizeCalendarData } from "../git";
 
@@ -7,8 +7,8 @@ ipcMain.handle(
   nameofHandler("GET_CALENDAR_DATA"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_CALENDAR_DATA"]>
-  ): Promise<ReturnType<Ipc["handlers"]["GET_CALENDAR_DATA"]>> => {
+    ...args: Parameters<IpcHandler["GET_CALENDAR_DATA"]>
+  ): Promise<ReturnType<IpcHandler["GET_CALENDAR_DATA"]>> => {
     const [returnMode, { limit, mode, name }] = args;
 
     const config = await ipc.handlers.GET_CONFIG();

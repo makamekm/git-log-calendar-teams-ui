@@ -1,16 +1,16 @@
 import { ipcMain } from "electron";
-import settings from "electron-settings";
-import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
+import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
+
+import { saveSettings, getSettings, emptyDir, remountDrive } from "../drive";
+import { getCollectPromise } from "./collect-stats.handler";
 
 ipcMain.handle(
   nameofHandler("GET_SETTINGS"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_SETTINGS"]>
-  ): Promise<ReturnType<Ipc["handlers"]["GET_SETTINGS"]>> => {
-    return {
-      useCommunications: settings.get("useCommunications"),
-    };
+    ...args: Parameters<IpcHandler["GET_SETTINGS"]>
+  ): Promise<ReturnType<IpcHandler["GET_SETTINGS"]>> => {
+    return getSettings();
   }
 );
 
@@ -18,10 +18,33 @@ ipcMain.handle(
   nameofHandler("SAVE_SETTINGS"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["SAVE_SETTINGS"]>
-  ): Promise<ReturnType<Ipc["handlers"]["SAVE_SETTINGS"]>> => {
-    const [{ useCommunications }] = args;
-    settings.set("useCommunications", useCommunications);
-    ipc.sends.ON_CHANGE_SETTING();
+    ...args: Parameters<IpcHandler["SAVE_SETTINGS"]>
+  ): Promise<ReturnType<IpcHandler["SAVE_SETTINGS"]>> => {
+    const [newConfig] = args;
+    await getCollectPromise();
+    saveSettings(newConfig);
+    ipc.sends.ON_SETTINGS_UPDATE_FINISH();
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("REMOUNT_DRIVE"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["REMOUNT_DRIVE"]>
+  ): Promise<ReturnType<IpcHandler["REMOUNT_DRIVE"]>> => {
+    await remountDrive();
+    ipc.sends.ON_SETTINGS_UPDATE_FINISH();
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("EMPTY_DRIVE"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["EMPTY_DRIVE"]>
+  ): Promise<ReturnType<IpcHandler["EMPTY_DRIVE"]>> => {
+    await emptyDir("/");
+    ipc.sends.ON_SETTINGS_UPDATE_FINISH();
   }
 );

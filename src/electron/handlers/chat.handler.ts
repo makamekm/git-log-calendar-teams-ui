@@ -16,7 +16,7 @@ const setChannels = (arr: Channel[]) => {
 };
 
 app.on("ready", () => {
-  ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
+  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     setChannels([]);
   });
   ipcMain.on(nameofSends("ON_CHANGE_USER"), () => {

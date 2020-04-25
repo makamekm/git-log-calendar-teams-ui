@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { nameofHandler, Ipc } from "~/shared/ipc";
+import { nameofHandler, IpcHandler } from "~/shared/ipc";
 import { CATCH_LOGS, FILE_LOG_LEVEL, CONSOLE_LOG_LEVEL } from "@env/config";
 import readline from "readline";
 import fsReverse from "fs-backwards-stream";
@@ -23,8 +23,8 @@ ipcMain.handle(
   nameofHandler("LOG"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["LOG"]>
-  ): Promise<ReturnType<Ipc["handlers"]["LOG"]>> => {
+    ...args: Parameters<IpcHandler["LOG"]>
+  ): Promise<ReturnType<IpcHandler["LOG"]>> => {
     let [logs, level] = args;
     level = level || "info";
 
@@ -75,8 +75,8 @@ ipcMain.handle(
   nameofHandler("GET_LOGS"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_LOGS"]>
-  ): Promise<ReturnType<Ipc["handlers"]["GET_LOGS"]>> => {
+    ...args: Parameters<IpcHandler["GET_LOGS"]>
+  ): Promise<ReturnType<IpcHandler["GET_LOGS"]>> => {
     let [search, limit] = args;
     limit = limit || 100;
 

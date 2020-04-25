@@ -1,13 +1,13 @@
 import { ipcMain } from "electron";
-import { nameofHandler, Ipc } from "~/shared/ipc";
+import { nameofHandler, IpcHandler } from "~/shared/ipc";
 import { getWindow } from "../main";
 
 ipcMain.handle(
   nameofHandler("PRINT"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["PRINT"]>
-  ): Promise<ReturnType<Ipc["handlers"]["PRINT"]>> => {
+    ...args: Parameters<IpcHandler["PRINT"]>
+  ): Promise<ReturnType<IpcHandler["PRINT"]>> => {
     await getWindow().webContents.print();
   }
 );

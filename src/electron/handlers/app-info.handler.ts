@@ -1,13 +1,13 @@
 import { app, ipcMain } from "electron";
-import { nameofHandler, Ipc } from "~/shared/ipc";
+import { nameofHandler, IpcHandler } from "~/shared/ipc";
 // import { writeFile, readFile } from "../drive";
 
 ipcMain.handle(
   nameofHandler("APP_INFO"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["APP_INFO"]>
-  ): Promise<ReturnType<Ipc["handlers"]["APP_INFO"]>> => {
+    ...args: Parameters<IpcHandler["APP_INFO"]>
+  ): Promise<ReturnType<IpcHandler["APP_INFO"]>> => {
     // await writeFile("/test.txt", "hello");
     // await writeFile("/test.txt", "hello");
     // await writeFile("/test.txt", "hello");

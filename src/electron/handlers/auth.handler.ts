@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import settings from "electron-settings";
 import { UNREGISTERED_SYMBOL, getAuthor } from "../git";
-import { Ipc, ipc, nameofHandler } from "~/shared/ipc";
+import { IpcHandler, ipc, nameofHandler } from "~/shared/ipc";
 
 export const getUser = async () => {
   const name = settings.get("name");
@@ -21,8 +21,8 @@ ipcMain.handle(
   nameofHandler("SAVE_USER"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["SAVE_USER"]>
-  ): Promise<ReturnType<Ipc["handlers"]["SAVE_USER"]>> => {
+    ...args: Parameters<IpcHandler["SAVE_USER"]>
+  ): Promise<ReturnType<IpcHandler["SAVE_USER"]>> => {
     const [{ name, email }] = args;
     settings.set("name", name);
     settings.set("email", email);
@@ -34,8 +34,8 @@ ipcMain.handle(
   nameofHandler("GET_USER"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_USER"]>
-  ): Promise<ReturnType<Ipc["handlers"]["GET_USER"]>> => {
+    ...args: Parameters<IpcHandler["GET_USER"]>
+  ): Promise<ReturnType<IpcHandler["GET_USER"]>> => {
     const name = settings.get("name");
     const email = settings.get("email");
     return {

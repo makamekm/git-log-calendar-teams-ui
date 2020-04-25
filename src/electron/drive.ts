@@ -12,6 +12,13 @@ import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 import { Chat } from "./chat/chat";
 import { ipc } from "~/shared/ipc";
 
+export interface ApplicationSettings {
+  publicKey: string;
+  secretKey: string;
+  useDriveSwarm: boolean;
+  communicationKey: string;
+}
+
 export const generateDriveKeys = () => {
   const keyPair = crypto.keyPair();
   return {
@@ -173,11 +180,12 @@ export const waitForDrive = async () => {
   return void 0;
 };
 
-export const getDriveConfig = () => {
+export const getSettings = (): ApplicationSettings => {
   return {
     publicKey: settings.get("publicKey"),
     secretKey: settings.get("secretKey"),
     useDriveSwarm: settings.get("useDriveSwarm"),
+    communicationKey: settings.get("communicationKey"),
   };
 };
 
@@ -194,7 +202,7 @@ export const remountDrive = () => {
   createDrive();
 };
 
-export const loadDriveKeys = () => {
+export const loadSettings = (): ApplicationSettings => {
   if (!settings.has("publicKey") || !settings.has("secretKey")) {
     const keyPair = generateDriveKeys();
     settings.set("publicKey", keyPair.publicKey);
@@ -204,17 +212,19 @@ export const loadDriveKeys = () => {
   const publicKey = settings.get("publicKey");
   const secretKey = settings.get("secretKey");
   return {
-    publicKey: parseKey(publicKey),
-    secretKey: parseKey(secretKey),
+    publicKey: publicKey,
+    secretKey: secretKey,
     useDriveSwarm: settings.get("useDriveSwarm"),
+    communicationKey: settings.get("communicationKey"),
   };
 };
 
-export const saveDriveConfig = (
-  publicKey: string,
-  secretKey: string,
-  useDriveSwarm: boolean
-) => {
+export const saveSettings = ({
+  publicKey,
+  secretKey,
+  useDriveSwarm,
+  communicationKey,
+}: ApplicationSettings) => {
   closeDrive();
   if (!publicKey || !secretKey) {
     const keyPair = generateDriveKeys();
@@ -224,24 +234,26 @@ export const saveDriveConfig = (
   settings.set("publicKey", publicKey);
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
+  settings.set("communicationKey", communicationKey);
+  ipc.sends.ON_CHANGE_SETTINGS();
   createDrive();
 };
 
 export const createDrive = () => {
   inited = false;
   closeDrive();
-  const { publicKey, secretKey, useDriveSwarm } = loadDriveKeys();
-  drive = hyperdrive(getBaseFolder(), publicKey.toString("hex"), {
-    secretKey,
+  const { publicKey, secretKey, useDriveSwarm } = loadSettings();
+  drive = hyperdrive(getBaseFolder(), publicKey, {
+    secretKey: parseKey(secretKey),
   });
   if (useDriveSwarm) {
     swarm = hyperswarm();
-    if (settings.get("useCommunications")) {
-      chat = new Chat(publicKey.toString("hex") + secretKey.toString("hex"));
+    if (settings.get("communicationKey")) {
+      chat = new Chat(settings.get("communicationKey"));
     }
 
     drive.on("ready", () => {
-      swarm.join(publicKey, {
+      swarm.join(parseKey(publicKey), {
         announce: true,
         lookup: true,
       });

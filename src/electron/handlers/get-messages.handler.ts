@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
+import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 
 import { searchCommitMessages } from "../git";
 
@@ -7,8 +7,8 @@ ipcMain.handle(
   nameofHandler("GET_MESSAGES"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_MESSAGES"]>
-  ): Promise<ReturnType<Ipc["handlers"]["GET_MESSAGES"]>> => {
+    ...args: Parameters<IpcHandler["GET_MESSAGES"]>
+  ): Promise<ReturnType<IpcHandler["GET_MESSAGES"]>> => {
     const [{ query, limit, maxMessages, mode, name }] = args;
 
     const config = await ipc.handlers.GET_CONFIG();

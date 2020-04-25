@@ -1,6 +1,6 @@
 import { ipcMain, app } from "electron";
 import md5 from "md5";
-import { nameofHandler, Ipc, nameofSends, ipc } from "~/shared/ipc";
+import { nameofHandler, IpcHandler, nameofSends, ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
 import { CACHE_LIFETIME } from "@env/config";
 
@@ -10,7 +10,7 @@ let config: Config = null;
 let date = +new Date();
 
 app.on("ready", () => {
-  ipcMain.on(nameofSends("ON_DRIVE_CONFIG_UPDATE_FINISH"), () => {
+  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     config = null;
   });
   ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
@@ -22,8 +22,8 @@ ipcMain.handle(
   nameofHandler("GET_CONFIG"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["GET_CONFIG"]>
-  ): Promise<ReturnType<Ipc["handlers"]["GET_CONFIG"]>> => {
+    ...args: Parameters<IpcHandler["GET_CONFIG"]>
+  ): Promise<ReturnType<IpcHandler["GET_CONFIG"]>> => {
     const [force] = args;
     if (force || !config || +new Date() > CACHE_LIFETIME + date) {
       config = await getConfig();
@@ -48,8 +48,8 @@ ipcMain.handle(
   nameofHandler("SAVE_CONFIG"),
   async (
     event,
-    ...args: Parameters<Ipc["handlers"]["SAVE_CONFIG"]>
-  ): Promise<ReturnType<Ipc["handlers"]["SAVE_CONFIG"]>> => {
+    ...args: Parameters<IpcHandler["SAVE_CONFIG"]>
+  ): Promise<ReturnType<IpcHandler["SAVE_CONFIG"]>> => {
     const [newConfig] = args;
     const oldConfig = await ipc.handlers.GET_CONFIG();
     if (oldConfig.password !== newConfig.password && newConfig.password) {
