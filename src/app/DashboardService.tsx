@@ -166,5 +166,7 @@ export const DashboardService = createService<DashboardState>(
     state.repositoryUserService = React.useContext(RepositoryUserService);
     useOnChange(state, "limit", state.load);
     useDelay(state, "isLoading", "isLoadingDelay");
+    React.useEffect(() => ipc.channels.ON_DRIVE_UPDATE(state.load));
+    React.useEffect(() => ipc.channels.ON_COLLECT_FINISH(state.load));
   }
 );

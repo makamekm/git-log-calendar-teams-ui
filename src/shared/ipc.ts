@@ -152,6 +152,9 @@ export const ipc = {
   channels: {
     ON_COLLECT_STATS: channelFactory("ON_COLLECT_STATS"),
     ON_CHANNEL_MESSAGE: channelFactory("ON_CHANNEL_MESSAGE"),
+    ON_SETTINGS_UPDATE_FINISH: channelFactory("ON_SETTINGS_UPDATE_FINISH"),
+    ON_DRIVE_UPDATE: channelFactory("ON_DRIVE_UPDATE"),
+    ON_COLLECT_FINISH: channelFactory("ON_COLLECT_FINISH"),
   },
   handlers: {
     APP_INFO: (

@@ -23,8 +23,9 @@ global.ipcRenderer.invoke = async (channel, ...args) => {
 };
 
 global.ipcRenderer.send = (channel, ...args) => {
+  const res = ipcMain.emit(channel, {}, ...args);
   global.mainWindow && global.mainWindow.webContents.send(channel, ...args);
-  return ipcMain.emit(channel, {}, ...args);
+  return res;
 };
 
 require("./main");
