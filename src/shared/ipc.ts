@@ -238,8 +238,6 @@ export const ipc = {
       ipcRenderer.send(nameofSends("ON_SETTINGS_UPDATE_FINISH")),
     ON_DRIVE_UPDATE: () => ipcRenderer.send(nameofSends("ON_DRIVE_UPDATE")),
     ON_COLLECT_FINISH: () => ipcRenderer.send(nameofSends("ON_COLLECT_FINISH")),
-    ON_CHANGE_SETTINGS: () =>
-      ipcRenderer.send(nameofSends("ON_CHANGE_SETTINGS")),
     ON_CHANGE_USER: () => ipcRenderer.send(nameofSends("ON_CHANGE_USER")),
     ON_CHANNEL_MESSAGE: (peer, data: Json) =>
       ipcRenderer.send(nameofSends("ON_CHANNEL_MESSAGE"), peer, data),

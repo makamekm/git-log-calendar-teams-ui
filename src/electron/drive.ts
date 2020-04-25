@@ -235,7 +235,6 @@ export const saveSettings = ({
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
   settings.set("communicationKey", communicationKey);
-  ipc.sends.ON_CHANGE_SETTINGS();
   createDrive();
 };
 
