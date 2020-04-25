@@ -11,13 +11,7 @@ import settings from "electron-settings";
 import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 import { Chat } from "./chat/chat";
 import { ipc } from "~/shared/ipc";
-
-export interface ApplicationSettings {
-  publicKey: string;
-  secretKey: string;
-  useDriveSwarm: boolean;
-  communicationKey: string;
-}
+import { ApplicationSettings } from "~/shared/Settings";
 
 export const generateDriveKeys = () => {
   const keyPair = crypto.keyPair();

@@ -1,6 +1,6 @@
 import { Config } from "./Config";
 import { Json } from "./Json";
-import { ApplicationSettings } from "~/electron/drive";
+import { ApplicationSettings } from "./Settings";
 
 export const nameof = <T>(name: keyof T) => name;
 

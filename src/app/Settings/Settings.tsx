@@ -23,14 +23,11 @@ import {
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useDelay, useOnLoad } from "~/hooks";
+import { ApplicationSettings } from "~/shared/Settings";
 
 interface SettingsState {
   isDirty: boolean;
-  config: {
-    publicKey: string;
-    secretKey: string;
-    useDriveSwarm: boolean;
-  };
+  config: ApplicationSettings;
   isLoading: boolean;
   isLoadingDelay: boolean;
   load: () => Promise<void>;
