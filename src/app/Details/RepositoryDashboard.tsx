@@ -247,7 +247,8 @@ export const RepositoryDashboard = observer(() => {
                   data={state.repositoriesStats[repositoryName] || []}
                 />
                 <BarActivities
-                  height={300}
+                  height={250}
+                  limit={state.limit}
                   data={state.repositoriesStats[repositoryName] || []}
                 />
               </>

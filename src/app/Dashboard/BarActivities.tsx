@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import {
   ResponsiveContainer,
   BarChart,
@@ -12,18 +13,52 @@ import {
 } from "recharts";
 import colors from "~/colors";
 
+const addEmptyDays = (
+  data: {
+    day: string;
+    value: number;
+  }[],
+  startDate: moment.Moment,
+  endDate: moment.Moment
+) => {
+  startDate = moment(startDate);
+  const days = endDate.diff(startDate, "day", false);
+
+  const newData: {
+    day: string;
+    value: number;
+  }[] = [];
+
+  for (let i = 0; i <= days; i++) {
+    let day = startDate.format("YYYY-MM-DD");
+    const date = data.find((d) => d.day === day);
+    newData[i] = {
+      day,
+      value: date?.value || 0,
+    };
+    startDate.add(1, "day");
+  }
+
+  return newData;
+};
+
 export const BarActivities = ({
   height,
   className,
   data,
+  limit,
 }: {
   height?: number;
+  limit: number;
   className?: string;
   data: {
     day: string;
     value: number;
   }[];
 }) => {
+  const now = moment();
+  const past = moment().subtract(limit, "days");
+  data = addEmptyDays(data, past, now);
   return (
     <ResponsiveContainer width="100%" minHeight={height} className={className}>
       <BarChart

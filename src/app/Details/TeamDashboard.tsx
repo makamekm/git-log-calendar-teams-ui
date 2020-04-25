@@ -164,7 +164,8 @@ export const TeamDashboard = observer(() => {
                   data={state.teamStats[teamName] || []}
                 />
                 <BarActivities
-                  height={300}
+                  height={250}
+                  limit={state.limit}
                   data={state.teamStats[teamName] || []}
                 />
               </>

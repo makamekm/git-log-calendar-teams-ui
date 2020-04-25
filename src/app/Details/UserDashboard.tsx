@@ -164,7 +164,8 @@ export const UserDashboard = observer(() => {
                   data={state.userStats[userName] || []}
                 />
                 <BarActivities
-                  height={300}
+                  height={250}
+                  limit={state.limit}
                   data={state.userStats[userName] || []}
                 />
               </>
