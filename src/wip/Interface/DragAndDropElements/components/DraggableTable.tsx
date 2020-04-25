@@ -247,7 +247,7 @@ export class DraggableTable extends React.Component<{
         <CardHeader className="bg-none bb-0">
           <CardTitle className="h6">Queue of Candidates</CardTitle>
         </CardHeader>
-        <DragDropContext onDragEnd={this.onDragEnd}>
+        <DragDropContext onDragEnd={this.onDragEnd as any}>
           <Table className="mb-0">
             <thead>
               <tr>
