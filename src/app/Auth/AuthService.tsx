@@ -1,4 +1,5 @@
 import React from "react";
+import md5 from "md5";
 import { useLocalStore } from "mobx-react";
 import { useHistory, useLocation } from "react-router";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
@@ -65,7 +66,7 @@ export const AuthService = createService<AuthState>(
         try {
           const config = await ipc.handlers.GET_CONFIG();
           state.isAuthenticated =
-            !config.password || config.password === password;
+            !config.password || config.password === md5(password);
         } catch (error) {
           state.error = error.message;
         }

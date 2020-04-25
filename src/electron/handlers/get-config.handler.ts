@@ -1,5 +1,6 @@
 import { ipcMain, app } from "electron";
-import { nameofHandler, Ipc, nameofSends } from "~/shared/ipc";
+import md5 from "md5";
+import { nameofHandler, Ipc, nameofSends, ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
 import { CACHE_LIFETIME } from "@env/config";
 
@@ -50,6 +51,10 @@ ipcMain.handle(
     ...args: Parameters<Ipc["handlers"]["SAVE_CONFIG"]>
   ): Promise<ReturnType<Ipc["handlers"]["SAVE_CONFIG"]>> => {
     const [newConfig] = args;
+    const oldConfig = await ipc.handlers.GET_CONFIG();
+    if (oldConfig.password !== newConfig.password && newConfig.password) {
+      newConfig.password = md5(newConfig.password);
+    }
     await saveConfig(newConfig);
     config = null;
   }
