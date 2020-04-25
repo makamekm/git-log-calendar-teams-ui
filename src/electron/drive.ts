@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
 import { app } from "electron";
+import md5 from "md5";
 import hyperswarm from "hyperswarm";
 import pump from "pump";
 import crypto from "hypercore-crypto";
@@ -24,7 +25,8 @@ const getBaseFolder = () => {
     DRIVE_BASE_FOLDER
       ? path.resolve(DRIVE_BASE_FOLDER)
       : path.resolve(app.getPath("appData"), "drive"),
-    settings.get("publicKey")
+    settings.get("publicKey"),
+    md5(settings.get("secretKey"))
   );
 };
 
@@ -179,14 +181,25 @@ export const getDriveConfig = () => {
   };
 };
 
+export const emptyDrive = () => {
+  if (fs.existsSync(getBaseFolder())) {
+    fsExtra.removeSync(getBaseFolder());
+  }
+};
+
+export const remountDrive = () => {
+  if (fs.existsSync(getBaseFolder())) {
+    fsExtra.removeSync(getBaseFolder());
+  }
+  createDrive();
+};
+
 export const loadDriveKeys = () => {
   if (!settings.has("publicKey") || !settings.has("secretKey")) {
     const keyPair = generateDriveKeys();
     settings.set("publicKey", keyPair.publicKey);
     settings.set("secretKey", keyPair.secretKey);
-    if (fs.existsSync(getBaseFolder())) {
-      fsExtra.removeSync(getBaseFolder());
-    }
+    emptyDrive();
   }
   const publicKey = settings.get("publicKey");
   const secretKey = settings.get("secretKey");
@@ -211,9 +224,6 @@ export const saveDriveConfig = (
   settings.set("publicKey", publicKey);
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
-  if (fs.existsSync(getBaseFolder())) {
-    fsExtra.removeSync(getBaseFolder());
-  }
   createDrive();
 };
 

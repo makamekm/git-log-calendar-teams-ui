@@ -1,7 +1,12 @@
 import { ipcMain } from "electron";
 import { nameofHandler, Ipc, ipc } from "~/shared/ipc";
 
-import { saveDriveConfig, getDriveConfig, emptyDir } from "../drive";
+import {
+  saveDriveConfig,
+  getDriveConfig,
+  emptyDir,
+  remountDrive,
+} from "../drive";
 import { getCollectPromise } from "./collect-stats.handler";
 
 ipcMain.handle(
@@ -27,6 +32,17 @@ ipcMain.handle(
       newConfig.secretKey,
       newConfig.useDriveSwarm
     );
+    ipc.sends.ON_DRIVE_CONFIG_UPDATE_FINISH();
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("REMOUNT_DRIVE_CONFIG"),
+  async (
+    event,
+    ...args: Parameters<Ipc["handlers"]["REMOUNT_DRIVE_CONFIG"]>
+  ): Promise<ReturnType<Ipc["handlers"]["REMOUNT_DRIVE_CONFIG"]>> => {
+    await remountDrive();
     ipc.sends.ON_DRIVE_CONFIG_UPDATE_FINISH();
   }
 );
