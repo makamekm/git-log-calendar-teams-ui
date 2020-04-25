@@ -107,8 +107,8 @@ export const BarActivities = ({
         />
         <Tooltip />
         <ReferenceLine y={0} stroke="#000" />
-        <Brush dataKey="day" height={30} stroke={colors["success"]} />
-        <Bar dataKey="value" fill={colors["success"]} />
+        <Brush dataKey="day" height={30} stroke={colors["primary"]} />
+        <Bar dataKey="value" fill={colors["primary"]} />
       </BarChart>
     </ResponsiveContainer>
   );
