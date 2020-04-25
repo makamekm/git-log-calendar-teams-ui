@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Instagram, List } from "react-content-loader";
+import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
 
 import {
@@ -32,6 +32,7 @@ import { HeaderSection } from "../HeaderSection";
 import { numberWithCommas } from "~/tools";
 import { LatestMessages } from "./LastMessages";
 import { RepositoryUserService } from "../RepositoryUserService";
+import { BarActivities } from "../Dashboard/BarActivities";
 
 const RepositoryUsers = observer(() => {
   const state = React.useContext(RepositoryUserService);
@@ -234,16 +235,22 @@ export const RepositoryDashboard = observer(() => {
               <span className="small ml-1 text-muted">#repository</span>
             </CardTitle>
           </div>
-          <div className="d-flex justify-content-center">
+          <div>
             {state.isLoadingDelay ? (
-              <Instagram height={"300px"} />
+              <List height={"300px"} />
             ) : (
-              <CalendarActivities
-                maxValue={state.maxValue}
-                height={200}
-                limit={state.limit}
-                data={state.repositoriesStats[repositoryName] || []}
-              />
+              <>
+                <CalendarActivities
+                  maxValue={state.maxValue}
+                  height={200}
+                  limit={state.limit}
+                  data={state.repositoriesStats[repositoryName] || []}
+                />
+                <BarActivities
+                  height={300}
+                  data={state.repositoriesStats[repositoryName] || []}
+                />
+              </>
             )}
           </div>
         </CardBody>
@@ -270,9 +277,9 @@ export const RepositoryDashboard = observer(() => {
                 <span className="small ml-1 text-muted">#team</span>
               </CardTitle>
             </div>
-            <div className="d-flex justify-content-center">
+            <div>
               {state.isLoadingDelay ? (
-                <Instagram height={"300px"} />
+                <List height={"300px"} />
               ) : (
                 <CalendarActivities
                   maxValue={state.maxValue}
@@ -307,9 +314,9 @@ export const RepositoryDashboard = observer(() => {
                 <span className="small ml-1 text-muted">#user</span>
               </CardTitle>
             </div>
-            <div className="d-flex justify-content-center">
+            <div>
               {state.isLoadingDelay ? (
-                <Instagram height={"300px"} />
+                <List height={"300px"} />
               ) : (
                 <CalendarActivities
                   maxValue={state.maxValue}

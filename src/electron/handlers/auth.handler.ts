@@ -3,6 +3,14 @@ import settings from "electron-settings";
 import { UNREGISTERED_SYMBOL, getAuthor } from "../git";
 import { IpcHandler, ipc, nameofHandler } from "~/shared/ipc";
 
+const users: {
+  [signature: string]: {
+    userKey: string;
+    email: string;
+    name: string;
+  };
+} = {};
+
 export const getUser = async () => {
   const name = settings.get("name");
   const email = settings.get("email");

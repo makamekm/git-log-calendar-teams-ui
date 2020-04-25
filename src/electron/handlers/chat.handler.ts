@@ -1,11 +1,39 @@
 import { app, ipcMain } from "electron";
 import settings from "electron-settings";
+import crypto from "hypercore-crypto";
+import md5 from "md5";
+import bufferFrom from "buffer-from";
 // import { nameofHandler, Ipc } from "~/shared/ipc";
 import { getChat } from "../drive";
 import { Channel } from "../chat/chat";
 import { ipc, nameofSends } from "~/shared/ipc";
 
 let channels: Channel[] = [];
+
+// const IDENTIFY_MESSAGE = "whoareyou";
+const userKey = "makame";
+const keyPair = crypto.keyPair();
+
+const signature = crypto.sign(
+  bufferFrom(md5(keyPair.publicKey)),
+  keyPair.secretKey
+);
+
+console.log(
+  "HERE",
+  signature.toString("hex"),
+  crypto.verify(
+    bufferFrom(md5(keyPair.publicKey)),
+    signature,
+    keyPair.publicKey
+  )
+);
+
+// userId === signature
+// public: signature, userKey, keyPair.publicKey
+// private: signature, userKey, keyPair.publicKey, keyPair.secretKey
+
+console.log();
 
 const setChannels = (arr: Channel[]) => {
   settings.set(

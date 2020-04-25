@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Instagram } from "react-content-loader";
+import { List } from "react-content-loader";
 import { groupBy } from "underscore";
 
 import {
@@ -75,10 +75,10 @@ export const TrackerActivities = observer(() => {
                 </DropdownMenu>
               </UncontrolledButtonDropdown>
             </div>
-            <div className="d-flex justify-content-center">
+            <div>
               {stateDashboard.isLoadingDelay ||
               stateFavourite.isLoadingDelay ? (
-                <Instagram height={"300px"} />
+                <List height={"300px"} />
               ) : (
                 <CalendarActivities
                   maxValue={stateDashboard.maxValue}
@@ -133,10 +133,10 @@ export const TrackerActivities = observer(() => {
                 </DropdownMenu>
               </UncontrolledButtonDropdown>
             </div>
-            <div className="d-flex justify-content-center">
+            <div>
               {stateDashboard.isLoadingDelay ||
               stateFavourite.isLoadingDelay ? (
-                <Instagram height={"300px"} />
+                <List height={"300px"} />
               ) : (
                 <CalendarActivities
                   maxValue={stateDashboard.maxValue}
@@ -191,10 +191,10 @@ export const TrackerActivities = observer(() => {
                 </DropdownMenu>
               </UncontrolledButtonDropdown>
             </div>
-            <div className="d-flex justify-content-center">
+            <div>
               {stateDashboard.isLoadingDelay ||
               stateFavourite.isLoadingDelay ? (
-                <Instagram height={"300px"} />
+                <List height={"300px"} />
               ) : (
                 <CalendarActivities
                   maxValue={stateDashboard.maxValue}

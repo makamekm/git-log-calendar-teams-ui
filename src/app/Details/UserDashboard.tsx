@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
-import { Instagram, List } from "react-content-loader";
+import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
 
 import {
@@ -25,6 +25,7 @@ import { ActiveStatsPanel } from "../Dashboard/ActiveStatsPanel";
 import { CalendarActivities } from "../Dashboard/CalendarActivities";
 import { HeaderSection } from "../HeaderSection";
 import { LatestMessages } from "./LastMessages";
+import { BarActivities } from "../Dashboard/BarActivities";
 
 export const UserDashboard = observer(() => {
   const { userName } = useParams();
@@ -151,16 +152,22 @@ export const UserDashboard = observer(() => {
               <span className="small ml-1 text-muted">#user</span>
             </CardTitle>
           </div>
-          <div className="d-flex justify-content-center">
+          <div>
             {state.isLoadingDelay ? (
-              <Instagram height={"300px"} />
+              <List height={"300px"} />
             ) : (
-              <CalendarActivities
-                maxValue={state.maxValue}
-                height={200}
-                limit={state.limit}
-                data={state.userStats[userName] || []}
-              />
+              <>
+                <CalendarActivities
+                  maxValue={state.maxValue}
+                  height={200}
+                  limit={state.limit}
+                  data={state.userStats[userName] || []}
+                />
+                <BarActivities
+                  height={300}
+                  data={state.userStats[userName] || []}
+                />
+              </>
             )}
           </div>
         </CardBody>
@@ -187,9 +194,9 @@ export const UserDashboard = observer(() => {
                 <span className="small ml-1 text-muted">#repository</span>
               </CardTitle>
             </div>
-            <div className="d-flex justify-content-center">
+            <div>
               {state.isLoadingDelay ? (
-                <Instagram height={"300px"} />
+                <List height={"300px"} />
               ) : (
                 <CalendarActivities
                   maxValue={state.maxValue}
@@ -224,9 +231,9 @@ export const UserDashboard = observer(() => {
                 <span className="small ml-1 text-muted">#team</span>
               </CardTitle>
             </div>
-            <div className="d-flex justify-content-center">
+            <div>
               {state.isLoadingDelay ? (
-                <Instagram height={"300px"} />
+                <List height={"300px"} />
               ) : (
                 <CalendarActivities
                   maxValue={state.maxValue}
