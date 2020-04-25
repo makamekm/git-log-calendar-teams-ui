@@ -1,5 +1,4 @@
 import React from "react";
-import Toggle from "react-toggle";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -21,19 +20,19 @@ import {
   ConfigurationTableProps,
 } from "./ConfigurationTable";
 
-const ConfigurationTableTeams = ConfigurationTable as React.FC<
-  ConfigurationTableProps<ConfigurationState["config"]["teams"][0]>
+const ConfigurationTableUsers = ConfigurationTable as React.FC<
+  ConfigurationTableProps<ConfigurationState["config"]["users"][0]>
 >;
 
-export const ConfigurationTeams = observer(
+export const ConfigurationUsers = observer(
   ({ state }: { state: ConfigurationState }) => {
     return (
-      <Accordion className="mb-3" initialOpen>
+      <Accordion className="mb-3">
         <AccordionHeader className="h6 cursor-pointer">
           <div className="d-flex justify-content-center align-items-center">
             <div>
-              Teams
-              <span className="small ml-1 text-muted">#1.02</span>
+              Users
+              <span className="small ml-1 text-muted">#1.03</span>
             </div>
             <Button
               outline
@@ -41,10 +40,9 @@ export const ConfigurationTeams = observer(
               className="ml-auto align-self-end"
               onClick={(e) => {
                 e.stopPropagation();
-                state.config.teams.unshift({
+                state.config.users.unshift({
                   name: "",
-                  invert: false,
-                  users: [],
+                  associations: [],
                 });
               }}
             >
@@ -56,63 +54,46 @@ export const ConfigurationTeams = observer(
           {!state.config || state.isLoadingDelay ? (
             <List className="m-4" height="200px" width="100%" />
           ) : (
-            <ConfigurationTableTeams
-              items={state.config.teams}
+            <ConfigurationTableUsers
+              items={state.config.users}
               header={
                 <>
                   <th className="bt-0">Name</th>
-                  <th className="bt-0">Inverted</th>
-                  <th className="bt-0">Users</th>
+                  <th className="bt-0">Associations</th>
                   <th className="text-right bt-0">Actions</th>
                 </>
               }
-              render={(team) => (
+              render={(user) => (
                 <>
                   <td className="align-middle">
                     <Input
                       type="text"
                       onChange={(e) => {
-                        team.name = e.currentTarget.value;
+                        user.name = e.currentTarget.value;
                       }}
-                      value={team.name}
+                      value={user.name}
                       placeholder="Name (Required & Unique)..."
-                    />
-                  </td>
-                  <td className="align-middle">
-                    <Toggle
-                      checked={team.invert}
-                      onChange={() => {
-                        team.invert = !team.invert;
-                        if (team.invert) {
-                          (team.users as any).replace([]);
-                        }
-                      }}
                     />
                   </td>
                   <td
                     className="align-middle"
-                    style={{
-                      maxWidth: "300px",
-                      overflow: "hidden",
-                    }}
+                    style={{ maxWidth: "300px", overflow: "hidden" }}
                   >
-                    {!team.invert && (
-                      <Typeahead
-                        id="exclusions"
-                        placeholder="Add users..."
-                        multiple
-                        allowNew
-                        selected={team.users}
-                        onChange={(selected) => {
-                          selected = selected.map((s: any) =>
-                            typeof s === "string" ? s : s.label
-                          );
-                          (team.users as any).replace(selected);
-                        }}
-                        options={state.users}
-                        positionFixed
-                      />
-                    )}
+                    <Typeahead
+                      id="exclusions"
+                      placeholder="Add associations..."
+                      multiple
+                      allowNew
+                      selected={user.associations as any}
+                      onChange={(selected) => {
+                        selected = selected.map((s: any) =>
+                          typeof s === "string" ? s : s.label
+                        );
+                        (user.associations as any).replace(selected);
+                      }}
+                      options={state.associations}
+                      positionFixed
+                    />
                   </td>
                   <td className="align-middle text-right">
                     <UncontrolledButtonDropdown>
@@ -126,8 +107,8 @@ export const ConfigurationTeams = observer(
                       <DropdownMenu right>
                         <DropdownItem
                           onClick={() => {
-                            state.config.teams.splice(
-                              state.config.teams.indexOf(team),
+                            state.config.users.splice(
+                              state.config.users.indexOf(user),
                               1
                             );
                           }}

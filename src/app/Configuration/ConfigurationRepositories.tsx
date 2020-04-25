@@ -1,5 +1,4 @@
 import React from "react";
-import Toggle from "react-toggle";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -21,19 +20,19 @@ import {
   ConfigurationTableProps,
 } from "./ConfigurationTable";
 
-const ConfigurationTableTeams = ConfigurationTable as React.FC<
-  ConfigurationTableProps<ConfigurationState["config"]["teams"][0]>
+const ConfigurationTableRepositories = ConfigurationTable as React.FC<
+  ConfigurationTableProps<ConfigurationState["config"]["repositories"][0]>
 >;
 
-export const ConfigurationTeams = observer(
+export const ConfigurationRepositories = observer(
   ({ state }: { state: ConfigurationState }) => {
     return (
-      <Accordion className="mb-3" initialOpen>
+      <Accordion className="mb-3">
         <AccordionHeader className="h6 cursor-pointer">
           <div className="d-flex justify-content-center align-items-center">
             <div>
-              Teams
-              <span className="small ml-1 text-muted">#1.02</span>
+              Repositories
+              <span className="small ml-1 text-muted">#1.01</span>
             </div>
             <Button
               outline
@@ -41,10 +40,11 @@ export const ConfigurationTeams = observer(
               className="ml-auto align-self-end"
               onClick={(e) => {
                 e.stopPropagation();
-                state.config.teams.unshift({
+                state.config.repositories.unshift({
+                  url: "",
                   name: "",
-                  invert: false,
-                  users: [],
+                  branch: "",
+                  exclude: [],
                 });
               }}
             >
@@ -56,63 +56,68 @@ export const ConfigurationTeams = observer(
           {!state.config || state.isLoadingDelay ? (
             <List className="m-4" height="200px" width="100%" />
           ) : (
-            <ConfigurationTableTeams
-              items={state.config.teams}
+            <ConfigurationTableRepositories
+              items={state.config.repositories}
               header={
                 <>
                   <th className="bt-0">Name</th>
-                  <th className="bt-0">Inverted</th>
-                  <th className="bt-0">Users</th>
+                  <th className="bt-0">Url</th>
+                  <th className="bt-0">Branch</th>
+                  <th className="bt-0">Excludes</th>
                   <th className="text-right bt-0">Actions</th>
                 </>
               }
-              render={(team) => (
+              render={(repository) => (
                 <>
                   <td className="align-middle">
                     <Input
                       type="text"
                       onChange={(e) => {
-                        team.name = e.currentTarget.value;
+                        repository.name = e.currentTarget.value;
                       }}
-                      value={team.name}
+                      value={repository.name}
                       placeholder="Name (Required & Unique)..."
                     />
                   </td>
                   <td className="align-middle">
-                    <Toggle
-                      checked={team.invert}
-                      onChange={() => {
-                        team.invert = !team.invert;
-                        if (team.invert) {
-                          (team.users as any).replace([]);
-                        }
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        repository.url = e.currentTarget.value;
                       }}
+                      value={repository.url}
+                      placeholder="Url (Required)..."
+                    />
+                  </td>
+                  <td className="align-middle">
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        repository.branch = e.currentTarget.value;
+                      }}
+                      value={repository.branch}
+                      placeholder="Branch (Optional)..."
                     />
                   </td>
                   <td
                     className="align-middle"
-                    style={{
-                      maxWidth: "300px",
-                      overflow: "hidden",
-                    }}
+                    style={{ maxWidth: "300px", overflow: "hidden" }}
                   >
-                    {!team.invert && (
-                      <Typeahead
-                        id="exclusions"
-                        placeholder="Add users..."
-                        multiple
-                        allowNew
-                        selected={team.users}
-                        onChange={(selected) => {
-                          selected = selected.map((s: any) =>
-                            typeof s === "string" ? s : s.label
-                          );
-                          (team.users as any).replace(selected);
-                        }}
-                        options={state.users}
-                        positionFixed
-                      />
-                    )}
+                    <Typeahead
+                      id="exclusions"
+                      placeholder="Add exclusions..."
+                      multiple
+                      allowNew
+                      selected={repository.exclude}
+                      onChange={(selected) => {
+                        selected = selected.map((s: any) =>
+                          typeof s === "string" ? s : s.label
+                        );
+                        (repository.exclude as any).replace(selected);
+                      }}
+                      options={state.excludes}
+                      positionFixed
+                    />
                   </td>
                   <td className="align-middle text-right">
                     <UncontrolledButtonDropdown>
@@ -126,8 +131,8 @@ export const ConfigurationTeams = observer(
                       <DropdownMenu right>
                         <DropdownItem
                           onClick={() => {
-                            state.config.teams.splice(
-                              state.config.teams.indexOf(team),
+                            state.config.repositories.splice(
+                              state.config.repositories.indexOf(repository),
                               1
                             );
                           }}

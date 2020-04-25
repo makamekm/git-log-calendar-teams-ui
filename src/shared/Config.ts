@@ -9,7 +9,7 @@ export interface Config {
   collectMessages?: boolean;
   repositories: {
     url: string;
-    name?: string;
+    name: string;
     branch?: string;
     exclude?: string[];
   }[];
