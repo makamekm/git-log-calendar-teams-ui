@@ -159,8 +159,8 @@ export const Configuration = observer(() => {
       </Row>
 
       <ConfigurationForm state={state} />
-      <ConfigurationRepositories state={state} />
       <ConfigurationTeams state={state} />
+      <ConfigurationRepositories state={state} />
       <ConfigurationUsers state={state} />
     </Container>
   );

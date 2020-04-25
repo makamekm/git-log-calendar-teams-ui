@@ -33,7 +33,7 @@ export const ConfigurationTeams = observer(
           <div className="d-flex justify-content-center align-items-center">
             <div>
               Teams
-              <span className="small ml-1 text-muted">#1.02</span>
+              <span className="small ml-1 text-muted">#1.01</span>
             </div>
             <Button
               outline
