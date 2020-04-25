@@ -51,6 +51,17 @@ export const Configuration = observer(() => {
       }
       return arr;
     },
+    get repositories() {
+      let arr: string[] = [];
+      if (state.config) {
+        state.config.repositories.forEach((repository) => {
+          if (!arr.includes(repository.name)) {
+            arr.push(repository.name);
+          }
+        });
+      }
+      return arr;
+    },
     get usedAssociations() {
       let arr: string[] = [];
       if (state.config) {

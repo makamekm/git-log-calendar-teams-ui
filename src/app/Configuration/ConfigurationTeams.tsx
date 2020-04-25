@@ -45,6 +45,7 @@ export const ConfigurationTeams = observer(
                   name: "",
                   invert: false,
                   users: [],
+                  repositories: [],
                 });
               }}
             >
@@ -139,6 +140,27 @@ export const ConfigurationTeams = observer(
                     </UncontrolledButtonDropdown>
                   </td>
                 </>
+              )}
+              renderAdditional={(team, style) => (
+                <tr style={{ ...style }}>
+                  <td colSpan={5}>
+                    <Typeahead
+                      id="exclusions"
+                      placeholder="Add repositories..."
+                      multiple
+                      allowNew
+                      selected={team.repositories}
+                      onChange={(selected) => {
+                        selected = selected.map((s: any) =>
+                          typeof s === "string" ? s : s.label
+                        );
+                        (team.repositories as any).replace(selected);
+                      }}
+                      options={state.repositories}
+                      positionFixed
+                    />
+                  </td>
+                </tr>
               )}
             />
           )}

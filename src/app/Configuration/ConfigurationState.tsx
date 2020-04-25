@@ -7,6 +7,7 @@ export interface ConfigurationState {
   isLoadingDelay: boolean;
   excludes: string[];
   users: string[];
+  repositories: string[];
   allUsers: {
     userKey: string;
     user?: {

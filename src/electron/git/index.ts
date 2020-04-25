@@ -217,6 +217,13 @@ function isAuthorBelongToRepositoryAndTeam(
   const excludeRepository =
     repository.exclude &&
     (repository.exclude.includes(name) || repository.exclude.includes(email));
+  const isTeamRepository =
+    !team.repositories ||
+    !team.repositories.length ||
+    team.repositories.find((r) => r === repository.name);
+  if (!isTeamRepository) {
+    return false;
+  }
   if (user) {
     const includesTeam = team.users.includes(user.name);
     return (

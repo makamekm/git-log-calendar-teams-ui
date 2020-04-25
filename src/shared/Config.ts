@@ -21,5 +21,6 @@ export interface Config {
     name: string;
     invert?: boolean;
     users?: string[];
+    repositories: string[];
   }[];
 }

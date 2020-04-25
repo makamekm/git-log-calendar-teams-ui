@@ -17,6 +17,7 @@ export interface ConfigurationTableProps<T = any> {
   } & T)[];
   header: any;
   render: (item: T) => any;
+  renderAdditional?: (item: T, style: React.CSSProperties) => any;
 }
 
 export const ConfigurationTable = withResizeDetector(
@@ -26,6 +27,7 @@ export const ConfigurationTable = withResizeDetector(
       width,
       header,
       render,
+      renderAdditional,
     }: ConfigurationTableProps & {
       width?: number;
     }) => {
@@ -67,27 +69,36 @@ export const ConfigurationTable = withResizeDetector(
                         >
                           {(providedDraggable, snapshot) =>
                             useObserver(() => (
-                              <tr
-                                ref={providedDraggable.innerRef}
-                                {...providedDraggable.draggableProps}
-                                style={{
-                                  ...providedDraggable.draggableProps.style,
-                                  width: snapshot.isDragging
-                                    ? width
-                                    : undefined,
-                                  display: snapshot.isDragging
-                                    ? "table"
-                                    : undefined,
-                                }}
-                              >
-                                <td
-                                  className="align-middle"
-                                  {...providedDraggable.dragHandleProps}
+                              <>
+                                <tr
+                                  ref={providedDraggable.innerRef}
+                                  {...providedDraggable.draggableProps}
+                                  style={{
+                                    ...providedDraggable.draggableProps.style,
+                                    width: snapshot.isDragging
+                                      ? width
+                                      : undefined,
+                                    display: snapshot.isDragging
+                                      ? "table"
+                                      : undefined,
+                                  }}
                                 >
-                                  <i className="fas fa-grip-vertical"></i>
-                                </td>
-                                {render(item)}
-                              </tr>
+                                  <td
+                                    className="align-middle"
+                                    {...providedDraggable.dragHandleProps}
+                                  >
+                                    <i className="fas fa-grip-vertical"></i>
+                                  </td>
+                                  {render(item)}
+                                </tr>
+                                {renderAdditional &&
+                                  renderAdditional(item, {
+                                    ...providedDraggable.draggableProps.style,
+                                    display: snapshot.isDragging
+                                      ? "none"
+                                      : undefined,
+                                  })}
+                              </>
                             ))
                           }
                         </Draggable>

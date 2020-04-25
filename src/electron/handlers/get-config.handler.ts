@@ -33,6 +33,7 @@ ipcMain.handle(
       });
       config.teams.forEach((team) => {
         team.users = team.users || [];
+        team.repositories = team.repositories || [];
       });
       config.users.forEach((users) => {
         users.associations = users.associations || [];
