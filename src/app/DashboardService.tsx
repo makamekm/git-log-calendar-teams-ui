@@ -77,6 +77,7 @@ export const DashboardService = createService<DashboardState>(
               if (
                 state.config.teams.find(
                   (t) =>
+                    !t.invert &&
                     state.name === t.name &&
                     t.users &&
                     t.users.includes(user.name)
