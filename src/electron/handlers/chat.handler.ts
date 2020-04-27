@@ -67,6 +67,7 @@ app.on("ready", () => {
   ipcMain.on(
     "ON_CHANNEL_PEER_END",
     (event, channelName: string, peer: Peer) => {
+      console.log("ON_CHANNEL_PEER_END", channelName);
       const email = peerUsers.get(peer);
       peerMessage.delete(peer);
       peerUsers.delete(peer);
@@ -82,6 +83,7 @@ app.on("ready", () => {
       if (!channel) {
         return;
       }
+      console.log("message", channelName, data);
       if (data.type === "meet") {
         const userConnection = generateUserConnection(data.message);
         peer.send({
