@@ -43,6 +43,9 @@ const createMainChannel = () => {
       peer.once("disconnected", () => {
         ipc.sends.ON_CHANNEL_PEER_END(MAIN_CHANNEL_NAME, peer);
       });
+      peer.on("data", (data) => {
+        console.log("ON_PEER_DATA", data);
+      });
     });
   }
 };
@@ -54,7 +57,7 @@ app.on("ready", () => {
       console.log("ON_CHANNEL_PEER_START", channelName);
 
       const channel = findChannel(channelName);
-      if (!channel) {
+      if (!channel && channelName !== MAIN_CHANNEL_NAME) {
         return;
       }
       const message = generateMessage();
@@ -81,7 +84,7 @@ app.on("ready", () => {
     "ON_CHANNEL_MESSAGE",
     async (event, channelName: string, peer: Peer, data: JsonCompatible) => {
       const channel = findChannel(channelName);
-      if (!channel) {
+      if (!channel && channelName !== MAIN_CHANNEL_NAME) {
         return;
       }
       console.log("message", channelName, data);
