@@ -36,11 +36,11 @@ const createMainChannel = () => {
     mainChannel = chat.channel(MAIN_CHANNEL_NAME);
     mainChannel.on("message", (peer, data) => {
       console.log("ON_CHANNEL_MESSAGE", data);
-      ipc.sends.ON_CHANNEL_MESSAGE(MAIN_CHANNEL_NAME, peer, data.message);
+      ipc.sends.ON_CHANNEL_MESSAGE(MAIN_CHANNEL_NAME, peer, data);
     });
     mainChannel.on("peer", (peer) => {
       ipc.sends.ON_CHANNEL_PEER_START(MAIN_CHANNEL_NAME, peer);
-      peer.once("end", () => {
+      peer.once("disconnected", () => {
         ipc.sends.ON_CHANNEL_PEER_END(MAIN_CHANNEL_NAME, peer);
       });
     });
@@ -256,11 +256,11 @@ ipcMain.handle(
       const channel = chat.channel(name);
       channels.push(channel);
       channel.on("message", (peer, data) => {
-        ipc.sends.ON_CHANNEL_MESSAGE(name, peer, data.message);
+        ipc.sends.ON_CHANNEL_MESSAGE(name, peer, data);
       });
       channel.on("peer", (peer) => {
         ipc.sends.ON_CHANNEL_PEER_START(name, peer);
-        peer.once("end", () => {
+        peer.once("disconnected", () => {
           ipc.sends.ON_CHANNEL_PEER_END(name, peer);
         });
       });

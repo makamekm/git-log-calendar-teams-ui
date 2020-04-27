@@ -97,8 +97,7 @@ export class Channel extends EventEmitter {
       this.emit("peer-disconnected", peer);
     });
     peer.on("message", (data) => {
-      console.log("HHHH", data);
-      this.emit("message", peer, data);
+      this.emit("message", peer, data.message);
     });
   }
 
