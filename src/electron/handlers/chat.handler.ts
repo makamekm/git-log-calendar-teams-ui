@@ -35,6 +35,7 @@ const createMainChannel = () => {
   if (chat) {
     mainChannel = chat.channel(MAIN_CHANNEL_NAME);
     mainChannel.on("message", (peer, data) => {
+      console.log("ON_CHANNEL_MESSAGE", data);
       ipc.sends.ON_CHANNEL_MESSAGE(MAIN_CHANNEL_NAME, peer, data.message);
     });
     mainChannel.on("peer", (peer) => {
