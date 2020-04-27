@@ -168,8 +168,8 @@ export const ChatService = createService<ChatState>(
             userKey,
           });
         } else {
-          if (!state.userMessages[channelName]) {
-            state.userMessages[channelName] = [];
+          if (!state.userMessages[email]) {
+            state.userMessages[email] = [];
           }
           state.userMessages[email].unshift({
             type: data.type,

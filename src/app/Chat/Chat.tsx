@@ -50,7 +50,7 @@ export const ChatScreen = observer(() => {
                 <ScrollToBottom className={"chat-box"}>
                   {(!service.userMessages[state.selectedEmail] ||
                     service.userMessages[state.selectedEmail].length === 0) && (
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center pt-2 pb-4">
                       <span>
                         {"<"} No Messages {">"}
                       </span>
@@ -67,9 +67,7 @@ export const ChatScreen = observer(() => {
                                   <ChatRight
                                     cardClassName="bg-gray-200 text-dark"
                                     text={message.text}
-                                    online={
-                                      service.userMap[message.email]?.online
-                                    }
+                                    online
                                     date={moment(message.timestamp).format(
                                       "DD/MM/YYYY hh:mm:ss"
                                     )}
