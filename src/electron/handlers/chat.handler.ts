@@ -47,26 +47,34 @@ const createMainChannel = () => {
 };
 
 app.on("ready", () => {
-  ipcMain.on("ON_PEER_START", (event, channelName: string, peer: Peer) => {
-    const channel = findChannel(channelName);
-    if (!channel) {
-      return;
+  ipcMain.on(
+    "ON_CHANNEL_PEER_START",
+    (event, channelName: string, peer: Peer) => {
+      console.log("ON_CHANNEL_PEER_START", channelName);
+
+      const channel = findChannel(channelName);
+      if (!channel) {
+        return;
+      }
+      const message = generateMessage();
+      peerMessage.set(peer, message);
+      peer.send({
+        type: "meet",
+        message,
+      });
     }
-    const message = generateMessage();
-    peerMessage.set(peer, message);
-    peer.send({
-      type: "meet",
-      message,
-    });
-  });
-  ipcMain.on("ON_PEER_END", (event, channelName: string, peer: Peer) => {
-    const email = peerUsers.get(peer);
-    peerMessage.delete(peer);
-    peerUsers.delete(peer);
-    if (email && channelName === MAIN_CHANNEL_NAME) {
-      peerPrivateUsers.delete(email);
+  );
+  ipcMain.on(
+    "ON_CHANNEL_PEER_END",
+    (event, channelName: string, peer: Peer) => {
+      const email = peerUsers.get(peer);
+      peerMessage.delete(peer);
+      peerUsers.delete(peer);
+      if (email && channelName === MAIN_CHANNEL_NAME) {
+        peerPrivateUsers.delete(email);
+      }
     }
-  });
+  );
   ipcMain.on(
     "ON_CHANNEL_MESSAGE",
     async (event, channelName: string, peer: Peer, data: JsonCompatible) => {

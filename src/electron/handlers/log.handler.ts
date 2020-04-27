@@ -6,6 +6,17 @@ import fsReverse from "fs-backwards-stream";
 
 import log from "electron-log";
 
+log.hooks.push((message, transport) => {
+  if (
+    message?.data[0]?.includes("DeprecationWarning") ||
+    message?.data[0]?.includes("deprecated")
+  ) {
+    return false;
+  }
+
+  return message;
+});
+
 log.transports.file.level = FILE_LOG_LEVEL;
 log.transports.console.level = CONSOLE_LOG_LEVEL;
 

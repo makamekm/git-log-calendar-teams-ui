@@ -264,10 +264,6 @@ export const createDrive = () => {
     secretKey: parseKey(secretKey),
   });
 
-  if (communicationKey && email && name && userPublicKey && userSecretKey) {
-    chat = new Chat(communicationKey);
-  }
-
   if (useDriveSwarm) {
     swarm = hyperswarm();
 
@@ -293,6 +289,10 @@ export const createDrive = () => {
 
       pump(connection, stream, connection);
     });
+  }
+
+  if (communicationKey && email && name && userPublicKey && userSecretKey) {
+    chat = new Chat(communicationKey);
   }
 
   ipc.sends.ON_DRIVE_CREATED();
