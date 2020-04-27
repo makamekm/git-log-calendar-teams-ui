@@ -173,7 +173,7 @@ const getChannels = (): Channel[] => {
     );
     channels = [
       ...channels,
-      notExistedChannels.map((channelName) => chat.channel(channelName)),
+      ...notExistedChannels.map((channelName) => chat.channel(channelName)),
     ];
   }
   return channels;
