@@ -1,6 +1,7 @@
 import { ipcMain, app } from "electron";
 import settings from "electron-settings";
 import crypto from "hypercore-crypto";
+import bufferFrom from "buffer-from";
 import { UNREGISTERED_SYMBOL, getAuthor } from "./git";
 import { ipc, nameofSends } from "~/shared/ipc";
 import { isExist, readFile, writeFile, parseKey } from "./drive";
@@ -68,7 +69,11 @@ export const getUserConnection = async (
   const user = users[email];
   if (
     user &&
-    crypto.verify(message, parseKey(signature), parseKey(user.publicKey))
+    crypto.verify(
+      bufferFrom(message),
+      parseKey(signature),
+      parseKey(user.publicKey)
+    )
   ) {
     return user;
   }
@@ -122,7 +127,7 @@ export const generateMessage = () => crypto.keyPair().publicKey.toString("hex");
 export const generateUserConnection = (message: string) => {
   const user = getUserSettings();
   const signature = crypto
-    .sign(message, parseKey(user.secretKey))
+    .sign(bufferFrom(message), parseKey(user.secretKey))
     .toString("hex");
   return {
     email: user.email,
