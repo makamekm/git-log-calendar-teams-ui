@@ -294,4 +294,6 @@ export const createDrive = () => {
       pump(connection, stream, connection);
     });
   }
+
+  ipc.sends.ON_DRIVE_CREATED();
 };

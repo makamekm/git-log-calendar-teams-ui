@@ -13,11 +13,29 @@ import {
 import { getUserSettings } from "./auth.handler";
 
 const MAIN_CHANNEL_NAME = "";
+
 let mainChannel: Channel;
 let peerPrivateUsers = new Map<string, Peer>();
 let channels: Channel[] = [];
 let peerUsers = new Map<Peer, string>();
 let peerMessage = new Map<Peer, string>();
+
+const createMainChannel = () => {
+  channels = [];
+  peerPrivateUsers = new Map();
+  peerUsers = new Map();
+  peerMessage = new Map();
+  if (mainChannel) {
+    if (!mainChannel.isClosed()) {
+      mainChannel.close();
+    }
+    mainChannel = null;
+  }
+  const chat = getChat();
+  if (chat) {
+    mainChannel = chat.channel(MAIN_CHANNEL_NAME);
+  }
+};
 
 app.on("ready", () => {
   ipcMain.on("ON_PEER_START", (event, channelName: string, peer: Peer) => {
@@ -89,38 +107,17 @@ app.on("ready", () => {
         const email = peerUsers.get(peer);
         if (email) {
           // OK
-          console.log("ON_CHANNEL_VERIFYED_MESSAGE", email, data);
+          console.log("ON_CHANNEL_VERIFYED_MESSAGE", channelName, email, data);
           // ipc.sends.ON_CHANNEL_VERIFYED_MESSAGE(channelName, email, data);
         }
       }
     }
   );
-  createMainChannel();
 
-  // ipcMain.on(nameofSends("ON_DRIVE_UPDATE"), () => {
-  //   createMainChannel();
-  // });
-  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
-    channels = [];
-    peerPrivateUsers = new Map();
-    peerUsers = new Map();
-    peerMessage = new Map();
+  ipcMain.on(nameofSends("ON_DRIVE_CREATED"), () => {
     createMainChannel();
   });
 });
-
-const createMainChannel = () => {
-  if (mainChannel) {
-    if (!mainChannel.isClosed()) {
-      mainChannel.close();
-    }
-    mainChannel = null;
-  }
-  const chat = getChat();
-  if (chat) {
-    mainChannel = chat.channel(MAIN_CHANNEL_NAME);
-  }
-};
 
 // const IDENTIFY_MESSAGE = "whoareyou";
 // const keyPair = crypto.keyPair();
