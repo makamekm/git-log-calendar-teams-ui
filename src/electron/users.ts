@@ -62,13 +62,11 @@ export const getUserConnection = async (
 ) => {
   const users = await getUsers();
   const user = users[email];
+  const key = Buffer.alloc(crypto_generichash_BYTES);
+  crypto_generichash(key, message);
   if (
     user &&
-    crypto.verify(
-      parseKey(message),
-      parseKey(signature),
-      parseKey(user.publicKey)
-    )
+    crypto.verify(key, parseKey(signature), parseKey(user.publicKey))
   ) {
     return user;
   }
