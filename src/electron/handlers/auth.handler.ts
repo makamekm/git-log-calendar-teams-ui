@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import crypto from "hypercore-crypto";
 import settings from "electron-settings";
-import { IpcHandler, ipc, nameofHandler } from "~/shared/ipc";
+import { IpcHandler, nameofHandler } from "~/shared/ipc";
 import { getUserKey } from "../users";
 
 export const getUserKeys = () => {
@@ -28,25 +28,10 @@ export const getUserSettings = () => {
   return {
     name,
     email,
-    publicKey,
-    secretKey,
+    userPublicKey: publicKey,
+    userSecretKey: secretKey,
   };
 };
-
-ipcMain.handle(
-  nameofHandler("SAVE_USER"),
-  async (
-    event,
-    ...args: Parameters<IpcHandler["SAVE_USER"]>
-  ): Promise<ReturnType<IpcHandler["SAVE_USER"]>> => {
-    const [{ email, name, publicKey, secretKey }] = args;
-    settings.set("email", email);
-    settings.set("name", name);
-    settings.set("userPublicKey", publicKey);
-    settings.set("userSecretKey", secretKey);
-    ipc.sends.ON_CHANGE_USER();
-  }
-);
 
 ipcMain.handle(
   nameofHandler("GET_USER"),
@@ -57,7 +42,9 @@ ipcMain.handle(
     const user = getUserSettings();
     return user
       ? {
-          ...user,
+          name: user.name,
+          email: user.email,
+          userPublicKey: user.userPublicKey,
           userKey: await getUserKey(user.email, user.name),
         }
       : null;

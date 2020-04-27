@@ -24,17 +24,55 @@ import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useDelay, useOnLoad } from "~/hooks";
 import { ApplicationSettings } from "~/shared/Settings";
+import { ConfigurationTable } from "../Configuration/ConfigurationTable";
+import { UserConnection } from "~/shared/UserConnection";
 
 interface SettingsState {
   isDirty: boolean;
   config: ApplicationSettings;
   isLoading: boolean;
   isLoadingDelay: boolean;
+  users: UserConnection[];
   load: () => Promise<void>;
   save: () => Promise<void>;
   remount: () => Promise<void>;
   empty: () => Promise<void>;
 }
+
+const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
+  return (
+    <Accordion className="mb-3" initialOpen>
+      <AccordionHeader className="h6 cursor-pointer">
+        Authorized Users
+      </AccordionHeader>
+      <AccordionBody className="pb-0">
+        {!state.config || state.isLoadingDelay ? (
+          <List height="200px" width="100%" />
+        ) : (
+          <ConfigurationTable
+            header={
+              <>
+                <td>Email</td>
+                <td>Name</td>
+                <td>Public Key</td>
+                <td>Actions</td>
+              </>
+            }
+            items={state.users}
+            render={(item) => (
+              <>
+                <td>{item.email}</td>
+                <td>{item.name}</td>
+                <td>{item.publicKey}</td>
+                <td>Unregister</td>
+              </>
+            )}
+          />
+        )}
+      </AccordionBody>
+    </Accordion>
+  );
+});
 
 const SettingsForm = observer(({ state }: { state: SettingsState }) => {
   return (
@@ -85,6 +123,75 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </Col>
             </FormGroup>
             <FormGroup row>
+              <Label sm={4}>Communinication Key</Label>
+              <Col sm={8}>
+                <Input
+                  type="text"
+                  onChange={(e) => {
+                    state.config.communicationKey = e.currentTarget.value;
+                  }}
+                  value={state.config.communicationKey}
+                  placeholder="Enter Key..."
+                />
+              </Col>
+            </FormGroup>
+            {!!state.config.communicationKey && (
+              <>
+                <FormGroup row>
+                  <Label sm={4}>Email</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.config.email = e.currentTarget.value;
+                      }}
+                      value={state.config.email}
+                      placeholder="Enter your email..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4}>Name</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.config.name = e.currentTarget.value;
+                      }}
+                      value={state.config.name}
+                      placeholder="Enter your name..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4}>Account Public Key</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.config.userPublicKey = e.currentTarget.value;
+                      }}
+                      value={state.config.userPublicKey}
+                      placeholder="Enter your account public key..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4}>Account Secret Key</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.config.userSecretKey = e.currentTarget.value;
+                      }}
+                      value={state.config.userSecretKey}
+                      placeholder="Enter your account secret key..."
+                    />
+                  </Col>
+                </FormGroup>
+              </>
+            )}
+            <FormGroup row>
               <Label sm={4}>Remount Drive & Reload All</Label>
               <Col sm={8}>
                 <ButtonGroup className="align-self-start mt-0 mb-3">
@@ -122,9 +229,11 @@ export const Settings = observer(() => {
     config: null,
     isLoading: false,
     isLoadingDelay: false,
+    users: [],
     load: async () => {
       state.isLoading = true;
       state.config = await ipc.handlers.GET_SETTINGS();
+      state.users = await ipc.handlers.GET_USERS();
       state.isDirty = false;
       state.isLoading = false;
     },
@@ -132,17 +241,20 @@ export const Settings = observer(() => {
       state.isLoading = true;
       await ipc.handlers.SAVE_SETTINGS(toJS(state.config));
       state.config = await ipc.handlers.GET_SETTINGS();
+      state.users = await ipc.handlers.GET_USERS();
       state.isDirty = false;
       state.isLoading = false;
     },
     remount: async () => {
       state.isLoading = true;
       await ipc.handlers.REMOUNT_DRIVE();
+      state.users = await ipc.handlers.GET_USERS();
       state.isLoading = false;
     },
     empty: async () => {
       state.isLoading = true;
       await ipc.handlers.EMPTY_DRIVE();
+      state.users = await ipc.handlers.GET_USERS();
       state.isLoading = false;
     },
   }));
@@ -193,6 +305,7 @@ export const Settings = observer(() => {
       </Row>
 
       <SettingsForm state={state} />
+      <SettingsUsers state={state} />
     </Container>
   );
 });

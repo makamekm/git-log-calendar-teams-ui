@@ -1,10 +1,9 @@
 import { ipcMain, app } from "electron";
-import settings from "electron-settings";
 import crypto from "hypercore-crypto";
 import bufferFrom from "buffer-from";
 import { UNREGISTERED_SYMBOL, getAuthor } from "./git";
 import { ipc, nameofSends } from "~/shared/ipc";
-import { isExist, readFile, writeFile, parseKey } from "./drive";
+import { isExist, readFile, writeFile, parseKey, waitForDrive } from "./drive";
 import { UserConnection } from "~/shared/UserConnection";
 import { getUserSettings } from "./handlers/auth.handler";
 
@@ -25,15 +24,13 @@ app.on("ready", () => {
   ipcMain.on(nameofSends("ON_DRIVE_UPDATE"), () => {
     usersCache = null;
   });
-  ipcMain.on(nameofSends("ON_CHANGE_USER"), () => {
-    usersCache = null;
-  });
-  ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
+  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     usersCache = null;
   });
 });
 
 const readUserCacheFile = async () => {
+  await waitForDrive();
   const isCacheFileExist = await isExist(USERS_FILE_PATH);
   if (isCacheFileExist) {
     return JSON.parse(await readFile(USERS_FILE_PATH));
@@ -45,14 +42,12 @@ const readUserCacheFile = async () => {
 const refillUsersCache = async () => {
   if (!usersCache) {
     const table = await readUserCacheFile();
-    usersCache = table[settings.get("email")] || {};
+    usersCache = table || {};
   }
 };
 
 const saveUsersCache = async () => {
-  const table = await readUserCacheFile();
-  table[settings.get("email")] = usersCache;
-  await writeFile(USERS_FILE_PATH, JSON.stringify(table, null, 2));
+  await writeFile(USERS_FILE_PATH, JSON.stringify(usersCache, null, 2));
 };
 
 export const getUsers = async () => {
@@ -127,12 +122,12 @@ export const generateMessage = () => crypto.keyPair().publicKey.toString("hex");
 export const generateUserConnection = (message: string) => {
   const user = getUserSettings();
   const signature = crypto
-    .sign(bufferFrom(message), parseKey(user.secretKey))
+    .sign(bufferFrom(message), parseKey(user.userSecretKey))
     .toString("hex");
   return {
     email: user.email,
     name: user.name,
-    publicKey: user.publicKey,
+    publicKey: user.userPublicKey,
     message,
     signature,
   };

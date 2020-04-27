@@ -10,11 +10,14 @@ import {
   generateUserConnection,
   generateMessage,
 } from "../users";
+import { getUserSettings } from "./auth.handler";
 
+const MAIN_CHANNEL_NAME = "";
+let mainChannel: Channel;
+let peerPrivateUsers = new Map<string, Peer>();
 let channels: Channel[] = [];
-
-const peerUsers = new Map<Peer, string>();
-const peerMessage = new Map<Peer, string>();
+let peerUsers = new Map<Peer, string>();
+let peerMessage = new Map<Peer, string>();
 
 app.on("ready", () => {
   ipcMain.on("ON_PEER_START", (event, channelName: string, peer: Peer) => {
@@ -30,8 +33,12 @@ app.on("ready", () => {
     });
   });
   ipcMain.on("ON_PEER_END", (event, channelName: string, peer: Peer) => {
+    const email = peerUsers.get(peer);
     peerMessage.delete(peer);
     peerUsers.delete(peer);
+    if (email && channelName === MAIN_CHANNEL_NAME) {
+      peerPrivateUsers.delete(email);
+    }
   });
   ipcMain.on(
     "ON_CHANNEL_MESSAGE",
@@ -55,26 +62,65 @@ app.on("ready", () => {
         if (email && name && publicKey && signature && message) {
           let user =
             (await getUserConnection(email, message, signature)) ||
-            (await registerUserConnection({
-              email,
-              name,
-              publicKey,
-            }));
+            (channelName === MAIN_CHANNEL_NAME &&
+              (await registerUserConnection({
+                email,
+                name,
+                publicKey,
+              })));
           if (user) {
             peerUsers.set(peer, email);
+            if (email && channelName === MAIN_CHANNEL_NAME) {
+              peerPrivateUsers.set(email, peer);
+            }
             return;
           }
         }
+        const user = getUserSettings();
+        peer.send({
+          type: "auth_fail",
+          from: {
+            email: user.email,
+            name: user.name,
+          },
+        });
         peer.destroy();
       } else {
-        const userName = peerUsers.get(peer);
-        if (userName) {
+        const email = peerUsers.get(peer);
+        if (email) {
           // OK
+          console.log("ON_CHANNEL_VERIFYED_MESSAGE", email, data);
+          // ipc.sends.ON_CHANNEL_VERIFYED_MESSAGE(channelName, email, data);
         }
       }
     }
   );
+  createMainChannel();
+
+  // ipcMain.on(nameofSends("ON_DRIVE_UPDATE"), () => {
+  //   createMainChannel();
+  // });
+  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
+    channels = [];
+    peerPrivateUsers = new Map();
+    peerUsers = new Map();
+    peerMessage = new Map();
+    createMainChannel();
+  });
 });
+
+const createMainChannel = () => {
+  if (mainChannel) {
+    if (!mainChannel.isClosed()) {
+      mainChannel.close();
+    }
+    mainChannel = null;
+  }
+  const chat = getChat();
+  if (chat) {
+    mainChannel = chat.channel(MAIN_CHANNEL_NAME);
+  }
+};
 
 // const IDENTIFY_MESSAGE = "whoareyou";
 // const keyPair = crypto.keyPair();
@@ -111,9 +157,6 @@ const setChannels = (arr: Channel[]) => {
 
 app.on("ready", () => {
   ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
-    setChannels([]);
-  });
-  ipcMain.on(nameofSends("ON_CHANGE_USER"), () => {
     getChannels().forEach((channel) => channel.close());
     setChannels([]);
   });
@@ -123,6 +166,15 @@ const getChannels = (): Channel[] => {
   const chat = getChat();
   if (!chat) {
     setChannels([]);
+  } else {
+    const channelNames = settings.get("channels") || [];
+    const notExistedChannels = channelNames.filter(
+      (channelName) => !channels.find((c) => c.getName() === channelName)
+    );
+    channels = [
+      ...channels,
+      notExistedChannels.map((channelName) => chat.channel(channelName)),
+    ];
   }
   return channels;
 };
@@ -145,6 +197,19 @@ ipcMain.handle(
 );
 
 ipcMain.handle(
+  "SEND_MESSAGE_USER",
+  async (event, ...args: any[]): Promise<any> => {
+    const [email, message] = args;
+    const chat = getChat();
+    const peer = peerPrivateUsers.get(email);
+    const user = await ipc.handlers.GET_USER();
+    if (chat && peer && user) {
+      peer.send({ ...message, author: user });
+    }
+  }
+);
+
+ipcMain.handle(
   "SEND_MESSAGE",
   async (event, ...args: any[]): Promise<any> => {
     const [name, message] = args;
@@ -161,6 +226,9 @@ ipcMain.handle(
   "CREATE_CHANNEL",
   async (event, ...args: any[]): Promise<any> => {
     const [name] = args;
+    if (!name) {
+      return;
+    }
     const chat = getChat();
     const user = await ipc.handlers.GET_USER();
     const existChannel = findChannel(name);
@@ -168,7 +236,7 @@ ipcMain.handle(
       const channel = chat.channel(name);
       channels.push(channel);
       channel.on("message", (peer, data) => {
-        ipc.sends.ON_CHANNEL_MESSAGE(name, peer, data);
+        ipc.sends.ON_CHANNEL_MESSAGE(name, peer, data.message);
       });
       channel.on("peer", (peer) => {
         ipc.sends.ON_CHANNEL_PEER_START(name, peer);

@@ -3,6 +3,7 @@ import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 
 import { saveSettings, getSettings, emptyDir, remountDrive } from "../drive";
 import { getCollectPromise } from "./collect-stats.handler";
+import { getUsers } from "../users";
 
 ipcMain.handle(
   nameofHandler("GET_SETTINGS"),
@@ -11,6 +12,17 @@ ipcMain.handle(
     ...args: Parameters<IpcHandler["GET_SETTINGS"]>
   ): Promise<ReturnType<IpcHandler["GET_SETTINGS"]>> => {
     return getSettings();
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("GET_USERS"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["GET_USERS"]>
+  ): Promise<ReturnType<IpcHandler["GET_USERS"]>> => {
+    const users = await getUsers();
+    return Object.values(users);
   }
 );
 

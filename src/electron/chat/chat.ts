@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import hyperswarm from "hyperswarm";
 import { crypto_generichash, crypto_generichash_BYTES } from "sodium-universal";
 import ndjson from "ndjson";
-import { Json, JsonCompatible } from "~/shared/Json";
+import { JsonCompatible } from "~/shared/Json";
 
 export class Chat extends EventEmitter {
   private swarm;
@@ -100,17 +100,18 @@ export class Channel extends EventEmitter {
     });
   }
 
-  send(message: Json) {
-    this.broadcast({
-      type: "message",
-      message,
-    });
+  send(message: JsonCompatible) {
+    this.broadcast(message);
   }
 
   broadcast(data: JsonCompatible) {
     this.peers.forEach((peer) => {
       peer.send(data);
     });
+  }
+
+  isClosed() {
+    return !this.chat;
   }
 
   close() {
@@ -152,7 +153,7 @@ export class Peer extends EventEmitter {
 
     if (peer && peer.topic) {
       const channel = peer.topic.toString("hex");
-      this.send({
+      this.sendData({
         type: "handshake",
         channel,
       });
@@ -161,7 +162,7 @@ export class Peer extends EventEmitter {
       }, 0);
     } else {
       this.once("handshake", ({ channel }) => {
-        this.send({
+        this.sendData({
           type: "handshake",
           channel,
         });
@@ -170,8 +171,15 @@ export class Peer extends EventEmitter {
     }
   }
 
-  send(data: JsonCompatible) {
+  sendData(data: JsonCompatible) {
     this.outgoing.write(data);
+  }
+
+  send(message: JsonCompatible) {
+    this.outgoing.write({
+      type: "message",
+      message,
+    });
   }
 
   destroy() {

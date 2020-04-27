@@ -1,6 +1,7 @@
 import { Config } from "./Config";
 import { Json } from "./Json";
 import { ApplicationSettings } from "./Settings";
+import { UserConnection } from "./UserConnection";
 
 export const nameof = <T>(name: keyof T) => name;
 
@@ -109,15 +110,8 @@ export interface IpcHandler {
     email: string;
     name: string;
     userKey: string;
-    publicKey: string;
-    secretKey: string;
+    userPublicKey: string;
   };
-  SAVE_USER: (user: {
-    email: string;
-    name: string;
-    publicKey: string;
-    secretKey: string;
-  }) => void;
   LOG: (
     log: any,
     level?: "info" | "warn" | "error" | "verbose" | "debug" | "silly"
@@ -145,6 +139,7 @@ export interface IpcHandler {
   GET_DATA: () => any;
   GET_SETTINGS: () => ApplicationSettings;
   SAVE_SETTINGS: (config: ApplicationSettings) => void;
+  GET_USERS: () => UserConnection[];
   REMOUNT_DRIVE: () => void;
   EMPTY_DRIVE: () => void;
 }
@@ -228,6 +223,10 @@ export const ipc = {
       ...args: Parameters<IpcHandler["SAVE_SETTINGS"]>
     ): Promise<ReturnType<IpcHandler["SAVE_SETTINGS"]>> =>
       ipcRenderer.invoke(nameofHandler("SAVE_SETTINGS"), ...args),
+    GET_USERS: (
+      ...args: Parameters<IpcHandler["GET_USERS"]>
+    ): Promise<ReturnType<IpcHandler["GET_USERS"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_USERS"), ...args),
     EMPTY_DRIVE: (
       ...args: Parameters<IpcHandler["EMPTY_DRIVE"]>
     ): Promise<ReturnType<IpcHandler["EMPTY_DRIVE"]>> =>
@@ -240,10 +239,6 @@ export const ipc = {
       ...args: Parameters<IpcHandler["GET_USER"]>
     ): Promise<ReturnType<IpcHandler["GET_USER"]>> =>
       ipcRenderer.invoke(nameofHandler("GET_USER"), ...args),
-    SAVE_USER: (
-      ...args: Parameters<IpcHandler["SAVE_USER"]>
-    ): Promise<ReturnType<IpcHandler["SAVE_USER"]>> =>
-      ipcRenderer.invoke(nameofHandler("SAVE_USER"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
@@ -252,7 +247,6 @@ export const ipc = {
       ipcRenderer.send(nameofSends("ON_SETTINGS_UPDATE_FINISH")),
     ON_DRIVE_UPDATE: () => ipcRenderer.send(nameofSends("ON_DRIVE_UPDATE")),
     ON_COLLECT_FINISH: () => ipcRenderer.send(nameofSends("ON_COLLECT_FINISH")),
-    ON_CHANGE_USER: () => ipcRenderer.send(nameofSends("ON_CHANGE_USER")),
     ON_CHANNEL_MESSAGE: (channel: string, peer, data: Json) =>
       ipcRenderer.send(nameofSends("ON_CHANNEL_MESSAGE"), channel, peer, data),
     ON_CHANNEL_PEER_START: (channel: string, peer) =>

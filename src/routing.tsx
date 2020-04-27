@@ -126,6 +126,7 @@ export const RoutedContent = () => {
         exact
         component={RepositoryDashboard}
       />
+
       <ProtectedRoute path="/chat" exact component={ChatScreen} />
 
       <ProtectedRoute path="/configuration" exact component={Configuration} />

@@ -181,6 +181,10 @@ export const getSettings = (): ApplicationSettings => {
     secretKey: settings.get("secretKey"),
     useDriveSwarm: settings.get("useDriveSwarm"),
     communicationKey: settings.get("communicationKey"),
+    name: settings.get("name"),
+    email: settings.get("email"),
+    userPublicKey: settings.get("userPublicKey"),
+    userSecretKey: settings.get("userSecretKey"),
   };
 };
 
@@ -206,11 +210,13 @@ export const loadSettings = (): ApplicationSettings => {
   }
   const publicKey = settings.get("publicKey");
   const secretKey = settings.get("secretKey");
+  const user = getUserSettings();
   return {
     publicKey: publicKey,
     secretKey: secretKey,
     useDriveSwarm: settings.get("useDriveSwarm"),
     communicationKey: settings.get("communicationKey"),
+    ...user,
   };
 };
 
@@ -219,6 +225,10 @@ export const saveSettings = ({
   secretKey,
   useDriveSwarm,
   communicationKey,
+  email,
+  name,
+  userPublicKey,
+  userSecretKey,
 }: ApplicationSettings) => {
   closeDrive();
   if (!publicKey || !secretKey) {
@@ -230,31 +240,36 @@ export const saveSettings = ({
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
   settings.set("communicationKey", communicationKey);
+  settings.set("email", email);
+  settings.set("name", name);
+  settings.set("userPublicKey", userPublicKey);
+  settings.set("userSecretKey", userSecretKey);
   createDrive();
 };
-
-app.on("ready", () => {
-  ipcMain.on("ON_CHANGE_USER", () => {
-    createDrive();
-  });
-});
 
 export const createDrive = () => {
   inited = false;
   closeDrive();
-  const { publicKey, secretKey, useDriveSwarm } = loadSettings();
+  const {
+    publicKey,
+    secretKey,
+    useDriveSwarm,
+    communicationKey,
+    email,
+    name,
+    userPublicKey,
+    userSecretKey,
+  } = loadSettings();
   drive = hyperdrive(getBaseFolder(), publicKey, {
     secretKey: parseKey(secretKey),
   });
+
+  if (communicationKey && email && name && userPublicKey && userSecretKey) {
+    chat = new Chat(communicationKey);
+  }
+
   if (useDriveSwarm) {
     swarm = hyperswarm();
-
-    if (settings.get("communicationKey")) {
-      const user = getUserSettings();
-      if (user) {
-        chat = new Chat(settings.get("communicationKey"));
-      }
-    }
 
     drive.on("ready", () => {
       swarm.join(parseKey(publicKey), {
