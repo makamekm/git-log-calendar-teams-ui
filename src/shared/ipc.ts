@@ -1,5 +1,5 @@
 import { Config } from "./Config";
-import { Json } from "./Json";
+import { Json, JsonCompatible } from "./Json";
 import { ApplicationSettings } from "./Settings";
 import { UserConnection } from "./UserConnection";
 
@@ -142,6 +142,14 @@ export interface IpcHandler {
   GET_USERS: () => UserConnection[];
   REMOUNT_DRIVE: () => void;
   EMPTY_DRIVE: () => void;
+  GET_ONLINE_USERS: () => string[];
+  GET_CHANNELS: () => {
+    [name: string]: string[];
+  };
+  CREATE_CHANNEL: (name: string) => string;
+  CLOSE_CHANNEL: (name: string) => void;
+  SEND_CHANNEL_MESSAGE: (name: string, message: JsonCompatible) => void;
+  SEND_USER_MESSAGE: (email: string, message: JsonCompatible) => void;
 }
 
 const channelFactory = <T = any[], K = void>(name: string) => (
@@ -161,6 +169,7 @@ export const ipc = {
     ON_SETTINGS_UPDATE_FINISH: channelFactory("ON_SETTINGS_UPDATE_FINISH"),
     ON_DRIVE_UPDATE: channelFactory("ON_DRIVE_UPDATE"),
     ON_COLLECT_FINISH: channelFactory("ON_COLLECT_FINISH"),
+    ON_CHANNEL_VERIFYED_MESSAGE: channelFactory("ON_CHANNEL_VERIFYED_MESSAGE"),
   },
   handlers: {
     APP_INFO: (
@@ -239,6 +248,30 @@ export const ipc = {
       ...args: Parameters<IpcHandler["GET_USER"]>
     ): Promise<ReturnType<IpcHandler["GET_USER"]>> =>
       ipcRenderer.invoke(nameofHandler("GET_USER"), ...args),
+    GET_ONLINE_USERS: (
+      ...args: Parameters<IpcHandler["GET_ONLINE_USERS"]>
+    ): Promise<ReturnType<IpcHandler["GET_ONLINE_USERS"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_ONLINE_USERS"), ...args),
+    GET_CHANNELS: (
+      ...args: Parameters<IpcHandler["GET_CHANNELS"]>
+    ): Promise<ReturnType<IpcHandler["GET_CHANNELS"]>> =>
+      ipcRenderer.invoke(nameofHandler("GET_CHANNELS"), ...args),
+    CREATE_CHANNEL: (
+      ...args: Parameters<IpcHandler["CREATE_CHANNEL"]>
+    ): Promise<ReturnType<IpcHandler["CREATE_CHANNEL"]>> =>
+      ipcRenderer.invoke(nameofHandler("CREATE_CHANNEL"), ...args),
+    CLOSE_CHANNEL: (
+      ...args: Parameters<IpcHandler["CLOSE_CHANNEL"]>
+    ): Promise<ReturnType<IpcHandler["CLOSE_CHANNEL"]>> =>
+      ipcRenderer.invoke(nameofHandler("CLOSE_CHANNEL"), ...args),
+    SEND_CHANNEL_MESSAGE: (
+      ...args: Parameters<IpcHandler["SEND_CHANNEL_MESSAGE"]>
+    ): Promise<ReturnType<IpcHandler["SEND_CHANNEL_MESSAGE"]>> =>
+      ipcRenderer.invoke(nameofHandler("SEND_CHANNEL_MESSAGE"), ...args),
+    SEND_USER_MESSAGE: (
+      ...args: Parameters<IpcHandler["SEND_USER_MESSAGE"]>
+    ): Promise<ReturnType<IpcHandler["SEND_USER_MESSAGE"]>> =>
+      ipcRenderer.invoke(nameofHandler("SEND_USER_MESSAGE"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
@@ -254,5 +287,29 @@ export const ipc = {
       ipcRenderer.send(nameofSends("ON_CHANNEL_PEER_START"), channel, peer),
     ON_CHANNEL_PEER_END: (channel: string, peer) =>
       ipcRenderer.send(nameofSends("ON_CHANNEL_PEER_END"), channel, peer),
+    ON_CHANNEL_UPDATE: (channelName: string) =>
+      ipcRenderer.send(nameofSends("ON_CHANNEL_UPDATE"), channelName),
+    ON_CHANNEL_AUTH_FAIL: (channelName: string, email: string, name: string) =>
+      ipcRenderer.send(
+        nameofSends("ON_CHANNEL_AUTH_FAIL"),
+        channelName,
+        email,
+        name
+      ),
+    ON_CHANNEL_VERIFYED_MESSAGE: (
+      channelName: string,
+      email: string,
+      name: string,
+      userKey: string,
+      data: JsonCompatible
+    ) =>
+      ipcRenderer.send(
+        nameofSends("ON_CHANNEL_VERIFYED_MESSAGE"),
+        channelName,
+        email,
+        name,
+        userKey,
+        data
+      ),
   },
 };

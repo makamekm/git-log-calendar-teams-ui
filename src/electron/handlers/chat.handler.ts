@@ -2,7 +2,7 @@ import { app, ipcMain } from "electron";
 import settings from "electron-settings";
 import { getChat, closeChat } from "../drive";
 import { Channel, Peer } from "../chat/chat";
-import { ipc, nameofSends } from "~/shared/ipc";
+import { ipc, IpcHandler, nameofSends, nameofHandler } from "~/shared/ipc";
 import { JsonCompatible } from "~/shared/Json";
 import {
   getUserConnection,
@@ -10,6 +10,7 @@ import {
   generateUserConnection,
   generateMessage,
   updateUserConnectionData,
+  getUserKey,
 } from "../users";
 import { getUserSettings } from "./auth.handler";
 
@@ -65,8 +66,6 @@ app.on("ready", () => {
   ipcMain.on(
     "ON_CHANNEL_PEER_START",
     (event, channelName: string, peer: Peer) => {
-      console.log("ON_CHANNEL_PEER_START", channelName, !!peer);
-
       const channel = findChannel(channelName);
       if (!channel && channelName !== MAIN_CHANNEL_NAME) {
         return;
@@ -82,13 +81,13 @@ app.on("ready", () => {
   ipcMain.on(
     "ON_CHANNEL_PEER_END",
     (event, channelName: string, peer: Peer) => {
-      console.log("ON_CHANNEL_PEER_END", channelName);
       const email = peerUsers.get(peer);
       peerMessage.delete(peer);
       peerUsers.delete(peer);
       if (email && channelName === MAIN_CHANNEL_NAME) {
         peerPrivateUsers.delete(email);
       }
+      ipc.sends.ON_CHANNEL_UPDATE(channelName);
     }
   );
   ipcMain.on(
@@ -99,8 +98,12 @@ app.on("ready", () => {
         return;
       }
       if (data.type === "auth_fail") {
-        console.log("ON_AUTH_FAIL", channelName, data.from);
         destroyChat();
+        ipc.sends.ON_CHANNEL_AUTH_FAIL(
+          channelName,
+          data.from?.email,
+          data.name?.name
+        );
       } else if (data.type === "meet") {
         const userConnection = generateUserConnection(data.message);
         peer.send({
@@ -127,6 +130,7 @@ app.on("ready", () => {
             if (email && channelName === MAIN_CHANNEL_NAME) {
               peerPrivateUsers.set(email, peer);
             }
+            ipc.sends.ON_CHANNEL_UPDATE(channelName);
             return;
           }
         }
@@ -145,9 +149,14 @@ app.on("ready", () => {
           if (data.author?.name) {
             await updateUserConnectionData(email, data.author.name);
           }
-          // OK
-          console.log("ON_CHANNEL_VERIFYED_MESSAGE", channelName, email, data);
-          // ipc.sends.ON_CHANNEL_VERIFYED_MESSAGE(channelName, email, data);
+          const userKey = await getUserKey(email, data.author?.name);
+          ipc.sends.ON_CHANNEL_VERIFYED_MESSAGE(
+            channelName,
+            email,
+            data.author?.name,
+            userKey,
+            data
+          );
         }
       }
     }
@@ -204,15 +213,45 @@ const removeChannel = (name: string) => {
 };
 
 ipcMain.handle(
-  "GET_CHANNELS",
-  async (event, ...args: any[]): Promise<any> => {
-    return getChannels().map((channel) => channel.getKey());
+  nameofHandler("GET_ONLINE_USERS"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["GET_ONLINE_USERS"]>
+  ): Promise<ReturnType<IpcHandler["GET_ONLINE_USERS"]>> => {
+    const result: ReturnType<IpcHandler["GET_ONLINE_USERS"]> = [];
+    peerPrivateUsers.forEach((peer, email) => {
+      result.push(email);
+    });
+    return result;
   }
 );
 
 ipcMain.handle(
-  "SEND_MESSAGE_USER",
-  async (event, ...args: any[]): Promise<any> => {
+  nameofHandler("GET_CHANNELS"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["GET_CHANNELS"]>
+  ): Promise<ReturnType<IpcHandler["GET_CHANNELS"]>> => {
+    const result: ReturnType<IpcHandler["GET_CHANNELS"]> = {};
+    getChannels().forEach((channel) => {
+      const arr = [];
+      peerUsers.forEach((email, peer) => {
+        if (channel.getPeers().has(peer)) {
+          arr.push(email);
+        }
+      });
+      result[channel.getName()] = arr;
+    });
+    return result;
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("SEND_USER_MESSAGE"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["SEND_USER_MESSAGE"]>
+  ): Promise<ReturnType<IpcHandler["SEND_USER_MESSAGE"]>> => {
     const [email, message] = args;
     const chat = getChat();
     const peer = peerPrivateUsers.get(email);
@@ -224,8 +263,11 @@ ipcMain.handle(
 );
 
 ipcMain.handle(
-  "SEND_MESSAGE",
-  async (event, ...args: any[]): Promise<any> => {
+  nameofHandler("SEND_CHANNEL_MESSAGE"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["SEND_CHANNEL_MESSAGE"]>
+  ): Promise<ReturnType<IpcHandler["SEND_CHANNEL_MESSAGE"]>> => {
     const [name, message] = args;
     const chat = getChat();
     const channel = findChannel(name);
@@ -237,8 +279,11 @@ ipcMain.handle(
 );
 
 ipcMain.handle(
-  "CREATE_CHANNEL",
-  async (event, ...args: any[]): Promise<any> => {
+  nameofHandler("CREATE_CHANNEL"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["CREATE_CHANNEL"]>
+  ): Promise<ReturnType<IpcHandler["CREATE_CHANNEL"]>> => {
     const [name] = args;
     if (!name) {
       return;

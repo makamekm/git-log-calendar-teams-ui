@@ -8,8 +8,9 @@ import log from "electron-log";
 
 log.hooks.push((message, transport) => {
   if (
-    message?.data[0]?.includes("DeprecationWarning") ||
-    message?.data[0]?.includes("deprecated")
+    message?.data[0]?.includes &&
+    (message?.data[0]?.includes("DeprecationWarning") ||
+      message?.data[0]?.includes("deprecated"))
   ) {
     return false;
   }
