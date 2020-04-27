@@ -170,6 +170,8 @@ export const ipc = {
     ON_DRIVE_UPDATE: channelFactory("ON_DRIVE_UPDATE"),
     ON_COLLECT_FINISH: channelFactory("ON_COLLECT_FINISH"),
     ON_CHANNEL_VERIFYED_MESSAGE: channelFactory("ON_CHANNEL_VERIFYED_MESSAGE"),
+    ON_CHANNEL_AUTH_FAIL: channelFactory("ON_CHANNEL_AUTH_FAIL"),
+    ON_CHANNEL_UPDATE: channelFactory("ON_CHANNEL_UPDATE"),
   },
   handlers: {
     APP_INFO: (

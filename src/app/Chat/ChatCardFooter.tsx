@@ -1,23 +1,48 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { InputGroup, InputGroupAddon, Button, Input } from "~/components";
+import { observer } from "mobx-react";
+import { ChatScreenState } from "./Chat";
+import { ChatService } from "../ChatService";
 
-const ChatCardFooter = () => (
-  <React.Fragment>
-    <InputGroup>
-      <InputGroupAddon addonType="prepend">
-        <Button color="secondary" outline>
-          <i className="fa fa-paperclip"></i>
-        </Button>
-      </InputGroupAddon>
-      <Input placeholder="Your message..." />
-      <InputGroupAddon addonType="append">
-        <Button color="primary" tag={Link} to="/apps/chat">
-          <i className="fas fa-paper-plane"></i>
-        </Button>
-      </InputGroupAddon>
-    </InputGroup>
-  </React.Fragment>
+export const ChatCardFooter = observer(
+  ({ state }: { state: ChatScreenState }) => {
+    const service = React.useContext(ChatService);
+    return (
+      <React.Fragment>
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">
+            <Button color="secondary" outline>
+              <i className="fa fa-paperclip"></i>
+            </Button>
+          </InputGroupAddon>
+          <Input
+            placeholder="Your message..."
+            value={state.text}
+            onChange={(e) => {
+              state.text = e.currentTarget.value;
+            }}
+            onKeyDown={(e) => {
+              if (e.keyCode === 13) {
+                if (state.selectedEmail) {
+                  service.sendUser(state.selectedEmail, state.text);
+                }
+              }
+            }}
+          />
+          <InputGroupAddon addonType="append">
+            <Button
+              color="primary"
+              onClick={() => {
+                if (state.selectedEmail) {
+                  service.sendUser(state.selectedEmail, state.text);
+                }
+              }}
+            >
+              <i className="fas fa-paper-plane"></i>
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </React.Fragment>
+    );
+  }
 );
-
-export { ChatCardFooter };

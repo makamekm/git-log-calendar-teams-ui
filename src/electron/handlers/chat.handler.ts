@@ -303,6 +303,7 @@ ipcMain.handle(
       channel.on("peer-disconnected", (peer) => {
         ipc.sends.ON_CHANNEL_PEER_END(name, peer);
       });
+      ipc.sends.ON_CHANNEL_UPDATE(name);
       return channel.getKey();
     }
     return null;
@@ -318,6 +319,7 @@ ipcMain.handle(
     if (chat && channel) {
       channel.close();
       removeChannel(name);
+      ipc.sends.ON_CHANNEL_UPDATE(name);
       return true;
     }
     return false;

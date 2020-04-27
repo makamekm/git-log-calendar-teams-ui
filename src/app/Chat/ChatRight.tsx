@@ -1,22 +1,24 @@
 import React from "react";
-import faker from "faker/locale/en_US";
 import { Card, Media, AvatarImage, AvatarAddonIcon } from "~/components";
 import { randomArray, randomAvatar } from "~/utilities";
 
 const status = ["warning", "danger", "success", "secondary"];
 
-const ChatRight = (props: { cardClassName?: string }) => (
+const ChatRight: React.FC<{
+  cardClassName?: string;
+  text: any;
+  author: any;
+  date: any;
+}> = (props) => (
   <React.Fragment>
     <Media className="mb-2">
       <Media body>
         <Card body className={`mb-2 ${props.cardClassName}`}>
-          <p className="mb-0">{faker.lorem.paragraph()}</p>
+          <p className="mb-0">{props.text}</p>
         </Card>
         <div className="mb-2 text-right">
-          <span className="text-inverse mr-2">
-            {faker.name.firstName()} {faker.name.firstName()}
-          </span>
-          <span className="small">13-Jun-2015, 08:13</span>
+          <span className="text-inverse mr-2">{props.author}</span>
+          <span className="small">{props.date}</span>
         </div>
       </Media>
       <Media right className="ml-3">
