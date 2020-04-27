@@ -66,8 +66,8 @@ export const getUserConnection = async (
     user &&
     crypto.verify(
       bufferFrom(message),
-      parseKey(signature),
-      parseKey(user.publicKey)
+      bufferFrom(signature),
+      bufferFrom(user.publicKey)
     )
   ) {
     return user;
@@ -122,7 +122,7 @@ export const generateMessage = () => crypto.keyPair().publicKey.toString("hex");
 export const generateUserConnection = (message: string) => {
   const user = getUserSettings();
   const signature = crypto
-    .sign(bufferFrom(message), parseKey(user.userSecretKey))
+    .sign(bufferFrom(message), bufferFrom(user.userSecretKey))
     .toString("hex");
   return {
     email: user.email,
