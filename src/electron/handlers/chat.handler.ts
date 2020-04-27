@@ -43,9 +43,6 @@ const createMainChannel = () => {
       peer.once("disconnected", () => {
         ipc.sends.ON_CHANNEL_PEER_END(MAIN_CHANNEL_NAME, peer);
       });
-      peer.on("data", (data) => {
-        console.log("ON_PEER_DATA", data);
-      });
     });
   }
 };
