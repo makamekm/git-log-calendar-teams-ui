@@ -50,7 +50,7 @@ export const ChatScreen = observer(() => {
                 <ScrollToBottom className={"chat-box"}>
                   {(!service.userMessages[state.selectedEmail] ||
                     service.userMessages[state.selectedEmail].length === 0) && (
-                    <div className="d-flex justify-content-center pt-2 pb-4">
+                    <div className="d-flex justify-content-center pt-1 pb-4">
                       <span>
                         {"<"} No Messages {">"}
                       </span>
@@ -65,6 +65,7 @@ export const ChatScreen = observer(() => {
                               if (message.email === service.self) {
                                 return (
                                   <ChatRight
+                                    key={index}
                                     cardClassName="bg-gray-200 text-dark"
                                     text={message.text}
                                     online
@@ -77,6 +78,7 @@ export const ChatScreen = observer(() => {
                               } else {
                                 return (
                                   <ChatLeft
+                                    key={index}
                                     cardClassName="text-dark"
                                     text={message.text}
                                     online={

@@ -37,10 +37,10 @@ export const ChatLeftNav = observer(({ state }: { state: ChatScreenState }) => {
         <div className="mt-4 mb-2">
           <span className="small">Chat Rooms</span>
         </div>
-        <Nav pills vertical>
+        <Nav pills vertical className="chat-user-list-box">
           {service.users.map((user) => {
             return (
-              <NavItem>
+              <NavItem key={user.email}>
                 <NavLink
                   className="cursor-pointer"
                   active={state.selectedEmail === user.email}
