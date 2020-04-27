@@ -1,5 +1,6 @@
 import { ipcMain, app } from "electron";
 import crypto from "hypercore-crypto";
+import { crypto_generichash, crypto_generichash_BYTES } from "sodium-universal";
 import { UNREGISTERED_SYMBOL, getAuthor } from "./git";
 import { ipc, nameofSends } from "~/shared/ipc";
 import { isExist, readFile, writeFile, parseKey, waitForDrive } from "./drive";
@@ -121,8 +122,10 @@ export const generateMessage = () => crypto.keyPair().publicKey.toString("hex");
 
 export const generateUserConnection = (message: string) => {
   const user = getUserSettings();
+  const key = Buffer.alloc(crypto_generichash_BYTES);
+  crypto_generichash(key, message);
   const signature = crypto
-    .sign(parseKey(message), parseKey(user.userSecretKey))
+    .sign(key, parseKey(user.userSecretKey))
     .toString("hex");
   return {
     email: user.email,
