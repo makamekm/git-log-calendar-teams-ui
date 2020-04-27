@@ -1,6 +1,4 @@
 import React from "react";
-import ScrollToBottom from "react-scroll-to-bottom";
-import moment from "moment";
 import {
   Container,
   Row,
@@ -11,8 +9,6 @@ import {
   CardFooter,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ChatLeft } from "./ChatLeft";
-import { ChatRight } from "./ChatRight";
 import { ChatLeftNav } from "./ChatLeftNav";
 import { ChatCardFooterUser, ChatCardFooterChannel } from "./ChatCardFooter";
 import { ChatCardHeader } from "./ChatCardHeader";
