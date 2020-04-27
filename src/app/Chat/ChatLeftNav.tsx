@@ -12,10 +12,9 @@ import {
   AvatarFont,
 } from "~/components";
 import { observer } from "mobx-react";
-import { ChatScreenState } from "./Chat";
 import { ChatService } from "../ChatService";
 
-export const ChatLeftNav = observer(({ state }: { state: ChatScreenState }) => {
+export const ChatLeftNav = observer(() => {
   const service = React.useContext(ChatService);
   return (
     <React.Fragment>
@@ -43,9 +42,10 @@ export const ChatLeftNav = observer(({ state }: { state: ChatScreenState }) => {
               <NavItem key={user.email}>
                 <NavLink
                   className="cursor-pointer"
-                  active={state.selectedEmail === user.email}
+                  active={service.selectedEmail === user.email}
                   onClick={() => {
-                    state.selectedEmail = user.email;
+                    service.selectedChannel = null;
+                    service.selectedEmail = user.email;
                   }}
                 >
                   <Media>

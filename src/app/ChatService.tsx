@@ -7,10 +7,21 @@ import { ApplicationSettings } from "~/shared/Settings";
 import { JsonCompatible } from "~/shared/Json";
 import { UserConnection } from "~/shared/UserConnection";
 
+const MEMORIZED_TYPES = ["text"];
+const MAX_MESSAGES = 100;
+
 export interface ChatState {
   settings: ApplicationSettings;
   onlineUsers: string[];
   allUsers: UserConnection[];
+  selectedEmail: string;
+  selectedChannel: string;
+  userMapText: {
+    [email: string]: string;
+  };
+  channelMapText: {
+    [name: string]: string;
+  };
   users: (UserConnection & {
     online: boolean;
   })[];
@@ -49,6 +60,7 @@ export interface ChatState {
   update: () => Promise<void>;
   sendChannel: (name: string, text: string) => void;
   sendUser: (name: string, text: string) => void;
+  sendMessage: () => void;
   onMessage: (
     channelName: string,
     email: string,
@@ -56,6 +68,7 @@ export interface ChatState {
     userKey: string,
     data: JsonCompatible
   ) => void;
+  addMessade: (arr, name: string, m) => void;
 }
 
 export const ChatService = createService<ChatState>(
@@ -65,6 +78,10 @@ export const ChatService = createService<ChatState>(
       get self() {
         return state.settings?.email;
       },
+      selectedEmail: null,
+      selectedChannel: null,
+      userMapText: {},
+      channelMapText: {},
       allUsers: [],
       onlineUsers: [],
       get users() {
@@ -114,6 +131,13 @@ export const ChatService = createService<ChatState>(
         state.onlineUsers = await ipc.handlers.GET_ONLINE_USERS();
         state.channels = await ipc.handlers.GET_CHANNELS();
       },
+      addMessade: (arr, name, m) => {
+        if (!arr[name]) {
+          arr[name] = [];
+        }
+        arr[name].length = Math.min(arr[name].length, MAX_MESSAGES - 1);
+        arr[name].unshift(m);
+      },
       sendChannel: async (name, text) => {
         const message = {
           type: "text",
@@ -121,10 +145,7 @@ export const ChatService = createService<ChatState>(
           timestamp: +new Date(),
         };
         await ipc.handlers.SEND_CHANNEL_MESSAGE(name, message);
-        if (!state.channelMessages[name]) {
-          state.channelMessages[name] = [];
-        }
-        state.channelMessages[name].unshift({
+        state.addMessade(state.channelMessages, name, {
           ...message,
           email: state.settings?.email,
           name: state.settings?.name,
@@ -138,15 +159,31 @@ export const ChatService = createService<ChatState>(
           timestamp: +new Date(),
         };
         await ipc.handlers.SEND_USER_MESSAGE(email, message);
-        if (!state.userMessages[email]) {
-          state.userMessages[email] = [];
-        }
-        state.userMessages[email].unshift({
+        state.addMessade(state.userMessages, email, {
           ...message,
           email: state.settings?.email,
           name: state.settings?.name,
           userKey: null,
         });
+      },
+      sendMessage: () => {
+        if (state.selectedEmail) {
+          if (state.userMapText[state.selectedEmail]) {
+            state.sendUser(
+              state.selectedEmail,
+              state.userMapText[state.selectedEmail]
+            );
+            state.userMapText[state.selectedEmail] = "";
+          }
+        } else if (state.selectedChannel) {
+          if (state.userMapText[state.selectedChannel]) {
+            state.sendChannel(
+              state.selectedChannel,
+              state.channelMapText[state.selectedChannel]
+            );
+            state.channelMapText[state.selectedChannel] = "";
+          }
+        }
       },
       onMessage: (
         channelName: string,
@@ -156,29 +193,27 @@ export const ChatService = createService<ChatState>(
         data: JsonCompatible
       ) => {
         if (channelName) {
-          if (!state.channelMessages[channelName]) {
-            state.channelMessages[channelName] = [];
+          if (MEMORIZED_TYPES.includes(data.type)) {
+            state.addMessade(state.channelMessages, channelName, {
+              type: data.type,
+              timestamp: data.timestamp,
+              text: data.text,
+              email,
+              name,
+              userKey,
+            });
           }
-          state.channelMessages[channelName].unshift({
-            type: data.type,
-            timestamp: data.timestamp,
-            text: data.text,
-            email,
-            name,
-            userKey,
-          });
         } else {
-          if (!state.userMessages[email]) {
-            state.userMessages[email] = [];
+          if (MEMORIZED_TYPES.includes(data.type)) {
+            state.addMessade(state.userMessages, email, {
+              type: data.type,
+              timestamp: data.timestamp,
+              text: data.text,
+              email,
+              name,
+              userKey,
+            });
           }
-          state.userMessages[email].unshift({
-            type: data.type,
-            timestamp: data.timestamp,
-            text: data.text,
-            email,
-            name,
-            userKey,
-          });
         }
       },
     }));

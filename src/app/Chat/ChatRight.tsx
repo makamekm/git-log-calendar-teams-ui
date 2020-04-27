@@ -12,7 +12,9 @@ const ChatRight: React.FC<{
     <Media className="mb-2">
       <Media body>
         <Card body className={`mb-2 ${props.cardClassName}`}>
-          <p className="mb-0">{props.text}</p>
+          <div className="d-flex justify-content-end">
+            <div>{props.text}</div>
+          </div>
         </Card>
         <div className="mb-2 text-right">
           <span className="text-inverse mr-2">{props.author}</span>

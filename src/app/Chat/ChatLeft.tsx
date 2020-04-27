@@ -27,7 +27,9 @@ const ChatLeft: React.FC<{
       </Media>
       <Media body>
         <Card body className={`mb-2 ${props.cardClassName}`}>
-          <p className="mb-0">{props.text}</p>
+          <div className="d-flex justify-content-start">
+            <div>{props.text}</div>
+          </div>
         </Card>
         <div className="mb-2">
           <span className="text-inverse mr-2">{props.author}</span>

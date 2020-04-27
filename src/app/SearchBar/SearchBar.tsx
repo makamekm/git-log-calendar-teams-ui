@@ -68,6 +68,7 @@ export const SearchBar = observer(() => {
           placeholder="Search..."
           renderMenu={TypeaheadMenu as any}
           selected={[]}
+          open={isFocus}
           labelKey="name"
           onKeyDown={service.reload}
           onBlur={() => {
