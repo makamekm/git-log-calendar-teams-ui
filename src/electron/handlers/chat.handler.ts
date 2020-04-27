@@ -9,6 +9,7 @@ import {
   registerUserConnection,
   generateUserConnection,
   generateMessage,
+  updateUserConnectionData,
 } from "../users";
 import { getUserSettings } from "./auth.handler";
 
@@ -141,6 +142,9 @@ app.on("ready", () => {
       } else {
         const email = peerUsers.get(peer);
         if (email) {
+          if (data.author?.name) {
+            await updateUserConnectionData(email, data.author.name);
+          }
           // OK
           console.log("ON_CHANNEL_VERIFYED_MESSAGE", channelName, email, data);
           // ipc.sends.ON_CHANNEL_VERIFYED_MESSAGE(channelName, email, data);
@@ -153,31 +157,6 @@ app.on("ready", () => {
     createMainChannel();
   });
 });
-
-// const IDENTIFY_MESSAGE = "whoareyou";
-// const keyPair = crypto.keyPair();
-// const secretWord = "fsfasdfasdf";
-
-// const signature = crypto.sign(
-//   bufferFrom(md5(keyPair.publicKey)),
-//   keyPair.secretKey
-// );
-
-// const checkWord = md5(secretWord);
-
-// console.log(
-//   "HERE",
-//   signature.toString("hex"),
-//   crypto.verify(
-//     bufferFrom(md5(keyPair.publicKey)),
-//     signature,
-//     keyPair.publicKey
-//   )
-// );
-
-// userId === signature
-// public: signature, userKey, keyPair.publicKey
-// private: signature, userKey, keyPair.publicKey, keyPair.secretKey
 
 const setChannels = (arr: Channel[]) => {
   settings.set(

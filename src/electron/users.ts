@@ -87,10 +87,10 @@ export const registerUserConnection = async (user: UserConnection) => {
   }
 };
 
-export const updateUserConnection = async (user: UserConnection) => {
+export const updateUserConnectionData = async (email: string, name: string) => {
   const users = await getUsers();
-  if (users[user.email]) {
-    users[user.email] = user;
+  if (users[email] && users[email].name !== name) {
+    users[email].name = name;
     await saveUsersCache();
   }
 };
