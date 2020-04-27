@@ -76,7 +76,6 @@ export const getUserConnection = async (
 
 export const registerUserConnection = async (user: UserConnection) => {
   const users = await getUsers();
-
   if (!user.email || !user.publicKey) {
     return;
   }

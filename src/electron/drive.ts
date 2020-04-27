@@ -138,6 +138,17 @@ export const emptyDir = async (dirPath) => {
   }
 };
 
+export const closeChat = () => {
+  try {
+    if (chat) {
+      chat.destroy();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  chat = null;
+};
+
 export const closeDrive = () => {
   if (drive) {
     try {

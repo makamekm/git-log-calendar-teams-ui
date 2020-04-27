@@ -29,8 +29,6 @@ export class Chat extends EventEmitter {
     const key = Buffer.alloc(crypto_generichash_BYTES);
     crypto_generichash(key, name + this.baseKey);
     const keyString = key.toString("hex");
-    console.log(keyString);
-
     const channel = new Channel(this, keyString, name);
     this.channels.add(channel);
 

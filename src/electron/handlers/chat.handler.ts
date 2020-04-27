@@ -1,6 +1,6 @@
 import { app, ipcMain } from "electron";
 import settings from "electron-settings";
-import { getChat } from "../drive";
+import { getChat, closeChat } from "../drive";
 import { Channel, Peer } from "../chat/chat";
 import { ipc, nameofSends } from "~/shared/ipc";
 import { JsonCompatible } from "~/shared/Json";
@@ -20,6 +20,20 @@ let channels: Channel[] = [];
 let peerUsers = new Map<Peer, string>();
 let peerMessage = new Map<Peer, string>();
 
+const destroyChat = () => {
+  channels = [];
+  peerPrivateUsers = new Map();
+  peerUsers = new Map();
+  peerMessage = new Map();
+  if (mainChannel) {
+    if (!mainChannel.isClosed()) {
+      mainChannel.close();
+    }
+    mainChannel = null;
+  }
+  closeChat();
+};
+
 const createMainChannel = () => {
   channels = [];
   peerPrivateUsers = new Map();
@@ -35,7 +49,6 @@ const createMainChannel = () => {
   if (chat) {
     mainChannel = chat.channel(MAIN_CHANNEL_NAME);
     mainChannel.on("message", (peer, data) => {
-      console.log("ON_CHANNEL_MESSAGE", data);
       ipc.sends.ON_CHANNEL_MESSAGE(MAIN_CHANNEL_NAME, peer, data);
     });
     mainChannel.on("peer", (peer) => {
@@ -84,8 +97,10 @@ app.on("ready", () => {
       if (!channel && channelName !== MAIN_CHANNEL_NAME) {
         return;
       }
-      console.log("message", channelName, data);
-      if (data.type === "meet") {
+      if (data.type === "auth_fail") {
+        console.log("ON_AUTH_FAIL", channelName, data.from);
+        destroyChat();
+      } else if (data.type === "meet") {
         const userConnection = generateUserConnection(data.message);
         peer.send({
           type: "auth",
