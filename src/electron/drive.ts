@@ -2,7 +2,7 @@ import hyperdrive from "hyperdrive";
 import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
-import { app } from "electron";
+import { app, ipcMain } from "electron";
 import md5 from "md5";
 import hyperswarm from "hyperswarm";
 import pump from "pump";
@@ -12,6 +12,7 @@ import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 import { Chat } from "./chat/chat";
 import { ipc } from "~/shared/ipc";
 import { ApplicationSettings } from "~/shared/Settings";
+import { getUserSettings } from "./handlers/auth.handler";
 
 export const generateDriveKeys = () => {
   const keyPair = crypto.keyPair();
@@ -232,6 +233,12 @@ export const saveSettings = ({
   createDrive();
 };
 
+app.on("ready", () => {
+  ipcMain.on("ON_CHANGE_USER", () => {
+    createDrive();
+  });
+});
+
 export const createDrive = () => {
   inited = false;
   closeDrive();
@@ -241,8 +248,12 @@ export const createDrive = () => {
   });
   if (useDriveSwarm) {
     swarm = hyperswarm();
+
     if (settings.get("communicationKey")) {
-      chat = new Chat(settings.get("communicationKey"));
+      const user = getUserSettings();
+      if (user) {
+        chat = new Chat(settings.get("communicationKey"));
+      }
     }
 
     drive.on("ready", () => {

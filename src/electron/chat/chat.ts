@@ -123,7 +123,7 @@ export class Channel extends EventEmitter {
   }
 }
 
-class Peer extends EventEmitter {
+export class Peer extends EventEmitter {
   private connection;
   private incoming = ndjson.parse();
   private outgoing = ndjson.stringify();
@@ -175,6 +175,7 @@ class Peer extends EventEmitter {
   }
 
   destroy() {
+    this.emit("end", this);
     this.connection.end();
   }
 }

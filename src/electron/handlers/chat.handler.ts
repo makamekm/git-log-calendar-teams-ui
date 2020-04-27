@@ -1,39 +1,105 @@
 import { app, ipcMain } from "electron";
 import settings from "electron-settings";
-import crypto from "hypercore-crypto";
-import md5 from "md5";
-import bufferFrom from "buffer-from";
-// import { nameofHandler, Ipc } from "~/shared/ipc";
 import { getChat } from "../drive";
-import { Channel } from "../chat/chat";
+import { Channel, Peer } from "../chat/chat";
 import { ipc, nameofSends } from "~/shared/ipc";
+import { JsonCompatible } from "~/shared/Json";
+import {
+  getUserConnection,
+  registerUserConnection,
+  generateUserConnection,
+  generateMessage,
+} from "../users";
 
 let channels: Channel[] = [];
 
+const peerUsers = new Map<Peer, string>();
+const peerMessage = new Map<Peer, string>();
+
+app.on("ready", () => {
+  ipcMain.on("ON_PEER_START", (event, channelName: string, peer: Peer) => {
+    const channel = findChannel(channelName);
+    if (!channel) {
+      return;
+    }
+    const message = generateMessage();
+    peerMessage.set(peer, message);
+    peer.send({
+      type: "meet",
+      message,
+    });
+  });
+  ipcMain.on("ON_PEER_END", (event, channelName: string, peer: Peer) => {
+    peerMessage.delete(peer);
+    peerUsers.delete(peer);
+  });
+  ipcMain.on(
+    "ON_CHANNEL_MESSAGE",
+    async (event, channelName: string, peer: Peer, data: JsonCompatible) => {
+      const channel = findChannel(channelName);
+      if (!channel) {
+        return;
+      }
+      if (data.type === "meet") {
+        const userConnection = generateUserConnection(data.message);
+        peer.send({
+          type: "auth",
+          ...userConnection,
+        });
+      } else if (data.type === "auth") {
+        const email = data.email;
+        const name = data.name;
+        const publicKey = data.publicKey;
+        const signature = data.signature;
+        const message = peerMessage.get(peer);
+        if (email && name && publicKey && signature && message) {
+          let user =
+            (await getUserConnection(email, message, signature)) ||
+            (await registerUserConnection({
+              email,
+              name,
+              publicKey,
+            }));
+          if (user) {
+            peerUsers.set(peer, email);
+            return;
+          }
+        }
+        peer.destroy();
+      } else {
+        const userName = peerUsers.get(peer);
+        if (userName) {
+          // OK
+        }
+      }
+    }
+  );
+});
+
 // const IDENTIFY_MESSAGE = "whoareyou";
-const userKey = "makame";
-const keyPair = crypto.keyPair();
+// const keyPair = crypto.keyPair();
+// const secretWord = "fsfasdfasdf";
 
-const signature = crypto.sign(
-  bufferFrom(md5(keyPair.publicKey)),
-  keyPair.secretKey
-);
+// const signature = crypto.sign(
+//   bufferFrom(md5(keyPair.publicKey)),
+//   keyPair.secretKey
+// );
 
-console.log(
-  "HERE",
-  signature.toString("hex"),
-  crypto.verify(
-    bufferFrom(md5(keyPair.publicKey)),
-    signature,
-    keyPair.publicKey
-  )
-);
+// const checkWord = md5(secretWord);
+
+// console.log(
+//   "HERE",
+//   signature.toString("hex"),
+//   crypto.verify(
+//     bufferFrom(md5(keyPair.publicKey)),
+//     signature,
+//     keyPair.publicKey
+//   )
+// );
 
 // userId === signature
 // public: signature, userKey, keyPair.publicKey
 // private: signature, userKey, keyPair.publicKey, keyPair.secretKey
-
-console.log();
 
 const setChannels = (arr: Channel[]) => {
   settings.set(
@@ -61,7 +127,7 @@ const getChannels = (): Channel[] => {
   return channels;
 };
 
-const findChannel = (name: string): Channel => {
+export const findChannel = (name: string): Channel => {
   return getChannels().find((channel) => channel.getName() === name);
 };
 
@@ -86,7 +152,7 @@ ipcMain.handle(
     const channel = findChannel(name);
     const user = await ipc.handlers.GET_USER();
     if (chat && channel && user) {
-      channel.send({ author: user, ...message });
+      channel.send({ ...message, author: user });
     }
   }
 );
@@ -102,7 +168,13 @@ ipcMain.handle(
       const channel = chat.channel(name);
       channels.push(channel);
       channel.on("message", (peer, data) => {
-        ipc.sends.ON_CHANNEL_MESSAGE(peer, data);
+        ipc.sends.ON_CHANNEL_MESSAGE(name, peer, data);
+      });
+      channel.on("peer", (peer) => {
+        ipc.sends.ON_CHANNEL_PEER_START(name, peer);
+        peer.once("end", () => {
+          ipc.sends.ON_CHANNEL_PEER_END(name, peer);
+        });
       });
       return channel.getKey();
     }

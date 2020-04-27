@@ -105,8 +105,19 @@ export interface IpcHandler {
   };
   GET_CONFIG: (force?: boolean) => Config;
   SAVE_CONFIG: (config: Config) => void;
-  GET_USER: () => { email: string; name: string };
-  SAVE_USER: (user: { email: string; name: string }) => void;
+  GET_USER: () => {
+    email: string;
+    name: string;
+    userKey: string;
+    publicKey: string;
+    secretKey: string;
+  };
+  SAVE_USER: (user: {
+    email: string;
+    name: string;
+    publicKey: string;
+    secretKey: string;
+  }) => void;
   LOG: (
     log: any,
     level?: "info" | "warn" | "error" | "verbose" | "debug" | "silly"
@@ -242,7 +253,11 @@ export const ipc = {
     ON_DRIVE_UPDATE: () => ipcRenderer.send(nameofSends("ON_DRIVE_UPDATE")),
     ON_COLLECT_FINISH: () => ipcRenderer.send(nameofSends("ON_COLLECT_FINISH")),
     ON_CHANGE_USER: () => ipcRenderer.send(nameofSends("ON_CHANGE_USER")),
-    ON_CHANNEL_MESSAGE: (peer, data: Json) =>
-      ipcRenderer.send(nameofSends("ON_CHANNEL_MESSAGE"), peer, data),
+    ON_CHANNEL_MESSAGE: (channel: string, peer, data: Json) =>
+      ipcRenderer.send(nameofSends("ON_CHANNEL_MESSAGE"), channel, peer, data),
+    ON_CHANNEL_PEER_START: (channel: string, peer) =>
+      ipcRenderer.send(nameofSends("ON_CHANNEL_PEER_START"), channel, peer),
+    ON_CHANNEL_PEER_END: (channel: string, peer) =>
+      ipcRenderer.send(nameofSends("ON_CHANNEL_PEER_END"), channel, peer),
   },
 };

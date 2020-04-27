@@ -1,28 +1,36 @@
 import { ipcMain } from "electron";
+import crypto from "hypercore-crypto";
 import settings from "electron-settings";
-import { UNREGISTERED_SYMBOL, getAuthor } from "../git";
 import { IpcHandler, ipc, nameofHandler } from "~/shared/ipc";
+import { getUserKey } from "../users";
 
-const users: {
-  [signature: string]: {
-    userKey: string;
-    email: string;
-    name: string;
+export const getUserKeys = () => {
+  if (!settings.get("userPublicKey") || !settings.get("userSecretKey")) {
+    const keyPair = crypto.keyPair();
+    settings.set("userPublicKey", keyPair.publicKey.toString("hex"));
+    settings.set("userSecretKey", keyPair.secretKey.toString("hex"));
+  }
+  return {
+    publicKey: settings.get("userPublicKey"),
+    secretKey: settings.get("userSecretKey"),
   };
-} = {};
+};
 
-export const getUser = async () => {
+export const getUserSettings = () => {
   const name = settings.get("name");
   const email = settings.get("email");
+  const keyPair = getUserKeys();
+  const publicKey = keyPair.publicKey;
+  const secretKey = keyPair.secretKey;
   if (!name || !email) {
     return null;
   }
-  const config = await ipc.handlers.GET_CONFIG();
-  const user = getAuthor(config.users, email, name);
-  return (
-    (user && user.name) ||
-    `${email.toLowerCase()} ${name.toLowerCase()} ${UNREGISTERED_SYMBOL}`
-  );
+  return {
+    name,
+    email,
+    publicKey,
+    secretKey,
+  };
 };
 
 ipcMain.handle(
@@ -31,9 +39,11 @@ ipcMain.handle(
     event,
     ...args: Parameters<IpcHandler["SAVE_USER"]>
   ): Promise<ReturnType<IpcHandler["SAVE_USER"]>> => {
-    const [{ name, email }] = args;
-    settings.set("name", name);
+    const [{ email, name, publicKey, secretKey }] = args;
     settings.set("email", email);
+    settings.set("name", name);
+    settings.set("userPublicKey", publicKey);
+    settings.set("userSecretKey", secretKey);
     ipc.sends.ON_CHANGE_USER();
   }
 );
@@ -44,11 +54,12 @@ ipcMain.handle(
     event,
     ...args: Parameters<IpcHandler["GET_USER"]>
   ): Promise<ReturnType<IpcHandler["GET_USER"]>> => {
-    const name = settings.get("name");
-    const email = settings.get("email");
-    return {
-      name,
-      email,
-    };
+    const user = getUserSettings();
+    return user
+      ? {
+          ...user,
+          userKey: await getUserKey(user.email, user.name),
+        }
+      : null;
   }
 );
