@@ -77,8 +77,6 @@ export const getUserConnection = async (
 export const registerUserConnection = async (user: UserConnection) => {
   const users = await getUsers();
 
-  console.log(users);
-
   if (!user.email || !user.publicKey) {
     return;
   }
@@ -87,6 +85,7 @@ export const registerUserConnection = async (user: UserConnection) => {
   } else {
     users[user.email] = user;
     await saveUsersCache();
+    return user;
   }
 };
 
