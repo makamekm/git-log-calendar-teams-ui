@@ -125,7 +125,7 @@ export const RepositoryDashboard = observer(() => {
   useOnLoad(onLoad);
 
   return (
-    <Container>
+    <Container className="pb-4">
       <WithLayoutMeta
         meta={{
           pageTitle: `${repositoryName} #repository`,

@@ -64,6 +64,7 @@
 
   &__content {
     padding: 1.5rem;
+    padding-bottom: 0;
 
     @media (max-width: breakpoint-max("md", $grid-breakpoints)) {
       padding: 0.5rem;

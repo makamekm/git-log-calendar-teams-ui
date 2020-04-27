@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Media, AvatarImage, AvatarAddonIcon } from "~/components";
-import { randomArray, randomAvatar } from "~/utilities";
+import { Card, Media, AvatarAddonIcon, AvatarFont } from "~/components";
 
 const status = ["warning", "danger", "success", "secondary"];
 
@@ -9,6 +8,7 @@ const ChatRight: React.FC<{
   text: any;
   author: any;
   date: any;
+  online?: boolean;
 }> = (props) => (
   <React.Fragment>
     <Media className="mb-2">
@@ -22,23 +22,19 @@ const ChatRight: React.FC<{
         </div>
       </Media>
       <Media right className="ml-3">
-        <AvatarImage
+        <AvatarFont
+          bgColor="info"
           size="md"
-          src={randomAvatar()}
-          className="mr-2"
           addOns={[
             <AvatarAddonIcon
               className="fa fa-circle"
-              color="white"
-              key="avatar-icon-bg"
-            />,
-            <AvatarAddonIcon
-              className="fa fa-circle"
-              color={randomArray(status)}
+              color={props.online ? "success" : "danger"}
               key="avatar-icon-fg"
             />,
           ]}
-        />
+        >
+          {props.author.substr(0, 2).toUpperCase()}
+        </AvatarFont>
       </Media>
     </Media>
   </React.Fragment>

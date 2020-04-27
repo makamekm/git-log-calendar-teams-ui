@@ -1,4 +1,6 @@
 import React from "react";
+import ScrollToBottom from "react-scroll-to-bottom";
+import moment from "moment";
 import {
   Container,
   Row,
@@ -38,43 +40,65 @@ export const ChatScreen = observer(() => {
             <ChatLeftNav state={state} />
           </Col>
           <Col lg={9}>
-            <Card className="mb-3">
-              <CardHeader className="d-flex bb-0 bg-white">
-                <ChatCardHeader state={state} />
-              </CardHeader>
-              <CardBody>
-                {!!state.selectedEmail &&
-                  service.userMessages[state.selectedEmail] && (
-                    <>
-                      {service.userMessages[state.selectedEmail].map(
-                        (message, index) => {
-                          if (message.type === "text") {
-                            if (message.email === service.self) {
-                              return (
-                                <ChatLeft
-                                  cardClassName="text-dark"
-                                  text={message.text}
-                                  date={message.timestamp}
-                                  author={message.email}
-                                />
-                              );
-                            } else {
-                              return (
-                                <ChatRight
-                                  cardClassName="text-dark"
-                                  text={message.text}
-                                  date={message.timestamp}
-                                  author={message.email}
-                                />
-                              );
-                            }
-                          }
-                          return <React.Fragment key={index} />;
-                        }
-                      )}
-                    </>
+            <Card className="mb-0">
+              {!!state.selectedEmail && (
+                <CardHeader className="d-flex bb-0 bg-white">
+                  <ChatCardHeader state={state} />
+                </CardHeader>
+              )}
+              {!!state.selectedEmail && (
+                <ScrollToBottom className={"chat-box"}>
+                  {(!service.userMessages[state.selectedEmail] ||
+                    service.userMessages[state.selectedEmail].length === 0) && (
+                    <div className="d-flex justify-content-center">
+                      <span>
+                        {"<"} No Messages {">"}
+                      </span>
+                    </div>
                   )}
-                {/* <ChatLeft cardClassName="bg-gray-300 b-0 text-dark" />
+                  <div className="px-3">
+                    {service.userMessages[state.selectedEmail] && (
+                      <>
+                        {service.userMessages[state.selectedEmail].map(
+                          (message, index) => {
+                            if (message.type === "text") {
+                              if (message.email === service.self) {
+                                return (
+                                  <ChatRight
+                                    cardClassName="bg-gray-200 text-dark"
+                                    text={message.text}
+                                    online={
+                                      service.userMap[message.email]?.online
+                                    }
+                                    date={moment(message.timestamp).format(
+                                      "DD/MM/YYYY hh:mm:ss"
+                                    )}
+                                    author={message.email}
+                                  />
+                                );
+                              } else {
+                                return (
+                                  <ChatLeft
+                                    cardClassName="text-dark"
+                                    text={message.text}
+                                    online={
+                                      service.userMap[message.email]?.online
+                                    }
+                                    date={moment(message.timestamp).format(
+                                      "DD/MM/YYYY hh:mm:ss"
+                                    )}
+                                    author={message.email}
+                                  />
+                                );
+                              }
+                            }
+                            return <React.Fragment key={index} />;
+                          }
+                        )}
+                      </>
+                    )}
+                  </div>
+                  {/* <ChatLeft cardClassName="bg-gray-300 b-0 text-dark" />
                 <ChatRight cardClassName="text-dark" />
                 <ChatLeft cardClassName="bg-gray-300 b-0 text-dark" />
                 <ChatRight cardClassName="text-dark" />
@@ -82,10 +106,20 @@ export const ChatScreen = observer(() => {
                 <ChatLeft cardClassName="bg-gray-300 b-0 text-dark" />
                 <ChatRight cardClassName="text-dark" />
                 <ChatLeft cardClassName="bg-gray-300 b-0 text-dark" /> */}
-              </CardBody>
-              <CardFooter>
-                <ChatCardFooter state={state} />
-              </CardFooter>
+                </ScrollToBottom>
+              )}
+              {!!state.selectedEmail && (
+                <CardFooter>
+                  <ChatCardFooter state={state} />
+                </CardFooter>
+              )}
+              {!state.selectedEmail && (
+                <CardBody className="d-flex justify-content-center">
+                  <span>
+                    {"<"} Select Chat Room {">"}
+                  </span>
+                </CardBody>
+              )}
             </Card>
           </Col>
         </Row>

@@ -264,7 +264,7 @@ export const Settings = observer(() => {
   useDelay(state, "isLoading", "isLoadingDelay");
 
   return (
-    <Container>
+    <Container className="pb-4">
       <WithLayoutMeta
         meta={{
           pageTitle: "Settings",

@@ -5,10 +5,20 @@ import { useDelay, useOnLoad } from "~/hooks";
 import { ipc, IpcHandler } from "~/shared/ipc";
 import { ApplicationSettings } from "~/shared/Settings";
 import { JsonCompatible } from "~/shared/Json";
+import { UserConnection } from "~/shared/UserConnection";
 
 export interface ChatState {
   settings: ApplicationSettings;
-  users: string[];
+  onlineUsers: string[];
+  allUsers: UserConnection[];
+  users: (UserConnection & {
+    online: boolean;
+  })[];
+  userMap: {
+    [email: string]: UserConnection & {
+      online: boolean;
+    };
+  };
   self: string;
   userMessages: {
     [email: string]: {
@@ -55,7 +65,24 @@ export const ChatService = createService<ChatState>(
       get self() {
         return state.settings?.email;
       },
-      users: [],
+      allUsers: [],
+      onlineUsers: [],
+      get users() {
+        return state.allUsers
+          .filter((user) => user.email !== state.self)
+          .map((user) => ({
+            ...user,
+            online: state.onlineUsers.includes(user.email),
+          }))
+          .sort((a, b) => (!a.online && b.online ? 1 : -1));
+      },
+      get userMap() {
+        const res = {};
+        state.users.forEach((user) => {
+          res[user.email] = user;
+        });
+        return res;
+      },
       channels: {},
       get channelList() {
         return Object.keys(state.channels);
@@ -77,12 +104,14 @@ export const ChatService = createService<ChatState>(
       load: async () => {
         state.isLoading = true;
         state.settings = await ipc.handlers.GET_SETTINGS();
-        state.users = await ipc.handlers.GET_ONLINE_USERS();
+        state.allUsers = await ipc.handlers.GET_USERS();
+        state.onlineUsers = await ipc.handlers.GET_ONLINE_USERS();
         state.channels = await ipc.handlers.GET_CHANNELS();
         state.isLoading = false;
       },
       update: async () => {
-        state.users = await ipc.handlers.GET_ONLINE_USERS();
+        state.allUsers = await ipc.handlers.GET_USERS();
+        state.onlineUsers = await ipc.handlers.GET_ONLINE_USERS();
         state.channels = await ipc.handlers.GET_CHANNELS();
       },
       sendChannel: async (name, text) => {
@@ -127,6 +156,9 @@ export const ChatService = createService<ChatState>(
         data: JsonCompatible
       ) => {
         if (channelName) {
+          if (!state.channelMessages[channelName]) {
+            state.channelMessages[channelName] = [];
+          }
           state.channelMessages[channelName].unshift({
             type: data.type,
             timestamp: data.timestamp,
@@ -136,6 +168,9 @@ export const ChatService = createService<ChatState>(
             userKey,
           });
         } else {
+          if (!state.userMessages[channelName]) {
+            state.userMessages[channelName] = [];
+          }
           state.userMessages[email].unshift({
             type: data.type,
             timestamp: data.timestamp,

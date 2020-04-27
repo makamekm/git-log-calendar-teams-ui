@@ -27,3 +27,12 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.chat-box {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 80vh;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+}

@@ -38,7 +38,7 @@ export const UserDashboard = observer(() => {
   useOnLoad(onLoad);
 
   return (
-    <Container>
+    <Container className="pb-4">
       <WithLayoutMeta
         meta={{
           pageTitle: `${userName} #user`,

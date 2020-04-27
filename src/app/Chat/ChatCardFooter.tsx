@@ -16,8 +16,9 @@ export const ChatCardFooter = observer(
             </Button>
           </InputGroupAddon>
           <Input
+            disabled={!state.selectedEmail}
             placeholder="Your message..."
-            value={state.text}
+            value={state.selectedEmail ? state.text : ""}
             onChange={(e) => {
               state.text = e.currentTarget.value;
             }}
@@ -25,6 +26,7 @@ export const ChatCardFooter = observer(
               if (e.keyCode === 13) {
                 if (state.selectedEmail) {
                   service.sendUser(state.selectedEmail, state.text);
+                  state.text = "";
                 }
               }
             }}
@@ -35,6 +37,7 @@ export const ChatCardFooter = observer(
               onClick={() => {
                 if (state.selectedEmail) {
                   service.sendUser(state.selectedEmail, state.text);
+                  state.text = "";
                 }
               }}
             >

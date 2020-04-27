@@ -13,9 +13,7 @@ export const ChatCardHeader = observer(
   ({ state }: { state: ChatScreenState }) => {
     return (
       <React.Fragment>
-        <h6 className="align-self-center mb-0">
-          Chat with {state.selectedEmail}
-        </h6>
+        <h6 className="align-self-center mb-0">{state.selectedEmail}</h6>
         <UncontrolledButtonDropdown className="align-self-center ml-auto">
           <DropdownToggle
             color="link"

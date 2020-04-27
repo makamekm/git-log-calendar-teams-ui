@@ -1,35 +1,29 @@
 import React from "react";
-import { Card, Media, AvatarAddonIcon, AvatarImage } from "~/components";
-import { randomArray, randomAvatar } from "~/utilities";
-
-const status = ["warning", "danger", "success", "secondary"];
+import { Card, Media, AvatarAddonIcon, AvatarFont } from "~/components";
 
 const ChatLeft: React.FC<{
   cardClassName?: string;
   text: any;
   author: any;
   date: any;
+  online?: boolean;
 }> = (props) => (
   <React.Fragment>
     <Media className="mb-2">
       <Media left className="mr-3">
-        <AvatarImage
+        <AvatarFont
+          bgColor="info"
           size="md"
-          src={randomAvatar()}
-          className="mr-2"
           addOns={[
             <AvatarAddonIcon
               className="fa fa-circle"
-              color="white"
-              key="avatar-icon-bg"
-            />,
-            <AvatarAddonIcon
-              className="fa fa-circle"
-              color={randomArray(status)}
+              color={props.online ? "success" : "danger"}
               key="avatar-icon-fg"
             />,
           ]}
-        />
+        >
+          {props.author.substr(0, 2).toUpperCase()}
+        </AvatarFont>
       </Media>
       <Media body>
         <Card body className={`mb-2 ${props.cardClassName}`}>

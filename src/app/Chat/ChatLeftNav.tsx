@@ -1,5 +1,4 @@
 import React from "react";
-import faker from "faker/locale/en_US";
 import {
   Nav,
   NavItem,
@@ -10,9 +9,8 @@ import {
   Button,
   NavLink,
   AvatarAddonIcon,
-  AvatarImage,
+  AvatarFont,
 } from "~/components";
-import { randomAvatar } from "~/utilities";
 import { observer } from "mobx-react";
 import { ChatScreenState } from "./Chat";
 import { ChatService } from "../ChatService";
@@ -25,10 +23,10 @@ export const ChatLeftNav = observer(({ state }: { state: ChatScreenState }) => {
       <div className="mb-4">
         {/* <div className="small mb-3">Search</div> */}
         <InputGroup>
-          <Input placeholder="Add Chat..." />
+          <Input placeholder="Add Room..." />
           <InputGroupAddon addonType="append">
             <Button outline color="secondary">
-              <i className="fa fa-search"></i>
+              <i className="fa fa-plus"></i>
             </Button>
           </InputGroupAddon>
         </InputGroup>
@@ -40,36 +38,34 @@ export const ChatLeftNav = observer(({ state }: { state: ChatScreenState }) => {
           <span className="small">Chat Rooms</span>
         </div>
         <Nav pills vertical>
-          {service.users.map((email) => {
+          {service.users.map((user) => {
             return (
               <NavItem>
                 <NavLink
-                  active={state.selectedEmail === email}
+                  className="cursor-pointer"
+                  active={state.selectedEmail === user.email}
                   onClick={() => {
-                    state.selectedEmail = email;
+                    state.selectedEmail = user.email;
                   }}
                 >
                   <Media>
                     <Media left className="align-self-start mr-3">
-                      <AvatarImage
+                      <AvatarFont
+                        bgColor="info"
                         size="sm"
-                        src={randomAvatar()}
                         addOns={[
                           <AvatarAddonIcon
                             className="fa fa-circle"
-                            color="primary"
-                            key="avatar-icon-bg"
-                          />,
-                          <AvatarAddonIcon
-                            className="fa fa-circle"
-                            color="danger"
+                            color={user.online ? "success" : "danger"}
                             key="avatar-icon-fg"
                           />,
                         ]}
-                      />
+                      >
+                        {user.email.substr(0, 2).toUpperCase()}
+                      </AvatarFont>
                     </Media>
                     <Media body>
-                      <div className="mt-0 d-flex">{email}</div>
+                      <div className="mt-0 d-flex">{user.email}</div>
                       {/* <span className="small">{faker.address.country()}</span> */}
                     </Media>
                   </Media>
