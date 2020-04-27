@@ -34,6 +34,15 @@ const createMainChannel = () => {
   const chat = getChat();
   if (chat) {
     mainChannel = chat.channel(MAIN_CHANNEL_NAME);
+    mainChannel.on("message", (peer, data) => {
+      ipc.sends.ON_CHANNEL_MESSAGE(MAIN_CHANNEL_NAME, peer, data.message);
+    });
+    mainChannel.on("peer", (peer) => {
+      ipc.sends.ON_CHANNEL_PEER_START(MAIN_CHANNEL_NAME, peer);
+      peer.once("end", () => {
+        ipc.sends.ON_CHANNEL_PEER_END(MAIN_CHANNEL_NAME, peer);
+      });
+    });
   }
 };
 
