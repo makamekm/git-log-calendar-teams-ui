@@ -1,8 +1,6 @@
 import React from "react";
 import { Card, Media, AvatarAddonIcon, AvatarFont } from "~/components";
 
-const status = ["warning", "danger", "success", "secondary"];
-
 const ChatRight: React.FC<{
   cardClassName?: string;
   text: any;
