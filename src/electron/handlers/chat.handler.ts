@@ -181,7 +181,10 @@ const getChannels = (): Channel[] => {
   if (!chat) {
     setChannels([]);
   } else {
-    const channelNames = settings.get("channels") || [];
+    const channelNames: string[] = settings.get("channels")
+      ? JSON.parse(settings.get("channels"))
+      : [];
+
     const notExistedChannels = channelNames.filter(
       (channelName) => !channels.find((c) => c.getName() === channelName)
     );
