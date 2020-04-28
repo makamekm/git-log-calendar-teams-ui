@@ -8,7 +8,6 @@ import {
   Card,
   CardFooter,
 } from "~/components";
-import { HeaderMain } from "~/app/HeaderMain";
 import { ChatLeftNavUser, ChatLeftNavChannel } from "./ChatLeftNav";
 import { ChatCardFooterUser, ChatCardFooterChannel } from "./ChatCardFooter";
 import { ChatCardHeaderUser, ChatCardHeaderChannel } from "./ChatCardHeader";
@@ -30,7 +29,7 @@ export const ChatUserScreen = observer(() => {
             <Card className="mb-0">
               {!!service.selectedEmail && (
                 <>
-                  <CardHeader className="d-flex bb-0 bg-white">
+                  <CardHeader className="d-flex bb-0 bg-white chat-header">
                     <ChatCardHeaderUser />
                   </CardHeader>
                   <ChatBodyUser />
@@ -69,7 +68,7 @@ export const ChatChannelScreen = observer(() => {
             <Card className="mb-0">
               {!!service.selectedChannel && (
                 <>
-                  <CardHeader className="d-flex bb-0 bg-white">
+                  <CardHeader className="d-flex bb-0 bg-white chat-header">
                     <ChatCardHeaderChannel />
                   </CardHeader>
                   <ChatBodyChannel />
