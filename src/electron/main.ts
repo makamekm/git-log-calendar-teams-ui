@@ -11,7 +11,9 @@ import {
   dialog,
 } from "electron";
 import path from "path";
+import http from "http";
 import url from "url";
+import HyperswarmServer from "hyperswarm-proxy-ws/server";
 import { ipc, nameofSends } from "~/shared/ipc";
 import {
   OPEN_MAIN_WINDOW_ON_LOAD,
@@ -174,6 +176,7 @@ app.on("ready", () => {
       if (OPEN_MAIN_WINDOW_ON_LOAD) {
         createWindow();
       }
+      createHyperProtocol();
       if (!process.env.ELECTRON_START_URL) {
         protocol.interceptFileProtocol(
           "file",
@@ -191,6 +194,22 @@ app.on("ready", () => {
     }
   });
 });
+
+const createHyperProtocol = async () => {
+  const server = http.createServer((req, res) => {
+    res.end("pong");
+  });
+
+  const port = 4977;
+  await server.listen(4977, "127.0.0.1");
+  const wsServer = new HyperswarmServer();
+  wsServer.listenOnServer(server);
+
+  const url = "http://127.0.0.1:" + port;
+  await protocol.registerHttpProtocol("hyperswarm", (request, callback) => {
+    return callback({ url });
+  });
+};
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

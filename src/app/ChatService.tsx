@@ -68,7 +68,9 @@ export interface ChatState {
     email: string,
     name: string,
     userKey: string,
-    data: JsonCompatible
+    data: JsonCompatible,
+    socket,
+    peer
   ) => void;
   addMessade: (arr, name: string, m) => void;
   createChannelName: string;
@@ -216,8 +218,11 @@ export const ChatService = createService<ChatState>(
         email: string,
         name: string,
         userKey: string,
-        data: JsonCompatible
+        data: JsonCompatible,
+        peer
       ) => {
+        console.log(peer);
+
         if (channelName) {
           if (MEMORIZED_TYPES.includes(data.type)) {
             state.addMessade(state.channelMessages, channelName, {

@@ -119,7 +119,7 @@ export class Channel extends EventEmitter {
 
   broadcast(data: JsonCompatible) {
     this.peers.forEach((peer) => {
-      if (peer.peer) {
+      if (!peer.peer) {
         peer.send(data);
       }
     });
@@ -144,6 +144,10 @@ export class Peer extends EventEmitter {
   private incoming = ndjson.parse();
   private outgoing = ndjson.stringify();
   public peer;
+
+  getConnection() {
+    return this.connection;
+  }
 
   constructor(connection, info) {
     super();

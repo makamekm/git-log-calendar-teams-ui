@@ -2,7 +2,8 @@
 
 @import "./bootstrap.scss";
 @import "./plugins/plugins.scss";
-@import "./bounce-animation.scss";
+@import "./components/bounce-animation.scss";
+@import "./components/call.scss";
 
 @media print {
   .no-print,

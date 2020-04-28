@@ -1,5 +1,7 @@
 import { app, ipcMain } from "electron";
 import settings from "electron-settings";
+// import pump from "pump";
+// import IPCStream from 'electron-ipc-stream';
 import { getChat, closeChat } from "../drive";
 import { Channel, Peer } from "../chat/chat";
 import { ipc, IpcHandler, nameofSends, nameofHandler } from "~/shared/ipc";
@@ -13,6 +15,7 @@ import {
   getUserKey,
 } from "../users";
 import { getUserSettings } from "./auth.handler";
+// import { getWindow } from "../main";
 
 const MAIN_CHANNEL_NAME = "";
 
@@ -259,6 +262,32 @@ ipcMain.handle(
   }
 );
 
+// ipcMain.handle(
+//   nameofHandler("GET_CONNECTION_STREAMS"),
+//   async (
+//     event,
+//     ...args: Parameters<IpcHandler["GET_CONNECTION_STREAMS"]>
+//   ): Promise<ReturnType<IpcHandler["GET_CONNECTION_STREAMS"]>> => {
+//     const [email] = args;
+//     const chat = getChat();
+//     const peers = peerPrivateUsers.get(email);
+//     const user = await ipc.handlers.GET_USER();
+//     const res = [];
+//     if (chat && peers && user) {
+//       let index = -1;
+//       peers.forEach((peer) => {
+//         if (peer.peer) {
+//           const addr = email + (++index);
+//           const stream = new IPCStream(addr, getWindow());
+//           pump(peer.getConnection(), stream, peer.getConnection());
+//           res.push(addr);
+//         }
+//       });
+//     }
+//     return res;
+//   }
+// );
+
 ipcMain.handle(
   nameofHandler("SEND_USER_MESSAGE"),
   async (
@@ -271,7 +300,7 @@ ipcMain.handle(
     const user = await ipc.handlers.GET_USER();
     if (chat && peers && user) {
       peers.forEach((peer) => {
-        if (peer.peer) {
+        if (!peer.peer) {
           peer.send({ ...message, author: user });
         }
       });

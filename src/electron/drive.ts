@@ -2,7 +2,7 @@ import hyperdrive from "hyperdrive";
 import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
-import { app, ipcMain } from "electron";
+import { app } from "electron";
 import md5 from "md5";
 import hyperswarm from "hyperswarm";
 import pump from "pump";
