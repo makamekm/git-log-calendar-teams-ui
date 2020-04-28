@@ -13,7 +13,7 @@ export const ChatBodyUser = observer(() => {
       <ScrollToBottom className={"chat-box"}>
         {(!service.userMessages[service.selectedEmail] ||
           service.userMessages[service.selectedEmail].length === 0) && (
-          <div className="d-flex justify-content-center pt-1 pb-4">
+          <div className="d-flex justify-content-center pt-4 pb-3">
             <span>
               {"<"} No Messages {">"}
             </span>
@@ -42,7 +42,7 @@ export const ChatBodyUser = observer(() => {
                       return (
                         <ChatLeft
                           key={index}
-                          cardClassName="text-dark"
+                          cardClassName="text-dark bg-gray-100"
                           text={message.text}
                           online={service.userMap[message.email]?.online}
                           date={moment(message.timestamp).format(
@@ -71,7 +71,7 @@ export const ChatBodyChannel = observer(() => {
       <ScrollToBottom className={"chat-box"}>
         {(!service.channelMessages[service.selectedChannel] ||
           service.channelMessages[service.selectedChannel].length === 0) && (
-          <div className="d-flex justify-content-center pt-1 pb-4">
+          <div className="d-flex justify-content-center pt-4 pb-3">
             <span>
               {"<"} No Messages {">"}
             </span>

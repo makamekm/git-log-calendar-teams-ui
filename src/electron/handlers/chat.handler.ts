@@ -85,8 +85,10 @@ app.on("ready", () => {
       peerMeetMessage.delete(peer);
       peerUsers.delete(peer);
       if (email && channelName === MAIN_CHANNEL_NAME) {
-        const peers = peerPrivateUsers.get(email);
-        peers.delete(peer);
+        if (peerPrivateUsers.has(email)) {
+          const peers = peerPrivateUsers.get(email);
+          peers.delete(peer);
+        }
       }
       ipc.sends.ON_CHANNEL_UPDATE(channelName);
     }

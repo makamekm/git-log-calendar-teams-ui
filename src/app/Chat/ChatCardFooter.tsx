@@ -24,15 +24,14 @@ export const ChatCardFooterUser = observer(() => {
         </InputGroupAddon>
         <Input
           disabled={isDisabled}
-          placeholder={isDisabled ? "No one online..." : "Your message..."}
+          placeholder={
+            isDisabled ? "The user is offline..." : "Your message..."
+          }
           value={
-            isDisabled
-              ? ""
-              : service.channelMapText[service.selectedEmail] || ""
+            isDisabled ? "" : service.userMapText[service.selectedEmail] || ""
           }
           onChange={(e) => {
-            service.channelMapText[service.selectedEmail] =
-              e.currentTarget.value;
+            service.userMapText[service.selectedEmail] = e.currentTarget.value;
           }}
           onKeyDown={(e) => {
             if (e.keyCode === 13) {
