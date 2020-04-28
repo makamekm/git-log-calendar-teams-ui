@@ -202,7 +202,7 @@ export const ChatService = createService<ChatState>(
             state.userMapText[state.selectedEmail] = "";
           }
         } else if (state.selectedChannel) {
-          if (state.userMapText[state.selectedChannel]) {
+          if (state.channelMapText[state.selectedChannel]) {
             state.sendChannel(
               state.selectedChannel,
               state.channelMapText[state.selectedChannel]
