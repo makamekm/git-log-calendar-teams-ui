@@ -70,6 +70,23 @@
         align-items: center;
         padding: 0.5rem;
       }
+      .initial-loader__subrow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 0.5rem;
+        transition: 0.1 opacity;
+        cursor: pointer;
+        border: 1px solid rgb(222, 226, 230);
+        border-radius: 3px;
+      }
+      .initial-loader__subrow:hover {
+        opacity: 0.8;
+      }
+      .initial-loader__subrow:active {
+        opacity: 0.6;
+      }
       .initial-loader h1 {
         margin: 0;
         color: #0d7bff;
@@ -117,6 +134,12 @@
         </div>
         <div class="initial-loader__row">
           The application is loading...
+        </div>
+        <div
+          class="initial-loader__subrow"
+          onclick="remote.getCurrentWindow().reload()"
+        >
+          FORCE RELOAD
         </div>
       </div>
     </div>
