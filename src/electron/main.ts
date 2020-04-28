@@ -9,7 +9,6 @@ import {
   powerSaveBlocker,
   protocol,
   dialog,
-  systemPreferences,
 } from "electron";
 import path from "path";
 import http from "http";
