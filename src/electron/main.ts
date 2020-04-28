@@ -9,6 +9,7 @@ import {
   powerSaveBlocker,
   protocol,
   dialog,
+  systemPreferences,
 } from "electron";
 import path from "path";
 import http from "http";
@@ -158,10 +159,22 @@ function createWindow() {
     });
   }
   global.mainWindow = mainWindow;
+  if (isWin) {
+    mainWindow.maximize();
+  }
 }
 
+export const gatherAccess = async () => {
+  // if (!(await systemPreferences.askForMediaAccess("camera"))) {
+  //   app.exit(1);
+  // }
+  // if (!(await systemPreferences.askForMediaAccess("microphone"))) {
+  //   app.exit(1);
+  // }
+};
+
 app.on("ready", () => {
-  commandExists("git", (err, commandExists) => {
+  commandExists("git", async (err, commandExists) => {
     if (!commandExists) {
       dialog.showMessageBoxSync({
         type: "error",
@@ -169,6 +182,7 @@ app.on("ready", () => {
       });
       app.exit();
     } else {
+      await gatherAccess();
       settings.setPath(path.resolve(app.getPath("userData"), "settings.json"));
       createDrive();
       createTray();

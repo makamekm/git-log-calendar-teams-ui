@@ -1,6 +1,7 @@
 import React from "react";
+import classNames from "classnames";
+// import { desktopCapturer } from "electron";
 import { observer, useLocalStore } from "mobx-react";
-import VideoCall from "./simple-peer";
 import { getDisplayStream } from "./media-access";
 import {
   ShareScreenIcon,
@@ -11,118 +12,212 @@ import {
 } from "./Icons";
 import { ipc } from "~/shared/ipc";
 import { JsonCompatible } from "~/shared/Json";
+import hyperswarm from "hyperswarm-web";
+import crypto from "crypto";
+import { toJS } from "mobx";
+
+const VideoStream: React.FC<{
+  className?: string;
+  stream: MediaStream;
+  hide?: boolean;
+}> = ({ className, stream, hide }) => {
+  const element = React.useRef<HTMLVideoElement>(null);
+  React.useEffect(() => {
+    if (element.current) {
+      element.current.srcObject = stream;
+    }
+  }, [element, stream]);
+  return (
+    <video
+      autoPlay
+      className={classNames(className, { hide })}
+      id="remoteVideo"
+      ref={element}
+    />
+  );
+};
+
+const useUpdate = () => {
+  const [number, setNumber] = React.useState<number>(0);
+  return React.useCallback(() => {
+    setNumber(number + 1);
+  }, [setNumber, number]);
+};
 
 export const VideoChat = observer(() => {
-  const state = useLocalStore<{
-    streamUrl: MediaStream;
+  const update = useUpdate();
+  const [store] = React.useState<{
     localStream: MediaStream;
-    remoteVideo: any;
-    localVideo: any;
-    peer: any;
-    waiting: boolean;
+    remoteStreams: MediaStream[];
+    connections: any[];
+  }>({
+    localStream: null,
+    remoteStreams: [],
+    connections: [],
+  });
+  const state = useLocalStore<{
+    loadingDevices: boolean;
     connecting: boolean;
     micState: boolean;
     camState: boolean;
-    videoCall: VideoCall;
+    mics: any[];
+    speakers: any[];
+    cameras: any[];
   }>(() => ({
-    streamUrl: null,
-    localStream: null,
-    remoteVideo: null,
-    localVideo: null,
-    peer: null,
-    waiting: false,
+    loadingDevices: true,
     connecting: true,
     micState: true,
     camState: true,
-    videoCall: new VideoCall(),
+    mics: [],
+    speakers: [],
+    cameras: [],
   }));
 
-  const enter = React.useCallback((roomId: string) => {
-    this.setState({ connecting: true });
-    const peer = this.videoCall.init(
-      this.state.localStream,
-      this.state.initiator
-    );
-    this.setState({ peer });
-
-    peer.on("signal", (data) => {
-      const signal = {
-        room: roomId,
-        desc: data,
-      };
-      this.state.socket.emit("signal", signal);
-    });
-    peer.on("stream", (stream) => {
-      this.remoteVideo.srcObject = stream;
-      this.setState({ connecting: false, waiting: false });
-    });
-    peer.on("error", function (err) {
-      console.log(err);
-    });
-  }, []);
-
-  const call = React.useCallback((otherId) => {
-    this.videoCall.connect(otherId);
-  }, []);
-
-  const getUserMedia = React.useCallback(() => {
-    return new Promise((resolve, reject) => {
-      navigator.getUserMedia = navigator.getUserMedia =
-        navigator.getUserMedia ||
-        (navigator as any).webkitGetUserMedia ||
-        (navigator as any).mozGetUserMedia;
-      const op = {
-        video: {
-          width: { min: 160, ideal: 640, max: 1280 },
-          height: { min: 120, ideal: 360, max: 720 },
-        },
-        audio: true,
-      };
-      navigator.getUserMedia(
-        op,
-        (stream) => {
-          state.streamUrl = stream;
-          state.localStream = stream;
-          state.localVideo.srcObject = stream;
-          resolve();
-        },
-        () => {}
-      );
+  React.useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then((deviceInfos) => {
+      for (let i = 0; i !== deviceInfos.length; ++i) {
+        const deviceInfo = deviceInfos[i];
+        if (deviceInfo.kind === "audioinput") {
+          state.mics.push(deviceInfo);
+        } else if (deviceInfo.kind === "audiooutput") {
+          state.speakers.push(deviceInfo);
+        } else if (deviceInfo.kind === "videoinput") {
+          state.cameras.push(deviceInfo);
+        }
+      }
+      state.loadingDevices = false;
     });
   }, [state]);
 
+  const exit = React.useCallback((socket, details) => {
+    console.log(socket, details, store.localStream);
+  }, []);
+
+  const enter = React.useCallback(
+    (socket, details) => {
+      state.connecting = true;
+      console.log(socket, details, store.localStream);
+      // const peer = state.videoCall.init(
+      //   state.localStream,
+      //   state.initiator
+      // );
+      // state.peer = peer;
+      // setState({ peer });
+
+      // peer.on("signal", (data) => {
+      //   const signal = {
+      //     room: roomId,
+      //     desc: data,
+      //   };
+      //   state.socket.emit("signal", signal);
+      // });
+      // peer.on("stream", (stream) => {
+      //   remoteVideo.srcObject = stream;
+      //   setState({ connecting: false, waiting: false });
+      // });
+      // peer.on("error", function (err) {
+      //   console.log(err);
+      // });
+      state.connecting = false;
+    },
+    [state]
+  );
+
+  const getUserMedia = React.useCallback(async () => {
+    // const sources = await desktopCapturer.getSources({
+    //   types: ["window", "screen"],
+    // });
+    // const source = sources[0];
+    // if (source) {
+    console.log(toJS(state));
+    navigator.mediaDevices
+      .getUserMedia({ audio: true, video: true })
+      .then((e) => console.log(e));
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+      // audio: {
+      //   deviceId: state.mics[0].deviceId,
+      // },
+      // video: {
+      //   deviceId: state.cameras[0].deviceId,
+      //   // mandatory: {
+      //   // chromeMediaSource: "desktop",
+      //   // chromeMediaSourceId: source.id,
+      //   //   minWidth: 1280,
+      //   //   maxWidth: 1920,
+      //   //   minHeight: 720,
+      //   //   maxHeight: 1080,
+      //   // },
+      // },
+    });
+    console.log(stream);
+    store.localStream = stream;
+    update();
+    // }
+  }, [store, update]);
+
   const setAudioLocal = React.useCallback(() => {
-    if (state.localStream.getAudioTracks().length > 0) {
-      state.localStream.getAudioTracks().forEach((track) => {
+    if (store.localStream.getAudioTracks().length > 0) {
+      store.localStream.getAudioTracks().forEach((track) => {
         track.enabled = !track.enabled;
       });
     }
     state.micState = !state.micState;
-  }, [state]);
+  }, [state, store]);
 
   const setVideoLocal = React.useCallback(() => {
-    if (state.localStream.getVideoTracks().length > 0) {
-      state.localStream.getVideoTracks().forEach((track) => {
+    if (store.localStream.getVideoTracks().length > 0) {
+      store.localStream.getVideoTracks().forEach((track) => {
         track.enabled = !track.enabled;
       });
     }
     state.camState = !state.camState;
-  }, [state]);
+  }, [state, store]);
 
   const getDisplay = React.useCallback(() => {
     getDisplayStream().then((stream) => {
-      stream.oninactive = () => {
-        state.peer.removeStream(state.localStream);
-        getUserMedia().then(() => {
-          state.peer.addStream(state.localStream);
-        });
-      };
-      state.streamUrl = stream;
-      state.localStream = stream;
-      state.localVideo.srcObject = stream;
-      state.peer.addStream(stream);
+      // stream.oninactive = () => {
+      //   state.peer.removeStream(store.localStream);
+      //   getUserMedia().then(() => {
+      //     state.peer.addStream(store.localStream);
+      //   });
+      // };
+      store.localStream = stream;
+      update();
     });
-  }, [state, getUserMedia]);
+  }, [state, store, getUserMedia, update]);
+
+  const init = React.useCallback(
+    async (swarm) => {
+      console.log("here");
+      await getUserMedia();
+      console.log("sdfsdfsdf");
+
+      const topic = crypto.createHash("sha256").update("makametest").digest();
+      swarm.join(topic);
+      swarm.on("connection", (socket, details) => {
+        console.log("new connection!", socket, details);
+        enter(socket, details);
+        socket.once("close", () => {
+          exit(socket, details);
+        });
+      });
+    },
+    [enter, exit, getUserMedia]
+  );
+
+  React.useEffect(() => {
+    if (!state.loadingDevices) {
+      const swarm = hyperswarm({
+        wsProxy: "hyperswarm://127.0.0.1",
+      });
+      init(swarm);
+      return () => {
+        swarm.destroy();
+      };
+    }
+  }, [init, state.loadingDevices]);
 
   React.useEffect(() => {
     return ipc.channels.ON_CHANNEL_VERIFYED_MESSAGE(
@@ -162,21 +257,19 @@ export const VideoChat = observer(() => {
 
   return (
     <>
-      <div className="video-wrapper">
+      <div className="video-wrapper mb-3">
         <div className="local-video-wrapper">
-          <video
-            autoPlay
-            id="localVideo"
-            muted
-            ref={(video) => (state.localVideo = video)}
-          />
+          {!!store.localStream && (
+            <VideoStream className="player-local" stream={store.localStream} />
+          )}
         </div>
-        <video
-          autoPlay
-          className={`${state.connecting || state.waiting ? "hide" : ""}`}
-          id="remoteVideo"
-          ref={(video) => (state.remoteVideo = video)}
-        />
+        {store.remoteStreams.map((stream) => (
+          <VideoStream
+            className="player-remote"
+            stream={stream}
+            hide={state.connecting}
+          />
+        ))}
 
         <div className="controls">
           <button
@@ -218,12 +311,6 @@ export const VideoChat = observer(() => {
         {state.connecting && (
           <div className="status">
             <p>Establishing connection...</p>
-          </div>
-        )}
-
-        {state.waiting && (
-          <div className="status">
-            <p>Waiting for someone...</p>
           </div>
         )}
       </div>

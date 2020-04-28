@@ -14,8 +14,6 @@ import { ChatCardHeaderUser, ChatCardHeaderChannel } from "./ChatCardHeader";
 import { observer } from "mobx-react";
 import { ChatService } from "../ChatService";
 import { ChatBodyUser, ChatBodyChannel } from "./ChatBody";
-import hyperswarm from "hyperswarm-web";
-import crypto from "crypto";
 
 export const ChatUserScreen = observer(() => {
   const service = React.useContext(ChatService);
@@ -58,22 +56,6 @@ export const ChatUserScreen = observer(() => {
 
 export const ChatChannelScreen = observer(() => {
   const service = React.useContext(ChatService);
-  React.useEffect(() => {
-    const swarm = hyperswarm({
-      wsProxy: "hyperswarm://127.0.0.1",
-    });
-
-    const topic = crypto.createHash("sha256").update("makametest").digest();
-
-    swarm.join(topic);
-
-    swarm.on("connection", (socket, details) => {
-      console.log("new connection!", details);
-    });
-    return () => {
-      swarm.destroy();
-    };
-  }, []);
   return (
     <React.Fragment>
       <Container>
