@@ -131,11 +131,13 @@ export class Peer extends EventEmitter {
   private connection;
   private incoming = ndjson.parse();
   private outgoing = ndjson.stringify();
+  public peer;
 
   constructor(connection, info) {
     super();
 
     const peer = info.peer;
+    this.peer = peer;
     this.connection = connection;
     connection.pipe(this.incoming);
     this.outgoing.pipe(connection);

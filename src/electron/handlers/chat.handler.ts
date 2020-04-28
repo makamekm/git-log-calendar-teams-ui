@@ -51,13 +51,19 @@ const createMainChannel = () => {
   if (chat) {
     mainChannel = chat.channel(MAIN_CHANNEL_NAME);
     mainChannel.on("message", (peer, data) => {
-      ipc.sends.ON_CHANNEL_MESSAGE(MAIN_CHANNEL_NAME, peer, data);
+      if (peer.peer) {
+        ipc.sends.ON_CHANNEL_MESSAGE(MAIN_CHANNEL_NAME, peer, data);
+      }
     });
     mainChannel.on("peer", (peer) => {
-      ipc.sends.ON_CHANNEL_PEER_START(MAIN_CHANNEL_NAME, peer);
+      if (peer.peer) {
+        ipc.sends.ON_CHANNEL_PEER_START(MAIN_CHANNEL_NAME, peer);
+      }
     });
     mainChannel.on("peer-disconnected", (peer) => {
-      ipc.sends.ON_CHANNEL_PEER_END(MAIN_CHANNEL_NAME, peer);
+      if (peer.peer) {
+        ipc.sends.ON_CHANNEL_PEER_END(MAIN_CHANNEL_NAME, peer);
+      }
     });
   }
 };
@@ -305,13 +311,19 @@ ipcMain.handle(
       const channels = getChannels();
       setChannels([channel, ...channels]);
       channel.on("message", (peer, data) => {
-        ipc.sends.ON_CHANNEL_MESSAGE(name, peer, data);
+        if (peer.peer) {
+          ipc.sends.ON_CHANNEL_MESSAGE(name, peer, data);
+        }
       });
       channel.on("peer", (peer) => {
-        ipc.sends.ON_CHANNEL_PEER_START(name, peer);
+        if (peer.peer) {
+          ipc.sends.ON_CHANNEL_PEER_START(name, peer);
+        }
       });
       channel.on("peer-disconnected", (peer) => {
-        ipc.sends.ON_CHANNEL_PEER_END(name, peer);
+        if (peer.peer) {
+          ipc.sends.ON_CHANNEL_PEER_END(name, peer);
+        }
       });
       ipc.sends.ON_CHANNEL_UPDATE(name);
       return channel.getKey();
