@@ -5,6 +5,7 @@ import ndjson from "ndjson";
 import { JsonCompatible } from "~/shared/Json";
 
 const COMMUNICATION_PROTOCOL = "tcp";
+const MAX_PEERS = Infinity;
 
 export class Chat extends EventEmitter {
   private swarm;
@@ -17,7 +18,9 @@ export class Chat extends EventEmitter {
     if (swarm) {
       this.swarm = swarm;
     } else {
-      this.swarm = hyperswarm();
+      this.swarm = hyperswarm({
+        maxPeers: MAX_PEERS,
+      });
     }
     this.swarm.on("connection", this.handleConnection);
   }
