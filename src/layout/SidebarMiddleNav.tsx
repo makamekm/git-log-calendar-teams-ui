@@ -15,9 +15,20 @@ export const SidebarMiddleNav = observer(() => {
 
       {chatService.isActive ? (
         <SidebarMenuItem
-          icon={<i className="fa fa-comments"></i>}
+          icon={<i className="fa fa-comment"></i>}
           title="Chat"
           to="/chat"
+          exact
+        />
+      ) : (
+        <></>
+      )}
+
+      {chatService.isActive ? (
+        <SidebarMenuItem
+          icon={<i className="fa fa-comments"></i>}
+          title="Channels"
+          to="/channel"
           exact
         />
       ) : (

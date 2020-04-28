@@ -104,7 +104,7 @@ import { TeamDashboard } from "./app/Details/TeamDashboard";
 import { UserDashboard } from "./app/Details/UserDashboard";
 import { Settings } from "./app/Settings/Settings";
 import { RepositoryDashboard } from "./app/Details/RepositoryDashboard";
-import { ChatScreen } from "./app/Chat/Chat";
+import { ChatUserScreen, ChatChannelScreen } from "./app/Chat/Chat";
 
 //------ Route Definitions --------
 export const RoutedContent = () => {
@@ -127,7 +127,8 @@ export const RoutedContent = () => {
         component={RepositoryDashboard}
       />
 
-      <ProtectedRoute path="/chat" exact component={ChatScreen} />
+      <ProtectedRoute path="/chat" exact component={ChatUserScreen} />
+      <ProtectedRoute path="/channel" exact component={ChatChannelScreen} />
 
       <ProtectedRoute path="/configuration" exact component={Configuration} />
       <Route path="/settings" exact component={Settings} />

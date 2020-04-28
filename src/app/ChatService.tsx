@@ -14,6 +14,7 @@ export interface ChatState {
   settings: ApplicationSettings;
   onlineUsers: string[];
   allUsers: UserConnection[];
+  userSearch: string;
   selectedEmail: string;
   selectedChannel: string;
   userMapText: {
@@ -53,6 +54,7 @@ export interface ChatState {
   };
   channels: ReturnType<IpcHandler["GET_CHANNELS"]>;
   channelList: string[];
+  isChannelOnline: (name: string) => boolean;
   isLoading: boolean;
   isLoadingDelay: boolean;
   isActive: boolean;
@@ -69,6 +71,8 @@ export interface ChatState {
     data: JsonCompatible
   ) => void;
   addMessade: (arr, name: string, m) => void;
+  createChannelName: string;
+  createChannel: () => Promise<void>;
 }
 
 export const ChatService = createService<ChatState>(
@@ -80,13 +84,21 @@ export const ChatService = createService<ChatState>(
       },
       selectedEmail: null,
       selectedChannel: null,
+      userSearch: "",
       userMapText: {},
       channelMapText: {},
       allUsers: [],
       onlineUsers: [],
       get users() {
         return state.allUsers
-          .filter((user) => user.email !== state.self)
+          .filter(
+            (user) =>
+              user.email !== state.self &&
+              (!state.userSearch ||
+                user.email
+                  .toLowerCase()
+                  .includes(state.userSearch.toLowerCase()))
+          )
           .map((user) => ({
             ...user,
             online: state.onlineUsers.includes(user.email),
@@ -103,6 +115,9 @@ export const ChatService = createService<ChatState>(
       channels: {},
       get channelList() {
         return Object.keys(state.channels);
+      },
+      isChannelOnline: (name: string) => {
+        return state.channels[name].filter((n) => n !== state.self).length > 0;
       },
       userMessages: {},
       channelMessages: {},
@@ -165,6 +180,17 @@ export const ChatService = createService<ChatState>(
           name: state.settings?.name,
           userKey: null,
         });
+      },
+      createChannelName: "",
+      createChannel: async () => {
+        if (state.createChannelName) {
+          if (!state.channels[state.createChannelName]) {
+            await ipc.handlers.CREATE_CHANNEL(state.createChannelName);
+            state.channels = await ipc.handlers.GET_CHANNELS();
+          }
+          state.selectedEmail = null;
+          state.selectedChannel = state.createChannelName;
+        }
       },
       sendMessage: () => {
         if (state.selectedEmail) {

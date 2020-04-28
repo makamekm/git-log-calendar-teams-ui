@@ -9,14 +9,14 @@ import {
   CardFooter,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
-import { ChatLeftNav } from "./ChatLeftNav";
+import { ChatLeftNavUser, ChatLeftNavChannel } from "./ChatLeftNav";
 import { ChatCardFooterUser, ChatCardFooterChannel } from "./ChatCardFooter";
-import { ChatCardHeader } from "./ChatCardHeader";
+import { ChatCardHeaderUser, ChatCardHeaderChannel } from "./ChatCardHeader";
 import { observer } from "mobx-react";
 import { ChatService } from "../ChatService";
-import { ChatBodyUser } from "./ChatBody";
+import { ChatBodyUser, ChatBodyChannel } from "./ChatBody";
 
-export const ChatScreen = observer(() => {
+export const ChatUserScreen = observer(() => {
   const service = React.useContext(ChatService);
   return (
     <React.Fragment>
@@ -25,30 +25,65 @@ export const ChatScreen = observer(() => {
         {/* START Content */}
         <Row>
           <Col lg={3} className="no-print">
-            <ChatLeftNav />
+            <ChatLeftNavUser />
           </Col>
           <Col lg={9}>
             <Card className="mb-0">
-              {(!!service.selectedEmail || !!service.selectedChannel) && (
-                <CardHeader className="d-flex bb-0 bg-white">
-                  <ChatCardHeader />
-                </CardHeader>
-              )}
-              {!!service.selectedEmail && <ChatBodyUser />}
               {!!service.selectedEmail && (
-                <CardFooter>
-                  <ChatCardFooterUser />
-                </CardFooter>
+                <>
+                  <CardHeader className="d-flex bb-0 bg-white">
+                    <ChatCardHeaderUser />
+                  </CardHeader>
+                  <ChatBodyUser />
+                  <CardFooter>
+                    <ChatCardFooterUser />
+                  </CardFooter>
+                </>
               )}
-              {!!service.selectedChannel && (
-                <CardFooter>
-                  <ChatCardFooterChannel />
-                </CardFooter>
-              )}
-              {!service.selectedEmail && !service.selectedChannel && (
+              {!service.selectedEmail && (
                 <CardBody className="d-flex justify-content-center">
                   <span>
-                    {"<"} Select Chat Room {">"}
+                    {"<"} Select a User {">"}
+                  </span>
+                </CardBody>
+              )}
+            </Card>
+          </Col>
+        </Row>
+        {/* END Content */}
+      </Container>
+    </React.Fragment>
+  );
+});
+
+export const ChatChannelScreen = observer(() => {
+  const service = React.useContext(ChatService);
+  return (
+    <React.Fragment>
+      <Container>
+        <HeaderMain title="Channels" className="mb-5" />
+        {/* START Content */}
+        <Row>
+          <Col lg={3} className="no-print">
+            <ChatLeftNavChannel />
+          </Col>
+          <Col lg={9}>
+            <Card className="mb-0">
+              {!!service.selectedChannel && (
+                <>
+                  <CardHeader className="d-flex bb-0 bg-white">
+                    <ChatCardHeaderChannel />
+                  </CardHeader>
+                  <ChatBodyChannel />
+                  <CardFooter>
+                    <ChatCardFooterChannel />
+                  </CardFooter>
+                </>
+              )}
+              {!service.selectedChannel && (
+                <CardBody className="d-flex justify-content-center">
+                  <span>
+                    {"<"} Select a Channel {">"}
                   </span>
                 </CardBody>
               )}

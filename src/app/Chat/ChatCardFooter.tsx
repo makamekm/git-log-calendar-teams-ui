@@ -61,7 +61,9 @@ export const ChatCardFooterUser = observer(() => {
 
 export const ChatCardFooterChannel = observer(() => {
   const service = React.useContext(ChatService);
-  const isDisabled = !service.selectedChannel;
+  const isDisabled =
+    !service.selectedChannel ||
+    !service.isChannelOnline(service.selectedChannel);
   return (
     <React.Fragment>
       <InputGroup>
