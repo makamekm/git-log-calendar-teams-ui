@@ -23,7 +23,7 @@ const ChatRight: React.FC<{
       </Media>
       <Media right className="ml-3">
         <AvatarFont
-          bgColor="info"
+          bgColor="pink"
           size="md"
           addOns={[
             <AvatarAddonIcon

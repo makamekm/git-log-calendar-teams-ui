@@ -12,7 +12,7 @@ const ChatLeft: React.FC<{
     <Media className="mb-2">
       <Media left className="mr-3">
         <AvatarFont
-          bgColor="info"
+          bgColor="pink"
           size="md"
           addOns={[
             <AvatarAddonIcon

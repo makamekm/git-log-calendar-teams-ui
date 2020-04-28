@@ -6,6 +6,9 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
+  UncontrolledPopover,
+  PopoverHeader,
+  PopoverBody,
 } from "~/components";
 import { observer } from "mobx-react";
 import { ChatService } from "../ChatService";
@@ -53,7 +56,19 @@ export const ChatCardHeaderChannel = observer(() => {
   const service = React.useContext(ChatService);
   return (
     <React.Fragment>
-      <h6 className="align-self-center mb-0">{service.selectedChannel}</h6>
+      <h6 id="channel-header" className="align-self-center mb-0 cursor-pointer">
+        {service.selectedChannel}
+      </h6>
+      <UncontrolledPopover placement="bottom" target="channel-header">
+        <PopoverHeader>{service.selectedChannel} List of Users</PopoverHeader>
+        <PopoverBody className="text-white">
+          <ul className="mb-0 pl-4">
+            {service.channels[service.selectedChannel].map((user) => (
+              <li>{user}</li>
+            ))}
+          </ul>
+        </PopoverBody>
+      </UncontrolledPopover>
       <div className="align-self-center ml-auto d-flex align-items-center">
         <Button outline>
           <i className="fa fa-phone"></i>

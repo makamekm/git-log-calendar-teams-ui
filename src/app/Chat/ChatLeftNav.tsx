@@ -62,7 +62,7 @@ export const ChatLeftNavUser = observer(() => {
                   <Media>
                     <Media left className="align-self-start mr-3">
                       <AvatarFont
-                        bgColor="info"
+                        bgColor="pink"
                         size="sm"
                         addOns={[
                           <AvatarAddonIcon
@@ -142,7 +142,7 @@ export const ChatLeftNavChannel = observer(() => {
                   <Media>
                     <Media left className="align-self-start mr-3">
                       <AvatarFont
-                        bgColor="info"
+                        bgColor="700"
                         size="sm"
                         addOns={[
                           <AvatarAddonIcon
