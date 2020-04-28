@@ -34,7 +34,7 @@
   max-height: 80vh;
   max-width: 100%;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column !important;
 }
 
 .chat-user-list-box {

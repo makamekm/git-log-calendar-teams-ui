@@ -151,7 +151,7 @@ export const ChatService = createService<ChatState>(
           arr[name] = [];
         }
         arr[name].length = Math.min(arr[name].length, MAX_MESSAGES - 1);
-        arr[name].unshift(m);
+        arr[name].push(m);
       },
       sendChannel: async (name, text) => {
         const message = {
