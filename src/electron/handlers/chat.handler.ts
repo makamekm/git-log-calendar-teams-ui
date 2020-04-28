@@ -249,7 +249,7 @@ ipcMain.handle(
     getChannels().forEach((channel) => {
       const arr = [];
       peerUsers.forEach((email, peer) => {
-        if (channel.getPeers().has(peer)) {
+        if (channel.getPeers().has(peer) && !arr.includes(email)) {
           arr.push(email);
         }
       });
