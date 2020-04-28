@@ -73,8 +73,6 @@ app.on("ready", () => {
     "ON_CHANNEL_PEER_START",
     (event, channelName: string, peer: Peer) => {
       const channel = findChannel(channelName);
-      console.log("here", channelName, channel);
-
       if (!channel && channelName !== MAIN_CHANNEL_NAME) {
         return;
       }
