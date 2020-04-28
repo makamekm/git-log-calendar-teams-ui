@@ -4,6 +4,8 @@ import { crypto_generichash, crypto_generichash_BYTES } from "sodium-universal";
 import ndjson from "ndjson";
 import { JsonCompatible } from "~/shared/Json";
 
+const COMMUNICATION_PROTOCOL = "tcp";
+
 export class Chat extends EventEmitter {
   private swarm;
   private channels = new Set<Channel>();
@@ -21,6 +23,11 @@ export class Chat extends EventEmitter {
   }
 
   handleConnection = (connection, info) => {
+    if (info.type !== COMMUNICATION_PROTOCOL) {
+      info.backoff();
+      connection.destroy();
+      return;
+    }
     const peer = new Peer(connection, info);
     this.emit("peer", peer);
   };
