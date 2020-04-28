@@ -31,7 +31,6 @@ export class Chat extends EventEmitter {
     const keyString = key.toString("hex");
     const channel = new Channel(this, keyString, name);
     this.channels.add(channel);
-    console.log("THERE", name, keyString);
 
     this.swarm.join(key, {
       announce: true,
