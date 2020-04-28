@@ -60,7 +60,7 @@ export const ChatCardHeaderChannel = observer(() => {
         {service.selectedChannel}
       </h6>
       <UncontrolledPopover placement="bottom" target="channel-header">
-        <PopoverHeader>{service.selectedChannel} List of Users</PopoverHeader>
+        <PopoverHeader>List of Users</PopoverHeader>
         <PopoverBody className="text-white">
           <ul className="mb-0 pl-4">
             {service.channels[service.selectedChannel].map((user) => (
