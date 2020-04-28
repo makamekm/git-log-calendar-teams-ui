@@ -21,7 +21,6 @@ export const ChatUserScreen = observer(() => {
   return (
     <React.Fragment>
       <Container>
-        <HeaderMain title="Chat" className="mb-5" />
         {/* START Content */}
         <Row>
           <Col lg={3} className="no-print">
@@ -61,7 +60,6 @@ export const ChatChannelScreen = observer(() => {
   return (
     <React.Fragment>
       <Container>
-        <HeaderMain title="Channels" className="mb-5" />
         {/* START Content */}
         <Row>
           <Col lg={3} className="no-print">
