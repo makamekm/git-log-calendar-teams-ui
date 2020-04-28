@@ -116,7 +116,7 @@ export class Channel extends EventEmitter {
 
   broadcast(data: JsonCompatible) {
     this.peers.forEach((peer) => {
-      if (!peer.peer) {
+      if (peer.peer) {
         peer.send(data);
       }
     });

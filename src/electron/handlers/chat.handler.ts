@@ -271,7 +271,7 @@ ipcMain.handle(
     const user = await ipc.handlers.GET_USER();
     if (chat && peers && user) {
       peers.forEach((peer) => {
-        if (!peer.peer) {
+        if (peer.peer) {
           peer.send({ ...message, author: user });
         }
       });
