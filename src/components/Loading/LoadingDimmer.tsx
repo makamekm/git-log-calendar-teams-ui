@@ -52,7 +52,6 @@ export const LoadingDimmer: React.FC<{
       return;
     }
     staticState.prevState = show;
-    console.log(show);
 
     if (show) {
       clearTimeout(staticState.timeout);
