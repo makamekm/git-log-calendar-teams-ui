@@ -38,12 +38,7 @@
   },
   "build": {
     "mac": {
-      "icon": "build/icon.icns",
-      "entitlements": "build/entitlements.mac.plist",
-      "extendInfo": {
-        "NSCameraUsageDescription": "This app requires camera access to record video.",
-        "NSMicrophoneUsageDescription": "This app requires microphone access to record audio."
-      }
+      "icon": "build/icon.icns"
     },
     "win": {
       "icon": "build/icon.ico",
