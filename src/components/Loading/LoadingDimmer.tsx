@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocalStore } from "mobx-react";
+import { useLocalStore, observer } from "mobx-react";
 
 const Dimmer = ({ text }: { text?: string }) => (
   <div className="initial-loader-wrap">
@@ -37,7 +37,7 @@ const Dimmer = ({ text }: { text?: string }) => (
 
 export const LoadingDimmer: React.FC<{
   show?: boolean;
-}> = ({ show, children }) => {
+}> = observer(({ show, children }) => {
   const [staticState] = React.useState({
     timeout: null,
     prevState: false,
@@ -48,17 +48,22 @@ export const LoadingDimmer: React.FC<{
   }));
 
   React.useEffect(() => {
-    if (!show && staticState.prevState) {
-      staticState.prevState = show;
+    if (staticState.prevState === show) {
+      return;
+    }
+    staticState.prevState = show;
+    console.log(show);
+
+    if (show) {
+      clearTimeout(staticState.timeout);
+      store.show = true;
+    } else {
       clearTimeout(staticState.timeout);
       document.body.classList.add("loaded");
       staticState.timeout = setTimeout(() => {
         document.body.classList.remove("loaded");
         store.show = false;
       }, 200);
-    } else if (show) {
-      clearTimeout(staticState.timeout);
-      store.show = true;
     }
   }, [show, staticState, store]);
 
@@ -68,4 +73,4 @@ export const LoadingDimmer: React.FC<{
       {store.show && <Dimmer />}
     </>
   );
-};
+});
