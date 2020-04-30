@@ -26,6 +26,7 @@ import { CalendarActivities } from "../Dashboard/CalendarActivities";
 import { HeaderSection } from "../HeaderSection";
 import { LatestMessages } from "./LastMessages";
 import { BarActivities } from "../Dashboard/BarActivities";
+import { LineActivities } from "../Dashboard/LineActivities";
 
 export const TeamDashboard = observer(() => {
   const { teamName } = useParams();
@@ -147,7 +148,7 @@ export const TeamDashboard = observer(() => {
           <div className="d-flex">
             <CardTitle tag="h6">
               <span>
-                <strong>{teamName}</strong>
+                Calendar activities of <strong>{teamName}</strong>
               </span>
               <span className="small ml-1 text-muted">#team</span>
             </CardTitle>
@@ -163,10 +164,85 @@ export const TeamDashboard = observer(() => {
                   limit={state.limit}
                   data={state.teamStats[teamName] || []}
                 />
+              </>
+            )}
+          </div>
+        </CardBody>
+      </Card>
+
+      <Card className="no-print-break mb-3">
+        <CardBody>
+          <div className="d-flex">
+            <CardTitle tag="h6">
+              <span>
+                Detailed activities of <strong>{teamName}</strong>
+              </span>
+              <span className="small ml-1 text-muted">#team</span>
+            </CardTitle>
+          </div>
+          <div>
+            {state.isLoadingDelay ? (
+              <List height={"300px"} />
+            ) : (
+              <>
                 <BarActivities
                   height={250}
                   limit={state.limit}
                   data={state.teamStats[teamName] || []}
+                />
+              </>
+            )}
+          </div>
+        </CardBody>
+      </Card>
+
+      <Card className="no-print-break mb-3">
+        <CardBody>
+          <div className="d-flex">
+            <CardTitle tag="h6">
+              <span>
+                User activities of <strong>{teamName}</strong>
+              </span>
+              <span className="small ml-1 text-muted">#team</span>
+            </CardTitle>
+          </div>
+          <div>
+            {state.isLoadingDelay ? (
+              <List height={"300px"} />
+            ) : (
+              <>
+                <LineActivities
+                  names={state.users}
+                  height={250}
+                  limit={state.limit}
+                  data={state.userCompareStats || []}
+                />
+              </>
+            )}
+          </div>
+        </CardBody>
+      </Card>
+
+      <Card className="no-print-break mb-3">
+        <CardBody>
+          <div className="d-flex">
+            <CardTitle tag="h6">
+              <span>
+                Repository activities of <strong>{teamName}</strong>
+              </span>
+              <span className="small ml-1 text-muted">#team</span>
+            </CardTitle>
+          </div>
+          <div>
+            {state.isLoadingDelay ? (
+              <List height={"300px"} />
+            ) : (
+              <>
+                <LineActivities
+                  names={state.repositories}
+                  height={250}
+                  limit={state.limit}
+                  data={state.repositoryCompareStats || []}
                 />
               </>
             )}

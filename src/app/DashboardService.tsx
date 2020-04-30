@@ -35,6 +35,21 @@ export interface DashboardState {
       value: number;
     }[];
   };
+  teamCompareStats: ({
+    day: string;
+  } & {
+    [name: string]: number;
+  })[];
+  userCompareStats: ({
+    day: string;
+  } & {
+    [name: string]: number;
+  })[];
+  repositoryCompareStats: ({
+    day: string;
+  } & {
+    [name: string]: number;
+  })[];
   users: string[];
   repositories: string[];
   teams: string[];
@@ -69,6 +84,75 @@ export const DashboardService = createService<DashboardState>(
       isLoading: false,
       isLoadingDelay: false,
       limit: 30,
+      get repositoryCompareStats() {
+        const result: {
+          [day: string]: {
+            day: string;
+          } & any;
+        } = {};
+        state.repositories.forEach((user) => {
+          const date = state.repositoriesStats[user];
+          if (date) {
+            date.forEach((data) => {
+              if (!result[data.day]) {
+                result[data.day] = {
+                  day: data.day,
+                  [user]: data.value,
+                };
+              } else {
+                result[data.day][user] = data.value;
+              }
+            });
+          }
+        });
+        return Object.values(result);
+      },
+      get userCompareStats() {
+        const result: {
+          [day: string]: {
+            day: string;
+          } & any;
+        } = {};
+        state.users.forEach((user) => {
+          const date = state.userStats[user];
+          if (date) {
+            date.forEach((data) => {
+              if (!result[data.day]) {
+                result[data.day] = {
+                  day: data.day,
+                  [user]: data.value,
+                };
+              } else {
+                result[data.day][user] = data.value;
+              }
+            });
+          }
+        });
+        return Object.values(result);
+      },
+      get teamCompareStats() {
+        const result: {
+          [day: string]: {
+            day: string;
+          } & any;
+        } = {};
+        state.teams.forEach((user) => {
+          const date = state.teamStats[user];
+          if (date) {
+            date.forEach((data) => {
+              if (!result[data.day]) {
+                result[data.day] = {
+                  day: data.day,
+                  [user]: data.value,
+                };
+              } else {
+                result[data.day][user] = data.value;
+              }
+            });
+          }
+        });
+        return Object.values(result);
+      },
       get users() {
         const result: string[] = [];
         state.config &&

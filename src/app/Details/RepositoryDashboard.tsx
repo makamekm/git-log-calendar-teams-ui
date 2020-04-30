@@ -33,6 +33,7 @@ import { numberWithCommas } from "~/tools";
 import { LatestMessages } from "./LastMessages";
 import { RepositoryUserService } from "../RepositoryUserService";
 import { BarActivities } from "../Dashboard/BarActivities";
+import { LineActivities } from "../Dashboard/LineActivities";
 
 const RepositoryUsers = observer(() => {
   const state = React.useContext(RepositoryUserService);
@@ -230,7 +231,7 @@ export const RepositoryDashboard = observer(() => {
           <div className="d-flex">
             <CardTitle tag="h6">
               <span>
-                <strong>{repositoryName}</strong>
+                Calendar activities of <strong>{repositoryName}</strong>
               </span>
               <span className="small ml-1 text-muted">#repository</span>
             </CardTitle>
@@ -246,10 +247,85 @@ export const RepositoryDashboard = observer(() => {
                   limit={state.limit}
                   data={state.repositoriesStats[repositoryName] || []}
                 />
+              </>
+            )}
+          </div>
+        </CardBody>
+      </Card>
+
+      <Card className="no-print-break mb-3">
+        <CardBody>
+          <div className="d-flex">
+            <CardTitle tag="h6">
+              <span>
+                Detailed activities of <strong>{repositoryName}</strong>
+              </span>
+              <span className="small ml-1 text-muted">#repository</span>
+            </CardTitle>
+          </div>
+          <div>
+            {state.isLoadingDelay ? (
+              <List height={"300px"} />
+            ) : (
+              <>
                 <BarActivities
                   height={250}
                   limit={state.limit}
                   data={state.repositoriesStats[repositoryName] || []}
+                />
+              </>
+            )}
+          </div>
+        </CardBody>
+      </Card>
+
+      <Card className="no-print-break mb-3">
+        <CardBody>
+          <div className="d-flex">
+            <CardTitle tag="h6">
+              <span>
+                User activities of <strong>{repositoryName}</strong>
+              </span>
+              <span className="small ml-1 text-muted">#repository</span>
+            </CardTitle>
+          </div>
+          <div>
+            {state.isLoadingDelay ? (
+              <List height={"300px"} />
+            ) : (
+              <>
+                <LineActivities
+                  names={state.users}
+                  height={250}
+                  limit={state.limit}
+                  data={state.userCompareStats || []}
+                />
+              </>
+            )}
+          </div>
+        </CardBody>
+      </Card>
+
+      <Card className="no-print-break mb-3">
+        <CardBody>
+          <div className="d-flex">
+            <CardTitle tag="h6">
+              <span>
+                Team activities of <strong>{repositoryName}</strong>
+              </span>
+              <span className="small ml-1 text-muted">#repository</span>
+            </CardTitle>
+          </div>
+          <div>
+            {state.isLoadingDelay ? (
+              <List height={"300px"} />
+            ) : (
+              <>
+                <LineActivities
+                  names={state.teams}
+                  height={250}
+                  limit={state.limit}
+                  data={state.teamCompareStats || []}
                 />
               </>
             )}

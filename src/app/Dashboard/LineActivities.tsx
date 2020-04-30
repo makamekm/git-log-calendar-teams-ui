@@ -2,66 +2,71 @@ import React from "react";
 import moment from "moment";
 import {
   ResponsiveContainer,
-  BarChart,
+  LineChart,
   CartesianGrid,
   XAxis,
   YAxis,
+  Legend,
   Tooltip,
   ReferenceLine,
-  Brush,
-  Bar,
+  Line,
 } from "recharts";
 import colors from "~/colors";
 
+const colorsArr = ["success", "primary", "yellow", "info", "purple"];
+
 const addEmptyDays = (
-  data: {
+  data: ({
     day: string;
-    value: number;
-  }[],
+  } & any)[],
+  names: string[],
   startDate: moment.Moment,
   endDate: moment.Moment
 ) => {
   startDate = moment(startDate);
   const days = endDate.diff(startDate, "day", false);
 
-  const newData: {
+  const newData: ({
     day: string;
-    value: number;
-  }[] = [];
+  } & any)[] = [];
 
   for (let i = 0; i <= days; i++) {
     let day = startDate.format("YYYY-MM-DD");
     const date = data.find((d) => d.day === day);
     newData[i] = {
+      ...date,
       day,
-      value: date?.value || 0,
     };
+    names.forEach((name) => {
+      newData[i][name] = newData[i][name] || 0;
+    });
     startDate.add(1, "day");
   }
 
   return newData;
 };
 
-export const BarActivities = ({
+export const LineActivities = ({
   height,
   className,
+  names,
   data,
   limit,
 }: {
   height?: number;
   limit: number;
   className?: string;
-  data: {
+  names: string[];
+  data: ({
     day: string;
-    value: number;
-  }[];
+  } & any)[];
 }) => {
   const now = moment();
   const past = moment().subtract(limit, "days");
-  data = addEmptyDays(data, past, now);
+  data = addEmptyDays(data, names, past, now);
   return (
     <ResponsiveContainer width="100%" minHeight={height} className={className}>
-      <BarChart
+      <LineChart
         data={data}
         margin={{
           top: 5,
@@ -105,30 +110,18 @@ export const BarActivities = ({
             fill: colors["900"],
           }}
         />
-        <Tooltip
-          content={(props) => {
-            return (
-              <div
-                className="p-2"
-                style={{ border: "solid 1px #ccc", background: "white" }}
-              >
-                {props.label} -{" "}
-                <strong>
-                  {data.find((d) => d.day === props.label)?.value}
-                </strong>
-              </div>
-            );
-          }}
-        />
+        <Tooltip />
         <ReferenceLine y={0} stroke="#000" />
-        <Brush dataKey="day" height={30} stroke={colors["primary"]} />
-        <Bar
-          dataKey="value"
-          fill={"transparent"}
-          stroke={colors["primary"]}
-          strokeWidth={2}
-        />
-      </BarChart>
+        <Legend />
+        {names.map((name, index) => (
+          <Line
+            type="monotone"
+            key={name}
+            dataKey={name}
+            stroke={colors[colorsArr[index % colorsArr.length]]}
+          />
+        ))}
+      </LineChart>
     </ResponsiveContainer>
   );
 };
