@@ -305,7 +305,7 @@ export const Settings = observer(() => {
       </Row>
 
       <SettingsForm state={state} />
-      <SettingsUsers state={state} />
+      {!!state.config?.communicationKey && <SettingsUsers state={state} />}
     </Container>
   );
 });
