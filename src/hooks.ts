@@ -43,14 +43,17 @@ export const useOnChange: <T, K extends keyof T>(
   fn: (value?: T[K]) => any,
   delay?: number
 ) => void = (state, name, fn, delay = 100) => {
-  React.useEffect(
-    () =>
-      reaction(
-        () => [state[name]],
-        debounce(([value]) => fn(value), delay, false)
-      ),
-    [state, name, fn, delay]
-  );
+  React.useEffect(() => {
+    (delay
+      ? debounce((value) => fn(value), delay, false)
+      : (value) => fn(value))(state[name]);
+    return reaction(
+      () => [state[name]],
+      delay
+        ? debounce(([value]) => fn(value), delay, false)
+        : ([value]) => fn(value)
+    );
+  }, [state, name, fn, delay]);
 };
 
 export const useOnLoad: <T>(fn: () => any, delay?: number) => void = (

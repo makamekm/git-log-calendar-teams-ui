@@ -21,16 +21,6 @@ export interface AuthState {
   initAuthorize: () => Promise<void>;
 }
 
-const removeLoadinghandler = () => {
-  const bodyElement = document.querySelector("body");
-  const loaderElement = document.querySelector(".initial-loader-wrap");
-  bodyElement.classList.add("loaded");
-  setTimeout(() => {
-    bodyElement.removeChild(loaderElement);
-    bodyElement.classList.remove("loading", "loaded");
-  }, 200);
-};
-
 export const getEncapsulatedPath = (pathname: string) => {
   return pathname.replace(/\//gi, PATH_ENCAPSULATION);
 };
@@ -90,12 +80,13 @@ export const AuthService = createService<AuthState>(
         }
       },
       initAuthorize: async () => {
+        state.isLoading = true;
         const config = await ipc.handlers.GET_CONFIG();
         if (!config.password) {
           await state.authorize(config.password);
           state.redirectToFrom();
         }
-        removeLoadinghandler();
+        state.isLoading = false;
       },
     }));
     return state;
