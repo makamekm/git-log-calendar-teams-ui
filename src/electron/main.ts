@@ -99,7 +99,7 @@ function createTray() {
       },
     },
   ]);
-  tray.setToolTip("Git Stats Manager");
+  tray.setToolTip("Git Activity Team Tracker");
   tray.setContextMenu(contextMenu);
   tray.addListener("click", () => {
     tray.popUpContextMenu();
@@ -121,7 +121,7 @@ function createWindow() {
     });
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, "../assets/logo.png"),
-    title: "Git Stats Manager",
+    title: "Git Activity Team Tracker",
     width: 800,
     height: 600,
     minWidth: 800,

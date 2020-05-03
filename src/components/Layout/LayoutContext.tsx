@@ -40,7 +40,7 @@ export const defaultLayoutMeta: LayoutMeta = {
   navbarHidden: false,
   footerHidden: false,
   pageTitle: null,
-  pageDescription: "Git Stats Manager",
+  pageDescription: "Git Activity Team Tracker",
   pageKeywords: "git team manager dashboard",
 };
 

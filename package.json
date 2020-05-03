@@ -1,8 +1,8 @@
 {
-  "name": "git-log-ui",
-  "version": "0.2.3",
+  "name": "git-activity-team-tracker",
+  "version": "0.2.4",
   "private": false,
-  "description": "The tool generates git calendar logs depending on teams' activities",
+  "description": "The tool visualize git activities, for teams, users, repositories",
   "author": "Maxim Karpov <makame@mail.ru>",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "cli",
     "ui"
   ],
-  "productName": "Git Stats Manager",
+  "productName": "Git Activity Team Tracker",
   "main": "src/electron/dev.js",
   "scripts": {
     "dev": "run-p start start:electron:watch",
