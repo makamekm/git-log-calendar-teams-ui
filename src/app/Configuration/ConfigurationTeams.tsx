@@ -42,6 +42,7 @@ export const ConfigurationTeams = observer(
               onClick={(e) => {
                 e.stopPropagation();
                 state.config.teams.unshift({
+                  id: String(Math.random() * 10000),
                   name: "",
                   invert: false,
                   users: [],

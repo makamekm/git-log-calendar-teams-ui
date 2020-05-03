@@ -41,6 +41,7 @@ export const ConfigurationRepositories = observer(
               onClick={(e) => {
                 e.stopPropagation();
                 state.config.repositories.unshift({
+                  id: String(Math.random() * 10000),
                   url: "",
                   name: "",
                   branch: "",

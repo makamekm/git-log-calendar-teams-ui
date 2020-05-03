@@ -63,8 +63,8 @@ export const ConfigurationTable = withResizeDetector(
                     {items.map((item, index) => {
                       return (
                         <Draggable
-                          draggableId={item.name}
-                          key={item.name}
+                          draggableId={item.id}
+                          key={item.id}
                           index={index}
                         >
                           {(providedDraggable, snapshot) =>

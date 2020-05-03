@@ -41,6 +41,7 @@ export const ConfigurationUsers = observer(
               onClick={(e) => {
                 e.stopPropagation();
                 state.config.users.unshift({
+                  id: String(Math.random() * 10000),
                   name: "",
                   associations: [],
                 });

@@ -15,7 +15,6 @@ import { DashboardService } from "./app/DashboardService";
 import { SearchService } from "./app/SearchService";
 import { MessageService } from "./app/MessageService";
 import { RepositoryUserService } from "./app/RepositoryUserService";
-import { ChatService } from "./app/ChatService";
 
 const basePath = process.env.BASE_PATH || "/";
 
@@ -28,8 +27,7 @@ export const App = () => {
       DashboardService,
       SearchService,
       MessageService,
-      RepositoryUserService,
-      ChatService
+      RepositoryUserService
     )
   );
 

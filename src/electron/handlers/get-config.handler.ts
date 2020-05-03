@@ -29,14 +29,17 @@ ipcMain.handle(
       config = await getConfig();
 
       config.repositories.forEach((repository) => {
+        repository.id = String(Math.random() * 10000);
         repository.exclude = repository.exclude || [];
       });
       config.teams.forEach((team) => {
+        team.id = String(Math.random() * 10000);
         team.users = team.users || [];
         team.repositories = team.repositories || [];
       });
-      config.users.forEach((users) => {
-        users.associations = users.associations || [];
+      config.users.forEach((user) => {
+        user.id = String(Math.random() * 10000);
+        user.associations = user.associations || [];
       });
 
       date = +new Date();
@@ -52,6 +55,17 @@ ipcMain.handle(
     ...args: Parameters<IpcHandler["SAVE_CONFIG"]>
   ): Promise<ReturnType<IpcHandler["SAVE_CONFIG"]>> => {
     const [newConfig] = args;
+
+    newConfig.repositories.forEach((repository) => {
+      delete repository.id;
+    });
+    newConfig.teams.forEach((team) => {
+      delete team.id;
+    });
+    newConfig.users.forEach((user) => {
+      delete user.id;
+    });
+
     const oldConfig = await ipc.handlers.GET_CONFIG();
     if (oldConfig.password !== newConfig.password && newConfig.password) {
       newConfig.password = md5(newConfig.password);

@@ -1,10 +1,8 @@
 import React from "react";
 import { SidebarMenu, SidebarMenuItem } from "~/components";
 import { observer } from "mobx-react";
-import { ChatService } from "~/app/ChatService";
 
 export const SidebarMiddleNav = observer(() => {
-  const chatService = React.useContext(ChatService);
   return (
     <SidebarMenu>
       <SidebarMenuItem
@@ -12,28 +10,6 @@ export const SidebarMiddleNav = observer(() => {
         title="Dashboard"
         to="/dashboard"
       />
-
-      {chatService.isActive ? (
-        <SidebarMenuItem
-          icon={<i className="fa fa-comment"></i>}
-          title="Chat"
-          to="/chat"
-          exact
-        />
-      ) : (
-        <></>
-      )}
-
-      {chatService.isActive ? (
-        <SidebarMenuItem
-          icon={<i className="fa fa-comments"></i>}
-          title="Channels"
-          to="/channel"
-          exact
-        />
-      ) : (
-        <></>
-      )}
 
       <SidebarMenuItem
         icon={<i className="fa fa-cog"></i>}
