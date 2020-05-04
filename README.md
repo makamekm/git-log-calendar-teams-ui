@@ -16,10 +16,13 @@ Features:
 - Different types of graphs
 - Suport Windows & Mac OS
 
+<p align="center">
 <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main.png" 
 alt="Main" width="100%" /></a></kbd>
+</p>
 
+<p align="center">
 <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main-bottom.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main-bottom.png" 
 alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/team-plots.png
@@ -33,6 +36,7 @@ alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.
 alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/settings.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/settings.png" 
 alt="Main Bottom" width="200" border="1" /></a></kbd>
+</p>
 
 Example PDF Print: [PDF React Demo Report](https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/react-demo-report.pdf).
 
