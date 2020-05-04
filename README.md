@@ -6,8 +6,6 @@ Download: [Git Activity Team Tracker](https://github.com/makamekm/git-log-calend
 
 Presentation: [Git Activity Team Tracker](https://www.canva.com/design/DAD66aWVC04/MfMGS8eUwHh2OvP-cNkFiQ/view?utm_content=DAD66aWVC04&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink).
 
-Presentation: [Git Activity Team Tracker](https://www.canva.com/design/DAD66aWVC04/MfMGS8eUwHh2OvP-cNkFiQ/view?utm_content=DAD66aWVC04&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink).
-
 Presentation Text: [Git Activity Team Tracker](https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/presentation.txt).
 
 Features:
