@@ -18,6 +18,8 @@ Features:
 - Different types of graphs
 - Suport Windows & Mac OS
 
+Screenshots:
+
 <p align="center">
 <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main.png" 
