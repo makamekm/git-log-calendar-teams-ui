@@ -1,0 +1,49 @@
+Git Activity Team Tracker
+
+Some engineers and managers have difficulties to track users, teams, project activities. Therefore I was asked to develop an instrument to solve that issue. That will allow users to collect and analyse all git stats. Basically it will help optimise human resources and as a consequence we will be able to optimise budget of all projects.
+
+[1]  Let’s go to the presentation. There is a basic structure of our talk:
+1) What problems do we have?
+2) How we can solve them?
+3) What limitations do we have?
+
+[2] We can’t do:
+
+* Graph stats per day
+* View Calendar activities
+* Compare teams and developers
+* Collect and sort all activities directly from GIT
+* Print reports
+
+[2] We have a tool that can solve all these issues.
+
+* It collects stats regularly
+* It allows to print reports
+* It has many ways of how to display and compare collected stats
+
+[3] There are some limitations:
+
+* We collect stats only by a schedule
+* To collect stats it requires access to these repositories
+* There is no web app, we have only Windows and MacOS application
+
+[4] Let’s got to the demo
+
+1) At the task bar we have a new icon, indicating about our application.
+2) If we click on it we see three options: open the UI tool, start collecting stats, and exit from the application
+3) If we open the UI, we see the main dashboard, where we can find the necessary entities, start collection logs, and log out from the ui if we use the password protection.
+4) At the left side there is a menu panel, but we will come back a little bit later.
+5) Let’s open a team stats.
+6) Here we have the all information about the team, repositories and users
+7) To print the report there is a button at the top of the screen.
+8) We can open any user, or a repository for detailed scam the stats.
+9) At the main dashboard we have Favourites, where you can add any of the important teams, users, projects of repositories.
+10) To configure all of these we need to open a Configuration Screen at the left menu.
+11) There are few options, but to start the basic collection you just need to add repositories and specify their default branches if they are not “master” by default.
+12) In the preferences panel you can find all the features, that I have talked about previously, such as Collect Time Interval, Password Protection, and Analyse Only Registered Users, that can help you to get rid of users who are not listed in the Users Section below.
+
+[Move to Dashboard]
+
+Finally, we can improve this tool by integrating TJS, Jira or other tools, but the current version gives us the gold minimum to report and track activities.  
+Overall.
+This tool gives the ability to users, teams and projects activities, that help optimise human resources and budgets of the projects.
