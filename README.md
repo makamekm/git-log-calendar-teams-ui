@@ -16,23 +16,23 @@ Features:
 - Different types of graphs
 - Suport Windows & Mac OS
 
-<a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main.png
+<kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main.png" 
-alt="Main" width="100%" /></a>
+alt="Main" width="100%" /></a></kbd>
 
-<a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main-bottom.png
+<kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main-bottom.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/main-bottom.png" 
-alt="Main Bottom" width="200" /></a> <a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/teams-plots.png
-" target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/teams-plots.png" 
-alt="Main Bottom" width="200" /></a> <a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/search.png
+alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/team-plots.png
+" target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/team-plots.png" 
+alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/search.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/search.png" 
-alt="Main Bottom" width="200" /></a> <a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/configuration-teams.png
+alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/configuration-teams.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/configuration-teams.png" 
-alt="Main Bottom" width="200" /></a> <a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/configuration-preferences.png
+alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/configuration-preferences.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/configuration-preferences.png" 
-alt="Main Bottom" width="200" /></a> <a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/settings.png
+alt="Main Bottom" width="200" border="1" /></a></kbd> <kbd><a href="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/settings.png
 " target="_blank"><img src="https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/settings.png" 
-alt="Main Bottom" width="200" /></a>
+alt="Main Bottom" width="200" border="1" /></a></kbd>
 
 Example PDF Print: [PDF React Demo Report](https://raw.github.com/makamekm/git-log-calendar-teams-ui/master/docs/react-demo-report.pdf).
 
