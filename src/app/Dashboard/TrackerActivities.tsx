@@ -81,7 +81,7 @@ export const TrackerActivities = observer(() => {
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
-                  maxValue={stateDashboard.maxValue}
+                  maxValue={stateDashboard.maxValueDelay}
                   height={200}
                   limit={stateDashboard.limit}
                   data={stateDashboard.userStats[name] || []}
@@ -139,7 +139,7 @@ export const TrackerActivities = observer(() => {
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
-                  maxValue={stateDashboard.maxValue}
+                  maxValue={stateDashboard.maxValueDelay}
                   height={200}
                   limit={stateDashboard.limit}
                   data={stateDashboard.teamStats[name] || []}
@@ -197,7 +197,7 @@ export const TrackerActivities = observer(() => {
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
-                  maxValue={stateDashboard.maxValue}
+                  maxValue={stateDashboard.maxValueDelay}
                   height={200}
                   limit={stateDashboard.limit}
                   data={stateDashboard.repositoriesStats[name] || []}

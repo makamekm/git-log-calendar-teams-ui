@@ -102,6 +102,45 @@ export const isObservableEquals = (a, b) => {
   return isEqual(toJS(a), toJS(b));
 };
 
+export const useSimpleSyncLocalStorage = <T, K extends keyof T>(
+  state: T,
+  name: K,
+  storageName?: string,
+  delay = 0
+) => {
+  const key = storageName || (name as string);
+
+  React.useEffect(() => {
+    return reaction(
+      () => [state[name]],
+      ([value]) => {
+        const localValue = localStorage.getItem(key);
+        if (!isObservableEquals(localValue, value)) {
+          localStorage.setItem(key, value);
+        }
+      }
+    );
+  }, [state, name, key, delay]);
+
+  React.useEffect(() => {
+    const localValue = localStorage.getItem(key);
+    setObservable(state, name, toJS(localValue));
+    return reaction(
+      () => [localStorage.getItem(key)],
+      debounce(
+        ([localValue]) => {
+          const value = state[name];
+          if (!isObservableEquals(localValue, value)) {
+            setObservable(state, name, localValue);
+          }
+        },
+        delay,
+        false
+      )
+    );
+  }, [state, name, key, delay]);
+};
+
 export const useSyncLocalStorage = <T, K extends keyof T>(
   state: T,
   name: K,

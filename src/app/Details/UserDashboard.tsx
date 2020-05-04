@@ -159,7 +159,7 @@ export const UserDashboard = observer(() => {
             ) : (
               <>
                 <CalendarActivities
-                  maxValue={state.maxValue}
+                  maxValue={state.maxValueDelay}
                   height={200}
                   limit={state.limit}
                   data={state.userStats[userName] || []}
@@ -249,7 +249,7 @@ export const UserDashboard = observer(() => {
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
-                  maxValue={state.maxValue}
+                  maxValue={state.maxValueDelay}
                   height={200}
                   limit={state.limit}
                   data={state.repositoriesStats[repository] || []}
@@ -286,7 +286,7 @@ export const UserDashboard = observer(() => {
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
-                  maxValue={state.maxValue}
+                  maxValue={state.maxValueDelay}
                   height={200}
                   limit={state.limit}
                   data={state.teamStats[team] || []}

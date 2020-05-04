@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
-import { useOnChange, useDelay } from "~/hooks";
+import { useOnChange, useDelay, useSimpleSyncLocalStorage } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc, IpcHandler } from "~/shared/ipc";
 import { MessageState, MessageService } from "./MessageService";
@@ -15,6 +15,7 @@ export interface DashboardState {
   repositoryUserService?: RepositoryUserState;
   config: Config;
   maxValue: number;
+  maxValueDelay: number;
   mode: "team" | "repository" | "user";
   name: string;
   teamStats: {
@@ -75,6 +76,7 @@ export const DashboardService = createService<DashboardState>(
     const state: DashboardState = useLocalStore<DashboardState>(() => ({
       config: null,
       maxValue: 0,
+      maxValueDelay: 0,
       mode: null,
       name: null,
       teamStats: {},
@@ -251,6 +253,9 @@ export const DashboardService = createService<DashboardState>(
     state.repositoryUserService = React.useContext(RepositoryUserService);
     useOnChange(state, "limit", state.load);
     useDelay(state, "isLoading", "isLoadingDelay");
+    useDelay(state, "maxValue", "maxValueDelay");
+    useSimpleSyncLocalStorage(state, "maxValue", "maxValue");
+    useSimpleSyncLocalStorage(state, "maxValueDelay", "maxValueDelay");
     React.useEffect(() => ipc.channels.ON_DRIVE_UPDATE(state.load));
     React.useEffect(() => ipc.channels.ON_COLLECT_FINISH(state.load));
   }

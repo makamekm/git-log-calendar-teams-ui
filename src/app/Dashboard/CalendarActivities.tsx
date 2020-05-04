@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { ResponsiveCalendarCanvas } from "@nivo/calendar";
+import { ResponsiveCalendar } from "@nivo/calendar";
 
 export const CalendarActivities = ({
   height,
@@ -41,13 +41,16 @@ export const CalendarActivities = ({
           right: 0,
         }}
       >
-        <ResponsiveCalendarCanvas
+        <ResponsiveCalendar
           data={data}
           from={past}
           to={now}
           maxValue={maxValue || "auto"}
           minValue={0}
-          emptyColor="#eeeeee"
+          emptyColor="#fff0f0"
+          monthBorderWidth={5}
+          monthBorderColor="#ddd"
+          dayBorderColor="#ddd"
           colors={[
             "#e6ffe6",
             "#99ff99",
@@ -56,14 +59,10 @@ export const CalendarActivities = ({
             "#00ff00",
             "#00cc00",
             "#009900",
-            "#008000",
-            "#006600",
           ]}
           margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
           yearSpacing={40}
-          monthBorderColor="#ffffff"
           dayBorderWidth={2}
-          dayBorderColor="#ffffff"
         />
       </div>
     </div>
