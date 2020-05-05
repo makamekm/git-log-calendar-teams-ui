@@ -24,7 +24,7 @@ export const ConfigurationForm = observer(
           <span className="small ml-1 text-muted">#1.00</span>
         </AccordionHeader>
         <AccordionBody className="pb-0">
-          {!state.config || state.isLoadingDelay ? (
+          {!state.config || state.isLoading ? (
             <List height="200px" width="100%" />
           ) : (
             <Form className="mt-3 mb-3">

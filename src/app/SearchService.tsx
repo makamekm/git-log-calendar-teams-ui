@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
-import { useDelay, useOnLoad } from "~/hooks";
+import { useOnLoad } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
 import { debounce } from "underscore";
@@ -23,7 +23,6 @@ export interface SearchState {
   config: Config;
   items: SearchItem[];
   isLoading: boolean;
-  isLoadingDelay: boolean;
   load: () => Promise<void>;
   reload: () => void;
 }
@@ -33,7 +32,6 @@ export const SearchService = createService<SearchState>(
     const state = useLocalStore<SearchState>(() => ({
       config: null,
       isLoading: false,
-      isLoadingDelay: false,
       get items() {
         const arr = [];
         if (state.config) {
@@ -73,6 +71,5 @@ export const SearchService = createService<SearchState>(
   () => {
     const state = useContext(SearchService);
     useOnLoad(state.load);
-    useDelay(state, "isLoading", "isLoadingDelay");
   }
 );

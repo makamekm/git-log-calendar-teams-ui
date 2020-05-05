@@ -54,7 +54,7 @@ export const ConfigurationRepositories = observer(
           </div>
         </AccordionHeader>
         <AccordionBody className="p-0">
-          {!state.config || state.isLoadingDelay ? (
+          {!state.config || state.isLoading ? (
             <List className="m-4" height="200px" width="100%" />
           ) : (
             <ConfigurationTableRepositories

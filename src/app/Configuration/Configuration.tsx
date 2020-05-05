@@ -26,7 +26,6 @@ export const Configuration = observer(() => {
     isDirty: false,
     config: null,
     isLoading: false,
-    isLoadingDelay: false,
     allUsers: [],
     usersQuery: "",
     usersQueryDelay: "",
@@ -123,7 +122,6 @@ export const Configuration = observer(() => {
 
   useOnLoad(state.load);
   useIsDirty(state, "config");
-  useDelay(state, "isLoading", "isLoadingDelay");
   useDelay(state, "usersQuery", "usersQueryDelay");
 
   return (

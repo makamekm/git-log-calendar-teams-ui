@@ -52,7 +52,7 @@ export const LatestMessages = observer(() => {
         </div>
       </AccordionHeader>
       <AccordionBody className="p-0">
-        {stateDashboard.isLoadingDelay || stateMessage.isLoadingDelay ? (
+        {stateDashboard.isLoading || stateMessage.isLoading ? (
           <List className="m-4" height="200px" width="100%" />
         ) : (
           <Table

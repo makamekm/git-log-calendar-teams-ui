@@ -4,7 +4,6 @@ export interface ConfigurationState {
   isDirty: boolean;
   config: Config;
   isLoading: boolean;
-  isLoadingDelay: boolean;
   excludes: string[];
   users: string[];
   repositories: string[];

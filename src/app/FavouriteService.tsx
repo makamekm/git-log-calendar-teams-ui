@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
-import { useSyncLocalStorage, useOnLoadPathname, useDelay } from "~/hooks";
+import { useSyncLocalStorage, useOnLoadPathname } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
 
@@ -23,7 +23,6 @@ export interface FavouriteState {
   trackers: Tracker[];
   allTrackers: Tracker[];
   isLoading: boolean;
-  isLoadingDelay: boolean;
   addTracker(item: { name: string; type: TrackerType }): void;
   removeTracker(name: string, type: TrackerType): void;
   load: () => Promise<void>;
@@ -35,7 +34,6 @@ export const FavouriteService = createService<FavouriteState>(
       config: null,
       trackers: [],
       isLoading: false,
-      isLoadingDelay: false,
       get allTrackers() {
         const arr = [];
         if (state.config) {
@@ -87,7 +85,6 @@ export const FavouriteService = createService<FavouriteState>(
     const state = useContext(FavouriteService);
 
     useOnLoadPathname(state.load);
-    useDelay(state, "isLoading", "isLoadingDelay");
     useSyncLocalStorage(state, "trackers");
   }
 );

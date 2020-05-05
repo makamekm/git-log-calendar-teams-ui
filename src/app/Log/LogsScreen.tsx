@@ -17,7 +17,7 @@ import {
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
-import { useDelay, useOnChange, useOnLoad } from "~/hooks";
+import { useOnChange, useOnLoad } from "~/hooks";
 
 const matchLogReg = /\[(\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d\d\d)\] \[(\w*)\] ([\d\w\W]*)/m;
 
@@ -42,7 +42,6 @@ interface LogsState {
     message: string;
   }[];
   isLoading: boolean;
-  isLoadingDelay: boolean;
   load: () => Promise<void>;
 }
 
@@ -93,7 +92,6 @@ export const LogsScreen = observer(() => {
       return logs.sort((a, b) => +b.date - +a.date);
     },
     isLoading: false,
-    isLoadingDelay: false,
     load: async () => {
       state.isLoading = true;
       state.logs = await ipc.handlers.GET_LOGS(state.search, state.limit);
@@ -104,7 +102,6 @@ export const LogsScreen = observer(() => {
 
   useOnLoad(state.load);
   useOnChange(state, "search", state.load, 500);
-  useDelay(state, "isLoading", "isLoadingDelay");
 
   return (
     <>
@@ -152,7 +149,7 @@ export const LogsScreen = observer(() => {
             </Card>
 
             <Card className="mt-2">
-              {state.isLoadingDelay ? (
+              {state.isLoading ? (
                 <List height={"300px"} className="m-4" />
               ) : (
                 <Table className="m-0">

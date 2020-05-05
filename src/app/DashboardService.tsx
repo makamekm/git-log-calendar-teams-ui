@@ -56,7 +56,6 @@ export interface DashboardState {
   teams: string[];
   stats: ReturnType<IpcHandler["GET_STATS_DATA"]>;
   isLoading: boolean;
-  isLoadingDelay: boolean;
   limit: number;
   load: () => Promise<void>;
 }
@@ -84,7 +83,6 @@ export const DashboardService = createService<DashboardState>(
       repositoriesStats: {},
       stats: null,
       isLoading: false,
-      isLoadingDelay: false,
       limit: 30,
       get repositoryCompareStats() {
         const result: {
@@ -252,7 +250,6 @@ export const DashboardService = createService<DashboardState>(
     state.messageService = React.useContext(MessageService);
     state.repositoryUserService = React.useContext(RepositoryUserService);
     useOnChange(state, "limit", state.load);
-    useDelay(state, "isLoading", "isLoadingDelay");
     useDelay(state, "maxValue", "maxValueDelay");
     useSimpleSyncLocalStorage(state, "maxValue", "maxValue");
     useSimpleSyncLocalStorage(state, "maxValueDelay", "maxValueDelay");

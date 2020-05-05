@@ -112,8 +112,8 @@ export const RoutedContent = () => {
       <Redirect from="/" to="/dashboard" exact />
       <Redirect from="/index.html" to="/dashboard" exact />
 
-      <Route path="/login/:loginFrom" exact component={AuthScreen} />
-      <LogoutRoute path="/logout/:loginFrom" exact />
+      <Route path="/login/:loginFrom" component={AuthScreen} />
+      <LogoutRoute path="/logout/:loginFrom" />
 
       <Route component={Error404} path="/404" />
 

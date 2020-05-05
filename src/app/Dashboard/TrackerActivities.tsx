@@ -76,8 +76,7 @@ export const TrackerActivities = observer(() => {
               </UncontrolledButtonDropdown>
             </div>
             <div>
-              {stateDashboard.isLoadingDelay ||
-              stateFavourite.isLoadingDelay ? (
+              {stateDashboard.isLoading || stateFavourite.isLoading ? (
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
@@ -134,8 +133,7 @@ export const TrackerActivities = observer(() => {
               </UncontrolledButtonDropdown>
             </div>
             <div>
-              {stateDashboard.isLoadingDelay ||
-              stateFavourite.isLoadingDelay ? (
+              {stateDashboard.isLoading || stateFavourite.isLoading ? (
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
@@ -192,8 +190,7 @@ export const TrackerActivities = observer(() => {
               </UncontrolledButtonDropdown>
             </div>
             <div>
-              {stateDashboard.isLoadingDelay ||
-              stateFavourite.isLoadingDelay ? (
+              {stateDashboard.isLoading || stateFavourite.isLoading ? (
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities

@@ -32,7 +32,6 @@ export interface RepositoryUserState {
     valueTotal: number;
   }[];
   isLoading: boolean;
-  isLoadingDelay: boolean;
   load: () => Promise<void>;
 }
 
@@ -42,7 +41,6 @@ export const RepositoryUserService = createService<RepositoryUserState>(
       () => ({
         repositoryUsers: [],
         isLoading: false,
-        isLoadingDelay: false,
         usersQuery: "",
         usersQueryDelay: "",
         sortBy: "value",
@@ -78,7 +76,6 @@ export const RepositoryUserService = createService<RepositoryUserState>(
   },
   (state) => {
     state.dashboardService = React.useContext(DashboardService);
-    useDelay(state, "isLoading", "isLoadingDelay");
     useDelay(state, "usersQuery", "usersQueryDelay");
   }
 );

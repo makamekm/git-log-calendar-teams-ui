@@ -80,7 +80,6 @@
     "holderjs": "^2.9.7",
     "hyperdrive": "^9.16.0",
     "hyperswarm": "^2.13.0",
-    "hyperswarm-web": "^1.0.3",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
     "mobx": "^5.15.4",

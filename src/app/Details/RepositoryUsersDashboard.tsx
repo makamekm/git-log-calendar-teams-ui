@@ -7,7 +7,6 @@ import {
   Table,
   AutoSizer,
   CellMeasurerCache,
-  WindowScroller,
   CellMeasurer,
 } from "react-virtualized";
 
@@ -207,24 +206,20 @@ export const RepositoryUsersDashboard = observer(() => {
         </div>
       </AccordionHeader>
       <AccordionBody className="p-0">
-        {state.isLoadingDelay || !storage.cache ? (
+        {state.isLoading || !storage.cache ? (
           <List className="m-4" height="200px" width="100%" />
         ) : (
           <div style={{ height: "450px" }}>
-            <WindowScroller>
-              {() => (
-                <AutoSizer>
-                  {({ width, height }) => (
-                    <UserTable
-                      width={width}
-                      height={height}
-                      state={state}
-                      cache={storage.cache}
-                    />
-                  )}
-                </AutoSizer>
+            <AutoSizer>
+              {({ width, height }) => (
+                <UserTable
+                  width={width}
+                  height={height}
+                  state={state}
+                  cache={storage.cache}
+                />
               )}
-            </WindowScroller>
+            </AutoSizer>
           </div>
         )}
       </AccordionBody>

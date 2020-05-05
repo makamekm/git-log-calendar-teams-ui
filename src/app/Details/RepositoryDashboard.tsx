@@ -72,7 +72,7 @@ export const RepositoryDashboard = observer(() => {
             <DashboardToolbar state={state} />
           </div>
         </Col>
-        {state.isLoadingDelay ? (
+        {state.isLoading ? (
           <List height="300px" />
         ) : (
           <>
@@ -151,7 +151,7 @@ export const RepositoryDashboard = observer(() => {
             </CardTitle>
           </div>
           <div>
-            {state.isLoadingDelay ? (
+            {state.isLoading ? (
               <List height={"300px"} />
             ) : (
               <>
@@ -178,7 +178,7 @@ export const RepositoryDashboard = observer(() => {
             </CardTitle>
           </div>
           <div>
-            {state.isLoadingDelay ? (
+            {state.isLoading ? (
               <List height={"300px"} />
             ) : (
               <>
@@ -204,7 +204,7 @@ export const RepositoryDashboard = observer(() => {
             </CardTitle>
           </div>
           <div>
-            {state.isLoadingDelay ? (
+            {state.isLoading ? (
               <List height={"300px"} />
             ) : (
               <>
@@ -231,7 +231,7 @@ export const RepositoryDashboard = observer(() => {
             </CardTitle>
           </div>
           <div>
-            {state.isLoadingDelay ? (
+            {state.isLoading ? (
               <List height={"300px"} />
             ) : (
               <>
@@ -269,7 +269,7 @@ export const RepositoryDashboard = observer(() => {
               </CardTitle>
             </div>
             <div>
-              {state.isLoadingDelay ? (
+              {state.isLoading ? (
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities
@@ -306,7 +306,7 @@ export const RepositoryDashboard = observer(() => {
               </CardTitle>
             </div>
             <div>
-              {state.isLoadingDelay ? (
+              {state.isLoading ? (
                 <List height={"300px"} />
               ) : (
                 <CalendarActivities

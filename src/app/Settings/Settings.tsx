@@ -22,7 +22,7 @@ import {
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
-import { useIsDirty, useDelay, useOnLoad } from "~/hooks";
+import { useIsDirty, useOnLoad } from "~/hooks";
 import { ApplicationSettings } from "~/shared/Settings";
 import { ConfigurationTable } from "../Configuration/ConfigurationTable";
 import { UserConnection } from "~/shared/UserConnection";
@@ -31,7 +31,6 @@ interface SettingsState {
   isDirty: boolean;
   config: ApplicationSettings;
   isLoading: boolean;
-  isLoadingDelay: boolean;
   users: UserConnection[];
   load: () => Promise<void>;
   save: () => Promise<void>;
@@ -46,7 +45,7 @@ const SettingsUsers = observer(({ state }: { state: SettingsState }) => {
         Authorized Users
       </AccordionHeader>
       <AccordionBody className="pb-0">
-        {!state.config || state.isLoadingDelay ? (
+        {!state.config || state.isLoading ? (
           <List height="200px" width="100%" />
         ) : (
           <ConfigurationTable
@@ -81,7 +80,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
         Application Preferences
       </AccordionHeader>
       <AccordionBody className="pb-0">
-        {!state.config || state.isLoadingDelay ? (
+        {!state.config || state.isLoading ? (
           <List height="200px" width="100%" />
         ) : (
           <Form className="mt-3 mb-3">
@@ -228,7 +227,6 @@ export const Settings = observer(() => {
     isDirty: false,
     config: null,
     isLoading: false,
-    isLoadingDelay: false,
     users: [],
     load: async () => {
       state.isLoading = true;
@@ -261,7 +259,6 @@ export const Settings = observer(() => {
 
   useOnLoad(state.load);
   useIsDirty(state, "config");
-  useDelay(state, "isLoading", "isLoadingDelay");
 
   return (
     <Container className="pb-4">

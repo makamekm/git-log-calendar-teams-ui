@@ -18,7 +18,6 @@ export interface MessageState {
   query: string;
   queryDelay: string;
   isLoading: boolean;
-  isLoadingDelay: boolean;
   load: () => Promise<void>;
 }
 
@@ -26,7 +25,6 @@ export const MessageService = createService<MessageState>(
   () => {
     const state: MessageState = useLocalStore<MessageState>(() => ({
       isLoading: false,
-      isLoadingDelay: false,
       query: "",
       queryDelay: "",
       messages: [],
@@ -49,7 +47,6 @@ export const MessageService = createService<MessageState>(
   },
   (state) => {
     state.dashboardService = React.useContext(DashboardService);
-    useDelay(state, "isLoading", "isLoadingDelay");
     useDelay(state, "query", "queryDelay");
     useOnChange(state, "queryDelay", state.load);
   }

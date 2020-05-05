@@ -43,7 +43,7 @@ export const Dashboard = observer(() => {
             <DashboardToolbar state={state} />
           </div>
         </Col>
-        {state.isLoadingDelay ? (
+        {state.isLoading ? (
           <List height="300px" />
         ) : (
           <>
