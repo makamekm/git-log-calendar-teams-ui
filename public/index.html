@@ -135,7 +135,10 @@
         <div class="initial-loader__row">
           The application is loading...
         </div>
-        <div class="initial-loader__subrow" onclick="window.location.reload()">
+        <div
+          class="initial-loader__subrow"
+          onclick="window.location = window.location.origin + '/index.html'"
+        >
           FORCE RELOAD
         </div>
       </div>
