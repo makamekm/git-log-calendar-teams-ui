@@ -377,6 +377,7 @@ function normalizeDataReduce(report, fileMap, config, callback) {
                 repositoryName,
                 email,
                 name,
+                user,
               });
             } else {
               const limit = new Date();
@@ -406,6 +407,7 @@ function normalizeDataReduce(report, fileMap, config, callback) {
                       message: map[dateString].message,
                       email,
                       name,
+                      user,
                     });
                   }
                 }

@@ -8,6 +8,8 @@ export interface ConfigurationState {
   excludes: string[];
   users: string[];
   repositories: string[];
+  usersQuery: string;
+  usersQueryDelay: string;
   allUsers: {
     userKey: string;
     user?: {
@@ -16,7 +18,9 @@ export interface ConfigurationState {
     email: string;
     name: string;
     value: number;
+    valueTotal: number;
   }[];
+  allUsersQueryed: ConfigurationState["allUsers"];
   usedAssociations: string[];
   associations: string[];
   load: () => Promise<void>;

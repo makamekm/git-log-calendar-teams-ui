@@ -258,5 +258,6 @@ export const DashboardService = createService<DashboardState>(
     useSimpleSyncLocalStorage(state, "maxValueDelay", "maxValueDelay");
     React.useEffect(() => ipc.channels.ON_DRIVE_UPDATE(state.load));
     React.useEffect(() => ipc.channels.ON_COLLECT_FINISH(state.load));
+    React.useEffect(() => ipc.channels.ON_CONFIG_UPDATE_FINISHED(state.load));
   }
 );

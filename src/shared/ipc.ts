@@ -150,6 +150,7 @@ export interface IpcHandler {
   CLOSE_CHANNEL: (name: string) => void;
   SEND_CHANNEL_MESSAGE: (name: string, message: JsonCompatible) => void;
   SEND_USER_MESSAGE: (email: string, message: JsonCompatible) => void;
+  REGISTER_USER: (email: string, username: string) => void;
 }
 
 const channelFactory = <T = any[], K = void>(name: string) => (
@@ -172,6 +173,8 @@ export const ipc = {
     ON_CHANNEL_VERIFYED_MESSAGE: channelFactory("ON_CHANNEL_VERIFYED_MESSAGE"),
     ON_CHANNEL_AUTH_FAIL: channelFactory("ON_CHANNEL_AUTH_FAIL"),
     ON_CHANNEL_UPDATE: channelFactory("ON_CHANNEL_UPDATE"),
+    ON_CONFIG_UPDATE_STARTED: channelFactory("ON_CONFIG_UPDATE_STARTED"),
+    ON_CONFIG_UPDATE_FINISHED: channelFactory("ON_CONFIG_UPDATE_FINISHED"),
   },
   handlers: {
     APP_INFO: (
@@ -274,6 +277,10 @@ export const ipc = {
       ...args: Parameters<IpcHandler["SEND_USER_MESSAGE"]>
     ): Promise<ReturnType<IpcHandler["SEND_USER_MESSAGE"]>> =>
       ipcRenderer.invoke(nameofHandler("SEND_USER_MESSAGE"), ...args),
+    REGISTER_USER: (
+      ...args: Parameters<IpcHandler["REGISTER_USER"]>
+    ): Promise<ReturnType<IpcHandler["REGISTER_USER"]>> =>
+      ipcRenderer.invoke(nameofHandler("REGISTER_USER"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
@@ -291,6 +298,10 @@ export const ipc = {
       ipcRenderer.send(nameofSends("ON_CHANNEL_PEER_END"), channel, peer),
     ON_CHANNEL_UPDATE: (channelName: string) =>
       ipcRenderer.send(nameofSends("ON_CHANNEL_UPDATE"), channelName),
+    ON_CONFIG_UPDATE_STARTED: () =>
+      ipcRenderer.send(nameofSends("ON_CONFIG_UPDATE_STARTED")),
+    ON_CONFIG_UPDATE_FINISHED: () =>
+      ipcRenderer.send(nameofSends("ON_CONFIG_UPDATE_FINISHED")),
     ON_CHANNEL_AUTH_FAIL: (channelName: string, email: string, name: string) =>
       ipcRenderer.send(
         nameofSends("ON_CHANNEL_AUTH_FAIL"),

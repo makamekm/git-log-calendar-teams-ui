@@ -19,6 +19,7 @@ import { ConfigurationTeams } from "./ConfigurationTeams";
 import { ConfigurationUsers } from "./ConfigurationUsers";
 import { ConfigurationRepositories } from "./ConfigurationRepositories";
 import { ConfigurationForm } from "./ConfigurationForm";
+import { ConfigurationAllUsers } from "./ConfigurationAllUsers";
 
 export const Configuration = observer(() => {
   const state = useLocalStore<ConfigurationState>(() => ({
@@ -27,6 +28,13 @@ export const Configuration = observer(() => {
     isLoading: false,
     isLoadingDelay: false,
     allUsers: [],
+    usersQuery: "",
+    usersQueryDelay: "",
+    get allUsersQueryed() {
+      return state.allUsers.filter((user) => {
+        return user.userKey.includes(state.usersQueryDelay);
+      });
+    },
     get excludes() {
       let arr: string[] = [];
       if (state.config) {
@@ -116,6 +124,7 @@ export const Configuration = observer(() => {
   useOnLoad(state.load);
   useIsDirty(state, "config");
   useDelay(state, "isLoading", "isLoadingDelay");
+  useDelay(state, "usersQuery", "usersQueryDelay");
 
   return (
     <Container className="pb-4">
@@ -162,6 +171,7 @@ export const Configuration = observer(() => {
       <ConfigurationTeams state={state} />
       <ConfigurationRepositories state={state} />
       <ConfigurationUsers state={state} />
+      <ConfigurationAllUsers state={state} />
     </Container>
   );
 });

@@ -54,6 +54,8 @@ ipcMain.handle(
     event,
     ...args: Parameters<IpcHandler["SAVE_CONFIG"]>
   ): Promise<ReturnType<IpcHandler["SAVE_CONFIG"]>> => {
+    ipc.sends.ON_CONFIG_UPDATE_STARTED();
+
     const [newConfig] = args;
 
     newConfig.repositories.forEach((repository) => {
@@ -72,5 +74,42 @@ ipcMain.handle(
     }
     await saveConfig(newConfig);
     config = null;
+
+    ipc.sends.ON_CONFIG_UPDATE_FINISHED();
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("REGISTER_USER"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["REGISTER_USER"]>
+  ): Promise<ReturnType<IpcHandler["REGISTER_USER"]>> => {
+    const [email, username] = args;
+    const name = username
+      .toLowerCase()
+      .split(" ")
+      .map((s) => {
+        s = s.trim();
+        return s.charAt(0).toUpperCase() + s.slice(0);
+      })
+      .join(" ");
+
+    const config = await ipc.handlers.GET_CONFIG();
+    if (
+      !config.users.find(
+        (u) =>
+          u.name === name ||
+          u.associations.includes(email) ||
+          u.associations.includes(username)
+      )
+    ) {
+      config.users.unshift({
+        id: "",
+        associations: [email, username],
+        name,
+      });
+      await ipc.handlers.SAVE_CONFIG(config);
+    }
   }
 );

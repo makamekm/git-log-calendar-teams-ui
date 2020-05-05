@@ -10,6 +10,7 @@ import {
   protocol,
   dialog,
 } from "electron";
+import contextMenu from "electron-context-menu";
 import path from "path";
 import http from "http";
 import url from "url";
@@ -60,6 +61,40 @@ export const getWindow = () => {
 function createUpdater() {
   new AppUpdater();
 }
+
+contextMenu({
+  showSearchWithGoogle: false,
+  showCopyImageAddress: false,
+  showSaveImage: true,
+  showSaveImageAs: true,
+  // shouldShowMenu: (event, params) => {
+  //   const createUser = params.linkURL && decodeURIComponent(params.linkURL);
+  //   return !!createUser || params.isEditable;
+  // },
+  prepend: (defaultActions, params, browserWindow) => {
+    const str = params.linkURL && decodeURIComponent(params.linkURL);
+    const createUser =
+      str && /user\/.*\*$/gi.test(decodeURIComponent(params.linkURL));
+    if (createUser) {
+      const arr = /user\/([a-zA-Z0-9_\-\.]+@[a-zA-Z0-9_\-\.]+) (.*)\*$/gi.exec(
+        str
+      );
+      const email = arr[1];
+      const username = arr[2];
+      return [
+        {
+          label: "Register user",
+          visible: /user\/.*\*$/gi.test(decodeURIComponent(params.linkURL)),
+          click: async () => {
+            await ipc.handlers.REGISTER_USER(email, username);
+          },
+        },
+      ];
+    }
+    return [];
+  },
+  menu: (actions) => [actions.copy({}), actions.paste({})],
+});
 
 function createTray() {
   tray = new Tray(

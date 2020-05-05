@@ -87,7 +87,7 @@ const RepositoryUsers = observer(() => {
                 return (
                   <tr key={index}>
                     <td className="align-middle">{index + 1}.</td>
-                    <td className="align-middle">
+                    <td className="align-middle hyphenate">
                       {user.user ? (
                         <Link to={`/user/${user.user.name}`}>
                           {user.user.name}
@@ -96,8 +96,8 @@ const RepositoryUsers = observer(() => {
                         <Link to={`/user/${user.userKey}`}>{user.userKey}</Link>
                       )}
                     </td>
-                    <td className="align-middle">{user.name}</td>
-                    <td className="align-middle">{user.email}</td>
+                    <td className="align-middle hyphenate">{user.name}</td>
+                    <td className="align-middle hyphenate">{user.email}</td>
                     <td className="text-right align-middle">
                       {numberWithCommas(user.value)}
                     </td>
