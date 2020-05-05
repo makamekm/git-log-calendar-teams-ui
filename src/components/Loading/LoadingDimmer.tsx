@@ -3,7 +3,7 @@ import { useLocalStore, observer } from "mobx-react";
 
 const Dimmer = ({ text }: { text?: string }) => {
   const reload = React.useCallback(() => {
-    (window as any).location = window.location.origin + "/index.html";
+    window.location.reload();
   }, []);
   return (
     <div className="initial-loader-wrap">

@@ -226,7 +226,7 @@ app.on("ready", () => {
         protocol.interceptFileProtocol(
           "file",
           (request, callback) => {
-            const url = request.url.substr(7);
+            const url = request.url.substr(7).split("#")[0];
             callback(path.normalize(`${__dirname}/../../${url}`));
           },
           (err) => {

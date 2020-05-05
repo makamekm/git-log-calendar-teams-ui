@@ -110,7 +110,6 @@ export const RoutedContent = () => {
   return (
     <Switch>
       <Redirect from="/" to="/dashboard" exact />
-      <Redirect from="/index.html" to="/dashboard" exact />
 
       <Route path="/login/:loginFrom" component={AuthScreen} />
       <LogoutRoute path="/logout/:loginFrom" />

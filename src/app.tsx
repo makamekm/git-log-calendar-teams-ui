@@ -1,6 +1,6 @@
 import React from "react";
 import "./app.css";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { RoutedContent } from "./routing";
 import { AppLayout } from "./layout/AppLayout";
 import {
