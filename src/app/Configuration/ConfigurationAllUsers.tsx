@@ -106,7 +106,7 @@ const UserActions = observer(
         )
       ) {
         state.config.users.unshift({
-          id: "",
+          id: String(Math.random() * 10000),
           associations: [user.email, user.name],
           name,
         });

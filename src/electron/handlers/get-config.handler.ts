@@ -105,7 +105,7 @@ ipcMain.handle(
       )
     ) {
       config.users.unshift({
-        id: "",
+        id: String(Math.random() * 10000),
         associations: [email, username],
         name,
       });
