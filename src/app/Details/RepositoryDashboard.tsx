@@ -11,11 +11,6 @@ import {
   Card,
   CardBody,
   CardTitle,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  Table,
-  Input,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { DashboardService } from "../DashboardService";
@@ -29,91 +24,10 @@ import { TotalCommitsPanel } from "../Dashboard/TotalCommitsPanel";
 import { ActiveStatsPanel } from "../Dashboard/ActiveStatsPanel";
 import { CalendarActivities } from "../Dashboard/CalendarActivities";
 import { HeaderSection } from "../HeaderSection";
-import { numberWithCommas } from "~/tools";
 import { LatestMessages } from "./LastMessages";
-import { RepositoryUserService } from "../RepositoryUserService";
 import { BarActivities } from "../Dashboard/BarActivities";
 import { LineActivities } from "../Dashboard/LineActivities";
-
-const RepositoryUsers = observer(() => {
-  const state = React.useContext(RepositoryUserService);
-  const onSearchChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      state.usersQuery = e.currentTarget.value;
-    },
-    [state]
-  );
-  return (
-    <Accordion className="mb-3">
-      <AccordionHeader className="h6 cursor-pointer">
-        <div className="d-flex justify-content-center align-items-center">
-          <div>Repository Users</div>
-          <div style={{ flex: 1 }}>
-            <Input
-              style={{ width: "150px" }}
-              outline
-              placeholder="Search..."
-              bsSize="sm"
-              className="ml-auto align-self-end no-print"
-              onClick={(e) => e.stopPropagation()}
-              value={state.usersQuery}
-              onChange={onSearchChange}
-            />
-          </div>
-        </div>
-      </AccordionHeader>
-      <AccordionBody className="p-0">
-        {state.isLoadingDelay ? (
-          <List className="m-4" height="200px" width="100%" />
-        ) : (
-          <Table
-            striped
-            className="mb-0"
-            style={{ maxWidth: "100%" }}
-            responsive
-          >
-            <thead>
-              <tr>
-                <th className="bt-0">#</th>
-                <th className="bt-0">Key</th>
-                <th className="bt-0">Name</th>
-                <th className="bt-0">Email</th>
-                <th className="text-right bt-0">Activity</th>
-                <th className="text-right bt-0">Total Activity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {state.tableRepositoryUsers.map((user, index) => {
-                return (
-                  <tr key={index}>
-                    <td className="align-middle">{index + 1}.</td>
-                    <td className="align-middle hyphenate">
-                      {user.user ? (
-                        <Link to={`/user/${user.user.name}`}>
-                          {user.user.name}
-                        </Link>
-                      ) : (
-                        <Link to={`/user/${user.userKey}`}>{user.userKey}</Link>
-                      )}
-                    </td>
-                    <td className="align-middle hyphenate">{user.name}</td>
-                    <td className="align-middle hyphenate">{user.email}</td>
-                    <td className="text-right align-middle">
-                      {numberWithCommas(user.value)}
-                    </td>
-                    <td className="text-right align-middle">
-                      {numberWithCommas(user.valueTotal)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        )}
-      </AccordionBody>
-    </Accordion>
-  );
-});
+import { RepositoryUsersDashboard } from "./RepositoryUsersDashboard";
 
 export const RepositoryDashboard = observer(() => {
   const { repositoryName } = useParams();
@@ -407,7 +321,7 @@ export const RepositoryDashboard = observer(() => {
         </Card>
       ))}
 
-      <RepositoryUsers />
+      <RepositoryUsersDashboard />
     </Container>
   );
 });

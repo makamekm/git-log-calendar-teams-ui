@@ -86,3 +86,55 @@
 .fixed-table {
   table-layout: fixed;
 }
+
+.ReactVirtualized__Table {
+}
+
+.ReactVirtualized__Grid.ReactVirtualized__Table__Grid {
+  outline: none;
+}
+
+.ReactVirtualized__Table__headerColumn {
+  text-transform: capitalize;
+  padding: 1rem 0.5rem;
+  font-size: 12px;
+  font-weight: 300;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+}
+
+// .ReactVirtualized__Table__headerColumn:not(:last-child) {
+//   border-right: 1px solid #ddd;
+// }
+
+.ReactVirtualized__Table__headerRow {
+  border-bottom: 2px solid #ddd;
+}
+
+.ReactVirtualized__Table__row.odd {
+  background-color: rgba(173, 181, 189, 0.075);
+}
+
+.ReactVirtualized__Table__row:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+
+.ReactVirtualized__Table__rowColumn {
+  padding: 1rem 0.5rem;
+  color: #333;
+}
+
+.ReactVirtualized__Table__rowColumn:not(:last-child) {
+  border-right: 1px solid #ddd;
+}
+
+@media print {
+  .ReactVirtualized__Grid {
+    margin: none !important;
+    overflow: visible !important;
+    display: block;
+    height: auto !important; //OR PUT A HUGE AMOUNT WHERE YOUR LIST WILL ALWAYS FIT (9999999px)
+  }
+}
