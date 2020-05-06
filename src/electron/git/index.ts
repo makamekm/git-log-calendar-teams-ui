@@ -189,6 +189,7 @@ export async function collect(
   const runCollect = async (repository) => {
     try {
       const repositoryName = getRepositoryName(repository);
+      console.log("collecting stats for", repositoryName);
       const gitRepository = await loadRepository(repository, config);
       const authors = await gitRepository.authors(config.collectMessages);
       if (authors.length > 0) {
@@ -198,6 +199,7 @@ export async function collect(
           JSON.stringify(authors, null, 4)
         );
       }
+      console.log("collecting stats finished for", repositoryName);
     } catch (err) {
       console.error(err);
     }
