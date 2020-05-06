@@ -1,6 +1,6 @@
 branch: master
 evaluateStr: item => item.linesChanged
-collectInterval: 15
+collectInterval: 60
 onlyRegistered: false
 collectMessages: true
 repositories:

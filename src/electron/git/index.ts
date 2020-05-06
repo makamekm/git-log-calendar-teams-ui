@@ -40,7 +40,7 @@ const getDefaultConfig = (): Config => {
     onlyRegistered: false,
     collectMessages: false,
     evaluateStr: "item => item.linesChanged",
-    collectInterval: 15,
+    collectInterval: 60,
     repositories: [],
     teams: [],
     users: [],
