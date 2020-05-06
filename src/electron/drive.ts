@@ -6,20 +6,16 @@ import { app } from "electron";
 import md5 from "md5";
 import hyperswarm from "hyperswarm";
 import pump from "pump";
-import crypto from "hypercore-crypto";
 import settings from "electron-settings";
-import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
+import {
+  SWARM_INIT_TIMEOUT,
+  DRIVE_INIT_TIMEOUT,
+  DRIVE_BASE_FOLDER,
+} from "@env/config";
 import { Chat } from "./chat/chat";
 import { ipc } from "~/shared/ipc";
 import { ApplicationSettings } from "~/shared/Settings";
-
-export const generateDriveKeys = () => {
-  const keyPair = crypto.keyPair();
-  return {
-    publicKey: keyPair.publicKey.toString("hex"),
-    secretKey: keyPair.secretKey.toString("hex"),
-  };
-};
+import { generateDriveKeys } from "~/tools";
 
 const getBaseFolder = () => {
   return path.resolve(
@@ -178,18 +174,29 @@ export const closeDrive = () => {
 let inited = false;
 
 export const waitForDrive = async () => {
-  if (settings.get("useDriveSwarm") && !inited) {
-    await new Promise((r) => setTimeout(r, SWARM_INIT_TIMEOUT));
+  if (!inited) {
+    if (settings.get("useDriveSwarm")) {
+      await new Promise((r) => setTimeout(r, SWARM_INIT_TIMEOUT));
+    } else {
+      await new Promise((r) => setTimeout(r, DRIVE_INIT_TIMEOUT));
+    }
   }
   inited = true;
   return void 0;
 };
 
-export const getSettings = (): ApplicationSettings => {
+export const isDriveWritable = async (): Promise<boolean> => {
+  await waitForDrive();
+  return drive.writable;
+};
+
+export const getSettings = async (): Promise<ApplicationSettings> => {
   return {
     publicKey: settings.get("publicKey"),
     secretKey: settings.get("secretKey"),
     useDriveSwarm: settings.get("useDriveSwarm"),
+    dontCollect: settings.get("dontCollect"),
+    isDriveWritable: await isDriveWritable(),
   };
 };
 
@@ -207,7 +214,7 @@ export const remountDrive = () => {
 };
 
 export const loadSettings = (): ApplicationSettings => {
-  if (!settings.has("publicKey") || !settings.has("secretKey")) {
+  if (!settings.has("publicKey")) {
     const keyPair = generateDriveKeys();
     settings.set("publicKey", keyPair.publicKey);
     settings.set("secretKey", keyPair.secretKey);
@@ -219,6 +226,7 @@ export const loadSettings = (): ApplicationSettings => {
     publicKey: publicKey,
     secretKey: secretKey,
     useDriveSwarm: settings.get("useDriveSwarm"),
+    dontCollect: settings.get("dontCollect"),
   };
 };
 
@@ -244,7 +252,7 @@ export const createDrive = () => {
   closeDrive();
   const { publicKey, secretKey, useDriveSwarm } = loadSettings();
   drive = hyperdrive(getBaseFolder(), publicKey, {
-    secretKey: parseKey(secretKey),
+    secretKey: secretKey ? parseKey(secretKey) : undefined,
   });
 
   if (useDriveSwarm) {

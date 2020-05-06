@@ -26,6 +26,7 @@ import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useOnLoad } from "~/hooks";
 import { ApplicationSettings } from "~/shared/Settings";
+import { generateDriveKeys } from "~/tools";
 
 interface SettingsState {
   isDirty: boolean;
@@ -35,6 +36,7 @@ interface SettingsState {
   save: () => Promise<void>;
   remount: () => Promise<void>;
   empty: () => Promise<void>;
+  regnerateKeyPair: () => void;
 }
 
 const SettingsForm = observer(({ state }: { state: SettingsState }) => {
@@ -74,6 +76,29 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 />
               </Col>
             </FormGroup>
+            <FormGroup row>
+              <Label sm={4}>Regenerate Key Pair</Label>
+              <Col sm={8}>
+                <ButtonGroup className="align-self-start mt-0">
+                  <Button color="info" onClick={state.regnerateKeyPair}>
+                    Regenerate The Key Pair
+                  </Button>
+                </ButtonGroup>
+              </Col>
+            </FormGroup>
+            {!!state.config.secretKey && (
+              <FormGroup row>
+                <Label sm={4}>Don't Collect Statistics</Label>
+                <Col sm={8}>
+                  <Toggle
+                    checked={state.config.dontCollect}
+                    onChange={() => {
+                      state.config.dontCollect = !state.config.dontCollect;
+                    }}
+                  />
+                </Col>
+              </FormGroup>
+            )}
             <FormGroup row>
               <Label sm={4}>Use Swarm</Label>
               <Col sm={8}>
@@ -190,6 +215,11 @@ export const Settings = observer(() => {
       state.isLoading = true;
       await ipc.handlers.EMPTY_DRIVE();
       state.isLoading = false;
+    },
+    regnerateKeyPair: () => {
+      const keyPair = generateDriveKeys();
+      state.config.publicKey = keyPair.publicKey;
+      state.config.secretKey = keyPair.secretKey;
     },
   }));
 

@@ -10,7 +10,7 @@ ipcMain.handle(
     event,
     ...args: Parameters<IpcHandler["GET_SETTINGS"]>
   ): Promise<ReturnType<IpcHandler["GET_SETTINGS"]>> => {
-    return getSettings();
+    return await getSettings();
   }
 );
 

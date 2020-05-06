@@ -54,6 +54,11 @@ ipcMain.handle(
     event,
     ...args: Parameters<IpcHandler["SAVE_CONFIG"]>
   ): Promise<ReturnType<IpcHandler["SAVE_CONFIG"]>> => {
+    const settings = await ipc.handlers.GET_SETTINGS();
+    if (!settings.isDriveWritable) {
+      return;
+    }
+
     ipc.sends.ON_CONFIG_UPDATE_STARTED();
 
     const [newConfig] = args;

@@ -15,6 +15,7 @@ if (RUN_COLLECT_INTERVAL) {
   app.on("ready", () => {
     const runTimeout = async () => {
       let interval: number;
+      const settings = await ipc.handlers.GET_SETTINGS();
       try {
         const config = await ipc.handlers.GET_CONFIG();
         interval = config.collectInterval;
@@ -22,7 +23,9 @@ if (RUN_COLLECT_INTERVAL) {
         console.error(error);
       }
       setTimeout(() => {
-        ipc.handlers.COLLECT_STATS();
+        if (!settings.dontCollect && settings.isDriveWritable) {
+          ipc.handlers.COLLECT_STATS();
+        }
         runTimeout();
       }, (interval || COLLECT_INTERVAL) * 1000 * 60);
     };
@@ -46,8 +49,11 @@ ipcMain.handle(
     ipc.sends.ON_COLLECT_STATS(true);
     console.log("collecting started!");
     const config = await ipc.handlers.GET_CONFIG();
+    const settings = await ipc.handlers.GET_SETTINGS();
     try {
-      await collect(config);
+      if (!settings.dontCollect && settings.isDriveWritable) {
+        await collect(config);
+      }
     } catch (error) {
       console.error(error);
     }
