@@ -13,7 +13,6 @@ import {
   DRIVE_BASE_FOLDER,
   BOOTSTRAP_SERVERS,
 } from "@env/config";
-import { Chat } from "./chat/chat";
 import { ipc } from "~/shared/ipc";
 import { ApplicationSettings } from "~/shared/Settings";
 import { generateDriveKeys } from "~/tools";
@@ -30,9 +29,6 @@ const getBaseFolder = () => {
 
 let drive;
 let swarm;
-let chat: Chat;
-
-export const getChat = () => chat;
 
 export const parseKey = (key) => {
   return Buffer.from(key, "hex");
@@ -134,17 +130,6 @@ export const emptyDir = async (dirPath) => {
   }
 };
 
-export const closeChat = () => {
-  try {
-    if (chat) {
-      chat.destroy();
-    }
-  } catch (error) {
-    console.error(error);
-  }
-  chat = null;
-};
-
 export const closeDrive = () => {
   if (drive) {
     try {
@@ -159,16 +144,8 @@ export const closeDrive = () => {
     } catch (error) {
       console.error(error);
     }
-    try {
-      if (chat) {
-        chat.destroy();
-      }
-    } catch (error) {
-      console.error(error);
-    }
     drive = null;
     swarm = null;
-    chat = null;
   }
 };
 
