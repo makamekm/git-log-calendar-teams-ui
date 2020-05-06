@@ -75,7 +75,6 @@
     "electron-settings": "^3.2.0",
     "electron-updater": "^4.2.5",
     "faker": "^4.1.0",
-    "fs-backwards-stream": "^1.0.0",
     "fs-extra": "^9.0.0",
     "holderjs": "^2.9.7",
     "hyperdrive": "^9.16.0",

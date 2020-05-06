@@ -2,7 +2,6 @@ import { ipcMain } from "electron";
 import { nameofHandler, IpcHandler } from "~/shared/ipc";
 import { CATCH_LOGS, FILE_LOG_LEVEL, CONSOLE_LOG_LEVEL } from "@env/config";
 import readline from "readline";
-import fsReverse from "fs-backwards-stream";
 import fs from "fs";
 import "../git-log.hooks";
 
@@ -84,31 +83,39 @@ const searchLinesFile = (
     }
 
     const lineReader = readline.createInterface({
-      input: fsReverse(file),
+      input: fs.createReadStream(file),
     });
 
     let lineCursor = "";
 
-    lineReader.on("close", () => {
-      if (lineCursor) {
-        if (!search || lineCursor.indexOf(search) >= 0) {
-          main.push(lineCursor);
-        }
-      }
-      r(main);
-    });
-
-    lineReader.on("line", (line) => {
-      if (line[0] === "[") {
-        if (main.length > limit) {
-          lineReader.close();
-        } else if (!search || lineCursor.indexOf(search) >= 0) {
-          main.push(lineCursor);
+    const readLine = (line) => {
+      if (line.charAt(0) === "[") {
+        if (!search || lineCursor.includes(search)) {
+          main.unshift(lineCursor);
         }
         lineCursor = line;
       } else {
-        lineCursor += "\n\r" + line;
+        lineCursor = (lineCursor ? "\n\r" + lineCursor : "") + line;
       }
+    };
+
+    const limitResult = () => {
+      main.splice(limit, Math.max(0, main.length - limit));
+    };
+
+    lineReader.on("close", () => {
+      if (lineCursor) {
+        if (!search || lineCursor.includes(search)) {
+          main.unshift(lineCursor);
+        }
+      }
+      limitResult();
+      r(main);
+    });
+
+    lineReader.on("line", (line: string) => {
+      readLine(line);
+      limitResult();
     });
   });
 };
