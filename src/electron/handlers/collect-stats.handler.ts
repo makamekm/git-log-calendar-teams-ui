@@ -69,7 +69,8 @@ ipcMain.handle(
         await collect(
           config,
           Math.max(1, settings.parallelCollectLimit),
-          settings.repositoryNamesToCollect
+          settings.repositoryNamesToCollect,
+          settings.limitCollectRepositoriesPerTry
         );
       }
     } catch (error) {

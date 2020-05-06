@@ -199,6 +199,8 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     dontCollect: settings.get("dontCollect"),
     parallelCollectLimit: settings.get("parallelCollectLimit") || 1,
     forceCollectingInterval: settings.get("forceCollectingInterval") || 0,
+    limitCollectRepositoriesPerTry:
+      settings.get("limitCollectRepositoriesPerTry") || 0,
     repositoryNamesToCollect: settings.get("repositoryNamesToCollect")
       ? JSON.parse(settings.get("repositoryNamesToCollect"))
       : [],
@@ -235,6 +237,8 @@ export const loadSettings = (): ApplicationSettings => {
     dontCollect: settings.get("dontCollect"),
     parallelCollectLimit: settings.get("parallelCollectLimit") || 1,
     forceCollectingInterval: settings.get("forceCollectingInterval") || 0,
+    limitCollectRepositoriesPerTry:
+      settings.get("limitCollectRepositoriesPerTry") || 0,
     repositoryNamesToCollect: settings.get("repositoryNamesToCollect")
       ? JSON.parse(settings.get("repositoryNamesToCollect"))
       : [],
@@ -248,6 +252,7 @@ export const saveSettings = ({
   dontCollect,
   parallelCollectLimit,
   forceCollectingInterval,
+  limitCollectRepositoriesPerTry,
   repositoryNamesToCollect,
 }: ApplicationSettings) => {
   closeDrive();
@@ -262,6 +267,10 @@ export const saveSettings = ({
   settings.set("dontCollect", dontCollect);
   settings.set("parallelCollectLimit", parallelCollectLimit);
   settings.set("forceCollectingInterval", forceCollectingInterval);
+  settings.set(
+    "limitCollectRepositoriesPerTry",
+    limitCollectRepositoriesPerTry
+  );
   settings.set(
     "repositoryNamesToCollect",
     JSON.stringify(repositoryNamesToCollect || [])

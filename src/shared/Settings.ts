@@ -5,6 +5,7 @@ export interface ApplicationSettings {
   dontCollect: boolean;
   parallelCollectLimit: number;
   forceCollectingInterval: number;
+  limitCollectRepositoriesPerTry: number;
   repositoryNamesToCollect: string[];
   isDriveWritable?: boolean;
 }

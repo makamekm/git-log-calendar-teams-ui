@@ -6,7 +6,14 @@ import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
 import { pick } from "lodash";
-import { waitForDrive, isExist, readFile, writeFile, readDir } from "../drive";
+import {
+  waitForDrive,
+  isExist,
+  readFile,
+  writeFile,
+  readDir,
+  stat,
+} from "../drive";
 import { Config } from "~/shared/Config";
 import { DEV_CONFIG } from "@env/config";
 
@@ -176,15 +183,43 @@ async function loadRepository(repository, config) {
 export async function collect(
   config: Config,
   parallelLimit: number,
-  repositoryNames: string[]
+  repositoryNames: string[],
+  limitRepositoriesPerCollect: number
 ) {
   config = config || (await getConfig());
   fsExtra.ensureDirSync(config.tmpDir);
 
-  const repositories =
+  const fileTimeMap: {
+    [repositoryName: string]: number;
+  } = {};
+
+  for (let file of await readDir("/")) {
+    if (file.includes(STATS_FILE_POSTFIX)) {
+      const repositoryName = file.split(".")[0];
+      const stats = await stat("/" + file);
+      fileTimeMap[repositoryName] = +new Date(stats.mtime);
+    }
+  }
+
+  let repositories =
     repositoryNames.length > 0
       ? config.repositories.filter((r) => repositoryNames.includes(r.name))
       : config.repositories;
+
+  repositories = repositories.slice().sort((a, b) => {
+    const aName = getRepositoryName(a);
+    const bName = getRepositoryName(b);
+    const aTime = fileTimeMap[aName] || 0;
+    const bTime = fileTimeMap[bName] || 0;
+    return aTime - bTime;
+  });
+
+  if (limitRepositoriesPerCollect > 0) {
+    repositories.splice(
+      limitRepositoriesPerCollect,
+      Math.max(0, repositories.length - limitRepositoriesPerCollect)
+    );
+  }
 
   const runCollect = async (repository) => {
     try {

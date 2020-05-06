@@ -124,8 +124,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             {!state.settings.dontCollect && (
               <FormGroup row>
                 <Label sm={4}>
-                  Local Collecting Interval (0 is to get from Configuration)
-                  [Minutes]
+                  Local Collecting Interval (0 is from Configuration) [Minutes]
                 </Label>
                 <Col sm={8}>
                   <Input
@@ -137,6 +136,29 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                       );
                     }}
                     value={Math.max(state.settings.forceCollectingInterval, 0)}
+                    placeholder="Enter Number..."
+                  />
+                </Col>
+              </FormGroup>
+            )}
+            {!state.settings.dontCollect && (
+              <FormGroup row>
+                <Label sm={4}>
+                  Limit Repositories Per Try (0 is unlimited)
+                </Label>
+                <Col sm={8}>
+                  <Input
+                    type="number"
+                    onChange={(e) => {
+                      state.settings.limitCollectRepositoriesPerTry = Math.max(
+                        Number(e.currentTarget.value),
+                        0
+                      );
+                    }}
+                    value={Math.max(
+                      state.settings.limitCollectRepositoriesPerTry,
+                      0
+                    )}
                     placeholder="Enter Number..."
                   />
                 </Col>
