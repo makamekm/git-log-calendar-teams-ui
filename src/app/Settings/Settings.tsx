@@ -134,7 +134,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                   className="modal-danger"
                 >
                   <ModalBody className="table-danger text-center px-5 py-5">
-                    <i className="fa fa-5x fa-info modal-icon mb-3"></i>
+                    <i className="fas fa-exclamation-triangle fa-4x modal-icon mb-4"></i>
                     <h6>Remount Drive</h6>
                     <p className="modal-text mb-5">
                       This operation is irreversible, please accept it.
@@ -159,7 +159,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                   className="modal-danger"
                 >
                   <ModalBody className="table-danger text-center px-5 py-5">
-                    <i className="fa fa-5x fa-info modal-icon mb-3"></i>
+                    <i className="fas fa-exclamation-triangle fa-4x modal-icon mb-4"></i>
                     <h6>Empty Drive</h6>
                     <p className="modal-text mb-5">
                       This operation is irreversible, please accept it.
