@@ -4,6 +4,7 @@ export interface ApplicationSettings {
   useDriveSwarm: boolean;
   dontCollect: boolean;
   parallelCollectLimit: number;
+  forceCollectingInterval: number;
   repositoryNamesToCollect: string[];
   isDriveWritable?: boolean;
 }

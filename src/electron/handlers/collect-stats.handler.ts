@@ -4,7 +4,7 @@ import { RUN_COLLECT_INTERVAL } from "@env/config";
 
 import { collect } from "../git";
 
-const COLLECT_INTERVAL = 15;
+const COLLECT_INTERVAL = 60;
 
 let isCollecting = false;
 let collectingPromise = Promise.resolve();
@@ -13,14 +13,28 @@ export const getCollectPromise = () => collectingPromise;
 
 if (RUN_COLLECT_INTERVAL) {
   app.on("ready", () => {
+    let inited = false;
     const runTimeout = async () => {
       let interval: number;
       const settings = await ipc.handlers.GET_SETTINGS();
-      try {
-        const config = await ipc.handlers.GET_CONFIG();
-        interval = config.collectInterval;
-      } catch (error) {
-        console.error(error);
+      if (
+        settings.forceCollectingInterval &&
+        settings.forceCollectingInterval > 0
+      ) {
+        interval = settings.forceCollectingInterval;
+      } else {
+        try {
+          const config = await ipc.handlers.GET_CONFIG();
+          interval = config.collectInterval;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      if (!inited) {
+        inited = true;
+        if (!settings.dontCollect && settings.isDriveWritable) {
+          ipc.handlers.COLLECT_STATS();
+        }
       }
       setTimeout(() => {
         if (!settings.dontCollect && settings.isDriveWritable) {

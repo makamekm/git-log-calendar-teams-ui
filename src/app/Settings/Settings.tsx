@@ -90,46 +90,6 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 </ButtonGroup>
               </Col>
             </FormGroup>
-            <FormGroup row>
-              <Label sm={4}>Parallel Job Collecting Limit</Label>
-              <Col sm={8}>
-                <Input
-                  type="number"
-                  onChange={(e) => {
-                    state.settings.parallelCollectLimit = Math.max(
-                      Number(e.currentTarget.value),
-                      1
-                    );
-                  }}
-                  value={Math.max(state.settings.parallelCollectLimit, 1)}
-                  placeholder="Enter Number..."
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label sm={4}>
-                Repositories to Collect (If empty then collect from all)
-              </Label>
-              <Col sm={8}>
-                <Typeahead
-                  id="exclusions"
-                  placeholder="Add repositories..."
-                  multiple
-                  allowNew
-                  selected={state.settings.repositoryNamesToCollect || []}
-                  onChange={(selected) => {
-                    selected = selected.map((s: any) =>
-                      typeof s === "string" ? s : s.label
-                    );
-                    (state.settings.repositoryNamesToCollect as any).replace(
-                      selected
-                    );
-                  }}
-                  options={state.repositories}
-                  positionFixed
-                />
-              </Col>
-            </FormGroup>
             {!!state.settings.secretKey && (
               <FormGroup row>
                 <Label sm={4}>Don't Collect Statistics</Label>
@@ -139,6 +99,71 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                     onChange={() => {
                       state.settings.dontCollect = !state.settings.dontCollect;
                     }}
+                  />
+                </Col>
+              </FormGroup>
+            )}
+            {!state.settings.dontCollect && (
+              <FormGroup row>
+                <Label sm={4}>Parallel Job Collecting Limit</Label>
+                <Col sm={8}>
+                  <Input
+                    type="number"
+                    onChange={(e) => {
+                      state.settings.parallelCollectLimit = Math.max(
+                        Number(e.currentTarget.value),
+                        1
+                      );
+                    }}
+                    value={Math.max(state.settings.parallelCollectLimit, 1)}
+                    placeholder="Enter Number..."
+                  />
+                </Col>
+              </FormGroup>
+            )}
+            {!state.settings.dontCollect && (
+              <FormGroup row>
+                <Label sm={4}>
+                  Local Collecting Interval (0 is to get from Configuration)
+                  [Minutes]
+                </Label>
+                <Col sm={8}>
+                  <Input
+                    type="number"
+                    onChange={(e) => {
+                      state.settings.forceCollectingInterval = Math.max(
+                        Number(e.currentTarget.value),
+                        0
+                      );
+                    }}
+                    value={Math.max(state.settings.forceCollectingInterval, 0)}
+                    placeholder="Enter Number..."
+                  />
+                </Col>
+              </FormGroup>
+            )}
+            {!state.settings.dontCollect && (
+              <FormGroup row>
+                <Label sm={4}>
+                  Repositories to Collect (If empty then collect from all)
+                </Label>
+                <Col sm={8}>
+                  <Typeahead
+                    id="exclusions"
+                    placeholder="Add repositories..."
+                    multiple
+                    allowNew
+                    selected={state.settings.repositoryNamesToCollect || []}
+                    onChange={(selected) => {
+                      selected = selected.map((s: any) =>
+                        typeof s === "string" ? s : s.label
+                      );
+                      (state.settings.repositoryNamesToCollect as any).replace(
+                        selected
+                      );
+                    }}
+                    options={state.repositories}
+                    positionFixed
                   />
                 </Col>
               </FormGroup>
