@@ -18,7 +18,7 @@ const UncontrolledModalClose = (
         <Tag
           {...otherProps}
           onClick={async () => {
-            const res = await onClick();
+            const res = onClick && (await onClick());
             if (res !== false) {
               value.toggleModal();
             }

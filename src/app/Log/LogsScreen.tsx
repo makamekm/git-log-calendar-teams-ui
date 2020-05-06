@@ -97,11 +97,10 @@ export const LogsScreen = observer(() => {
       state.isLoading = false;
     },
     clear: async () => {
-      // state.isLoading = true;
-      throw new Error("sdfsdfsdf");
-      // await ipc.handlers.CLEAR_LOGS();
-      // state.logs = await ipc.handlers.GET_LOGS(state.search, state.limit);
-      // state.isLoading = false;
+      state.isLoading = true;
+      await ipc.handlers.CLEAR_LOGS();
+      state.logs = await ipc.handlers.GET_LOGS(state.search, state.limit);
+      state.isLoading = false;
     },
   }));
 

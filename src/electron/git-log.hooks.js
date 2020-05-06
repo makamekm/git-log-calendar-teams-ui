@@ -10,6 +10,7 @@ const ignoreLines = [
   "Warning: A future version of React will block javascript",
   "Warning: Using UNSAFE_componentWillReceiveProps",
   "Warning: Legacy context API has been detected within a strict-mode tree",
+  "Warning: Can't perform a React state update on an unmounted component",
   "Download the React DevTools for a better development experience",
   "[HMR] Waiting for update signal from WDS...",
   "[MobX] You haven't configured observer batching which might result in unexpected behavior in some cases",
