@@ -11,6 +11,7 @@ import {
   SWARM_INIT_TIMEOUT,
   DRIVE_INIT_TIMEOUT,
   DRIVE_BASE_FOLDER,
+  BOOTSTRAP_SERVERS,
 } from "@env/config";
 import { Chat } from "./chat/chat";
 import { ipc } from "~/shared/ipc";
@@ -273,7 +274,9 @@ export const createDrive = () => {
   });
 
   if (useDriveSwarm) {
-    swarm = hyperswarm();
+    swarm = hyperswarm({
+      bootstrap: BOOTSTRAP_SERVERS,
+    });
 
     drive.on("ready", () => {
       swarm.join(parseKey(publicKey), {

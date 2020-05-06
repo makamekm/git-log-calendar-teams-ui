@@ -11,3 +11,8 @@ export const SWARM_INIT_TIMEOUT = 1000;
 export const DRIVE_INIT_TIMEOUT = 1000;
 export const DRIVE_BASE_FOLDER = "./test";
 export const CACHE_LIFETIME = 10000;
+export const BOOTSTRAP_SERVERS = [
+  "bootstrap1.hyperdht.org:49737",
+  "bootstrap2.hyperdht.org:49737",
+  "bootstrap3.hyperdht.org:49737",
+];
