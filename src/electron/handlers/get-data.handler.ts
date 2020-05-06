@@ -14,6 +14,9 @@ app.on("ready", () => {
   ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
     fileMap = null;
   });
+  ipcMain.on(nameofSends("ON_CONFIG_UPDATE_FINISHED"), () => {
+    fileMap = null;
+  });
 });
 
 ipcMain.handle(

@@ -50,8 +50,6 @@ import { DatePickerExamples } from "./wip/Forms/DatePicker/DatePickerExamples";
 import { Dropzone } from "./wip/Forms/Dropzone/Dropzone";
 import { Sliders } from "./wip/Forms/Sliders/Sliders";
 import { ReCharts } from "./wip/Graphs/ReCharts";
-import { Tables } from "./wip/Tables/Tables/Tables";
-import { AgGridExample } from "./wip/Tables/AgGrid/AgGrid";
 import { AccountEdit } from "./wip/Apps/AccountEdit/AccountEdit";
 import { BillingEdit } from "./wip/Apps/BillingEdit/BillingEdit";
 import { Clients } from "./wip/Apps/Clients/Clients";
@@ -302,10 +300,6 @@ export const RoutedContent = () => {
 
       {/*    Graphs Routes   */}
       <ProtectedRoute isWIP component={ReCharts} path="/graphs/re-charts" />
-
-      {/*    Tables Routes   */}
-      <ProtectedRoute isWIP component={Tables} path="/tables/tables" />
-      <ProtectedRoute isWIP component={AgGridExample} path="/tables/ag-grid" />
 
       {/*    Apps Routes     */}
       <ProtectedRoute isWIP component={AccountEdit} path="/apps/account-edit" />

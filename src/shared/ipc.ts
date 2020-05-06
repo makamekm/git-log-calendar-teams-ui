@@ -1,7 +1,6 @@
 import { Config } from "./Config";
 import { Json, JsonCompatible } from "./Json";
 import { ApplicationSettings } from "./Settings";
-import { UserConnection } from "./UserConnection";
 
 export const nameof = <T>(name: keyof T) => name;
 
@@ -106,16 +105,11 @@ export interface IpcHandler {
   };
   GET_CONFIG: (force?: boolean) => Config;
   SAVE_CONFIG: (config: Config) => void;
-  GET_USER: () => {
-    email: string;
-    name: string;
-    userKey: string;
-    userPublicKey: string;
-  };
   LOG: (
     log: any,
     level?: "info" | "warn" | "error" | "verbose" | "debug" | "silly"
   ) => void;
+  CLEAR_LOGS: () => void;
   GET_LOGS: (
     search: string,
     limit?: number
@@ -139,7 +133,6 @@ export interface IpcHandler {
   GET_DATA: () => any;
   GET_SETTINGS: () => ApplicationSettings;
   SAVE_SETTINGS: (config: ApplicationSettings) => void;
-  GET_USERS: () => UserConnection[];
   REMOUNT_DRIVE: () => void;
   EMPTY_DRIVE: () => void;
   GET_ONLINE_USERS: () => string[];
@@ -209,6 +202,10 @@ export const ipc = {
       ...args: Parameters<IpcHandler["LOG"]>
     ): Promise<ReturnType<IpcHandler["LOG"]>> =>
       ipcRenderer.invoke(nameofHandler("LOG"), ...args),
+    CLEAR_LOGS: (
+      ...args: Parameters<IpcHandler["CLEAR_LOGS"]>
+    ): Promise<ReturnType<IpcHandler["CLEAR_LOGS"]>> =>
+      ipcRenderer.invoke(nameofHandler("CLEAR_LOGS"), ...args),
     GET_LOGS: (
       ...args: Parameters<IpcHandler["GET_LOGS"]>
     ): Promise<ReturnType<IpcHandler["GET_LOGS"]>> =>
@@ -237,10 +234,6 @@ export const ipc = {
       ...args: Parameters<IpcHandler["SAVE_SETTINGS"]>
     ): Promise<ReturnType<IpcHandler["SAVE_SETTINGS"]>> =>
       ipcRenderer.invoke(nameofHandler("SAVE_SETTINGS"), ...args),
-    GET_USERS: (
-      ...args: Parameters<IpcHandler["GET_USERS"]>
-    ): Promise<ReturnType<IpcHandler["GET_USERS"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_USERS"), ...args),
     EMPTY_DRIVE: (
       ...args: Parameters<IpcHandler["EMPTY_DRIVE"]>
     ): Promise<ReturnType<IpcHandler["EMPTY_DRIVE"]>> =>
@@ -249,10 +242,6 @@ export const ipc = {
       ...args: Parameters<IpcHandler["REMOUNT_DRIVE"]>
     ): Promise<ReturnType<IpcHandler["REMOUNT_DRIVE"]>> =>
       ipcRenderer.invoke(nameofHandler("REMOUNT_DRIVE"), ...args),
-    GET_USER: (
-      ...args: Parameters<IpcHandler["GET_USER"]>
-    ): Promise<ReturnType<IpcHandler["GET_USER"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_USER"), ...args),
     GET_ONLINE_USERS: (
       ...args: Parameters<IpcHandler["GET_ONLINE_USERS"]>
     ): Promise<ReturnType<IpcHandler["GET_ONLINE_USERS"]>> =>

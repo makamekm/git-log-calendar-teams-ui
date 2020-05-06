@@ -28,7 +28,6 @@ const levelColorMap = {
 };
 
 interface LogsState {
-  isDirty: boolean;
   search: string;
   limit: number;
   logs: {
@@ -43,11 +42,11 @@ interface LogsState {
   }[];
   isLoading: boolean;
   load: () => Promise<void>;
+  clear: () => Promise<void>;
 }
 
 export const LogsScreen = observer(() => {
   const state = useLocalStore<LogsState>(() => ({
-    isDirty: false,
     search: "",
     limit: 50,
     logs: {
@@ -95,8 +94,14 @@ export const LogsScreen = observer(() => {
     load: async () => {
       state.isLoading = true;
       state.logs = await ipc.handlers.GET_LOGS(state.search, state.limit);
-      state.isDirty = false;
       state.isLoading = false;
+    },
+    clear: async () => {
+      // state.isLoading = true;
+      throw new Error("sdfsdfsdf");
+      // await ipc.handlers.CLEAR_LOGS();
+      // state.logs = await ipc.handlers.GET_LOGS(state.search, state.limit);
+      // state.isLoading = false;
     },
   }));
 
@@ -119,11 +124,11 @@ export const LogsScreen = observer(() => {
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-4 pb-2">
             <HeaderMain title="Logs" className="mt-0 mb-3" />
-            {/* <div className="ml-auto d-flex align-self-center">
-                <Link to="/" className="ml-auto text-decoration-none">
-                  <i className="fa fa-home mr-2"></i> Back Home
-                </Link>
-              </div> */}
+            <div className="ml-auto d-flex align-self-center">
+              <Button outline onClick={state.clear}>
+                <i className="fa fa-trash mr-2"></i> Clear Logs
+              </Button>
+            </div>
           </div>
         </Col>
       </Row>
@@ -151,7 +156,7 @@ export const LogsScreen = observer(() => {
             <Card className="mt-2">
               {state.isLoading ? (
                 <List height={"300px"} className="m-4" />
-              ) : (
+              ) : state.aggregatedLogs.length > 0 ? (
                 <Table className="m-0">
                   <tbody>
                     {state.aggregatedLogs.map((line, index) => {
@@ -178,6 +183,8 @@ export const LogsScreen = observer(() => {
                     })}
                   </tbody>
                 </Table>
+              ) : (
+                <div className="text-center py-3">There are no logs...</div>
               )}
             </Card>
           </div>

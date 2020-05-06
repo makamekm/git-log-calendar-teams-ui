@@ -53,11 +53,13 @@ export const RepositoryUserService = createService<RepositoryUserState>(
                   .includes(state.usersQueryDelay.toLowerCase());
               })
             : state.repositoryUsers;
-          values = values.sort(
-            (a, b) =>
-              (a[state.sortBy] - b[state.sortBy]) *
-              (state.sortDirectionDesc ? -1 : 1)
-          );
+          values = values
+            .slice()
+            .sort(
+              (a, b) =>
+                (a[state.sortBy] - b[state.sortBy]) *
+                (state.sortDirectionDesc ? -1 : 1)
+            );
           return values;
         },
         load: async () => {

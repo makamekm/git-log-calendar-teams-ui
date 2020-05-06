@@ -1,3 +1,5 @@
+import numeral from "numeral";
+
 export const numberWithCommas = (x: number) => {
-  return (x || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return numeral(x || 0).format("0,0");
 };

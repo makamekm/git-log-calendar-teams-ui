@@ -46,7 +46,7 @@ export const DashboardToolbar = observer(
             className="no-print mb-2"
             placeholder="Activity Max Value"
             type="number"
-            value={state.maxValue}
+            value={state.maxValue || ""}
             style={{
               width: "150px",
               minWidth: "150px",

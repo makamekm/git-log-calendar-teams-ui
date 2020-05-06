@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
-import { groupBy } from "underscore";
+import { groupBy } from "lodash";
 
 import {
   Card,

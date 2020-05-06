@@ -7,7 +7,7 @@ import {
   MenuItem,
   Highlighter,
 } from "react-bootstrap-typeahead";
-import { groupBy } from "underscore";
+import { groupBy } from "lodash";
 import { searchMap, SearchService } from "../SearchService";
 import { useHistory } from "react-router";
 import { Nav, NavItem } from "~/components";

@@ -194,7 +194,6 @@ export const RepositoryUsersDashboard = observer(() => {
           <div style={{ flex: 1 }}>
             <Input
               style={{ width: "150px" }}
-              outline
               placeholder="Search..."
               bsSize="sm"
               className="ml-auto align-self-end no-print"

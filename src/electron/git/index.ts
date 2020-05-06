@@ -4,7 +4,7 @@ import YAML from "yaml";
 import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
-import { pick } from "underscore";
+import { pick } from "lodash";
 import { waitForDrive, isExist, readFile, writeFile, readDir } from "../drive";
 import { Config } from "~/shared/Config";
 import { DEV_CONFIG } from "@env/config";

@@ -15,7 +15,6 @@ import {
 import { HeaderMain } from "~/app/HeaderMain";
 import { ProfileLeftNav } from "~/wip/Profile/ProfileLeftNav";
 import { ProfileHeader } from "~/wip/Profile/ProfileHeader";
-import { TrTableBorderless } from "../../Tables/Tables/components/TrTableBorderless";
 
 export const BillingEdit = () => (
   <React.Fragment>
@@ -135,9 +134,7 @@ export const BillingEdit = () => (
                   <th className="text-right bt-0">Receipt</th>
                 </tr>
               </thead>
-              <tbody>
-                <TrTableBorderless />
-              </tbody>
+              <tbody></tbody>
             </Table>
             {/* END Table */}
           </Card>

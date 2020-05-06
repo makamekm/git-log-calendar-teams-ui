@@ -12,7 +12,6 @@ import { SWARM_INIT_TIMEOUT, DRIVE_BASE_FOLDER } from "@env/config";
 import { Chat } from "./chat/chat";
 import { ipc } from "~/shared/ipc";
 import { ApplicationSettings } from "~/shared/Settings";
-import { getUserSettings } from "./handlers/auth.handler";
 
 export const generateDriveKeys = () => {
   const keyPair = crypto.keyPair();
@@ -191,11 +190,6 @@ export const getSettings = (): ApplicationSettings => {
     publicKey: settings.get("publicKey"),
     secretKey: settings.get("secretKey"),
     useDriveSwarm: settings.get("useDriveSwarm"),
-    communicationKey: settings.get("communicationKey"),
-    name: settings.get("name"),
-    email: settings.get("email"),
-    userPublicKey: settings.get("userPublicKey"),
-    userSecretKey: settings.get("userSecretKey"),
   };
 };
 
@@ -221,13 +215,10 @@ export const loadSettings = (): ApplicationSettings => {
   }
   const publicKey = settings.get("publicKey");
   const secretKey = settings.get("secretKey");
-  const user = getUserSettings();
   return {
     publicKey: publicKey,
     secretKey: secretKey,
     useDriveSwarm: settings.get("useDriveSwarm"),
-    communicationKey: settings.get("communicationKey"),
-    ...user,
   };
 };
 
@@ -235,11 +226,6 @@ export const saveSettings = ({
   publicKey,
   secretKey,
   useDriveSwarm,
-  communicationKey,
-  email,
-  name,
-  userPublicKey,
-  userSecretKey,
 }: ApplicationSettings) => {
   closeDrive();
   if (!publicKey || !secretKey) {
@@ -250,27 +236,13 @@ export const saveSettings = ({
   settings.set("publicKey", publicKey);
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
-  settings.set("communicationKey", communicationKey);
-  settings.set("email", email);
-  settings.set("name", name);
-  settings.set("userPublicKey", userPublicKey);
-  settings.set("userSecretKey", userSecretKey);
   createDrive();
 };
 
 export const createDrive = () => {
   inited = false;
   closeDrive();
-  const {
-    publicKey,
-    secretKey,
-    useDriveSwarm,
-    communicationKey,
-    email,
-    name,
-    userPublicKey,
-    userSecretKey,
-  } = loadSettings();
+  const { publicKey, secretKey, useDriveSwarm } = loadSettings();
   drive = hyperdrive(getBaseFolder(), publicKey, {
     secretKey: parseKey(secretKey),
   });
@@ -300,10 +272,6 @@ export const createDrive = () => {
 
       pump(connection, stream, connection);
     });
-  }
-
-  if (communicationKey && email && name && userPublicKey && userSecretKey) {
-    chat = new Chat(communicationKey);
   }
 
   ipc.sends.ON_DRIVE_CREATED();

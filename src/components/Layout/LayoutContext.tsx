@@ -1,5 +1,5 @@
 import React from "react";
-import { isEqual } from "underscore";
+import { isEqual } from "lodash";
 
 export interface LayoutMeta {
   sidebarHidden?: boolean;

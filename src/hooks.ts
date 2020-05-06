@@ -1,7 +1,7 @@
 import React from "react";
 import { autorun, reaction, isObservableArray, isObservable, toJS } from "mobx";
 import localStorage from "mobx-localstorage";
-import { debounce, isEqual } from "underscore";
+import { debounce, isEqual } from "lodash";
 import { deepObserve } from "mobx-utils";
 import { useLocation } from "react-router";
 
@@ -44,14 +44,12 @@ export const useOnChange: <T, K extends keyof T>(
   delay?: number
 ) => void = (state, name, fn, delay = 100) => {
   React.useEffect(() => {
-    (delay
-      ? debounce((value) => fn(value), delay, false)
-      : (value) => fn(value))(state[name]);
+    (delay ? debounce((value) => fn(value), delay) : (value) => fn(value))(
+      state[name]
+    );
     return reaction(
       () => [state[name]],
-      delay
-        ? debounce(([value]) => fn(value), delay, false)
-        : ([value]) => fn(value)
+      delay ? debounce(([value]) => fn(value), delay) : ([value]) => fn(value)
     );
   }, [state, name, fn, delay]);
 };
@@ -127,16 +125,12 @@ export const useSimpleSyncLocalStorage = <T, K extends keyof T>(
     setObservable(state, name, toJS(localValue));
     return reaction(
       () => [localStorage.getItem(key)],
-      debounce(
-        ([localValue]) => {
-          const value = state[name];
-          if (!isObservableEquals(localValue, value)) {
-            setObservable(state, name, localValue);
-          }
-        },
-        delay,
-        false
-      )
+      debounce(([localValue]) => {
+        const value = state[name];
+        if (!isObservableEquals(localValue, value)) {
+          setObservable(state, name, localValue);
+        }
+      }, delay)
     );
   }, [state, name, key, delay]);
 };
@@ -164,16 +158,12 @@ export const useSyncLocalStorage = <T, K extends keyof T>(
     setObservable(state, name, toJS(localValue));
     return reaction(
       () => [localStorage.getItem(key)],
-      debounce(
-        ([localValue]) => {
-          const value = state[name];
-          if (!isObservableEquals(localValue, value)) {
-            setObservable(state, name, localValue);
-          }
-        },
-        delay,
-        false
-      )
+      debounce(([localValue]) => {
+        const value = state[name];
+        if (!isObservableEquals(localValue, value)) {
+          setObservable(state, name, localValue);
+        }
+      }, delay)
     );
   }, [state, name, key, delay]);
 };

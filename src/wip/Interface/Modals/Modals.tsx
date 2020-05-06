@@ -549,7 +549,7 @@ export const Modals = () => (
             >
               <ModalHeader className="py-3" />
               <ModalBody className="table-danger text-center px-5">
-                <i className="fa fa-5x fa-close fa-fw modal-icon mb-3"></i>
+                <i className="fa fa-5x fa-info modal-icon mb-3"></i>
                 <h6>Danger</h6>
                 <p className="modal-text">
                   Change a few things up and try submitting.

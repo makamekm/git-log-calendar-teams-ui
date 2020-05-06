@@ -7,7 +7,7 @@ import {
   MenuItem,
   Highlighter,
 } from "react-bootstrap-typeahead";
-import { groupBy } from "underscore";
+import { groupBy } from "lodash";
 import { FavouriteService, trackerMap } from "../FavouriteService";
 
 const TypeaheadMenu = (

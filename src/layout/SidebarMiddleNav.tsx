@@ -141,15 +141,6 @@ export const SidebarMiddleNav = observer(() => {
         <SidebarMenuItem title="Dropzone" to="/forms/dropzone" />
         <SidebarMenuItem title="Sliders" to="/forms/sliders" />
       </SidebarMenuItem>
-      {/* -------- Tables ---------*/}
-      <SidebarMenuItem
-        isWIP
-        icon={<i className="fa fa-fw fa-trello"></i>}
-        title="Tables"
-      >
-        <SidebarMenuItem title="Tables" to="/tables/tables" />
-        <SidebarMenuItem title="AgGrid" to="/tables/ag-grid" />
-      </SidebarMenuItem>
       {/* -------- Apps ---------*/}
       <SidebarMenuItem
         isWIP

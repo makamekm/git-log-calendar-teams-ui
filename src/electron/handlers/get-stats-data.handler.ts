@@ -32,6 +32,9 @@ app.on("ready", () => {
   ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
     cache = {};
   });
+  ipcMain.on(nameofSends("ON_CONFIG_UPDATE_FINISHED"), () => {
+    cache = {};
+  });
 });
 
 ipcMain.handle(

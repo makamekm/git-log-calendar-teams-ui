@@ -3,20 +3,10 @@ import { nameofHandler, IpcHandler } from "~/shared/ipc";
 import { CATCH_LOGS, FILE_LOG_LEVEL, CONSOLE_LOG_LEVEL } from "@env/config";
 import readline from "readline";
 import fsReverse from "fs-backwards-stream";
+import fs from "fs";
+import "../git-log.hooks";
 
 import log from "electron-log";
-
-log.hooks.push((message, transport) => {
-  if (
-    message?.data[0]?.includes &&
-    (message?.data[0]?.includes("DeprecationWarning") ||
-      message?.data[0]?.includes("deprecated"))
-  ) {
-    return false;
-  }
-
-  return message;
-});
 
 log.transports.file.level = FILE_LOG_LEVEL;
 log.transports.console.level = CONSOLE_LOG_LEVEL;
@@ -27,7 +17,8 @@ if (CATCH_LOGS) {
 
 const levels = ["info", "warn", "error", "verbose", "debug", "silly"];
 
-export const getLogPathMain = () => log.transports.file.getFile().path;
+export const getLogPathMain = () =>
+  log.transports.file.getFile().path.replace("renderer.log", "main.log");
 export const getLogPathRenderer = () =>
   log.transports.file.getFile().path.replace("main.log", "renderer.log");
 
@@ -46,13 +37,52 @@ ipcMain.handle(
   }
 );
 
+ipcMain.handle(
+  nameofHandler("CLEAR_LOGS"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["CLEAR_LOGS"]>
+  ): Promise<ReturnType<IpcHandler["CLEAR_LOGS"]>> => {
+    if (await isFileExist(getLogPathMain())) {
+      await removeFile(getLogPathMain());
+    }
+    if (await isFileExist(getLogPathRenderer())) {
+      await removeFile(getLogPathRenderer());
+    }
+  }
+);
+
+const isFileExist = (file) =>
+  new Promise((r) =>
+    fs.exists(file, (exists) => {
+      r(exists);
+    })
+  );
+
+const removeFile = (file) =>
+  new Promise((r, e) =>
+    fs.unlink(file, (err) => {
+      if (err) {
+        e(err);
+      } else {
+        r();
+      }
+    })
+  );
+
 const searchLinesFile = (
   search: string,
   limit: number,
   file: string
 ): Promise<string[]> => {
-  return new Promise<string[]>((r) => {
+  return new Promise<string[]>(async (r) => {
     const main: string[] = [];
+
+    if (!(await isFileExist(file))) {
+      r(main);
+      return;
+    }
+
     const lineReader = readline.createInterface({
       input: fsReverse(file),
     });
@@ -92,8 +122,19 @@ ipcMain.handle(
     let [search, limit] = args;
     limit = limit || 100;
 
-    const main = await searchLinesFile(search, limit, getLogPathMain());
-    const renderer = await searchLinesFile(search, limit, getLogPathRenderer());
+    let main: string[] = [];
+    let renderer: string[] = [];
+
+    try {
+      main = await searchLinesFile(search, limit, getLogPathMain());
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      renderer = await searchLinesFile(search, limit, getLogPathRenderer());
+    } catch (error) {
+      console.log(error);
+    }
 
     return {
       main,

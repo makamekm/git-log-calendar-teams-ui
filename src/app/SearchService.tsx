@@ -4,7 +4,7 @@ import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useOnLoad } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
-import { debounce } from "underscore";
+import { debounce } from "lodash";
 
 export type SearchType = "repository" | "team" | "user";
 
@@ -64,7 +64,7 @@ export const SearchService = createService<SearchState>(
         state.config = await ipc.handlers.GET_CONFIG();
         state.isLoading = false;
       },
-      reload: debounce(() => state.load(), 1000, false),
+      reload: debounce(() => state.load(), 1000),
     }));
     return state;
   },

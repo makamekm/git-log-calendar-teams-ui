@@ -41,8 +41,8 @@ export const DefaultNavbar = () => {
               <i className="fa fa-home"></i>
             </Link>
           </span>
-          {context.breadcrumbs.map((breadcrumb) => (
-            <>
+          {context.breadcrumbs.map((breadcrumb, index) => (
+            <React.Fragment key={index}>
               <span className="navbar-text px-2">
                 <i className="fa fa-angle-right"></i>
               </span>
@@ -53,7 +53,7 @@ export const DefaultNavbar = () => {
               ) : (
                 <span className="navbar-text">{breadcrumb.name}</span>
               )}
-            </>
+            </React.Fragment>
           ))}
         </NavItem>
       </Nav>

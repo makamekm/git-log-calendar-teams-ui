@@ -11,7 +11,6 @@ import {
 import { HeaderMain } from "~/app/HeaderMain";
 import { ProfileLeftNav } from "~/wip/Profile/ProfileLeftNav";
 import { ProfileHeader } from "~/wip/Profile/ProfileHeader";
-import { TrTableResponsive } from "../../Tables/Tables/components/TrTableResponsive";
 
 export const SessionsEdit = () => (
   <React.Fragment>
@@ -44,9 +43,7 @@ export const SessionsEdit = () => (
                   <th className="text-right">Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <TrTableResponsive />
-              </tbody>
+              <tbody></tbody>
             </Table>
             {/* END Table */}
           </Card>
