@@ -25,7 +25,7 @@ export const ConfigurationForm = observer(
         </AccordionHeader>
         <AccordionBody className="pb-0">
           {!state.config || state.isLoading ? (
-            <List height="200px" width="100%" />
+            <List className="m-3" height="200px" width="100%" />
           ) : (
             <Form className="mt-3 mb-3">
               <FormGroup row>

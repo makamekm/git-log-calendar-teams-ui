@@ -1,6 +1,7 @@
 import GitRepository from "./git-tools";
 import { app } from "electron";
 import YAML from "yaml";
+import PromisePool from "es6-promise-pool";
 import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
@@ -172,11 +173,20 @@ async function loadRepository(repository, config) {
 }
 
 // Collect  stats from repositories and save them into a stats folder
-export async function collect(config) {
+export async function collect(
+  config: Config,
+  parallelLimit: number,
+  repositoryNames: string[]
+) {
   config = config || (await getConfig());
   fsExtra.ensureDirSync(config.tmpDir);
 
-  for (let repository of config.repositories) {
+  const repositories =
+    repositoryNames.length > 0
+      ? config.repositories.filter((r) => repositoryNames.includes(r.name))
+      : config.repositories;
+
+  const runCollect = async (repository) => {
     try {
       const repositoryName = getRepositoryName(repository);
       const gitRepository = await loadRepository(repository, config);
@@ -191,7 +201,22 @@ export async function collect(config) {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
+
+  let cursor = -1;
+
+  const promiseProducer = () => {
+    cursor++;
+    const repository = repositories[cursor];
+    if (repository) {
+      return runCollect(repository);
+    }
+    return null;
+  };
+
+  const pool = new PromisePool(promiseProducer, parallelLimit);
+
+  await pool.start();
 }
 
 // Check if the pair of email & name belongs to a reposoroty & team, but excluding the specifyed occurrences

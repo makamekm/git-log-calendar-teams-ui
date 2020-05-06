@@ -104,8 +104,8 @@ export const AuthService = createService<AuthState>(
       state.initAuthorize();
     }, [state]);
 
-    useOnChange(state, "isLoading", (isLoading) =>
-      loadingService.setLoading(isLoading)
-    );
+    useOnChange(state, "isLoading", (isLoading) => {
+      loadingService.setLoading(isLoading, "AuthState");
+    });
   }
 );

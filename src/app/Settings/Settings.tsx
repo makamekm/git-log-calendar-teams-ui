@@ -3,6 +3,7 @@ import { toJS } from "mobx";
 import Toggle from "react-toggle";
 import { useLocalStore, observer } from "mobx-react";
 import { List } from "react-content-loader";
+import { Typeahead } from "react-bootstrap-typeahead";
 
 import {
   Container,
@@ -27,11 +28,14 @@ import { ipc } from "~/shared/ipc";
 import { useIsDirty, useOnLoad } from "~/hooks";
 import { ApplicationSettings } from "~/shared/Settings";
 import { generateDriveKeys } from "~/tools";
+import { Config } from "~/shared/Config";
 
 interface SettingsState {
   isDirty: boolean;
-  config: ApplicationSettings;
+  settings: ApplicationSettings;
+  config: Config;
   isLoading: boolean;
+  repositories: string[];
   load: () => Promise<void>;
   save: () => Promise<void>;
   remount: () => Promise<void>;
@@ -46,8 +50,8 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
         Application Preferences
       </AccordionHeader>
       <AccordionBody className="pb-0">
-        {!state.config || state.isLoading ? (
-          <List height="200px" width="100%" />
+        {!state.settings || state.isLoading ? (
+          <List className="m-3" height="200px" width="100%" />
         ) : (
           <div className="form mt-3 mb-3">
             <FormGroup row>
@@ -56,9 +60,9 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 <Input
                   type="text"
                   onChange={(e) => {
-                    state.config.publicKey = e.currentTarget.value;
+                    state.settings.publicKey = e.currentTarget.value;
                   }}
-                  value={state.config.publicKey}
+                  value={state.settings.publicKey}
                   placeholder="Enter Public Key..."
                 />
               </Col>
@@ -69,9 +73,9 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 <Input
                   type="text"
                   onChange={(e) => {
-                    state.config.secretKey = e.currentTarget.value;
+                    state.settings.secretKey = e.currentTarget.value;
                   }}
-                  value={state.config.secretKey}
+                  value={state.settings.secretKey}
                   placeholder="Enter Secret Key..."
                 />
               </Col>
@@ -86,14 +90,54 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 </ButtonGroup>
               </Col>
             </FormGroup>
-            {!!state.config.secretKey && (
+            <FormGroup row>
+              <Label sm={4}>Parallel Job Collecting Limit</Label>
+              <Col sm={8}>
+                <Input
+                  type="number"
+                  onChange={(e) => {
+                    state.settings.parallelCollectLimit = Math.max(
+                      Number(e.currentTarget.value),
+                      1
+                    );
+                  }}
+                  value={Math.max(state.settings.parallelCollectLimit, 1)}
+                  placeholder="Enter Number..."
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label sm={4}>
+                Repositories to Collect (If empty then collect from all)
+              </Label>
+              <Col sm={8}>
+                <Typeahead
+                  id="exclusions"
+                  placeholder="Add repositories..."
+                  multiple
+                  allowNew
+                  selected={state.settings.repositoryNamesToCollect || []}
+                  onChange={(selected) => {
+                    selected = selected.map((s: any) =>
+                      typeof s === "string" ? s : s.label
+                    );
+                    (state.settings.repositoryNamesToCollect as any).replace(
+                      selected
+                    );
+                  }}
+                  options={state.repositories}
+                  positionFixed
+                />
+              </Col>
+            </FormGroup>
+            {!!state.settings.secretKey && (
               <FormGroup row>
                 <Label sm={4}>Don't Collect Statistics</Label>
                 <Col sm={8}>
                   <Toggle
-                    checked={state.config.dontCollect}
+                    checked={state.settings.dontCollect}
                     onChange={() => {
-                      state.config.dontCollect = !state.config.dontCollect;
+                      state.settings.dontCollect = !state.settings.dontCollect;
                     }}
                   />
                 </Col>
@@ -103,9 +147,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               <Label sm={4}>Use Swarm</Label>
               <Col sm={8}>
                 <Toggle
-                  checked={state.config.useDriveSwarm}
+                  checked={state.settings.useDriveSwarm}
                   onChange={() => {
-                    state.config.useDriveSwarm = !state.config.useDriveSwarm;
+                    state.settings.useDriveSwarm = !state.settings
+                      .useDriveSwarm;
                   }}
                 />
               </Col>
@@ -192,39 +237,55 @@ export const Settings = observer(() => {
   const state = useLocalStore<SettingsState>(() => ({
     isDirty: false,
     config: null,
+    settings: null,
     isLoading: false,
+    get repositories() {
+      let arr: string[] = [];
+      if (state.config) {
+        state.config.repositories.forEach((repository) => {
+          if (!arr.includes(repository.name)) {
+            arr.push(repository.name);
+          }
+        });
+      }
+      return arr;
+    },
     load: async () => {
       state.isLoading = true;
-      state.config = await ipc.handlers.GET_SETTINGS();
+      state.settings = await ipc.handlers.GET_SETTINGS();
+      state.config = await ipc.handlers.GET_CONFIG(true);
       state.isDirty = false;
       state.isLoading = false;
     },
     save: async () => {
       state.isLoading = true;
-      await ipc.handlers.SAVE_SETTINGS(toJS(state.config));
-      state.config = await ipc.handlers.GET_SETTINGS();
+      await ipc.handlers.SAVE_SETTINGS(toJS(state.settings));
+      state.settings = await ipc.handlers.GET_SETTINGS();
+      state.config = await ipc.handlers.GET_CONFIG(true);
       state.isDirty = false;
       state.isLoading = false;
     },
     remount: async () => {
       state.isLoading = true;
       await ipc.handlers.REMOUNT_DRIVE();
+      state.config = await ipc.handlers.GET_CONFIG(true);
       state.isLoading = false;
     },
     empty: async () => {
       state.isLoading = true;
       await ipc.handlers.EMPTY_DRIVE();
+      state.config = await ipc.handlers.GET_CONFIG(true);
       state.isLoading = false;
     },
     regnerateKeyPair: () => {
       const keyPair = generateDriveKeys();
-      state.config.publicKey = keyPair.publicKey;
-      state.config.secretKey = keyPair.secretKey;
+      state.settings.publicKey = keyPair.publicKey;
+      state.settings.secretKey = keyPair.secretKey;
     },
   }));
 
   useOnLoad(state.load);
-  useIsDirty(state, "config");
+  useIsDirty(state, "settings");
 
   return (
     <Container className="pb-4">

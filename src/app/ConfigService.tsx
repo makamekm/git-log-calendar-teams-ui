@@ -27,7 +27,7 @@ export const ConfigService = createService(
       ipc.channels.ON_CONFIG_UPDATE_FINISHED(state.onConfigUpdateFinished)
     );
     useOnChange(state, "isLoading", (isLoading) =>
-      loadingService.setLoading(isLoading)
+      loadingService.setLoading(isLoading, "ConfigService")
     );
   }
 );

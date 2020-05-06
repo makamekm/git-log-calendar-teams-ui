@@ -4,9 +4,11 @@ import { useOnLoad, useOnChange } from "~/hooks";
 
 export interface LoadingStore {
   inited: boolean;
-  loaders: number;
+  loaders: {
+    [name: string]: boolean;
+  };
   isLoading: boolean;
-  setLoading: (value: boolean) => void;
+  setLoading: (value: boolean, name: string) => void;
 }
 
 const removeLoadinghandler = () => {
@@ -23,15 +25,16 @@ export const LoadingService = createService<LoadingStore>(
   () => {
     const store = useLocalStore<LoadingStore>(() => ({
       inited: false,
-      loaders: 1,
-      get isLoading() {
-        return store.loaders > 0;
+      loaders: {
+        initial: true,
       },
-      setLoading: (value) => {
-        if (value) {
-          store.loaders++;
-        } else if (store.loaders > 0) {
-          store.loaders--;
+      get isLoading() {
+        return Object.keys(store.loaders).length > 0;
+      },
+      setLoading: (value, name) => {
+        store.loaders[name] = value;
+        if (!value) {
+          delete store.loaders[name];
         }
       },
     }));
@@ -42,10 +45,10 @@ export const LoadingService = createService<LoadingStore>(
       removeLoadinghandler();
     });
     useOnLoad(() => {
-      state.loaders--;
+      delete state.loaders["initial"];
     }, INITIAL_DELAY);
-    useOnChange(state, "loaders", () => {
-      if (!state.inited && state.loaders === 0) {
+    useOnChange(state, "isLoading", () => {
+      if (!state.isLoading) {
         state.inited = true;
       }
     });

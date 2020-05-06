@@ -52,7 +52,11 @@ ipcMain.handle(
     const settings = await ipc.handlers.GET_SETTINGS();
     try {
       if (!settings.dontCollect && settings.isDriveWritable) {
-        await collect(config);
+        await collect(
+          config,
+          Math.max(1, settings.parallelCollectLimit),
+          settings.repositoryNamesToCollect
+        );
       }
     } catch (error) {
       console.error(error);

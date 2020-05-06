@@ -196,6 +196,10 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     secretKey: settings.get("secretKey"),
     useDriveSwarm: settings.get("useDriveSwarm"),
     dontCollect: settings.get("dontCollect"),
+    parallelCollectLimit: settings.get("parallelCollectLimit") || 1,
+    repositoryNamesToCollect: settings.get("repositoryNamesToCollect")
+      ? JSON.parse(settings.get("repositoryNamesToCollect"))
+      : [],
     isDriveWritable: await isDriveWritable(),
   };
 };
@@ -227,6 +231,10 @@ export const loadSettings = (): ApplicationSettings => {
     secretKey: secretKey,
     useDriveSwarm: settings.get("useDriveSwarm"),
     dontCollect: settings.get("dontCollect"),
+    parallelCollectLimit: settings.get("parallelCollectLimit") || 1,
+    repositoryNamesToCollect: settings.get("repositoryNamesToCollect")
+      ? JSON.parse(settings.get("repositoryNamesToCollect"))
+      : [],
   };
 };
 
@@ -234,6 +242,9 @@ export const saveSettings = ({
   publicKey,
   secretKey,
   useDriveSwarm,
+  dontCollect,
+  parallelCollectLimit,
+  repositoryNamesToCollect,
 }: ApplicationSettings) => {
   closeDrive();
   if (!publicKey || !secretKey) {
@@ -244,6 +255,12 @@ export const saveSettings = ({
   settings.set("publicKey", publicKey);
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
+  settings.set("dontCollect", dontCollect);
+  settings.set("parallelCollectLimit", parallelCollectLimit);
+  settings.set(
+    "repositoryNamesToCollect",
+    JSON.stringify(repositoryNamesToCollect || [])
+  );
   createDrive();
 };
 

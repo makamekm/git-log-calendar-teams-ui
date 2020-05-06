@@ -3,5 +3,7 @@ export interface ApplicationSettings {
   secretKey: string;
   useDriveSwarm: boolean;
   dontCollect: boolean;
+  parallelCollectLimit: number;
+  repositoryNamesToCollect: string[];
   isDriveWritable?: boolean;
 }
