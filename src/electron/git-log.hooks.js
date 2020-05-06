@@ -8,7 +8,7 @@ const ignoreLines = [
   "Warning: Using UNSAFE_componentWillMount",
   "Warning: validateDOMNesting(...)",
   "Warning: A future version of React will block javascript",
-  "Warning: Using UNSAFE_componentWillReceiveProps in strict mode is not recommended",
+  "Warning: Using UNSAFE_componentWillReceiveProps",
   "Warning: Legacy context API has been detected within a strict-mode tree",
   "Download the React DevTools for a better development experience",
   "[HMR] Waiting for update signal from WDS...",
@@ -20,8 +20,8 @@ const hasIgnores = (line) => {
   return (
     line &&
     line.includes &&
-    ignoreLines.toLowerCase &&
-    ignoreLines.toLowerCase().find((s) => line.includes(s))
+    line.toLowerCase &&
+    ignoreLines.find((s) => line.toLowerCase().includes(s.toLowerCase()))
   );
 };
 
