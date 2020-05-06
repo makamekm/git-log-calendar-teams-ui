@@ -47,7 +47,7 @@ ipcMain.handle(
 
     isCollecting = true;
     ipc.sends.ON_COLLECT_STATS(true);
-    console.log("collecting started!");
+    console.log("collecting stats started!");
     const config = await ipc.handlers.GET_CONFIG();
     const settings = await ipc.handlers.GET_SETTINGS();
     try {
@@ -61,7 +61,7 @@ ipcMain.handle(
     } catch (error) {
       console.error(error);
     }
-    console.log("collecting finished!");
+    console.log("collecting stats finished!");
     ipc.sends.ON_COLLECT_STATS(false);
     isCollecting = false;
 
