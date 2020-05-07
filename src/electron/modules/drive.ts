@@ -14,7 +14,13 @@ import {
 import { ipc } from "~/shared/ipc";
 
 const getBaseFolder = (publicKey: string, secretKey: string, dir: string) => {
-  return path.resolve(DRIVE_BASE_FOLDER || dir, publicKey, md5(secretKey));
+  dir = DRIVE_BASE_FOLDER || dir;
+  if (!dir) {
+    throw new Error("No drive folder set!");
+  }
+  console.log(dir);
+
+  return path.resolve(dir, publicKey, md5(secretKey));
 };
 
 let drive;

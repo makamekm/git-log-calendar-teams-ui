@@ -7,6 +7,7 @@ export const CATCH_LOGS = true;
 export const CONSOLE_LOG_LEVEL = "error";
 export const FILE_LOG_LEVEL = "error";
 export const DEV_CONFIG = "git-log-config.yml";
+export const SERVER_SETTINGS = "./server-config.yml";
 export const SWARM_INIT_TIMEOUT = 1000;
 export const DRIVE_INIT_TIMEOUT = 1000;
 export const DRIVE_BASE_FOLDER = "";

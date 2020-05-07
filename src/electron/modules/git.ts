@@ -39,9 +39,11 @@ export async function readData(config) {
 }
 
 const getDefaultConfig = (): Config => {
-  const homeConfigPath = path.resolve(app.getPath("home"), DEV_CONFIG);
-  if (fs.existsSync(homeConfigPath)) {
-    return YAML.parse(fs.readFileSync(homeConfigPath, "utf-8"));
+  if (app) {
+    const homeConfigPath = path.resolve(app.getPath("home"), DEV_CONFIG);
+    if (fs.existsSync(homeConfigPath)) {
+      return YAML.parse(fs.readFileSync(homeConfigPath, "utf-8"));
+    }
   }
   return {
     branch: "master",
@@ -56,7 +58,7 @@ const getDefaultConfig = (): Config => {
 };
 
 // Load Config from YAML
-export async function getConfig() {
+export async function getConfig(tempDir?: string) {
   await waitForDrive();
   let config: Config;
 
@@ -67,7 +69,13 @@ export async function getConfig() {
     config = getDefaultConfig();
   }
 
-  config.tmpDir = path.resolve(app.getPath("temp"), "repositories");
+  if (tempDir) {
+    config.tmpDir = path.resolve(tempDir);
+  } else if (app) {
+    config.tmpDir = path.resolve(app.getPath("temp"), "repositories");
+  } else {
+    throw new Error("No temp folder set!");
+  }
 
   if (config.evaluateStr) {
     // eslint-disable-next-line no-new-func

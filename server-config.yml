@@ -4,4 +4,5 @@ parallelCollectLimit: 5
 forceCollectingInterval: 0
 limitCollectRepositoriesPerTry: 0
 repositoryNamesToCollect: []
-drivePath: ./test
+drivePath: ./drive
+tempPath: ./temp

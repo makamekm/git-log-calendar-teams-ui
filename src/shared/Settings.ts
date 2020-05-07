@@ -8,4 +8,5 @@ export interface ApplicationSettings {
   limitCollectRepositoriesPerTry: number;
   repositoryNamesToCollect: string[];
   drivePath?: string;
+  tempPath?: string;
 }
