@@ -1,9 +1,9 @@
 import "~/shared/Bus";
-import "./settings.handler";
-import "./config.handler";
+import "./handlers/settings.handler";
+import "./handlers/config.handler";
 
 import { createDrive, getDrive } from "~/electron/modules/drive";
-import { runCollectJob } from "./collect.job";
+import { runCollectJob } from "./modules/collect.job";
 
 run();
 
