@@ -110,12 +110,15 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                   <Input
                     type="number"
                     onChange={(e) => {
-                      state.settings.parallelCollectLimit = Math.max(
+                      state.settings.parallelCollectingJobLimit = Math.max(
                         Number(e.currentTarget.value),
                         1
                       );
                     }}
-                    value={Math.max(state.settings.parallelCollectLimit, 1)}
+                    value={Math.max(
+                      state.settings.parallelCollectingJobLimit,
+                      1
+                    )}
                     placeholder="Enter Number..."
                   />
                 </Col>
@@ -150,13 +153,13 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                   <Input
                     type="number"
                     onChange={(e) => {
-                      state.settings.limitCollectRepositoriesPerTry = Math.max(
+                      state.settings.limitCollectingRepositoriesPerTry = Math.max(
                         Number(e.currentTarget.value),
                         0
                       );
                     }}
                     value={Math.max(
-                      state.settings.limitCollectRepositoriesPerTry,
+                      state.settings.limitCollectingRepositoriesPerTry,
                       0
                     )}
                     placeholder="Enter Number..."
@@ -175,12 +178,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                     placeholder="Add repositories..."
                     multiple
                     allowNew
-                    selected={state.settings.repositoryNamesToCollect || []}
+                    selected={state.settings.collectingRepositoryNames || []}
                     onChange={(selected) => {
                       selected = selected.map((s: any) =>
                         typeof s === "string" ? s : s.label
                       );
-                      (state.settings.repositoryNamesToCollect as any).replace(
+                      (state.settings.collectingRepositoryNames as any).replace(
                         selected
                       );
                     }}

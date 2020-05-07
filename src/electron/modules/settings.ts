@@ -10,12 +10,12 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     secretKey: settings.get("secretKey"),
     useDriveSwarm: settings.get("useDriveSwarm"),
     dontCollect: settings.get("dontCollect"),
-    parallelCollectLimit: settings.get("parallelCollectLimit") || 1,
+    parallelCollectingJobLimit: settings.get("parallelCollectingJobLimit") || 1,
     forceCollectingInterval: settings.get("forceCollectingInterval") || 0,
-    limitCollectRepositoriesPerTry:
-      settings.get("limitCollectRepositoriesPerTry") || 0,
-    repositoryNamesToCollect: settings.get("repositoryNamesToCollect")
-      ? JSON.parse(settings.get("repositoryNamesToCollect"))
+    limitCollectingRepositoriesPerTry:
+      settings.get("limitCollectingRepositoriesPerTry") || 0,
+    collectingRepositoryNames: settings.get("collectingRepositoryNames")
+      ? JSON.parse(settings.get("collectingRepositoryNames"))
       : [],
     drivePath: path.resolve(app.getPath("appData"), "drive"),
   };
@@ -26,10 +26,10 @@ export const saveSettings = ({
   secretKey,
   useDriveSwarm,
   dontCollect,
-  parallelCollectLimit,
+  parallelCollectingJobLimit,
   forceCollectingInterval,
-  limitCollectRepositoriesPerTry,
-  repositoryNamesToCollect,
+  limitCollectingRepositoriesPerTry,
+  collectingRepositoryNames,
 }: ApplicationSettings) => {
   if (!publicKey) {
     const keyPair = generateDriveKeys();
@@ -40,15 +40,15 @@ export const saveSettings = ({
   settings.set("secretKey", secretKey);
   settings.set("useDriveSwarm", useDriveSwarm);
   settings.set("dontCollect", dontCollect);
-  settings.set("parallelCollectLimit", parallelCollectLimit);
+  settings.set("parallelCollectingJobLimit", parallelCollectingJobLimit);
   settings.set("forceCollectingInterval", forceCollectingInterval);
   settings.set(
-    "limitCollectRepositoriesPerTry",
-    limitCollectRepositoriesPerTry
+    "limitCollectingRepositoriesPerTry",
+    limitCollectingRepositoriesPerTry
   );
   settings.set(
-    "repositoryNamesToCollect",
-    JSON.stringify(repositoryNamesToCollect || [])
+    "collectingRepositoryNames",
+    JSON.stringify(collectingRepositoryNames || [])
   );
 };
 

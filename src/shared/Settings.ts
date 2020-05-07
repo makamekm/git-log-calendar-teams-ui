@@ -3,10 +3,10 @@ export interface ApplicationSettings {
   secretKey: string;
   useDriveSwarm: boolean;
   dontCollect: boolean;
-  parallelCollectLimit: number;
+  parallelCollectingJobLimit: number;
   forceCollectingInterval: number;
-  limitCollectRepositoriesPerTry: number;
-  repositoryNamesToCollect: string[];
+  limitCollectingRepositoriesPerTry: number;
+  collectingRepositoryNames: string[];
   drivePath?: string;
   tempPath?: string;
 }

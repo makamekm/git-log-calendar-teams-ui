@@ -69,9 +69,9 @@ ipcMain.handle(
       if (!settings.dontCollect && (await isDriveWritable())) {
         await collect(
           config,
-          Math.max(1, settings.parallelCollectLimit),
-          settings.repositoryNamesToCollect,
-          settings.limitCollectRepositoriesPerTry
+          Math.max(1, settings.parallelCollectingJobLimit),
+          settings.collectingRepositoryNames,
+          settings.limitCollectingRepositoriesPerTry
         );
       }
     } catch (error) {
