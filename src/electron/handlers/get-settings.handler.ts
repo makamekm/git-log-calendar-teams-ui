@@ -1,4 +1,3 @@
-import { ipcMain } from "electron";
 import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 
 import {
@@ -14,20 +13,18 @@ import {
   generateKeysSettings,
 } from "../modules/settings";
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("GET_SETTINGS"),
   async (
-    event,
     ...args: Parameters<IpcHandler["GET_SETTINGS"]>
   ): Promise<ReturnType<IpcHandler["GET_SETTINGS"]>> => {
     return await getSettings();
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("SAVE_SETTINGS"),
   async (
-    event,
     ...args: Parameters<IpcHandler["SAVE_SETTINGS"]>
   ): Promise<ReturnType<IpcHandler["SAVE_SETTINGS"]>> => {
     const [newConfig] = args;
@@ -39,10 +36,9 @@ ipcMain.handle(
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("REMOUNT_DRIVE"),
   async (
-    event,
     ...args: Parameters<IpcHandler["REMOUNT_DRIVE"]>
   ): Promise<ReturnType<IpcHandler["REMOUNT_DRIVE"]>> => {
     await remountDrive();
@@ -50,10 +46,9 @@ ipcMain.handle(
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("REGENERATE_KEY_PAIR"),
   async (
-    event,
     ...args: Parameters<IpcHandler["REGENERATE_KEY_PAIR"]>
   ): Promise<ReturnType<IpcHandler["REGENERATE_KEY_PAIR"]>> => {
     generateKeysSettings();
@@ -61,10 +56,9 @@ ipcMain.handle(
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("EMPTY_DRIVE"),
   async (
-    event,
     ...args: Parameters<IpcHandler["EMPTY_DRIVE"]>
   ): Promise<ReturnType<IpcHandler["EMPTY_DRIVE"]>> => {
     await emptyDir("/");

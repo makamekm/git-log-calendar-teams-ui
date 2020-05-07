@@ -3,8 +3,6 @@ import {
   BrowserWindow,
   Tray,
   Menu,
-  IpcRenderer,
-  ipcMain,
   MenuItem,
   powerSaveBlocker,
   protocol,
@@ -23,12 +21,6 @@ import { AppUpdater } from "./modules/updater";
 import { createDrive } from "./modules/drive";
 import settings from "electron-settings";
 
-const isWin = process.platform !== "darwin";
-
-declare global {
-  var ipcBus: IpcRenderer;
-}
-
 declare global {
   namespace NodeJS {
     interface Global {
@@ -36,6 +28,8 @@ declare global {
     }
   }
 }
+
+const isWin = process.platform !== "darwin";
 
 powerSaveBlocker.start("prevent-app-suspension");
 
@@ -112,7 +106,7 @@ function createTray() {
     },
   });
 
-  ipcMain.on(nameofSends("ON_COLLECT_STATS"), (_, value) => {
+  ipcBus.on(nameofSends("ON_COLLECT_STATS"), (value) => {
     collectButton.enabled = !value;
   });
 

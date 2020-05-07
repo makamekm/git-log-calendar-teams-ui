@@ -1,4 +1,3 @@
-import { ipcMain } from "electron";
 import { nameofHandler, IpcHandler } from "~/shared/ipc";
 import { CATCH_LOGS, FILE_LOG_LEVEL, CONSOLE_LOG_LEVEL } from "@env/config";
 import readline from "readline";
@@ -21,10 +20,9 @@ export const getLogPathMain = () =>
 export const getLogPathRenderer = () =>
   log.transports.file.getFile().path.replace("main.log", "renderer.log");
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("LOG"),
   async (
-    event,
     ...args: Parameters<IpcHandler["LOG"]>
   ): Promise<ReturnType<IpcHandler["LOG"]>> => {
     let [logs, level] = args;
@@ -36,10 +34,9 @@ ipcMain.handle(
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("CLEAR_LOGS"),
   async (
-    event,
     ...args: Parameters<IpcHandler["CLEAR_LOGS"]>
   ): Promise<ReturnType<IpcHandler["CLEAR_LOGS"]>> => {
     if (await isFileExist(getLogPathMain())) {
@@ -120,10 +117,9 @@ const searchLinesFile = (
   });
 };
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("GET_LOGS"),
   async (
-    event,
     ...args: Parameters<IpcHandler["GET_LOGS"]>
   ): Promise<ReturnType<IpcHandler["GET_LOGS"]>> => {
     let [search, limit] = args;

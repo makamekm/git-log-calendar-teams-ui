@@ -1,4 +1,4 @@
-import { app, ipcMain } from "electron";
+import { app } from "electron";
 import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 import { RUN_COLLECT_INTERVAL } from "@env/config";
 
@@ -48,7 +48,7 @@ if (RUN_COLLECT_INTERVAL) {
   });
 }
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("COLLECT_STATS"),
   async (): Promise<ReturnType<IpcHandler["COLLECT_STATS"]>> => {
     if (isCollecting) {
@@ -87,7 +87,7 @@ ipcMain.handle(
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("IS_COLLECTING_STATS"),
   async (): Promise<ReturnType<IpcHandler["IS_COLLECTING_STATS"]>> => {
     return isCollecting;

@@ -1,10 +1,9 @@
-import { app, ipcMain } from "electron";
+import { app } from "electron";
 import { nameofHandler, IpcHandler } from "~/shared/ipc";
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("APP_INFO"),
   async (
-    event,
     ...args: Parameters<IpcHandler["APP_INFO"]>
   ): Promise<ReturnType<IpcHandler["APP_INFO"]>> => {
     return {

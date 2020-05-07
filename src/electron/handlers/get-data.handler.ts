@@ -1,4 +1,4 @@
-import { ipcMain, app } from "electron";
+import { app } from "electron";
 import { nameofHandler, IpcHandler, ipc, nameofSends } from "~/shared/ipc";
 import { CACHE_LIFETIME } from "@env/config";
 
@@ -8,18 +8,18 @@ let fileMap = null;
 let date = +new Date();
 
 app.on("ready", () => {
-  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
+  ipcBus.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     fileMap = null;
   });
-  ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
+  ipcBus.on(nameofSends("ON_COLLECT_FINISH"), () => {
     fileMap = null;
   });
-  ipcMain.on(nameofSends("ON_CONFIG_UPDATE_FINISHED"), () => {
+  ipcBus.on(nameofSends("ON_CONFIG_UPDATE_FINISHED"), () => {
     fileMap = null;
   });
 });
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("GET_DATA"),
   async (): Promise<ReturnType<IpcHandler["GET_DATA"]>> => {
     if (!fileMap || +new Date() > CACHE_LIFETIME + date) {

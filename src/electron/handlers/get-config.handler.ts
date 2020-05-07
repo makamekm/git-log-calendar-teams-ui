@@ -1,4 +1,4 @@
-import { ipcMain, app } from "electron";
+import { app } from "electron";
 import md5 from "md5";
 import { nameofHandler, IpcHandler, nameofSends, ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
@@ -11,18 +11,17 @@ let config: Config = null;
 let date = +new Date();
 
 app.on("ready", () => {
-  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
+  ipcBus.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     config = null;
   });
-  ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
+  ipcBus.on(nameofSends("ON_COLLECT_FINISH"), () => {
     config = null;
   });
 });
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("GET_CONFIG"),
   async (
-    event,
     ...args: Parameters<IpcHandler["GET_CONFIG"]>
   ): Promise<ReturnType<IpcHandler["GET_CONFIG"]>> => {
     const [force] = args;
@@ -49,10 +48,9 @@ ipcMain.handle(
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("SAVE_CONFIG"),
   async (
-    event,
     ...args: Parameters<IpcHandler["SAVE_CONFIG"]>
   ): Promise<ReturnType<IpcHandler["SAVE_CONFIG"]>> => {
     if (!(await isDriveWritable())) {
@@ -84,10 +82,9 @@ ipcMain.handle(
   }
 );
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("REGISTER_USER"),
   async (
-    event,
     ...args: Parameters<IpcHandler["REGISTER_USER"]>
   ): Promise<ReturnType<IpcHandler["REGISTER_USER"]>> => {
     const [email, username] = args;

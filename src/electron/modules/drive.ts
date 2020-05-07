@@ -18,7 +18,6 @@ const getBaseFolder = (publicKey: string, secretKey: string, dir: string) => {
   if (!dir) {
     throw new Error("No drive folder set!");
   }
-  console.log(dir);
 
   return path.resolve(dir, publicKey, md5(secretKey));
 };

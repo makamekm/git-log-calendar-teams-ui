@@ -1,5 +1,4 @@
 import { Config } from "./Config";
-import { Json, JsonCompatible } from "./Json";
 import { ApplicationSettings } from "./Settings";
 
 export const nameof = <T>(name: keyof T) => name;
@@ -136,39 +135,20 @@ export interface IpcHandler {
   REMOUNT_DRIVE: () => void;
   EMPTY_DRIVE: () => void;
   REGENERATE_KEY_PAIR: () => void;
-  GET_ONLINE_USERS: () => string[];
-  GET_CHANNELS: () => {
-    [name: string]: string[];
-  };
-  CREATE_CHANNEL: (name: string) => string;
-  CLOSE_CHANNEL: (name: string) => void;
-  SEND_CHANNEL_MESSAGE: (name: string, message: JsonCompatible) => void;
-  SEND_USER_MESSAGE: (email: string, message: JsonCompatible) => void;
   REGISTER_USER: (email: string, username: string) => void;
 }
 
-const channelFactory = <T = any[], K = void>(name: string) => (
-  callback: (...args: any[]) => void
-) => {
-  const listener = (event: any, ...args) => {
-    callback(...args);
-  };
-  ipcBus.on(name, listener);
-  return () => ipcBus.removeListener(name, listener);
-};
-
 export const ipc = {
   channels: {
-    ON_COLLECT_STATS: channelFactory("ON_COLLECT_STATS"),
-    ON_CHANNEL_MESSAGE: channelFactory("ON_CHANNEL_MESSAGE"),
-    ON_SETTINGS_UPDATE_FINISH: channelFactory("ON_SETTINGS_UPDATE_FINISH"),
-    ON_DRIVE_UPDATE: channelFactory("ON_DRIVE_UPDATE"),
-    ON_COLLECT_FINISH: channelFactory("ON_COLLECT_FINISH"),
-    ON_CHANNEL_VERIFYED_MESSAGE: channelFactory("ON_CHANNEL_VERIFYED_MESSAGE"),
-    ON_CHANNEL_AUTH_FAIL: channelFactory("ON_CHANNEL_AUTH_FAIL"),
-    ON_CHANNEL_UPDATE: channelFactory("ON_CHANNEL_UPDATE"),
-    ON_CONFIG_UPDATE_STARTED: channelFactory("ON_CONFIG_UPDATE_STARTED"),
-    ON_CONFIG_UPDATE_FINISHED: channelFactory("ON_CONFIG_UPDATE_FINISHED"),
+    ON_COLLECT_STATS: (fn) => ipcBus.subscribe("ON_COLLECT_STATS", fn),
+    ON_SETTINGS_UPDATE_FINISH: (fn) =>
+      ipcBus.subscribe("ON_SETTINGS_UPDATE_FINISH", fn),
+    ON_DRIVE_UPDATE: (fn) => ipcBus.subscribe("ON_DRIVE_UPDATE", fn),
+    ON_COLLECT_FINISH: (fn) => ipcBus.subscribe("ON_COLLECT_FINISH", fn),
+    ON_CONFIG_UPDATE_STARTED: (fn) =>
+      ipcBus.subscribe("ON_CONFIG_UPDATE_STARTED", fn),
+    ON_CONFIG_UPDATE_FINISHED: (fn) =>
+      ipcBus.subscribe("ON_CONFIG_UPDATE_FINISHED", fn),
   },
   handlers: {
     APP_INFO: (
@@ -247,30 +227,6 @@ export const ipc = {
       ...args: Parameters<IpcHandler["REMOUNT_DRIVE"]>
     ): Promise<ReturnType<IpcHandler["REMOUNT_DRIVE"]>> =>
       ipcBus.invoke(nameofHandler("REMOUNT_DRIVE"), ...args),
-    GET_ONLINE_USERS: (
-      ...args: Parameters<IpcHandler["GET_ONLINE_USERS"]>
-    ): Promise<ReturnType<IpcHandler["GET_ONLINE_USERS"]>> =>
-      ipcBus.invoke(nameofHandler("GET_ONLINE_USERS"), ...args),
-    GET_CHANNELS: (
-      ...args: Parameters<IpcHandler["GET_CHANNELS"]>
-    ): Promise<ReturnType<IpcHandler["GET_CHANNELS"]>> =>
-      ipcBus.invoke(nameofHandler("GET_CHANNELS"), ...args),
-    CREATE_CHANNEL: (
-      ...args: Parameters<IpcHandler["CREATE_CHANNEL"]>
-    ): Promise<ReturnType<IpcHandler["CREATE_CHANNEL"]>> =>
-      ipcBus.invoke(nameofHandler("CREATE_CHANNEL"), ...args),
-    CLOSE_CHANNEL: (
-      ...args: Parameters<IpcHandler["CLOSE_CHANNEL"]>
-    ): Promise<ReturnType<IpcHandler["CLOSE_CHANNEL"]>> =>
-      ipcBus.invoke(nameofHandler("CLOSE_CHANNEL"), ...args),
-    SEND_CHANNEL_MESSAGE: (
-      ...args: Parameters<IpcHandler["SEND_CHANNEL_MESSAGE"]>
-    ): Promise<ReturnType<IpcHandler["SEND_CHANNEL_MESSAGE"]>> =>
-      ipcBus.invoke(nameofHandler("SEND_CHANNEL_MESSAGE"), ...args),
-    SEND_USER_MESSAGE: (
-      ...args: Parameters<IpcHandler["SEND_USER_MESSAGE"]>
-    ): Promise<ReturnType<IpcHandler["SEND_USER_MESSAGE"]>> =>
-      ipcBus.invoke(nameofHandler("SEND_USER_MESSAGE"), ...args),
     REGISTER_USER: (
       ...args: Parameters<IpcHandler["REGISTER_USER"]>
     ): Promise<ReturnType<IpcHandler["REGISTER_USER"]>> =>
@@ -284,39 +240,9 @@ export const ipc = {
     ON_DRIVE_UPDATE: () => ipcBus.send(nameofSends("ON_DRIVE_UPDATE")),
     ON_DRIVE_CREATED: () => ipcBus.send(nameofSends("ON_DRIVE_CREATED")),
     ON_COLLECT_FINISH: () => ipcBus.send(nameofSends("ON_COLLECT_FINISH")),
-    ON_CHANNEL_MESSAGE: (channel: string, peer, data: Json) =>
-      ipcBus.send(nameofSends("ON_CHANNEL_MESSAGE"), channel, peer, data),
-    ON_CHANNEL_PEER_START: (channel: string, peer) =>
-      ipcBus.send(nameofSends("ON_CHANNEL_PEER_START"), channel, peer),
-    ON_CHANNEL_PEER_END: (channel: string, peer) =>
-      ipcBus.send(nameofSends("ON_CHANNEL_PEER_END"), channel, peer),
-    ON_CHANNEL_UPDATE: (channelName: string) =>
-      ipcBus.send(nameofSends("ON_CHANNEL_UPDATE"), channelName),
     ON_CONFIG_UPDATE_STARTED: () =>
       ipcBus.send(nameofSends("ON_CONFIG_UPDATE_STARTED")),
     ON_CONFIG_UPDATE_FINISHED: () =>
       ipcBus.send(nameofSends("ON_CONFIG_UPDATE_FINISHED")),
-    ON_CHANNEL_AUTH_FAIL: (channelName: string, email: string, name: string) =>
-      ipcBus.send(
-        nameofSends("ON_CHANNEL_AUTH_FAIL"),
-        channelName,
-        email,
-        name
-      ),
-    ON_CHANNEL_VERIFYED_MESSAGE: (
-      channelName: string,
-      email: string,
-      name: string,
-      userKey: string,
-      data: JsonCompatible
-    ) =>
-      ipcBus.send(
-        nameofSends("ON_CHANNEL_VERIFYED_MESSAGE"),
-        channelName,
-        email,
-        name,
-        userKey,
-        data
-      ),
   },
 };

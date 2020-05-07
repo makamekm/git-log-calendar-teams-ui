@@ -1,4 +1,4 @@
-import { ipcMain, app } from "electron";
+import { app } from "electron";
 import { nameofHandler, IpcHandler, ipc, nameofSends } from "~/shared/ipc";
 
 import {
@@ -26,23 +26,20 @@ let cache: {
 } = {};
 
 app.on("ready", () => {
-  ipcMain.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
+  ipcBus.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     cache = {};
   });
-  ipcMain.on(nameofSends("ON_COLLECT_FINISH"), () => {
+  ipcBus.on(nameofSends("ON_COLLECT_FINISH"), () => {
     cache = {};
   });
-  ipcMain.on(nameofSends("ON_CONFIG_UPDATE_FINISHED"), () => {
+  ipcBus.on(nameofSends("ON_CONFIG_UPDATE_FINISHED"), () => {
     cache = {};
   });
 });
 
-ipcMain.handle(
+ipcBus.handle(
   nameofHandler("GET_STATS_DATA"),
-  async (
-    event,
-    ...args: Parameters<IpcHandler["GET_STATS_DATA"]>
-  ): Promise<Stats> => {
+  async (...args: Parameters<IpcHandler["GET_STATS_DATA"]>): Promise<Stats> => {
     let [{ limit, mode, name, top }] = args;
     top = top || 5;
 
