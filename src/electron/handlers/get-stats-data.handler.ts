@@ -6,7 +6,7 @@ import {
   normalizeRepositoryData,
   normalizeTeamData,
   normalizeCommitsAndLineChanges,
-} from "../git";
+} from "../modules/git";
 import { CACHE_LIFETIME } from "@env/config";
 
 type Stats = ReturnType<IpcHandler["GET_STATS_DATA"]>;

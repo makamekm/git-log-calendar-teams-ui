@@ -19,14 +19,14 @@ import {
   OPEN_MAIN_WINDOW_DEV_TOOLS,
 } from "@env/config";
 import commandExists from "command-exists";
-import { AppUpdater } from "./updater";
-import { createDrive } from "./drive";
+import { AppUpdater } from "./modules/updater";
+import { createDrive } from "./modules/drive";
 import settings from "electron-settings";
 
 const isWin = process.platform !== "darwin";
 
 declare global {
-  var ipcRenderer: IpcRenderer;
+  var ipcBus: IpcRenderer;
 }
 
 declare global {
@@ -245,11 +245,3 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
-// app.on("activate", () => {
-//   if (mainWindow != null) {
-//     mainWindow.focus();
-//   } else if (OPEN_MAIN_WINDOW_ON_LOAD) {
-//     createWindow();
-//   }
-// });

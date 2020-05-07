@@ -1,0 +1,7 @@
+publicKey: 2487b7e00adfd05de3d1268366b4571d5c8260e0e54bd77cb99dedd0dd92da0e
+secretKey: a884d249dc9daa144a5fef336c311e46ea9f95252dc2be907f863cd7bb8e68ee2487b7e00adfd05de3d1268366b4571d5c8260e0e54bd77cb99dedd0dd92da0e
+parallelCollectLimit: 5
+forceCollectingInterval: 0
+limitCollectRepositoriesPerTry: 0
+repositoryNamesToCollect: []
+drivePath: ./test

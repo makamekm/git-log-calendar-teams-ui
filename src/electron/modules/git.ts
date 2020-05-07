@@ -13,7 +13,7 @@ import {
   writeFile,
   readDir,
   stat,
-} from "../drive";
+} from "./drive";
 import { Config } from "~/shared/Config";
 import { DEV_CONFIG } from "@env/config";
 

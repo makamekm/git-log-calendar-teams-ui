@@ -7,5 +7,5 @@ export interface ApplicationSettings {
   forceCollectingInterval: number;
   limitCollectRepositoriesPerTry: number;
   repositoryNamesToCollect: string[];
-  isDriveWritable?: boolean;
+  drivePath?: string;
 }

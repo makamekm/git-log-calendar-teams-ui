@@ -135,6 +135,7 @@ export interface IpcHandler {
   SAVE_SETTINGS: (config: ApplicationSettings) => void;
   REMOUNT_DRIVE: () => void;
   EMPTY_DRIVE: () => void;
+  REGENERATE_KEY_PAIR: () => void;
   GET_ONLINE_USERS: () => string[];
   GET_CHANNELS: () => {
     [name: string]: string[];
@@ -152,8 +153,8 @@ const channelFactory = <T = any[], K = void>(name: string) => (
   const listener = (event: any, ...args) => {
     callback(...args);
   };
-  ipcRenderer.on(name, listener);
-  return () => ipcRenderer.removeListener(name, listener);
+  ipcBus.on(name, listener);
+  return () => ipcBus.removeListener(name, listener);
 };
 
 export const ipc = {
@@ -173,126 +174,130 @@ export const ipc = {
     APP_INFO: (
       ...args: Parameters<IpcHandler["APP_INFO"]>
     ): Promise<ReturnType<IpcHandler["APP_INFO"]>> =>
-      ipcRenderer.invoke(nameofHandler("APP_INFO"), ...args),
+      ipcBus.invoke(nameofHandler("APP_INFO"), ...args),
     COLLECT_STATS: (
       ...args: Parameters<IpcHandler["COLLECT_STATS"]>
     ): Promise<ReturnType<IpcHandler["COLLECT_STATS"]>> =>
-      ipcRenderer.invoke(nameofHandler("COLLECT_STATS"), ...args),
+      ipcBus.invoke(nameofHandler("COLLECT_STATS"), ...args),
     IS_COLLECTING_STATS: (
       ...args: Parameters<IpcHandler["IS_COLLECTING_STATS"]>
     ): Promise<ReturnType<IpcHandler["IS_COLLECTING_STATS"]>> =>
-      ipcRenderer.invoke(nameofHandler("IS_COLLECTING_STATS"), ...args),
+      ipcBus.invoke(nameofHandler("IS_COLLECTING_STATS"), ...args),
     GET_CALENDAR_DATA: (
       ...args: Parameters<IpcHandler["GET_CALENDAR_DATA"]>
     ): Promise<ReturnType<IpcHandler["GET_CALENDAR_DATA"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_CALENDAR_DATA"), ...args),
+      ipcBus.invoke(nameofHandler("GET_CALENDAR_DATA"), ...args),
     GET_CONFIG: (
       ...args: Parameters<IpcHandler["GET_CONFIG"]>
     ): Promise<ReturnType<IpcHandler["GET_CONFIG"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_CONFIG"), ...args),
+      ipcBus.invoke(nameofHandler("GET_CONFIG"), ...args),
     GET_DATA: (
       ...args: Parameters<IpcHandler["GET_DATA"]>
     ): Promise<ReturnType<IpcHandler["GET_DATA"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_DATA"), ...args),
+      ipcBus.invoke(nameofHandler("GET_DATA"), ...args),
     SAVE_CONFIG: (
       ...args: Parameters<IpcHandler["SAVE_CONFIG"]>
     ): Promise<ReturnType<IpcHandler["SAVE_CONFIG"]>> =>
-      ipcRenderer.invoke(nameofHandler("SAVE_CONFIG"), ...args),
+      ipcBus.invoke(nameofHandler("SAVE_CONFIG"), ...args),
     LOG: (
       ...args: Parameters<IpcHandler["LOG"]>
     ): Promise<ReturnType<IpcHandler["LOG"]>> =>
-      ipcRenderer.invoke(nameofHandler("LOG"), ...args),
+      ipcBus.invoke(nameofHandler("LOG"), ...args),
     CLEAR_LOGS: (
       ...args: Parameters<IpcHandler["CLEAR_LOGS"]>
     ): Promise<ReturnType<IpcHandler["CLEAR_LOGS"]>> =>
-      ipcRenderer.invoke(nameofHandler("CLEAR_LOGS"), ...args),
+      ipcBus.invoke(nameofHandler("CLEAR_LOGS"), ...args),
     GET_LOGS: (
       ...args: Parameters<IpcHandler["GET_LOGS"]>
     ): Promise<ReturnType<IpcHandler["GET_LOGS"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_LOGS"), ...args),
+      ipcBus.invoke(nameofHandler("GET_LOGS"), ...args),
     GET_STATS_DATA: (
       ...args: Parameters<IpcHandler["GET_STATS_DATA"]>
     ): Promise<ReturnType<IpcHandler["GET_STATS_DATA"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_STATS_DATA"), ...args),
+      ipcBus.invoke(nameofHandler("GET_STATS_DATA"), ...args),
     PRINT: (
       ...args: Parameters<IpcHandler["PRINT"]>
     ): Promise<ReturnType<IpcHandler["PRINT"]>> =>
-      ipcRenderer.invoke(nameofHandler("PRINT"), ...args),
+      ipcBus.invoke(nameofHandler("PRINT"), ...args),
     GET_REPOSITORY_USERS: (
       ...args: Parameters<IpcHandler["GET_REPOSITORY_USERS"]>
     ): Promise<ReturnType<IpcHandler["GET_REPOSITORY_USERS"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_REPOSITORY_USERS"), ...args),
+      ipcBus.invoke(nameofHandler("GET_REPOSITORY_USERS"), ...args),
     GET_MESSAGES: (
       ...args: Parameters<IpcHandler["GET_MESSAGES"]>
     ): Promise<ReturnType<IpcHandler["GET_MESSAGES"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_MESSAGES"), ...args),
+      ipcBus.invoke(nameofHandler("GET_MESSAGES"), ...args),
     GET_SETTINGS: (
       ...args: Parameters<IpcHandler["GET_SETTINGS"]>
     ): Promise<ReturnType<IpcHandler["GET_SETTINGS"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_SETTINGS"), ...args),
+      ipcBus.invoke(nameofHandler("GET_SETTINGS"), ...args),
     SAVE_SETTINGS: (
       ...args: Parameters<IpcHandler["SAVE_SETTINGS"]>
     ): Promise<ReturnType<IpcHandler["SAVE_SETTINGS"]>> =>
-      ipcRenderer.invoke(nameofHandler("SAVE_SETTINGS"), ...args),
+      ipcBus.invoke(nameofHandler("SAVE_SETTINGS"), ...args),
     EMPTY_DRIVE: (
       ...args: Parameters<IpcHandler["EMPTY_DRIVE"]>
     ): Promise<ReturnType<IpcHandler["EMPTY_DRIVE"]>> =>
-      ipcRenderer.invoke(nameofHandler("EMPTY_DRIVE"), ...args),
+      ipcBus.invoke(nameofHandler("EMPTY_DRIVE"), ...args),
+    REGENERATE_KEY_PAIR: (
+      ...args: Parameters<IpcHandler["REGENERATE_KEY_PAIR"]>
+    ): Promise<ReturnType<IpcHandler["REGENERATE_KEY_PAIR"]>> =>
+      ipcBus.invoke(nameofHandler("REGENERATE_KEY_PAIR"), ...args),
     REMOUNT_DRIVE: (
       ...args: Parameters<IpcHandler["REMOUNT_DRIVE"]>
     ): Promise<ReturnType<IpcHandler["REMOUNT_DRIVE"]>> =>
-      ipcRenderer.invoke(nameofHandler("REMOUNT_DRIVE"), ...args),
+      ipcBus.invoke(nameofHandler("REMOUNT_DRIVE"), ...args),
     GET_ONLINE_USERS: (
       ...args: Parameters<IpcHandler["GET_ONLINE_USERS"]>
     ): Promise<ReturnType<IpcHandler["GET_ONLINE_USERS"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_ONLINE_USERS"), ...args),
+      ipcBus.invoke(nameofHandler("GET_ONLINE_USERS"), ...args),
     GET_CHANNELS: (
       ...args: Parameters<IpcHandler["GET_CHANNELS"]>
     ): Promise<ReturnType<IpcHandler["GET_CHANNELS"]>> =>
-      ipcRenderer.invoke(nameofHandler("GET_CHANNELS"), ...args),
+      ipcBus.invoke(nameofHandler("GET_CHANNELS"), ...args),
     CREATE_CHANNEL: (
       ...args: Parameters<IpcHandler["CREATE_CHANNEL"]>
     ): Promise<ReturnType<IpcHandler["CREATE_CHANNEL"]>> =>
-      ipcRenderer.invoke(nameofHandler("CREATE_CHANNEL"), ...args),
+      ipcBus.invoke(nameofHandler("CREATE_CHANNEL"), ...args),
     CLOSE_CHANNEL: (
       ...args: Parameters<IpcHandler["CLOSE_CHANNEL"]>
     ): Promise<ReturnType<IpcHandler["CLOSE_CHANNEL"]>> =>
-      ipcRenderer.invoke(nameofHandler("CLOSE_CHANNEL"), ...args),
+      ipcBus.invoke(nameofHandler("CLOSE_CHANNEL"), ...args),
     SEND_CHANNEL_MESSAGE: (
       ...args: Parameters<IpcHandler["SEND_CHANNEL_MESSAGE"]>
     ): Promise<ReturnType<IpcHandler["SEND_CHANNEL_MESSAGE"]>> =>
-      ipcRenderer.invoke(nameofHandler("SEND_CHANNEL_MESSAGE"), ...args),
+      ipcBus.invoke(nameofHandler("SEND_CHANNEL_MESSAGE"), ...args),
     SEND_USER_MESSAGE: (
       ...args: Parameters<IpcHandler["SEND_USER_MESSAGE"]>
     ): Promise<ReturnType<IpcHandler["SEND_USER_MESSAGE"]>> =>
-      ipcRenderer.invoke(nameofHandler("SEND_USER_MESSAGE"), ...args),
+      ipcBus.invoke(nameofHandler("SEND_USER_MESSAGE"), ...args),
     REGISTER_USER: (
       ...args: Parameters<IpcHandler["REGISTER_USER"]>
     ): Promise<ReturnType<IpcHandler["REGISTER_USER"]>> =>
-      ipcRenderer.invoke(nameofHandler("REGISTER_USER"), ...args),
+      ipcBus.invoke(nameofHandler("REGISTER_USER"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
-      ipcRenderer.send(nameofSends("ON_COLLECT_STATS"), value),
+      ipcBus.send(nameofSends("ON_COLLECT_STATS"), value),
     ON_SETTINGS_UPDATE_FINISH: () =>
-      ipcRenderer.send(nameofSends("ON_SETTINGS_UPDATE_FINISH")),
-    ON_DRIVE_UPDATE: () => ipcRenderer.send(nameofSends("ON_DRIVE_UPDATE")),
-    ON_DRIVE_CREATED: () => ipcRenderer.send(nameofSends("ON_DRIVE_CREATED")),
-    ON_COLLECT_FINISH: () => ipcRenderer.send(nameofSends("ON_COLLECT_FINISH")),
+      ipcBus.send(nameofSends("ON_SETTINGS_UPDATE_FINISH")),
+    ON_DRIVE_UPDATE: () => ipcBus.send(nameofSends("ON_DRIVE_UPDATE")),
+    ON_DRIVE_CREATED: () => ipcBus.send(nameofSends("ON_DRIVE_CREATED")),
+    ON_COLLECT_FINISH: () => ipcBus.send(nameofSends("ON_COLLECT_FINISH")),
     ON_CHANNEL_MESSAGE: (channel: string, peer, data: Json) =>
-      ipcRenderer.send(nameofSends("ON_CHANNEL_MESSAGE"), channel, peer, data),
+      ipcBus.send(nameofSends("ON_CHANNEL_MESSAGE"), channel, peer, data),
     ON_CHANNEL_PEER_START: (channel: string, peer) =>
-      ipcRenderer.send(nameofSends("ON_CHANNEL_PEER_START"), channel, peer),
+      ipcBus.send(nameofSends("ON_CHANNEL_PEER_START"), channel, peer),
     ON_CHANNEL_PEER_END: (channel: string, peer) =>
-      ipcRenderer.send(nameofSends("ON_CHANNEL_PEER_END"), channel, peer),
+      ipcBus.send(nameofSends("ON_CHANNEL_PEER_END"), channel, peer),
     ON_CHANNEL_UPDATE: (channelName: string) =>
-      ipcRenderer.send(nameofSends("ON_CHANNEL_UPDATE"), channelName),
+      ipcBus.send(nameofSends("ON_CHANNEL_UPDATE"), channelName),
     ON_CONFIG_UPDATE_STARTED: () =>
-      ipcRenderer.send(nameofSends("ON_CONFIG_UPDATE_STARTED")),
+      ipcBus.send(nameofSends("ON_CONFIG_UPDATE_STARTED")),
     ON_CONFIG_UPDATE_FINISHED: () =>
-      ipcRenderer.send(nameofSends("ON_CONFIG_UPDATE_FINISHED")),
+      ipcBus.send(nameofSends("ON_CONFIG_UPDATE_FINISHED")),
     ON_CHANNEL_AUTH_FAIL: (channelName: string, email: string, name: string) =>
-      ipcRenderer.send(
+      ipcBus.send(
         nameofSends("ON_CHANNEL_AUTH_FAIL"),
         channelName,
         email,
@@ -305,7 +310,7 @@ export const ipc = {
       userKey: string,
       data: JsonCompatible
     ) =>
-      ipcRenderer.send(
+      ipcBus.send(
         nameofSends("ON_CHANNEL_VERIFYED_MESSAGE"),
         channelName,
         email,

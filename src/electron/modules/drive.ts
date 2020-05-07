@@ -2,11 +2,9 @@ import hyperdrive from "hyperdrive";
 import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
-import { app } from "electron";
 import md5 from "md5";
 import hyperswarm from "hyperswarm";
 import pump from "pump";
-import settings from "electron-settings";
 import {
   SWARM_INIT_TIMEOUT,
   DRIVE_INIT_TIMEOUT,
@@ -14,17 +12,9 @@ import {
   BOOTSTRAP_SERVERS,
 } from "@env/config";
 import { ipc } from "~/shared/ipc";
-import { ApplicationSettings } from "~/shared/Settings";
-import { generateDriveKeys } from "~/tools";
 
-const getBaseFolder = () => {
-  return path.resolve(
-    DRIVE_BASE_FOLDER
-      ? path.resolve(DRIVE_BASE_FOLDER)
-      : path.resolve(app.getPath("appData"), "drive"),
-    settings.get("publicKey"),
-    md5(settings.get("secretKey"))
-  );
+const getBaseFolder = (publicKey: string, secretKey: string, dir: string) => {
+  return path.resolve(DRIVE_BASE_FOLDER || dir, publicKey, md5(secretKey));
 };
 
 let drive;
@@ -153,7 +143,8 @@ let inited = false;
 
 export const waitForDrive = async () => {
   if (!inited) {
-    if (settings.get("useDriveSwarm")) {
+    let settings = await ipc.handlers.GET_SETTINGS();
+    if (settings.useDriveSwarm) {
       await new Promise((r) => setTimeout(r, SWARM_INIT_TIMEOUT));
     } else {
       await new Promise((r) => setTimeout(r, DRIVE_INIT_TIMEOUT));
@@ -168,108 +159,55 @@ export const isDriveWritable = async (): Promise<boolean> => {
   return drive.writable;
 };
 
-export const getSettings = async (): Promise<ApplicationSettings> => {
-  return {
-    publicKey: settings.get("publicKey"),
-    secretKey: settings.get("secretKey"),
-    useDriveSwarm: settings.get("useDriveSwarm"),
-    dontCollect: settings.get("dontCollect"),
-    parallelCollectLimit: settings.get("parallelCollectLimit") || 1,
-    forceCollectingInterval: settings.get("forceCollectingInterval") || 0,
-    limitCollectRepositoriesPerTry:
-      settings.get("limitCollectRepositoriesPerTry") || 0,
-    repositoryNamesToCollect: settings.get("repositoryNamesToCollect")
-      ? JSON.parse(settings.get("repositoryNamesToCollect"))
-      : [],
-    isDriveWritable: await isDriveWritable(),
-  };
-};
-
-export const emptyDrive = () => {
-  if (fs.existsSync(getBaseFolder())) {
-    fsExtra.removeSync(getBaseFolder());
+export const emptyDrive = async () => {
+  let settings = await ipc.handlers.GET_SETTINGS();
+  const dir = getBaseFolder(
+    settings.publicKey,
+    settings.secretKey,
+    settings.drivePath
+  );
+  if (fs.existsSync(dir)) {
+    fsExtra.removeSync(dir);
   }
 };
 
-export const remountDrive = () => {
-  if (fs.existsSync(getBaseFolder())) {
-    fsExtra.removeSync(getBaseFolder());
+export const remountDrive = async () => {
+  let settings = await ipc.handlers.GET_SETTINGS();
+  const dir = getBaseFolder(
+    settings.publicKey,
+    settings.secretKey,
+    settings.drivePath
+  );
+  if (fs.existsSync(dir)) {
+    fsExtra.removeSync(dir);
   }
   createDrive();
 };
 
-export const loadSettings = (): ApplicationSettings => {
-  if (!settings.has("publicKey")) {
-    const keyPair = generateDriveKeys();
-    settings.set("publicKey", keyPair.publicKey);
-    settings.set("secretKey", keyPair.secretKey);
-    emptyDrive();
-  }
-  const publicKey = settings.get("publicKey");
-  const secretKey = settings.get("secretKey");
-  return {
-    publicKey: publicKey,
-    secretKey: secretKey,
-    useDriveSwarm: settings.get("useDriveSwarm"),
-    dontCollect: settings.get("dontCollect"),
-    parallelCollectLimit: settings.get("parallelCollectLimit") || 1,
-    forceCollectingInterval: settings.get("forceCollectingInterval") || 0,
-    limitCollectRepositoriesPerTry:
-      settings.get("limitCollectRepositoriesPerTry") || 0,
-    repositoryNamesToCollect: settings.get("repositoryNamesToCollect")
-      ? JSON.parse(settings.get("repositoryNamesToCollect"))
-      : [],
-  };
-};
-
-export const saveSettings = ({
-  publicKey,
-  secretKey,
-  useDriveSwarm,
-  dontCollect,
-  parallelCollectLimit,
-  forceCollectingInterval,
-  limitCollectRepositoriesPerTry,
-  repositoryNamesToCollect,
-}: ApplicationSettings) => {
-  closeDrive();
-  if (!publicKey || !secretKey) {
-    const keyPair = generateDriveKeys();
-    publicKey = keyPair.publicKey;
-    secretKey = keyPair.secretKey;
-  }
-  settings.set("publicKey", publicKey);
-  settings.set("secretKey", secretKey);
-  settings.set("useDriveSwarm", useDriveSwarm);
-  settings.set("dontCollect", dontCollect);
-  settings.set("parallelCollectLimit", parallelCollectLimit);
-  settings.set("forceCollectingInterval", forceCollectingInterval);
-  settings.set(
-    "limitCollectRepositoriesPerTry",
-    limitCollectRepositoriesPerTry
-  );
-  settings.set(
-    "repositoryNamesToCollect",
-    JSON.stringify(repositoryNamesToCollect || [])
-  );
-  createDrive();
-};
-
-export const createDrive = () => {
+export const createDrive = async () => {
   inited = false;
   closeDrive();
-  const { publicKey, secretKey, useDriveSwarm } = loadSettings();
-  drive = hyperdrive(getBaseFolder(), publicKey, {
-    secretKey: secretKey ? parseKey(secretKey) : undefined,
-  });
+  let settings = await ipc.handlers.GET_SETTINGS();
+  if (!settings.publicKey) {
+    await ipc.handlers.REGENERATE_KEY_PAIR();
+    settings = await ipc.handlers.GET_SETTINGS();
+  }
 
-  if (useDriveSwarm) {
+  drive = hyperdrive(
+    getBaseFolder(settings.publicKey, settings.secretKey, settings.drivePath),
+    settings.publicKey,
+    {
+      secretKey: settings.secretKey ? parseKey(settings.secretKey) : undefined,
+    }
+  );
+
+  if (settings.useDriveSwarm) {
     swarm = hyperswarm({
       bootstrap: BOOTSTRAP_SERVERS,
     });
 
     drive.on("ready", () => {
-      swarm.join(parseKey(publicKey), {
+      swarm.join(parseKey(settings.publicKey), {
         announce: true,
         lookup: true,
       });

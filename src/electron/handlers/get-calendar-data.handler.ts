@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 
-import { normalizeCalendarData } from "../git";
+import { normalizeCalendarData } from "../modules/git";
 
 ipcMain.handle(
   nameofHandler("GET_CALENDAR_DATA"),

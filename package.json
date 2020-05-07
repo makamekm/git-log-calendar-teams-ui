@@ -34,7 +34,8 @@
     "package": "electron-builder build --mac --win -c.extraMetadata.main=build/src/electron/index.js --publish always",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "dist": "run-s build build-electron package"
+    "dist": "run-s build build-electron package",
+    "server": "ts-node -r tsconfig-paths/register --project tsconfig.electron.json ./src/server/index.ts"
   },
   "build": {
     "mac": {

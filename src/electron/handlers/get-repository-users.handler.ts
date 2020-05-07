@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 
-import { getAllRepositoryUsers } from "../git";
+import { getAllRepositoryUsers } from "../modules/git";
 
 ipcMain.handle(
   nameofHandler("GET_REPOSITORY_USERS"),

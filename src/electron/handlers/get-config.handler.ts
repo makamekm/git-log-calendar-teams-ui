@@ -4,7 +4,8 @@ import { nameofHandler, IpcHandler, nameofSends, ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
 import { CACHE_LIFETIME } from "@env/config";
 
-import { getConfig, saveConfig } from "../git";
+import { getConfig, saveConfig } from "../modules/git";
+import { isDriveWritable } from "../modules/drive";
 
 let config: Config = null;
 let date = +new Date();
@@ -54,8 +55,7 @@ ipcMain.handle(
     event,
     ...args: Parameters<IpcHandler["SAVE_CONFIG"]>
   ): Promise<ReturnType<IpcHandler["SAVE_CONFIG"]>> => {
-    const settings = await ipc.handlers.GET_SETTINGS();
-    if (!settings.isDriveWritable) {
+    if (!(await isDriveWritable())) {
       return;
     }
 

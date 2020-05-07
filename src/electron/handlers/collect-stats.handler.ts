@@ -2,7 +2,8 @@ import { app, ipcMain } from "electron";
 import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 import { RUN_COLLECT_INTERVAL } from "@env/config";
 
-import { collect } from "../git";
+import { collect } from "../modules/git";
+import { isDriveWritable } from "../modules/drive";
 
 const COLLECT_INTERVAL = 60;
 
@@ -32,12 +33,12 @@ if (RUN_COLLECT_INTERVAL) {
       }
       if (!inited) {
         inited = true;
-        if (!settings.dontCollect && settings.isDriveWritable) {
+        if (!settings.dontCollect && (await isDriveWritable())) {
           ipc.handlers.COLLECT_STATS();
         }
       }
-      setTimeout(() => {
-        if (!settings.dontCollect && settings.isDriveWritable) {
+      setTimeout(async () => {
+        if (!settings.dontCollect && (await isDriveWritable())) {
           ipc.handlers.COLLECT_STATS();
         }
         runTimeout();
@@ -65,7 +66,7 @@ ipcMain.handle(
     const config = await ipc.handlers.GET_CONFIG();
     const settings = await ipc.handlers.GET_SETTINGS();
     try {
-      if (!settings.dontCollect && settings.isDriveWritable) {
+      if (!settings.dontCollect && (await isDriveWritable())) {
         await collect(
           config,
           Math.max(1, settings.parallelCollectLimit),

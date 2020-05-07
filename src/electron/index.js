@@ -1,7 +1,7 @@
 const { ipcMain } = require("electron");
-global.ipcRenderer = ipcMain;
+global.ipcBus = ipcMain;
 
-global.ipcRenderer.invoke = async (channel, ...args) => {
+global.ipcBus.invoke = async (channel, ...args) => {
   const responce = await new Promise((r, e) => {
     const event = {
       _reply: (result) => r({ result }),
@@ -22,7 +22,7 @@ global.ipcRenderer.invoke = async (channel, ...args) => {
   }
 };
 
-global.ipcRenderer.send = (channel, ...args) => {
+global.ipcBus.send = (channel, ...args) => {
   const res = ipcMain.emit(channel, {}, ...args);
   global.mainWindow && global.mainWindow.webContents.send(channel, ...args);
   return res;

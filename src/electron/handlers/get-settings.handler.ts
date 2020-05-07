@@ -1,8 +1,18 @@
 import { ipcMain } from "electron";
 import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 
-import { saveSettings, getSettings, emptyDir, remountDrive } from "../drive";
+import {
+  emptyDir,
+  remountDrive,
+  closeDrive,
+  createDrive,
+} from "../modules/drive";
 import { getCollectPromise } from "./collect-stats.handler";
+import {
+  getSettings,
+  saveSettings,
+  generateKeysSettings,
+} from "../modules/settings";
 
 ipcMain.handle(
   nameofHandler("GET_SETTINGS"),
@@ -22,7 +32,9 @@ ipcMain.handle(
   ): Promise<ReturnType<IpcHandler["SAVE_SETTINGS"]>> => {
     const [newConfig] = args;
     await getCollectPromise();
+    closeDrive();
     saveSettings(newConfig);
+    await createDrive();
     ipc.sends.ON_SETTINGS_UPDATE_FINISH();
   }
 );
@@ -34,6 +46,17 @@ ipcMain.handle(
     ...args: Parameters<IpcHandler["REMOUNT_DRIVE"]>
   ): Promise<ReturnType<IpcHandler["REMOUNT_DRIVE"]>> => {
     await remountDrive();
+    ipc.sends.ON_SETTINGS_UPDATE_FINISH();
+  }
+);
+
+ipcMain.handle(
+  nameofHandler("REGENERATE_KEY_PAIR"),
+  async (
+    event,
+    ...args: Parameters<IpcHandler["REGENERATE_KEY_PAIR"]>
+  ): Promise<ReturnType<IpcHandler["REGENERATE_KEY_PAIR"]>> => {
+    generateKeysSettings();
     ipc.sends.ON_SETTINGS_UPDATE_FINISH();
   }
 );

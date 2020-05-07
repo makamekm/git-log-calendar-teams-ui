@@ -2,7 +2,7 @@ import { ipcMain, app } from "electron";
 import { nameofHandler, IpcHandler, ipc, nameofSends } from "~/shared/ipc";
 import { CACHE_LIFETIME } from "@env/config";
 
-import { readData } from "../git";
+import { readData } from "../modules/git";
 
 let fileMap = null;
 let date = +new Date();

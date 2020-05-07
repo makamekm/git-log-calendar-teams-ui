@@ -1,7 +1,7 @@
 const { ipcRenderer, remote } = require("electron");
 require("./git-log.hooks");
 
-window.ipcRenderer = ipcRenderer;
+window.ipcBus = ipcRenderer;
 window.remote = remote;
 
 const log = require("electron-log");
