@@ -1,6 +1,7 @@
 import GitRepository from "./git-tools";
 import { app } from "electron";
 import YAML from "yaml";
+import safeEval from "safe-eval";
 import PromisePool from "es6-promise-pool";
 import path from "path";
 import fs from "fs";
@@ -78,10 +79,7 @@ export async function getConfig(tempDir?: string) {
   }
 
   if (config.evaluateStr) {
-    // eslint-disable-next-line no-new-func
-    config.evaluate = Function(
-      '"use strict";return (' + config.evaluateStr + ")"
-    )();
+    config.evaluate = safeEval(config.evaluateStr);
   } else {
     config.evaluate = DEFAULT_EVALUATE;
   }

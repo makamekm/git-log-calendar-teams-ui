@@ -118,6 +118,7 @@
     "react-virtualized": "^9.21.2",
     "reactstrap": "^8.4.1",
     "recharts": "^2.0.0-beta.5",
+    "safe-eval": "^0.4.1",
     "simple-peer": "^9.7.0",
     "sodium-universal": "^2.0.0",
     "spawnback": "^1.0.0",
