@@ -14,6 +14,7 @@ import {
   BOOTSTRAP_SERVERS,
 } from "@env/config";
 import { ipc } from "~/shared/ipc";
+import { ApplicationSettings } from "~/shared/Settings";
 
 const getBaseFolder = (publicKey: string, secretKey: string, dir: string) => {
   dir = DRIVE_BASE_FOLDER || dir;
@@ -203,8 +204,11 @@ export const remountDrive = async () => {
 
 export const createDrive = async () => {
   inited = false;
+
   closeDrive();
+
   let settings = await ipc.handlers.GET_SETTINGS();
+
   if (!settings.publicKey) {
     await ipc.handlers.REGENERATE_KEY_PAIR();
     settings = await ipc.handlers.GET_SETTINGS();
@@ -218,6 +222,13 @@ export const createDrive = async () => {
     }
   );
 
+  createS3Drive(settings);
+  createSwarmDrive(settings);
+
+  ipc.sends.ON_DRIVE_CREATED();
+};
+
+function createS3Drive(settings: ApplicationSettings) {
   if (settings.useDriveS3) {
     try {
       AWS.config.update({
@@ -248,7 +259,9 @@ export const createDrive = async () => {
       console.error(error);
     }
   }
+}
 
+function createSwarmDrive(settings: ApplicationSettings) {
   if (settings.useDriveSwarm) {
     swarm = hyperswarm({
       bootstrap: BOOTSTRAP_SERVERS,
@@ -277,6 +290,4 @@ export const createDrive = async () => {
       pump(connection, stream, connection);
     });
   }
-
-  ipc.sends.ON_DRIVE_CREATED();
-};
+}
