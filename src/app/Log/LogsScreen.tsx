@@ -124,6 +124,9 @@ export const LogsScreen = observer(() => {
           <div className="d-flex flex-wrap mb-4 pb-2">
             <HeaderMain title="Logs" className="mt-0 mb-3" />
             <div className="ml-auto d-flex align-self-center">
+              <Button outline onClick={state.load} className="mr-2">
+                <i className="fas fa-sync mr-2"></i> Reload
+              </Button>
               <Button outline onClick={state.clear}>
                 <i className="fa fa-trash mr-2"></i> Clear Logs
               </Button>
