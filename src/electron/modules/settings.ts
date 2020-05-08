@@ -18,7 +18,7 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
       ? JSON.parse(settings.get("collectingRepositoryNames"))
       : [],
     drivePath: path.resolve(app.getPath("appData"), "drive"),
-    useS3: settings.get("useS3"),
+    useDriveS3: settings.get("useDriveS3"),
     s3AccessKeyId: settings.get("s3AccessKeyId"),
     s3SecretAccessKey: settings.get("s3SecretAccessKey"),
     s3DrivePath: settings.get("s3DrivePath"),
@@ -35,7 +35,7 @@ export const saveSettings = ({
   forceCollectingInterval,
   limitCollectingRepositoriesPerTry,
   collectingRepositoryNames,
-  useS3,
+  useDriveS3,
   s3AccessKeyId,
   s3Bucket,
   s3DrivePath,
@@ -60,7 +60,7 @@ export const saveSettings = ({
     "collectingRepositoryNames",
     JSON.stringify(collectingRepositoryNames || [])
   );
-  settings.set("useS3", useS3);
+  settings.set("useDriveS3", useDriveS3);
   settings.set("s3AccessKeyId", s3AccessKeyId);
   settings.set("s3Bucket", s3Bucket);
   settings.set("s3DrivePath", s3DrivePath);

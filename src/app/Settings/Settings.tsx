@@ -206,6 +206,74 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </Col>
             </FormGroup>
             <FormGroup row>
+              <Label sm={4}>Use S3</Label>
+              <Col sm={8}>
+                <Toggle
+                  checked={state.settings.useDriveS3}
+                  onChange={() => {
+                    state.settings.useDriveS3 = !state.settings.useDriveS3;
+                  }}
+                />
+              </Col>
+            </FormGroup>
+            {state.settings.useDriveS3 && (
+              <>
+                <FormGroup row>
+                  <Label sm={4}>S3 Access Key ID</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.settings.s3AccessKeyId = e.currentTarget.value;
+                      }}
+                      value={state.settings.s3AccessKeyId}
+                      placeholder="Enter S3 Access Key ID..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4}>S3 Secret Access Key</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.settings.s3SecretAccessKey =
+                          e.currentTarget.value;
+                      }}
+                      value={state.settings.s3SecretAccessKey}
+                      placeholder="Enter S3 Secret Access Key..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4}>S3 Bucket Name</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.settings.s3Bucket = e.currentTarget.value;
+                      }}
+                      value={state.settings.s3Bucket}
+                      placeholder="Enter S3 Bucket Name..."
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4}>S3 Drive Path</Label>
+                  <Col sm={8}>
+                    <Input
+                      type="text"
+                      onChange={(e) => {
+                        state.settings.s3DrivePath = e.currentTarget.value;
+                      }}
+                      value={state.settings.s3DrivePath}
+                      placeholder="Enter S3 Drive Path..."
+                    />
+                  </Col>
+                </FormGroup>
+              </>
+            )}
+            <FormGroup row>
               <Label sm={4}>Remount Drive & Reload All</Label>
               <Col sm={8}>
                 <ButtonGroup className="align-self-start mt-0">

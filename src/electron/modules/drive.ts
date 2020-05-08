@@ -218,7 +218,7 @@ export const createDrive = async () => {
     }
   );
 
-  if (settings.useS3) {
+  if (settings.useDriveS3) {
     try {
       AWS.config.update({
         accessKeyId: settings.s3AccessKeyId,
