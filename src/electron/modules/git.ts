@@ -78,11 +78,7 @@ export async function getConfig(tempDir?: string) {
     throw new Error("No temp folder set!");
   }
 
-  if (config.evaluateStr) {
-    config.evaluate = safeEval(config.evaluateStr);
-  } else {
-    config.evaluate = DEFAULT_EVALUATE;
-  }
+  config.evaluate = safeEval(config.evaluateStr || DEFAULT_EVALUATE);
 
   collectUnusedUsers(config);
 
