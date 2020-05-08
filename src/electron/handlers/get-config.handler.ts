@@ -1,8 +1,9 @@
 import { app } from "electron";
 import md5 from "md5";
+import path from "path";
 import { nameofHandler, IpcHandler, nameofSends, ipc } from "~/shared/ipc";
 import { Config } from "~/shared/Config";
-import { CACHE_LIFETIME } from "@env/config";
+import { CACHE_LIFETIME, DEV_CONFIG } from "@env/config";
 
 import { getConfig, saveConfig } from "../modules/git";
 import { isDriveWritable } from "../modules/drive";
@@ -26,7 +27,10 @@ ipcBus.handle(
   ): Promise<ReturnType<IpcHandler["GET_CONFIG"]>> => {
     const [force] = args;
     if (force || !config || +new Date() > CACHE_LIFETIME + date) {
-      config = await getConfig();
+      config = await getConfig(
+        path.resolve(app.getPath("temp"), "repositories"),
+        path.resolve(app.getPath("home"), DEV_CONFIG)
+      );
 
       config.repositories.forEach((repository) => {
         repository.id = String(Math.random() * 10000);

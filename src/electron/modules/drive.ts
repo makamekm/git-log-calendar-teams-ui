@@ -196,6 +196,7 @@ export const remountDrive = async () => {
     settings.secretKey,
     settings.drivePath
   );
+
   if (fs.existsSync(dir)) {
     fsExtra.removeSync(dir);
   }
@@ -238,7 +239,13 @@ function createS3Drive(settings: ApplicationSettings) {
 
       const s3 = new AWS.S3();
       s3Storage = ras3(settings.s3DrivePath, { bucket: settings.s3Bucket, s3 });
-      s3Drive = hyperdrive(s3Storage);
+      s3Drive = hyperdrive(s3Storage, settings.publicKey, {
+        secretKey: settings.secretKey
+          ? parseKey(settings.secretKey)
+          : undefined,
+        sparse: false,
+        sparseMetadata: false,
+      });
 
       const s3Stream = s3Drive.replicate({
         initiator: true,
@@ -248,7 +255,6 @@ function createS3Drive(settings: ApplicationSettings) {
       });
 
       const stream = drive.replicate({
-        initiator: false,
         live: true,
         upload: true,
         download: true,

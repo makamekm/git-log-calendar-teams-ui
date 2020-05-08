@@ -95,7 +95,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 <Label sm={4}>Don't Collect Statistics</Label>
                 <Col sm={8}>
                   <Toggle
-                    checked={state.settings.dontCollect}
+                    checked={!!state.settings.dontCollect}
                     onChange={() => {
                       state.settings.dontCollect = !state.settings.dontCollect;
                     }}
@@ -197,7 +197,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               <Label sm={4}>Use Swarm</Label>
               <Col sm={8}>
                 <Toggle
-                  checked={state.settings.useDriveSwarm}
+                  checked={!!state.settings.useDriveSwarm}
                   onChange={() => {
                     state.settings.useDriveSwarm = !state.settings
                       .useDriveSwarm;
@@ -209,7 +209,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               <Label sm={4}>Use S3</Label>
               <Col sm={8}>
                 <Toggle
-                  checked={state.settings.useDriveS3}
+                  checked={!!state.settings.useDriveS3}
                   onChange={() => {
                     state.settings.useDriveS3 = !state.settings.useDriveS3;
                   }}
