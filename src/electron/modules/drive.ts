@@ -2,6 +2,8 @@ import hyperdrive from "hyperdrive";
 import path from "path";
 import fs from "fs";
 import fsExtra from "fs-extra";
+import ras3 from "random-access-s3";
+import AWS from "aws-sdk";
 import md5 from "md5";
 import hyperswarm from "hyperswarm";
 import pump from "pump";
@@ -24,6 +26,8 @@ const getBaseFolder = (publicKey: string, secretKey: string, dir: string) => {
 
 let drive;
 let swarm;
+let s3Storage;
+let s3Drive;
 
 export const parseKey = (key) => {
   return Buffer.from(key, "hex");
@@ -126,22 +130,30 @@ export const emptyDir = async (dirPath) => {
 };
 
 export const closeDrive = () => {
-  if (drive) {
-    try {
-      drive.close();
-    } catch (error) {
-      console.error(error);
+  try {
+    if (s3Drive) {
+      s3Drive.close();
     }
-    try {
-      if (swarm) {
-        swarm.destroy();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    drive = null;
-    swarm = null;
+  } catch (error) {
+    console.error(error);
   }
+  try {
+    if (drive) {
+      drive.close();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    if (swarm) {
+      swarm.destroy();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  s3Drive = null;
+  drive = null;
+  swarm = null;
 };
 
 let inited = false;
@@ -205,6 +217,37 @@ export const createDrive = async () => {
       secretKey: settings.secretKey ? parseKey(settings.secretKey) : undefined,
     }
   );
+
+  if (settings.useS3) {
+    try {
+      AWS.config.update({
+        accessKeyId: settings.s3AccessKeyId,
+        secretAccessKey: settings.s3SecretAccessKey,
+      });
+
+      const s3 = new AWS.S3();
+      s3Storage = ras3(settings.s3DrivePath, { bucket: settings.s3Bucket, s3 });
+      s3Drive = hyperdrive(s3Storage);
+
+      const s3Stream = s3Drive.replicate({
+        initiator: true,
+        live: true,
+        upload: true,
+        download: true,
+      });
+
+      const stream = drive.replicate({
+        initiator: false,
+        live: true,
+        upload: true,
+        download: true,
+      });
+
+      pump(stream, s3Stream, stream);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   if (settings.useDriveSwarm) {
     swarm = hyperswarm({

@@ -18,6 +18,11 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
       ? JSON.parse(settings.get("collectingRepositoryNames"))
       : [],
     drivePath: path.resolve(app.getPath("appData"), "drive"),
+    useS3: settings.get("useS3"),
+    s3AccessKeyId: settings.get("s3AccessKeyId"),
+    s3SecretAccessKey: settings.get("s3SecretAccessKey"),
+    s3DrivePath: settings.get("s3DrivePath"),
+    s3Bucket: settings.get("s3Bucket"),
   };
 };
 
@@ -30,6 +35,11 @@ export const saveSettings = ({
   forceCollectingInterval,
   limitCollectingRepositoriesPerTry,
   collectingRepositoryNames,
+  useS3,
+  s3AccessKeyId,
+  s3Bucket,
+  s3DrivePath,
+  s3SecretAccessKey,
 }: ApplicationSettings) => {
   if (!publicKey) {
     const keyPair = generateDriveKeys();
@@ -50,6 +60,11 @@ export const saveSettings = ({
     "collectingRepositoryNames",
     JSON.stringify(collectingRepositoryNames || [])
   );
+  settings.set("useS3", useS3);
+  settings.set("s3AccessKeyId", s3AccessKeyId);
+  settings.set("s3Bucket", s3Bucket);
+  settings.set("s3DrivePath", s3DrivePath);
+  settings.set("s3SecretAccessKey", s3SecretAccessKey);
 };
 
 export const generateKeysSettings = () => {
