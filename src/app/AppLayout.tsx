@@ -30,7 +30,8 @@ export const SidebarMenuItem = ({ to, title, icon }) => {
     >
       <div
         className={classNames({
-          "px-2": !service.sidebarCollapsed,
+          "lg:pr-0 pr-2": service.sidebarCollapsed,
+          "pr-2": !service.sidebarCollapsed,
         })}
       >
         {icon}
