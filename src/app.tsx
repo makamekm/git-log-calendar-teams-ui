@@ -1,8 +1,7 @@
 import React from "react";
-import "./app.css";
 import { HashRouter as Router } from "react-router-dom";
 import { RoutedContent } from "./routing";
-import { AppLayout } from "./layout/AppLayout";
+import { AppLayout } from "./app/AppLayout";
 import {
   ServiceProviderFactory,
   ServiceProviderHook,
@@ -16,6 +15,7 @@ import { SearchService } from "./app/SearchService";
 import { MessageService } from "./app/MessageService";
 import { RepositoryUserService } from "./app/RepositoryUserService";
 import { ConfigService } from "./app/ConfigService";
+import { LayoutService } from "./components/Layout/LayoutService";
 
 const basePath = process.env.BASE_PATH || "/";
 
@@ -23,6 +23,7 @@ export const App = () => {
   const [ServiceProvider] = React.useState<React.FC>(() =>
     ServiceProviderFactory(
       AuthService,
+      LayoutService,
       LoadingService,
       FavouriteService,
       DashboardService,

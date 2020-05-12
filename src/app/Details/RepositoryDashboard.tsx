@@ -3,15 +3,7 @@ import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
 
-import {
-  Container,
-  Row,
-  Col,
-  WithLayoutMeta,
-  Card,
-  CardBody,
-  CardTitle,
-} from "~/components";
+import { Container, Row, Col, Card, CardBody, CardTitle } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { DashboardService } from "../DashboardService";
 import { useParams } from "react-router";
@@ -28,6 +20,7 @@ import { LatestMessages } from "./LastMessages";
 import { BarActivities } from "../Dashboard/BarActivities";
 import { LineActivities } from "../Dashboard/LineActivities";
 import { RepositoryUsersDashboard } from "./RepositoryUsersDashboard";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const RepositoryDashboard = observer(() => {
   const { repositoryName } = useParams();
@@ -38,26 +31,24 @@ export const RepositoryDashboard = observer(() => {
     state.load();
   }, [state, repositoryName]);
   useOnLoad(onLoad);
+  useLayoutConfig({
+    pageTitle: `${repositoryName} #repository`,
+    breadcrumbs: [
+      {
+        name: "Dashboard",
+        url: "/dashboard",
+      },
+      {
+        name: "Repository",
+      },
+      {
+        name: `${repositoryName}`,
+      },
+    ],
+  });
 
   return (
     <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: `${repositoryName} #repository`,
-          breadcrumbs: [
-            {
-              name: "Dashboard",
-              url: "/dashboard",
-            },
-            {
-              name: "Repository",
-            },
-            {
-              name: `${repositoryName}`,
-            },
-          ],
-        }}
-      />
       <Row className="mb-5">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-3">

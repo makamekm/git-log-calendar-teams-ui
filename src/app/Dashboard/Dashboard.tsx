@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 
-import { Container, Row, Col, WithLayoutMeta } from "~/components";
+import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { TotalCommitsPanel } from "./TotalCommitsPanel";
 import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
@@ -14,6 +14,7 @@ import { TrackersSelector } from "./TrackerSelector";
 import { TrackerActivities } from "./TrackerActivities";
 import { periods } from "./Periods";
 import { useOnLoad } from "~/hooks";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const Dashboard = observer(() => {
   const state = React.useContext(DashboardService);
@@ -23,19 +24,17 @@ export const Dashboard = observer(() => {
     state.load();
   }, [state]);
   useOnLoad(onLoad);
+  useLayoutConfig({
+    pageTitle: "Dashboard",
+    breadcrumbs: [
+      {
+        name: "Dashboard",
+      },
+    ],
+  });
 
   return (
     <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: "Dashboard",
-          breadcrumbs: [
-            {
-              name: "Dashboard",
-            },
-          ],
-        }}
-      />
       <Row className="mb-5">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-3">

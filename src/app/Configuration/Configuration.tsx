@@ -9,7 +9,6 @@ import {
   ButtonToolbar,
   ButtonGroup,
   Button,
-  WithLayoutMeta,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
@@ -20,6 +19,7 @@ import { ConfigurationUsers } from "./ConfigurationUsers";
 import { ConfigurationRepositories } from "./ConfigurationRepositories";
 import { ConfigurationForm } from "./ConfigurationForm";
 import { ConfigurationAllUsers } from "./ConfigurationAllUsers";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const Configuration = observer(() => {
   const state = useLocalStore<ConfigurationState>(() => ({
@@ -123,19 +123,17 @@ export const Configuration = observer(() => {
   useOnLoad(state.load);
   useIsDirty(state, "config");
   useDelay(state, "usersQuery", "usersQueryDelay");
+  useLayoutConfig({
+    pageTitle: "Configuration",
+    breadcrumbs: [
+      {
+        name: "Configuration",
+      },
+    ],
+  });
 
   return (
     <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: "Configuration",
-          breadcrumbs: [
-            {
-              name: "Configuration",
-            },
-          ],
-        }}
-      />
       <Row className="mb-2">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-4 pb-2">

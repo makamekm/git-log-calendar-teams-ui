@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./tailwind.generated.css";
 import "./styles/main.scss";
 import "./index.css";
 import { App } from "./app";

@@ -18,7 +18,6 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
-  WithLayoutMeta,
   UncontrolledModal,
   ModalBody,
   UncontrolledModalClose,
@@ -29,6 +28,7 @@ import { useIsDirty, useOnLoad } from "~/hooks";
 import { ApplicationSettings } from "~/shared/Settings";
 import { generateDriveKeys } from "~/tools";
 import { Config } from "~/shared/Config";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 interface SettingsState {
   isDirty: boolean;
@@ -404,19 +404,17 @@ export const Settings = observer(() => {
 
   useOnLoad(state.load);
   useIsDirty(state, "settings");
+  useLayoutConfig({
+    pageTitle: "Settings",
+    breadcrumbs: [
+      {
+        name: "Settings",
+      },
+    ],
+  });
 
   return (
     <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: "Settings",
-          breadcrumbs: [
-            {
-              name: "Settings",
-            },
-          ],
-        }}
-      />
       <Row className="mb-2">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-4 pb-2">

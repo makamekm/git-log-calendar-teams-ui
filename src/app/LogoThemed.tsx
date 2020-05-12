@@ -2,15 +2,19 @@ import React from "react";
 
 export const LogoThemed = ({
   className,
-  ...otherProps
-}: React.DetailedHTMLProps<
-  React.ImgHTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
->) => (
-  <span className="align-self-center sidebar__brand">
+  titleClassName,
+  small,
+}: {
+  className?: string;
+  titleClassName?: string;
+  small?: string;
+}) => (
+  <span className={className}>
     <i className="fab fa-git fa-fw fa-lg"></i>
-    <sub>
-      <strong>STATS MANAGER</strong>
-    </sub>
+    {!small && (
+      <sub className={titleClassName}>
+        <strong>STATS MANAGER</strong>
+      </sub>
+    )}
   </span>
 );

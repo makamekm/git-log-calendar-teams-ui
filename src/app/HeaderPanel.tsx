@@ -15,7 +15,7 @@ const HeaderPanel = (props: {
         {props.icon ? (
           <i className={`fa fa-${props.icon} fa-3x ${props.iconClassName}`}></i>
         ) : (
-          <LogoThemed height="30" />
+          <LogoThemed />
         )}
       </Link>
     </div>

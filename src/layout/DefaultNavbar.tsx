@@ -1,13 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import {
-  SidebarTrigger,
-  Navbar,
-  Nav,
-  NavItem,
-  LayoutContext,
-} from "~/components";
+import { Navbar, Nav, NavItem } from "~/components";
 import { LogoThemed } from "~/app/LogoThemed";
 // import { NavbarActivityFeed } from "./NavbarActivityFeed";
 // import { NavbarMessages } from "./NavbarMessages";
@@ -15,20 +9,16 @@ import { NavbarUser } from "./NavbarUser";
 import { NavbarPrint } from "./NavbarPrint";
 import { SearchBar } from "~/app/SearchBar/SearchBar";
 import { NavbarCollect } from "./NavbarCollect";
+import { LayoutService } from "~/components/Layout/LayoutService";
 
 export const DefaultNavbar = () => {
-  const context = React.useContext(LayoutContext);
+  const context = React.useContext(LayoutService);
   return (
     <Navbar light expand="xs" fluid>
       <Nav navbar className="text-nowrap" style={{ flexWrap: "unset" }}>
-        {!context.sidebarHidden && (
-          <NavItem className="mr-3">
-            <SidebarTrigger />
-          </NavItem>
-        )}
         <NavItem
           className={classNames("navbar-brand", {
-            "d-lg-none": !context.sidebarHidden,
+            "d-lg-none": true,
           })}
         >
           <Link to="/" className="nav-logo">

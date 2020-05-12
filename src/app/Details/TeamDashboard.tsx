@@ -3,15 +3,7 @@ import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
 
-import {
-  Container,
-  Row,
-  Col,
-  WithLayoutMeta,
-  Card,
-  CardBody,
-  CardTitle,
-} from "~/components";
+import { Container, Row, Col, Card, CardBody, CardTitle } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { DashboardService } from "../DashboardService";
 import { useParams } from "react-router";
@@ -27,6 +19,7 @@ import { HeaderSection } from "../HeaderSection";
 import { LatestMessages } from "./LastMessages";
 import { BarActivities } from "../Dashboard/BarActivities";
 import { LineActivities } from "../Dashboard/LineActivities";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const TeamDashboard = observer(() => {
   const { teamName } = useParams();
@@ -37,26 +30,24 @@ export const TeamDashboard = observer(() => {
     state.load();
   }, [state, teamName]);
   useOnLoad(onLoad);
+  useLayoutConfig({
+    pageTitle: `${teamName} #team`,
+    breadcrumbs: [
+      {
+        name: "Dashboard",
+        url: "/dashboard",
+      },
+      {
+        name: "Team",
+      },
+      {
+        name: `${teamName}`,
+      },
+    ],
+  });
 
   return (
     <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: `${teamName} #team`,
-          breadcrumbs: [
-            {
-              name: "Dashboard",
-              url: "/dashboard",
-            },
-            {
-              name: "Team",
-            },
-            {
-              name: `${teamName}`,
-            },
-          ],
-        }}
-      />
       <Row className="mb-5">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-3">

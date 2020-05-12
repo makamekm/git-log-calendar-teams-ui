@@ -13,11 +13,11 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  WithLayoutMeta,
 } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useOnChange, useOnLoad } from "~/hooks";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 const matchLogReg = /\[(\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d\d\d)\] \[(\w*)\] ([\d\w\W]*)/m;
 
@@ -106,19 +106,17 @@ export const LogsScreen = observer(() => {
 
   useOnLoad(state.load);
   useOnChange(state, "search", state.load, 500);
+  useLayoutConfig({
+    pageTitle: "Logs",
+    breadcrumbs: [
+      {
+        name: "Logs",
+      },
+    ],
+  });
 
   return (
     <>
-      <WithLayoutMeta
-        meta={{
-          pageTitle: "Logs",
-          breadcrumbs: [
-            {
-              name: "Logs",
-            },
-          ],
-        }}
-      />
       <Row className="mb-2">
         <Col lg={12}>
           <div className="d-flex flex-wrap mb-4 pb-2">
