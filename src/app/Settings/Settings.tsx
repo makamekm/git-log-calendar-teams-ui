@@ -270,7 +270,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
               Remount Drive & Reload All
             </div>
-            <div className="flex-1 mt-3 flex flex-col md:flex-row">
+            <div className="flex-1 mt-3 -mx-3 flex flex-col md:flex-row">
               <button
                 className={classNames(
                   "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
