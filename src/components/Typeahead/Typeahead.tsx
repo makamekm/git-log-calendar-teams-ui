@@ -234,6 +234,83 @@ export const Typeahead: React.FC<{
         transform: "scale(0.9)",
       },
     });
+    const optionsStrTransitions = useTransition(optionsStr, (item) => item, {
+      config: (item) =>
+        !optionsStr.includes(item)
+          ? { duration: 0 }
+          : {
+              duration: 100,
+            },
+      from: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+      enter: {
+        opacity: 1,
+        transform: "scale(1)",
+      },
+      leave: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+    });
+    const optionsGroupsReduced = optionsGroups.reduce((arr, group) => {
+      arr.push({
+        key: "_g_" + group.label,
+        label: group,
+      });
+      group.values.forEach((item) => {
+        arr.push({
+          key: "_g_" + group.label + "__" + item,
+          value: item,
+        });
+      });
+      return arr;
+    }, []);
+    const optionsGroupTransitions = useTransition(
+      optionsGroupsReduced,
+      (item) => item.key,
+      {
+        config: (item) =>
+          !optionsGroupsReduced.includes(item)
+            ? { duration: 0 }
+            : {
+                duration: 100,
+              },
+        from: {
+          opacity: 0,
+          transform: "scale(0.9)",
+        },
+        enter: {
+          opacity: 1,
+          transform: "scale(1)",
+        },
+        leave: {
+          opacity: 0,
+          transform: "scale(0.9)",
+        },
+      }
+    );
+    const hasNewTransitions = useTransition(hasNew, null, {
+      config: () =>
+        !hasNew
+          ? { duration: 0 }
+          : {
+              duration: 100,
+            },
+      from: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+      enter: {
+        opacity: 1,
+        transform: "scale(1)",
+      },
+      leave: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+    });
     let index = -1;
     return (
       <div
@@ -251,7 +328,7 @@ export const Typeahead: React.FC<{
             {selectedTransitions.map(({ item, props, key }) => (
               <animated.div
                 style={props}
-                key={item}
+                key={key}
                 className="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-gray-700 bg-gray-100 border border-gray-300"
               >
                 <div className="px-1 text-xs font-normal leading-none max-w-full flex-initial">
@@ -388,45 +465,53 @@ export const Typeahead: React.FC<{
               <animated.div key={key} style={props}>
                 <div className="no-print shadow left-0 right-0 w-full my-1 origin-top-right bg-white w-full min-w-64 rounded overflow-y-auto">
                   <div className="flex flex-col w-full">
-                    {hasNew && (
-                      <button
-                        onClick={() => {
-                          const item = state.query;
-                          if (hasNew) {
-                            onChange(multiple ? [...selected, item] : [item]);
-                            state.query = "";
-                          }
-                          autoFocus &&
-                            refInput.current &&
-                            refInput.current.focus();
-                        }}
-                        onBlur={tryToCloseTimeout}
-                        className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
-                      >
-                        <div
-                          className={classNames(
-                            "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-teal-300",
-                            {
-                              "border-gray-100 bg-gray-100": isHighlitedByEnter(),
-                            }
-                          )}
-                        >
-                          <div className="w-full items-center flex">
-                            <div className="mx-2 leading-6">
-                              Add New:{" "}
-                              <span className="font-semibold">
-                                {state.query}
-                              </span>
+                    {hasNewTransitions.map(
+                      ({ item, key, props }) =>
+                        item && (
+                          <animated.button
+                            key={key}
+                            style={props}
+                            onClick={() => {
+                              const item = state.query;
+                              if (hasNew) {
+                                onChange(
+                                  multiple ? [...selected, item] : [item]
+                                );
+                                state.query = "";
+                              }
+                              autoFocus &&
+                                refInput.current &&
+                                refInput.current.focus();
+                            }}
+                            onBlur={tryToCloseTimeout}
+                            className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                          >
+                            <div
+                              className={classNames(
+                                "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-teal-300",
+                                {
+                                  "border-gray-100 bg-gray-100": isHighlitedByEnter(),
+                                }
+                              )}
+                            >
+                              <div className="w-full items-center flex">
+                                <div className="mx-2 leading-6">
+                                  Add New:{" "}
+                                  <span className="font-semibold">
+                                    {state.query}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </button>
+                          </animated.button>
+                        )
                     )}
-                    {optionsStr.map((item) => {
+                    {optionsStrTransitions.map(({ item, key, props }) => {
                       index++;
                       return (
-                        <button
-                          key={item}
+                        <animated.button
+                          style={props}
+                          key={key}
                           onClick={() => {
                             const index = selected.findIndex((s) => item === s);
                             if (index >= 0) {
@@ -466,58 +551,73 @@ export const Typeahead: React.FC<{
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </animated.button>
                       );
                     })}
-                    {optionsGroups.map((group) => (
-                      <React.Fragment key={group.label}>
-                        <div className="flex w-full items-center justify-left text-xs py-1 px-3 border-transparent border-l-4 text-gray-600 rounded-t border-b">
-                          {group.label}
-                        </div>
-                        {group.values.map((item) => {
-                          index++;
-                          return (
-                            <button
-                              key={item}
-                              onClick={() => {
-                                const index = selected.findIndex(
-                                  (s) => item === s
+                    {optionsGroupTransitions.map(({ item, key, props }) => {
+                      if (item.label) {
+                        return (
+                          <animated.div
+                            style={props}
+                            key={key}
+                            className="flex w-full items-center justify-left text-xs py-1 px-3 border-transparent border-l-4 text-gray-600 rounded-t border-b"
+                          >
+                            {item.label}
+                          </animated.div>
+                        );
+                      } else {
+                        index++;
+                        return (
+                          <animated.button
+                            style={props}
+                            key={key}
+                            onClick={() => {
+                              const index = selected.findIndex(
+                                (s) => item === s
+                              );
+                              if (index >= 0) {
+                                onChange(selected.filter((s) => s !== item));
+                              } else {
+                                onChange(
+                                  multiple ? [...selected, item] : [item]
                                 );
-                                if (index >= 0) {
-                                  onChange(selected.filter((s) => s !== item));
-                                } else {
-                                  onChange(multiple ? [...selected, item] : []);
+                              }
+                              state.query = "";
+                              autoFocus &&
+                                refInput.current &&
+                                refInput.current.focus();
+                            }}
+                            onBlur={tryToCloseTimeout}
+                            className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                          >
+                            <div
+                              className={classNames(
+                                "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-teal-300",
+                                {
+                                  "border-gray-100 bg-gray-100": isHighlitedByEnter(
+                                    index
+                                  ),
+                                  "border-teal-300": !!selected.find(
+                                    (s) => item === s
+                                  ),
                                 }
-                                state.query = "";
-                                autoFocus &&
-                                  refInput.current &&
-                                  refInput.current.focus();
-                              }}
-                              onBlur={tryToCloseTimeout}
-                              className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                              )}
                             >
-                              <div
-                                className={classNames(
-                                  "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-teal-300",
-                                  {
-                                    "border-gray-100 bg-gray-100": isHighlitedByEnter(
-                                      index
-                                    ),
-                                    "border-teal-300": !!selected.find(
-                                      (s) => item === s
-                                    ),
-                                  }
-                                )}
-                              >
-                                <div className="w-full items-center flex">
-                                  <div className="mx-2 leading-6">{item}</div>
+                              <div className="w-full items-center flex">
+                                <div className="mx-2 leading-6">
+                                  <Highlighter
+                                    highlightClassName="font-semibold bg-transparent p-0"
+                                    searchWords={state.queryArr}
+                                    autoEscape
+                                    textToHighlight={item}
+                                  />
                                 </div>
                               </div>
-                            </button>
-                          );
-                        })}
-                      </React.Fragment>
-                    ))}
+                            </div>
+                          </animated.button>
+                        );
+                      }
+                    })}
                   </div>
                 </div>
               </animated.div>
