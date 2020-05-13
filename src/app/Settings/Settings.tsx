@@ -4,7 +4,6 @@ import { toJS } from "mobx";
 import Toggle from "react-toggle";
 import { useLocalStore, observer } from "mobx-react";
 import { List } from "react-content-loader";
-import { Typeahead } from "react-bootstrap-typeahead";
 
 import {
   UncontrolledModal,
@@ -20,6 +19,7 @@ import { Config } from "~/shared/Config";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
 import { Accordion } from "~/components/Accordion/Accordion";
 import { AccordionToggle } from "~/components/Accordion/AccordionToggle";
+import { Typeahead } from "~/components/Typeahead/Typeahead";
 
 interface SettingsState {
   isDirty: boolean;
@@ -163,21 +163,17 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
                 <Typeahead
-                  id="exclusions"
                   placeholder="Add repositories..."
+                  autoFocus
                   multiple
                   allowNew
                   selected={state.settings.collectingRepositoryNames || []}
                   onChange={(selected) => {
-                    selected = selected.map((s: any) =>
-                      typeof s === "string" ? s : s.label
-                    );
                     (state.settings.collectingRepositoryNames as any).replace(
                       selected
                     );
                   }}
                   options={state.repositories}
-                  positionFixed
                 />
               </div>
             </div>

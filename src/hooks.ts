@@ -181,3 +181,32 @@ export function useClickOutside(ref, fn) {
     };
   }, [ref, fn]);
 }
+
+export function useKeyPress(targetKey, down?, up?) {
+  const downHandler = React.useCallback(
+    (e) => {
+      if (e.key === targetKey) {
+        down && down(e);
+      }
+    },
+    [targetKey, down]
+  );
+
+  const upHandler = React.useCallback(
+    (e) => {
+      if (e.key === targetKey) {
+        up && up(e);
+      }
+    },
+    [targetKey, up]
+  );
+
+  React.useEffect(() => {
+    window.addEventListener("keydown", downHandler);
+    window.addEventListener("keyup", upHandler);
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+      window.removeEventListener("keyup", upHandler);
+    };
+  }, [downHandler, upHandler]);
+}

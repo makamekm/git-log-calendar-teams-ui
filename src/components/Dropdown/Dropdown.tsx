@@ -37,7 +37,7 @@ export const Dropdown: React.FC<{
   return (
     <div
       ref={ref}
-      className={classNames(className, "relative")}
+      className={classNames(className, "relative z-10")}
       onMouseLeave={tryToCloseTimeout}
     >
       <button
@@ -67,9 +67,9 @@ export const Dropdown: React.FC<{
         ({ item, key, props }) =>
           item && (
             <animated.div key={key} style={props}>
-              <div className="no-print absolute z-10 right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48 text-left">
+              <div className="no-print absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48 text-left">
                 <div
-                  className="flex flex-col w-full px-1 overflow-auto h-64 bg-white rounded-md shadow dark-mode:bg-gray-800 text-gray-600 dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
+                  className="flex flex-col w-full px-1 overflow-y-auto h-64 bg-white rounded-md shadow dark-mode:bg-gray-800 text-gray-600 dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
                   tabIndex={0}
                 >
                   <div className="flex flex-col -my-1 w-full py-1">
