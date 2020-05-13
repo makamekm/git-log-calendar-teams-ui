@@ -191,6 +191,43 @@ export const Typeahead: React.FC<{
         top: "100%",
       },
     });
+    const hasSelectionTransitions = useTransition(selected.length > 0, null, {
+      config: {
+        duration: 100,
+      },
+      from: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+      enter: {
+        opacity: 1,
+        transform: "scale(1)",
+      },
+      leave: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+    });
+    const selectedTransitions = useTransition(selected, (item) => item, {
+      config: (item) =>
+        !selected.includes(item)
+          ? { duration: 0 }
+          : {
+              duration: 100,
+            },
+      from: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+      enter: {
+        opacity: 1,
+        transform: "scale(1)",
+      },
+      leave: {
+        opacity: 0,
+        transform: "scale(0.9)",
+      },
+    });
     let index = -1;
     return (
       <div
@@ -200,66 +237,116 @@ export const Typeahead: React.FC<{
           "w-full flex flex-col items-center relative z-10"
         )}
       >
-        <div className="w-full flex items-stretch border border-gray-200 bg-white rounded shadow-sm">
+        <div
+          className="w-full flex items-stretch border border-gray-200 bg-white rounded shadow-sm"
+          style={{ minHeight: "2.5rem" }}
+        >
           <div className="flex flex-auto flex-wrap p-1">
-            {selected.map((item) => (
-              <div
+            {selectedTransitions.map(({ item, props, key }) => (
+              <animated.div
+                style={props}
                 key={item}
                 className="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-gray-700 bg-gray-100 border border-gray-300"
               >
                 <div className="px-1 text-xs font-normal leading-none max-w-full flex-initial">
                   {item}
                 </div>
-                <div className="-ml-2 flex flex-auto flex-row-reverse">
-                  <button
-                    onClick={() => {
-                      onChange(selected.filter((s) => s !== item));
-                      autoFocus && refInput.current && refInput.current.focus();
-                    }}
-                    onBlur={tryToCloseTimeout}
-                    className="hover:text-red-400 focus:text-red-400 outline-none focus:outline-none"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="100%"
-                      height="100%"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="feather feather-x cursor-pointer rounded-full w-4 h-4 ml-2"
+                {multiple && (
+                  <div className="-ml-2 flex flex-auto flex-row-reverse">
+                    <button
+                      onClick={() => {
+                        onChange(selected.filter((s) => s !== item));
+                        autoFocus &&
+                          refInput.current &&
+                          refInput.current.focus();
+                      }}
+                      onBlur={tryToCloseTimeout}
+                      className="hover:text-red-400 focus:text-red-400 outline-none focus:outline-none"
                     >
-                      <line x1="18" y1="6" x2="6" y2="18"></line>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                  </button>
-                </div>
-              </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        height="100%"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="feather feather-x cursor-pointer rounded-full w-4 h-4 ml-2"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </animated.div>
             ))}
             <div className="flex-1">
-              <input
-                ref={refInput}
-                onFocus={() => {
-                  state.isOpen = true;
-                  state.isInputFocused = true;
-                }}
-                onBlur={() => {
-                  state.isInputFocused = false;
-                  tryToCloseTimeout();
-                }}
-                value={state.query}
-                onChange={(e) => {
-                  state.query = e.currentTarget.value;
-                }}
-                onKeyDown={onEnterInput}
-                placeholder={placeholder}
-                className="no-print bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
-                style={{ minWidth: "100px" }}
-              />
+              {(multiple || selected.length === 0) && (
+                <input
+                  ref={refInput}
+                  onFocus={() => {
+                    state.isOpen = true;
+                    state.isInputFocused = true;
+                  }}
+                  onBlur={() => {
+                    state.isInputFocused = false;
+                    tryToCloseTimeout();
+                  }}
+                  value={state.query}
+                  onChange={(e) => {
+                    state.query = e.currentTarget.value;
+                  }}
+                  onKeyDown={onEnterInput}
+                  placeholder={placeholder}
+                  className="no-print bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
+                  style={{ minWidth: "100px" }}
+                />
+              )}
             </div>
           </div>
+
+          {hasSelectionTransitions.map(
+            ({ item, key, props }) =>
+              item && (
+                <animated.div
+                  key={key}
+                  style={props}
+                  className="flex flex-col items-stretch justify-center text-gray-600"
+                >
+                  <button
+                    onClick={() => {
+                      onChange([]);
+                    }}
+                    onBlur={tryToCloseTimeout}
+                    className="w-10 h-full border-l flex flex-col items-stretch justify-center border-gray-200 cursor-pointer outline-none hover:bg-red-100 focus:bg-red-100 hover:text-red-400 focus:text-red-400 focus:outline-none"
+                  >
+                    <div className="flex-1 h-full flex items-center justify-center transition-transform duration-200 transform rotate-0 hover:rotate-180">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        height="100%"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={classNames(
+                          "feather feather-chevron-up w-4 h-4"
+                        )}
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </div>
+                  </button>
+                </animated.div>
+              )
+          )}
+
           <button
             onClick={() => {
               state.isOpen = true;
@@ -300,7 +387,7 @@ export const Typeahead: React.FC<{
                         onClick={() => {
                           const item = state.query;
                           if (hasNew) {
-                            onChange([...selected, item]);
+                            onChange(multiple ? [...selected, item] : [item]);
                             state.query = "";
                           }
                           autoFocus &&
@@ -339,7 +426,7 @@ export const Typeahead: React.FC<{
                             if (index >= 0) {
                               onChange(selected.filter((s) => s !== item));
                             } else {
-                              onChange([...selected, item]);
+                              onChange(multiple ? [...selected, item] : [item]);
                             }
                             state.query = "";
                             autoFocus &&
@@ -393,7 +480,7 @@ export const Typeahead: React.FC<{
                                 if (index >= 0) {
                                   onChange(selected.filter((s) => s !== item));
                                 } else {
-                                  onChange([...selected, item]);
+                                  onChange(multiple ? [...selected, item] : []);
                                 }
                                 state.query = "";
                                 autoFocus &&
