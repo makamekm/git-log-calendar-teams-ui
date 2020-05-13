@@ -47,36 +47,35 @@ const TypeaheadMenu = (
 };
 
 export const SearchBar = observer(() => {
-  const [isFocus, setIsFocus] = React.useState(false);
   const service = React.useContext(SearchService);
   const history = useHistory();
   const ref = React.createRef<Typeahead<any>>();
   return (
-    <Nav
-      navbar
-      className={classNames("mr-4", {
-        "ml-4": isFocus,
-        "ml-auto": !isFocus,
+    <div
+      className={classNames("mr-2 ml-3", {
+        "flex-1": service.isFocus,
       })}
-      style={{ width: isFocus ? "100%" : undefined }}
+      style={{ width: service.isFocus ? "100%" : undefined }}
     >
-      <NavItem className="search-bar d-flex justify-content-start align-items-center no-print">
-        <i className="fa fa-search mr-2"></i>
+      <div className="search-bar flex justify-start items-center">
+        <div>
+          <i className="fa fa-search mr-2"></i>
+        </div>
         <Typeahead
           id="search-input"
           ref={ref}
           placeholder="Search..."
           renderMenu={TypeaheadMenu as any}
           selected={[]}
-          open={isFocus}
+          open={service.isFocus}
           labelKey="name"
           onKeyDown={service.reload}
           onBlur={() => {
-            setIsFocus(false);
+            service.isFocus = false;
           }}
           onFocus={() => {
             service.reload();
-            setIsFocus(true);
+            service.isFocus = true;
           }}
           onChange={([selected]) => {
             (ref.current as any).clear();
@@ -85,7 +84,7 @@ export const SearchBar = observer(() => {
           }}
           options={service.items}
         />
-      </NavItem>
-    </Nav>
+      </div>
+    </div>
   );
 });

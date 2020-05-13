@@ -23,6 +23,7 @@ export interface SearchState {
   config: Config;
   items: SearchItem[];
   isLoading: boolean;
+  isFocus: boolean;
   load: () => Promise<void>;
   reload: () => void;
 }
@@ -32,6 +33,7 @@ export const SearchService = createService<SearchState>(
     const state = useLocalStore<SearchState>(() => ({
       config: null,
       isLoading: false,
+      isFocus: false,
       get items() {
         const arr = [];
         if (state.config) {

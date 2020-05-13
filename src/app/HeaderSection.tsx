@@ -1,24 +1,30 @@
 import React from "react";
-import { Media } from "~/components";
+import classNames from "classnames";
 
-const HeaderSection = (props: {
+const HeaderSection = ({
+  no,
+  title,
+  subTitle,
+  children,
+  className,
+}: {
   no?: string | number;
   title?: string;
   subTitle?: any;
   children?: any;
   className?: string;
 }) => (
-  <Media className={`mb-3 ${props.className}`}>
-    <Media left top>
-      <h1 className="mr-3 display-4 text-muted">{props.no}.</h1>
-    </Media>
-    <Media body>
-      <h4 className="mt-1">{props.title}</h4>
-      {(props.children || props.subTitle) && (
-        <p>{props.children || props.subTitle}</p>
+  <div className={classNames("flex text-5xl font-light", className)}>
+    <div>
+      <div className="mr-3 display-4 text-muted">{no}.</div>
+    </div>
+    <div className="text-xl">
+      <h4 className="mt-1 text-gray-900">{title}</h4>
+      {(children || subTitle) && (
+        <div className="text-sm">{children || subTitle}</div>
       )}
-    </Media>
-  </Media>
+    </div>
+  </div>
 );
 
 HeaderSection.defaultProps = {

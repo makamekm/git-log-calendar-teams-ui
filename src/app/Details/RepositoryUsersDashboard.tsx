@@ -187,7 +187,7 @@ export const RepositoryUsersDashboard = observer(() => {
     }),
   }));
   return (
-    <Accordion className="mb-3 no-print">
+    <Accordion className="mt-3 no-print">
       <AccordionHeader className="h6 cursor-pointer">
         <div className="d-flex justify-content-center align-items-center">
           <div>Repository Users</div>

@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import { Media } from "~/components";
 import { TinyDonutChart } from "./TinyDonutChart";
 import { numberWithCommas } from "~/tools";
 
@@ -28,22 +27,22 @@ export const TopPanel = ({
         </span>
       </div>
       {data.length === 0 && (
-        <div className="d-flex align-items-center justify-content-center">
+        <div className="flex items-center justify-center">
           <code>
             {"<"} No Data {">"}
           </code>
         </div>
       )}
       {data.length > 0 && (
-        <Media>
-          <Media left className="mr-3">
+        <div className="flex">
+          <div className="mr-3">
             <TinyDonutChart
               colors={colors}
               data={data}
               colorShift={colorShift}
             />
-          </Media>
-          <Media body>
+          </div>
+          <div>
             {data.map((entry, index) => (
               <div key={index}>
                 <Link to={`/${type}/${entry.name}`} className="text-secondary">
@@ -59,8 +58,8 @@ export const TopPanel = ({
                 </Link>
               </div>
             ))}
-          </Media>
-        </Media>
+          </div>
+        </div>
       )}
     </div>
   ) : null;

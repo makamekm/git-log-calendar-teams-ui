@@ -132,6 +132,7 @@ export const TeamDashboard = observer(() => {
         no={"Overall"}
         title="All Stats"
         subTitle="Calendar Activity"
+        className="mb-3"
       />
 
       <Card className="no-print-break mb-3">
@@ -246,7 +247,6 @@ export const TeamDashboard = observer(() => {
           no={"Users"}
           title="Team Stats"
           subTitle="Calendar Activity"
-          className="mt-5"
         />
       )}
 
@@ -283,7 +283,7 @@ export const TeamDashboard = observer(() => {
           no={"Repositories"}
           title="Team Stats"
           subTitle="Calendar Activity"
-          className="mt-5"
+          className="mt-5 mb-3"
         />
       )}
 

@@ -1,22 +1,27 @@
 import React from "react";
+import classNames from "classnames";
 
-const HeaderMain = (props: {
+const HeaderMain = ({
+  subTitle,
+  title,
+  className,
+}: {
   title?: any;
   subTitle?: any;
   className?: string;
 }) => (
   <React.Fragment>
     {/* START H1 Header */}
-    <div className={` d-flex ${props.className}`}>
-      <h1 className="display-4 mr-3 mb-0 align-self-start">{props.title}</h1>
+    <div className={classNames("text-5xl font-light text-gray-900", className)}>
+      {title} {subTitle && <span className="text-xs">{subTitle}</span>}
     </div>
     {/* END H1 Header */}
   </React.Fragment>
 );
 
 HeaderMain.defaultProps = {
-  title: "Waiting for Data...",
-  subTitle: "Waiting for Data...",
+  title: "",
+  subTitle: "",
   className: "my-4",
 };
 

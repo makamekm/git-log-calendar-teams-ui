@@ -8,6 +8,8 @@ import { LogoThemed } from "./LogoThemed";
 import { NavbarCollect } from "./NavbarCollect";
 import { NavbarPrint } from "./NavbarPrint";
 import { NavbarUser } from "./NavbarUser";
+import { FooterText } from "./FooterText";
+import { SearchBar } from "./SearchBar/SearchBar";
 
 export const SidebarMenuItem = ({ to, title, icon }) => {
   const active = !!useRouteMatch({
@@ -17,10 +19,9 @@ export const SidebarMenuItem = ({ to, title, icon }) => {
   return (
     <Link
       className={classNames(
-        "flex py-2 mt-2 text-sm font-semibold text-gray-700 rounded-lg",
+        "flex py-2 mt-2 text-sm font-semibold text-gray-700 rounded-lg dark-mode:hover:bg-gray-600",
         {
-          "bg-gray-200 dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600": active,
-          "dark-mode:hover:bg-gray-600": !active,
+          "bg-gray-200 dark-mode:bg-gray-700": active,
           "px-4": !service.sidebarCollapsed,
           "px-3": service.sidebarCollapsed,
         },
@@ -80,7 +81,7 @@ const MenuItems = () => {
 const SideMenu: React.FC = observer(() => {
   const service = React.useContext(LayoutService);
   return (
-    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print">
+    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print border-right border-solid border-1 border-gray-300">
       <div
         onClick={() => {
           service.sidebarOpened = !service.sidebarOpened;
@@ -190,7 +191,8 @@ const TopMenu: React.FC = observer(() => {
             ))}
           </div>
         </div>
-        <nav className="flex flex-row items-center justify-end">
+        <nav className="flex-1 flex flex-row items-center justify-end">
+          <SearchBar />
           <NavbarCollect className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
           <NavbarPrint className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
           <NavbarUser className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
@@ -206,16 +208,14 @@ export const AppLayout: React.FC = observer(({ children }) => {
     <div className="min-h-screen">
       <div className="lg:flex">
         <SideMenu />
-        <div className="flex-1">
+        <div className="flex-1 flex flex-col min-h-screen">
           <TopMenu />
-          <div className="container">{children}</div>
+          <div className="container flex flex-col mx-auto px-4 flex-1">
+            {children}
+          </div>
           {service.footer && (
-            <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-3 pl-2 pr-2 no-print">
-              Designed & implemented by{" "}
-              <a className="link" href="https://github.com/makamekm">
-                github.com/makamekm
-              </a>{" "}
-              in 2020
+            <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-3 container mx-auto px-4 no-print">
+              <FooterText />
             </div>
           )}
         </div>

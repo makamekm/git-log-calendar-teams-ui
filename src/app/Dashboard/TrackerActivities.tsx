@@ -39,7 +39,7 @@ export const TrackerActivities = observer(() => {
           no="Users"
           title="#user"
           subTitle="Calendar Activity"
-          className="mt-5"
+          className="mt-5 mb-3"
         />
       )}
 
@@ -96,7 +96,7 @@ export const TrackerActivities = observer(() => {
           no="Teams"
           title="#team"
           subTitle="Calendar Activity"
-          className="mt-5"
+          className="mt-5 mb-3"
         />
       )}
 
@@ -153,7 +153,7 @@ export const TrackerActivities = observer(() => {
           no="Repositories"
           title="#repository"
           subTitle="Calendar Activity"
-          className="mt-5"
+          className="mt-5 mb-3"
         />
       )}
 
