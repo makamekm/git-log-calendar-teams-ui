@@ -126,26 +126,32 @@ export const Typeahead: React.FC<{
         }
       }
     });
+    let length = 0;
     const optionsStr: string[] = (options.filter(
       (s) =>
         typeof s === "string" &&
         ((!showSelected && !selected.includes(s)) || showSelected) &&
         s.toLowerCase().includes(state.query.toLowerCase())
     ) as any[]).slice(0, LIMIT);
+    length = optionsStr.length;
     const optionsGroups: {
       label: string;
       values: string[];
     }[] = (options.filter((s) => typeof s !== "string") as any[])
       .map((g) => {
-        g.values = g.values.filter(
+        let values = g.values.filter(
           (s) =>
             ((!showSelected && !selected.includes(s)) || showSelected) &&
             s.toLowerCase().includes(state.query.toLowerCase())
         );
-        return g;
+        values = values.slice(0, Math.max(0, length - values.length));
+        length += values.length;
+        return {
+          ...g,
+          values,
+        };
       })
-      .filter((g) => g.values.length > 0)
-      .slice(0, Math.max(0, LIMIT - options.length));
+      .filter((g) => g.values.length > 0);
     const hasNew = allowNew && !!state.query && !selected.includes(state.query);
     const isHighlitedByEnter = React.useCallback(
       (index?: number) => {
