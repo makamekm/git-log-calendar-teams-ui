@@ -167,3 +167,17 @@ export const useSyncLocalStorage = <T, K extends keyof T>(
     );
   }, [state, name, key, delay]);
 };
+
+export function useClickOutside(ref, fn) {
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        fn();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, fn]);
+}

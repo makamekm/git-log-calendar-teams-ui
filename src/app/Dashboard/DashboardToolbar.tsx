@@ -1,17 +1,10 @@
 import React from "react";
+import classNames from "classnames";
 import { observer } from "mobx-react";
 import moment from "moment";
-import {
-  ButtonToolbar,
-  ButtonGroup,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Input,
-} from "~/components";
 import { periods } from "./Periods";
 import { DashboardState } from "../DashboardService";
+import { Dropdown } from "~/components/Dropdown/Dropdown";
 
 const PeriodValues = observer(({ state }: { state: DashboardState }) => {
   return (
@@ -19,15 +12,21 @@ const PeriodValues = observer(({ state }: { state: DashboardState }) => {
       {Object.keys(periods).map((key: any) => {
         key = Number(key);
         return (
-          <DropdownItem
-            key={key}
-            active={state.limit === key}
-            onClick={() => {
+          <button
+            onClick={(e) => {
+              e.currentTarget.blur();
               state.limit = key;
             }}
+            key={key}
+            className={classNames(
+              "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline",
+              {
+                "bg-gray-200 text-gray-900": state.limit === key,
+              }
+            )}
           >
             {periods[key]}
-          </DropdownItem>
+          </button>
         );
       })}
     </>
@@ -40,51 +39,40 @@ export const DashboardToolbar = observer(
     const past = moment().subtract(state.limit, "days").format("YYYY/MM/DD");
 
     return (
-      <div className="d-flex flex-wrap justify-content-end ml-auto">
-        <div className="flex-column pr-4 mt-2 mb-2">
-          <Input
-            className="no-print mb-2"
+      <div className="flex flex-wrap justify-end ml-auto">
+        <div className="flex-column pr-4 mt-2 mb-2 text-right">
+          <input
+            className="no-print mb-2 shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
             placeholder="Activity Max Value"
             type="number"
             value={state.maxValue || ""}
-            style={{
-              width: "150px",
-              minWidth: "150px",
-            }}
             onChange={(e) => {
               state.maxValue = Number(e.currentTarget.value);
             }}
           />
-          <div className="small">
+          <div className="text-xs">
             Activity max value: <strong>{state.maxValue || "auto"}</strong>
           </div>
         </div>
-        <ButtonToolbar className="mt-2 mb-2">
-          <ButtonGroup
-            className="align-self-start mr-2 mt-0 mb-3"
-            style={{
-              minWidth: "150px",
-            }}
-          >
-            <UncontrolledButtonDropdown className="flex-column">
-              <DropdownToggle
-                color="link"
-                className="no-print text-right pl-0 text-decoration-none mb-2"
-              >
-                <i className="fa fa-calendar-o text-body mr-2"></i>
+        <div className="flex-column pr-4 mt-2 mb-2 text-right">
+          <Dropdown
+            className="mb-2"
+            title={
+              <>
+                <i className="far fa-calendar-alt mr-2"></i>
                 {periods[state.limit]}
-                <i className="fa fa-angle-down text-body ml-2" />
-              </DropdownToggle>
-              <div className="small">
-                {past} to {now}
-              </div>
-              <DropdownMenu>
-                <DropdownItem header>Select Period:</DropdownItem>
-                <PeriodValues state={state} />
-              </DropdownMenu>
-            </UncontrolledButtonDropdown>
-          </ButtonGroup>
-        </ButtonToolbar>
+              </>
+            }
+          >
+            <div className="block w-full my-1 px-4 py-1 text-left text-xs focus:outline-none text-left">
+              Select Period:
+            </div>
+            <PeriodValues state={state} />
+          </Dropdown>
+          <div className="text-xs">
+            {past} to {now}
+          </div>
+        </div>
       </div>
     );
   }
