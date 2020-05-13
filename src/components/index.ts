@@ -90,11 +90,6 @@ export {
 } from "reactstrap";
 // export * from "reactstrap";
 
-export * from "./Accordion/Accordion";
-export * from "./Accordion/AccordionBody";
-export * from "./Accordion/AccordionHeader";
-export * from "./Accordion/AccordionIndicator";
-
 export * from "./Avatar/Avatar";
 export * from "./Avatar/AvatarAddonBadge";
 export * from "./Avatar/AvatarAddonIcon";

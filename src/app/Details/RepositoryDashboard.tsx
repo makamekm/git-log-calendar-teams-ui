@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
 
-import { Card, CardBody, CardTitle } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { DashboardService } from "../DashboardService";
 import { useParams } from "react-router";
@@ -124,7 +123,7 @@ export const RepositoryDashboard = observer(() => {
         no={"Overall"}
         title="All Stats"
         subTitle="Calendar Activity"
-        className="mt-3"
+        className="my-5"
       />
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
@@ -217,6 +216,7 @@ export const RepositoryDashboard = observer(() => {
           no={"Teams"}
           title="Repository Stats"
           subTitle="Calendar Activity"
+          className="my-5"
         />
       )}
 
@@ -252,7 +252,7 @@ export const RepositoryDashboard = observer(() => {
           no={"Users"}
           title="Repository Stats"
           subTitle="Calendar Activity"
-          className="mt-5 mt-3"
+          className="my-5"
         />
       )}
 

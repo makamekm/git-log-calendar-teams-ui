@@ -10,13 +10,13 @@ import {
   CellMeasurer,
 } from "react-virtualized";
 
-import { Accordion, AccordionHeader, AccordionBody, Input } from "~/components";
 import { numberWithCommas } from "~/tools";
 import {
   RepositoryUserService,
   RepositoryUserState,
 } from "../RepositoryUserService";
 import { DashboardState } from "../DashboardService";
+import { Accordion } from "~/components/Accordion/Accordion";
 
 const UserKey = observer(
   ({
@@ -187,41 +187,37 @@ export const RepositoryUsersDashboard = observer(() => {
     }),
   }));
   return (
-    <Accordion className="mt-3 no-print">
-      <AccordionHeader className="h6 cursor-pointer">
-        <div className="d-flex justify-content-center align-items-center">
-          <div>Repository Users</div>
-          <div style={{ flex: 1 }}>
-            <Input
-              style={{ width: "150px" }}
-              placeholder="Search..."
-              bsSize="sm"
-              className="ml-auto align-self-end no-print"
-              onClick={(e) => e.stopPropagation()}
-              value={state.usersQuery}
-              onChange={onSearchChange}
-            />
-          </div>
+    <Accordion
+      className="mt-3 no-print"
+      title={
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center">Repository Users</div>
+          <input
+            placeholder="Search..."
+            className="no-print text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+            onClick={(e) => e.stopPropagation()}
+            value={state.usersQuery}
+            onChange={onSearchChange}
+          />
         </div>
-      </AccordionHeader>
-      <AccordionBody className="p-0">
-        {state.isLoading || !storage.cache ? (
-          <List className="m-4" height="200px" width="100%" />
-        ) : (
-          <div style={{ height: "450px" }}>
-            <AutoSizer>
-              {({ width, height }) => (
-                <UserTable
-                  width={width}
-                  height={height}
-                  state={state}
-                  cache={storage.cache}
-                />
-              )}
-            </AutoSizer>
-          </div>
-        )}
-      </AccordionBody>
+      }
+    >
+      {state.isLoading || !storage.cache ? (
+        <List className="m-4" height="200px" width="100%" />
+      ) : (
+        <div className="w-full" style={{ height: "450px" }}>
+          <AutoSizer>
+            {({ width, height }) => (
+              <UserTable
+                width={width}
+                height={height}
+                state={state}
+                cache={storage.cache}
+              />
+            )}
+          </AutoSizer>
+        </div>
+      )}
     </Accordion>
   );
 });

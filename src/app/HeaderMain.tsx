@@ -22,7 +22,7 @@ const HeaderMain = ({
 HeaderMain.defaultProps = {
   title: "",
   subTitle: "",
-  className: "my-4",
+  className: "",
 };
 
 export { HeaderMain };

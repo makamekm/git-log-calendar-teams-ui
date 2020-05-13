@@ -1,61 +1,66 @@
 import React from "react";
+import classNames from "classnames";
+import { useTransition, animated } from "react-spring";
+import { observer, useLocalStore } from "mobx-react";
 
-import { Card } from "./../Card/Card";
-
-import { AccordionProvider } from "./context";
-
-export class Accordion extends React.Component<{
-  initialOpen?: boolean;
-  onToggle?: (open: boolean) => void;
-  open?: boolean;
-  children?: any;
+export const Accordion: React.FC<{
   className?: string;
-}> {
-  state = {
-    isOpen: this.props.initialOpen,
-  };
-
-  constructor(props) {
-    super(props);
-
-    if (props.open !== "undefined" && props.onToggle === "undefined") {
-      // eslint-disable-next-line no-throw-literal
-      throw (
-        "Accordion: props.open has to be used combined with props.onToggle " +
-        "use props.initialOpen to create an uncontrolled Accordion."
-      );
-    }
-  }
-
-  toggleHandler() {
-    const { onToggle } = this.props;
-
-    if (!onToggle) {
-      this.setState({ isOpen: !this.state.isOpen });
-    } else {
-      onToggle(!this.props.open);
-    }
-  }
-
-  isOpen() {
-    return !this.props.onToggle ? this.state.isOpen : this.props.open;
-  }
-
-  render() {
-    /* eslint-disable-next-line no-unused-vars */
-    const { className, children, initialOpen, ...otherProps } = this.props;
-
-    return (
-      <AccordionProvider
-        value={{
-          onToggle: this.toggleHandler.bind(this),
-          isOpen: this.isOpen(),
-        }}
-      >
-        <Card className={className} {...otherProps}>
-          {children}
-        </Card>
-      </AccordionProvider>
-    );
-  }
-}
+  initialOpen?: boolean;
+  title?: any;
+}> = observer(({ children, className, initialOpen, title }) => {
+  const state = useLocalStore(() => ({
+    isOpen: initialOpen,
+  }));
+  const toggle = React.useCallback(() => {
+    state.isOpen = !state.isOpen;
+  }, [state]);
+  const transitions = useTransition(state.isOpen, null, {
+    config: {
+      duration: 100,
+    },
+    from: {
+      opacity: 0,
+    },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
+  return (
+    <div
+      className={classNames(
+        className,
+        "no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+      )}
+    >
+      <div className="flex items-center w-full font-semibold px-4 py-3 text-lg">
+        <button
+          onClick={toggle}
+          className="mr-2 flex items-center justify-center w-8 h-8 rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            className={classNames(
+              "inline w-4 h-4 transition-transform duration-200 transform",
+              { "rotate-180": state.isOpen, "rotate-0": !state.isOpen }
+            )}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            ></path>
+          </svg>
+        </button>
+        {title}
+      </div>
+      {transitions.map(
+        ({ item, key, props }) =>
+          item && (
+            <animated.div key={key} style={props}>
+              {children}
+            </animated.div>
+          )
+      )}
+    </div>
+  );
+});
