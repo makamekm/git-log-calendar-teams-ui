@@ -111,3 +111,12 @@
     height: auto !important; //OR PUT A HUGE AMOUNT WHERE YOUR LIST WILL ALWAYS FIT (9999999px)
   }
 }
+
+.backdrop {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.6);
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+}

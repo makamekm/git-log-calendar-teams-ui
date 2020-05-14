@@ -204,6 +204,7 @@ const TopMenu: React.FC = observer(() => {
 
 export const AppLayout: React.FC = observer(({ children }) => {
   const service = React.useContext(LayoutService);
+  const scrollable = service.scrollable && service.nonScrollableStack === 0;
   return (
     <div className="min-h-screen">
       <div className="lg:flex">
@@ -222,8 +223,8 @@ export const AppLayout: React.FC = observer(({ children }) => {
       </div>
       <style jsx>{`
         :global(body) {
-          max-height: ${service.scrollable ? "unset" : "100vh"};
-          overflow-y: ${service.scrollable ? "visible" : "hidden"};
+          max-height: ${scrollable ? "unset" : "100vh"};
+          overflow-y: ${scrollable ? "visible" : "hidden"};
         }
       `}</style>
     </div>

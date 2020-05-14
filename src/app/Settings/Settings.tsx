@@ -5,11 +5,6 @@ import Toggle from "react-toggle";
 import { useLocalStore, observer } from "mobx-react";
 import { List } from "react-content-loader";
 
-import {
-  UncontrolledModal,
-  ModalBody,
-  UncontrolledModalClose,
-} from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useOnLoad } from "~/hooks";
@@ -20,6 +15,7 @@ import { useLayoutConfig } from "~/components/Layout/LayoutService";
 import { Accordion } from "~/components/Accordion/Accordion";
 import { AccordionToggle } from "~/components/Accordion/AccordionToggle";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
+import { AlertModal } from "~/components/Modal/AlertModal";
 
 interface SettingsState {
   isDirty: boolean;
@@ -42,7 +38,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
       ) : (
         <div className="px-3 pb-3">
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">Public Key</div>
+            <div className="w-2/5 mx-2 mt-3 text-gray-800">Public Key</div>
             <div className="flex-1 mt-3 flex flex-col md:flex-row">
               <input
                 className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
@@ -56,7 +52,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">Secret Key</div>
+            <div className="w-2/5 mx-2 mt-3 text-gray-800">Secret Key</div>
             <div className="flex-1 mt-3 flex flex-col md:flex-row">
               <input
                 className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
@@ -69,7 +65,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+            <div className="w-2/5 mx-2 mt-3 text-gray-800">
               Regenerate Key Pair
             </div>
             <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -83,7 +79,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <AccordionToggle value={!!state.settings.secretKey}>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 Don't Collect Statistics
               </div>
               <div className="flex-1 mt-3">
@@ -98,7 +94,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </AccordionToggle>
           <AccordionToggle value={!state.settings.dontCollect}>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 Parallel Job Collecting Limit
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -117,7 +113,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 Local Collecting Interval (0 is from Configuration) [Minutes]
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -136,7 +132,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 Limit Repositories Per Try (0 is unlimited)
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -158,7 +154,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 Repositories to Collect (If empty then collect from all)
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -179,7 +175,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">Use Swarm</div>
+            <div className="w-2/5 mx-2 mt-3 text-gray-800">Use Swarm</div>
             <div className="flex-1 mt-3">
               <Toggle
                 checked={!!state.settings.useDriveSwarm}
@@ -190,7 +186,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">Use S3</div>
+            <div className="w-2/5 mx-2 mt-3 text-gray-800">Use S3</div>
             <div className="flex-1 mt-3">
               <Toggle
                 checked={!!state.settings.useDriveS3}
@@ -202,7 +198,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <AccordionToggle value={!!state.settings.useDriveS3}>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 S3 Access Key ID
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -218,7 +214,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 S3 Secret Access Key
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -234,7 +230,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">
                 S3 Bucket Name
               </div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
@@ -250,9 +246,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
-                S3 Drive Path
-              </div>
+              <div className="w-2/5 mx-2 mt-3 text-gray-800">S3 Drive Path</div>
               <div className="flex-1 mt-3 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
@@ -267,80 +261,52 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 h-6 mx-2 mt-3 text-gray-800">
+            <div className="w-2/5 mx-2 mt-3 text-gray-800">
               Remount Drive & Reload All
             </div>
-            <div className="flex-1 mt-3 -mx-3 flex flex-col md:flex-row">
-              <button
-                className={classNames(
-                  "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
-                  {
-                    "pointer-events-none opacity-50": state.isDirty,
-                  }
-                )}
-                disabled={state.isDirty}
-                id="remountDriveModal"
-                color="danger"
+            <div className="flex-1 mt-1 -mx-2 -mb-2 flex flex-row flex-wrap">
+              <AlertModal
+                accept={state.remount}
+                title="Remount Drive"
+                text="This operation is irreversible, please accept it."
               >
-                Remount Drive
-              </button>
-              <button
-                className={classNames(
-                  "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
-                  {
-                    "pointer-events-none opacity-50": state.isDirty,
-                  }
-                )}
-                disabled={state.isDirty}
-                id="emptyDriveModal"
-                color="danger"
-              >
-                Empty Drive
-              </button>
-              <UncontrolledModal
-                target="remountDriveModal"
-                className="modal-danger"
-              >
-                <ModalBody className="table-danger text-center px-5 py-5">
-                  <i className="fas fa-exclamation-triangle fa-4x modal-icon mb-4"></i>
-                  <h6>Remount Drive</h6>
-                  <p className="modal-text mb-5">
-                    This operation is irreversible, please accept it.
-                  </p>
-                  <UncontrolledModalClose
+                {({ open }) => (
+                  <button
+                    className={classNames(
+                      "text-base font-semibold py-2 px-3 m-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+                      {
+                        "pointer-events-none opacity-50": state.isDirty,
+                      }
+                    )}
+                    disabled={state.isDirty}
                     color="danger"
-                    className="mr-2"
-                    onClick={state.remount}
+                    onClick={open}
                   >
-                    OK, Process
-                  </UncontrolledModalClose>
-                  <UncontrolledModalClose color="link" className="text-danger">
-                    Cancel
-                  </UncontrolledModalClose>
-                </ModalBody>
-              </UncontrolledModal>
-              <UncontrolledModal
-                target="emptyDriveModal"
-                className="modal-danger"
+                    Remount Drive
+                  </button>
+                )}
+              </AlertModal>
+              <AlertModal
+                accept={state.empty}
+                title="Empty Drive"
+                text="This operation is irreversible, please accept it."
               >
-                <ModalBody className="table-danger text-center px-5 py-5">
-                  <i className="fas fa-exclamation-triangle fa-4x modal-icon mb-4"></i>
-                  <h6>Empty Drive</h6>
-                  <p className="modal-text mb-5">
-                    This operation is irreversible, please accept it.
-                  </p>
-                  <UncontrolledModalClose
+                {({ open }) => (
+                  <button
+                    className={classNames(
+                      "text-base font-semibold py-2 px-3 m-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+                      {
+                        "pointer-events-none opacity-50": state.isDirty,
+                      }
+                    )}
+                    disabled={state.isDirty}
                     color="danger"
-                    className="mr-2"
-                    onClick={state.empty}
+                    onClick={open}
                   >
-                    OK, Process
-                  </UncontrolledModalClose>
-                  <UncontrolledModalClose color="link" className="text-danger">
-                    Cancel
-                  </UncontrolledModalClose>
-                </ModalBody>
-              </UncontrolledModal>
+                    Empty Drive
+                  </button>
+                )}
+              </AlertModal>
             </div>
           </div>
         </div>
