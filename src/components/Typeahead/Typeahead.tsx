@@ -16,15 +16,25 @@ export const Typeahead: React.FC<{
   allowNew?: boolean;
   showSelected?: boolean;
   autoFocus?: boolean;
+  hideClear?: boolean;
+  hideCaret?: boolean;
   selected?: string[];
-  onChange?: (selected: string[]) => void;
+  onChange?: (
+    selected: string[],
+    group?: {
+      label: string;
+      values: string[];
+    } & any
+  ) => void;
   options: (
     | string
-    | {
+    | ({
         label: string;
         values: string[];
-      }
+      } & any)
   )[];
+  onOpen?: () => void;
+  onClose?: () => void;
 }> = observer(
   ({
     className,
@@ -37,6 +47,10 @@ export const Typeahead: React.FC<{
     allowNew,
     multiple,
     onChange,
+    hideClear,
+    hideCaret,
+    onOpen,
+    onClose,
   }) => {
     const ref = React.useRef<HTMLDivElement>(null);
     const refInput = React.useRef<HTMLInputElement>(null);
@@ -48,11 +62,18 @@ export const Typeahead: React.FC<{
         return state.query.split(/\W/gi);
       },
     }));
+    const open = React.useCallback(() => {
+      if (!state.isOpen) {
+        state.isOpen = true;
+        onOpen && onOpen();
+      }
+    }, [state, onOpen]);
     const tryToClose = React.useCallback(() => {
       if (ref.current && ref.current.querySelectorAll(":focus").length === 0) {
         state.isOpen = false;
+        onClose && onClose();
       }
-    }, [state, ref]);
+    }, [state, ref, onClose]);
     const tryToCloseTimeout = React.useCallback(() => {
       setTimeout(tryToClose, 100);
     }, [tryToClose]);
@@ -145,7 +166,7 @@ export const Typeahead: React.FC<{
             ((!showSelected && !selected.includes(s)) || showSelected) &&
             s.toLowerCase().includes(state.query.toLowerCase())
         );
-        values = values.slice(0, Math.max(0, length - values.length));
+        values = values.slice(0, Math.max(0, values.length - length));
         length += values.length;
         return {
           ...g,
@@ -258,16 +279,18 @@ export const Typeahead: React.FC<{
     const optionsGroupsReduced = optionsGroups.reduce((arr, group) => {
       arr.push({
         key: "_g_" + group.label,
-        label: group,
+        label: group.label,
       });
       group.values.forEach((item) => {
         arr.push({
           key: "_g_" + group.label + "__" + item,
           value: item,
+          group,
         });
       });
       return arr;
     }, []);
+
     const optionsGroupTransitions = useTransition(
       optionsGroupsReduced,
       (item) => item.key,
@@ -336,12 +359,6 @@ export const Typeahead: React.FC<{
                   >
                     <div className="px-1 text-xs font-normal leading-none flex-initial ellipsis">
                       {item}
-                      {item}
-                      {item}
-                      {item}
-                      {item}
-                      {item}
-                      {item}
                     </div>
                     {multiple && (
                       <div className="-ml-2 flex flex-auto flex-row-reverse">
@@ -380,7 +397,7 @@ export const Typeahead: React.FC<{
                     <input
                       ref={refInput}
                       onFocus={() => {
-                        state.isOpen = true;
+                        open();
                         state.isInputFocused = true;
                       }}
                       onBlur={() => {
@@ -402,73 +419,74 @@ export const Typeahead: React.FC<{
             )}
           </ReactResizeDetector>
 
-          {hasSelectionTransitions.map(
-            ({ item, key, props }) =>
-              item && (
-                <animated.div
-                  key={key}
-                  style={props}
-                  className="flex flex-col items-stretch justify-center text-gray-600"
-                >
-                  <button
-                    onClick={() => {
-                      onChange([]);
-                    }}
-                    onBlur={tryToCloseTimeout}
-                    style={{ minWidth: "40px" }}
-                    className="h-full border-l flex flex-col items-stretch justify-center border-gray-200 cursor-pointer outline-none hover:bg-red-100 focus:bg-red-100 hover:text-red-400 focus:text-red-400 focus:outline-none"
+          {!hideClear &&
+            hasSelectionTransitions.map(
+              ({ item, key, props }) =>
+                item && (
+                  <animated.div
+                    key={key}
+                    style={props}
+                    className="flex flex-col items-stretch justify-center text-gray-600"
                   >
-                    <div className="flex-1 h-full flex items-center justify-center transition-transform duration-200 transform rotate-0 hover:rotate-180">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="100%"
-                        height="100%"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={classNames(
-                          "feather feather-chevron-up w-4 h-4"
-                        )}
-                      >
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                    </div>
-                  </button>
-                </animated.div>
-              )
+                    <button
+                      onClick={() => {
+                        onChange([]);
+                      }}
+                      onBlur={tryToCloseTimeout}
+                      style={{ minWidth: "40px" }}
+                      className="h-full border-l flex flex-col items-stretch justify-center border-gray-200 cursor-pointer outline-none hover:bg-red-100 focus:bg-red-100 hover:text-red-400 focus:text-red-400 focus:outline-none"
+                    >
+                      <div className="flex-1 h-full flex items-center justify-center transition-transform duration-200 transform rotate-0 hover:rotate-180">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="100%"
+                          height="100%"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={classNames(
+                            "feather feather-chevron-up w-4 h-4"
+                          )}
+                        >
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                      </div>
+                    </button>
+                  </animated.div>
+                )
+            )}
+          {!hideCaret && (
+            <button
+              onClick={open}
+              onBlur={tryToCloseTimeout}
+              style={{ minWidth: "40px" }}
+              className="text-gray-300 border-l flex items-center justify-center border-gray-200 cursor-pointer text-gray-600 outline-none hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="100%"
+                  height="100%"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={classNames(
+                    "feather feather-chevron-up w-4 h-4 transition-transform duration-200 transform",
+                    { "rotate-180": isOpen, "rotate-0": !isOpen }
+                  )}
+                >
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+              </div>
+            </button>
           )}
-          <button
-            onClick={() => {
-              state.isOpen = true;
-            }}
-            onBlur={tryToCloseTimeout}
-            style={{ minWidth: "40px" }}
-            className="text-gray-300 border-l flex items-center justify-center border-gray-200 cursor-pointer text-gray-600 outline-none hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
-          >
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="100%"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={classNames(
-                  "feather feather-chevron-up w-4 h-4 transition-transform duration-200 transform",
-                  { "rotate-180": isOpen, "rotate-0": !isOpen }
-                )}
-              >
-                <polyline points="18 15 12 9 6 15"></polyline>
-              </svg>
-            </div>
-          </button>
         </div>
 
         {transitions.map(
@@ -491,9 +509,12 @@ export const Typeahead: React.FC<{
                                 );
                                 state.query = "";
                               }
-                              autoFocus &&
-                                refInput.current &&
-                                refInput.current.focus();
+                              autoFocus
+                                ? refInput.current && refInput.current.focus()
+                                : document.activeElement &&
+                                  (document.activeElement as HTMLElement)
+                                    .blur &&
+                                  (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
                             className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
@@ -532,9 +553,11 @@ export const Typeahead: React.FC<{
                               onChange(multiple ? [...selected, item] : [item]);
                             }
                             state.query = "";
-                            autoFocus &&
-                              refInput.current &&
-                              refInput.current.focus();
+                            autoFocus
+                              ? refInput.current && refInput.current.focus()
+                              : document.activeElement &&
+                                (document.activeElement as HTMLElement).blur &&
+                                (document.activeElement as HTMLElement).blur();
                           }}
                           onBlur={tryToCloseTimeout}
                           className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
@@ -572,7 +595,7 @@ export const Typeahead: React.FC<{
                           <animated.div
                             style={props}
                             key={key}
-                            className="flex w-full items-center justify-left text-xs py-1 px-3 border-transparent border-l-4 text-gray-600 rounded-t border-b"
+                            className="flex w-full font-semibold items-center justify-left text-xs py-1 px-3 border-transparent border-l-4 text-gray-600 rounded-t border-b"
                           >
                             {item.label}
                           </animated.div>
@@ -585,19 +608,28 @@ export const Typeahead: React.FC<{
                             key={key}
                             onClick={() => {
                               const index = selected.findIndex(
-                                (s) => item === s
+                                (s) => item.value === s
                               );
                               if (index >= 0) {
-                                onChange(selected.filter((s) => s !== item));
+                                onChange(
+                                  selected.filter((s) => s !== item.value),
+                                  item.group
+                                );
                               } else {
                                 onChange(
-                                  multiple ? [...selected, item] : [item]
+                                  multiple
+                                    ? [...selected, item.value]
+                                    : [item.value],
+                                  item.group
                                 );
                               }
                               state.query = "";
-                              autoFocus &&
-                                refInput.current &&
-                                refInput.current.focus();
+                              autoFocus
+                                ? refInput.current && refInput.current.focus()
+                                : document.activeElement &&
+                                  (document.activeElement as HTMLElement)
+                                    .blur &&
+                                  (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
                             className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
@@ -610,7 +642,7 @@ export const Typeahead: React.FC<{
                                     index
                                   ),
                                   "border-teal-300": !!selected.find(
-                                    (s) => item === s
+                                    (s) => item.value === s
                                   ),
                                 }
                               )}
@@ -621,7 +653,7 @@ export const Typeahead: React.FC<{
                                     highlightClassName="font-semibold bg-transparent p-0"
                                     searchWords={state.queryArr}
                                     autoEscape
-                                    textToHighlight={item}
+                                    textToHighlight={item.value}
                                   />
                                 </div>
                               </div>

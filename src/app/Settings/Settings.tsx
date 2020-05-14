@@ -379,9 +379,9 @@ export const Settings = observer(() => {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between mb-4 pb-4">
+      <div className="flex flex-wrap items-center justify-between mb-4 md:pb-4">
         <HeaderMain title="Settings" />
-        <div className="ml-auto">
+        <div className="ml-auto my-3">
           <button
             className={classNames(
               "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
