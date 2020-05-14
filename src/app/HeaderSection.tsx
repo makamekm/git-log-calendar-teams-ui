@@ -14,16 +14,20 @@ const HeaderSection = ({
   children?: any;
   className?: string;
 }) => (
-  <div className={classNames("flex text-5xl font-light", className)}>
+  <div
+    className={classNames("flex items-center text-5xl font-light", className)}
+  >
     <div>
       <div className="mr-3 display-4 text-muted">{no}.</div>
     </div>
-    <div className="text-xl">
-      <h4 className="mt-1 text-gray-900">{title}</h4>
-      {(children || subTitle) && (
-        <div className="text-sm">{children || subTitle}</div>
-      )}
-    </div>
+    {(title || children || subTitle) && (
+      <div className="text-xl">
+        <h4 className="mt-1 text-gray-900">{title}</h4>
+        {(children || subTitle) && (
+          <div className="text-sm">{children || subTitle}</div>
+        )}
+      </div>
+    )}
   </div>
 );
 

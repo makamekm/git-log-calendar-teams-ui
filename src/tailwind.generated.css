@@ -13226,6 +13226,46 @@ video {
   box-shadow: none;
 }
 
+.focus-within\:shadow-xs:focus-within {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.focus-within\:shadow-sm:focus-within {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.focus-within\:shadow:focus-within {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.focus-within\:shadow-md:focus-within {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.focus-within\:shadow-lg:focus-within {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.focus-within\:shadow-xl:focus-within {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.focus-within\:shadow-2xl:focus-within {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.focus-within\:shadow-inner:focus-within {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.focus-within\:shadow-outline:focus-within {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.focus-within\:shadow-none:focus-within {
+  box-shadow: none;
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -30484,6 +30524,46 @@ video {
   }
 
   .sm\:focus\:shadow-none:focus {
+    box-shadow: none;
+  }
+
+  .sm\:focus-within\:shadow-xs:focus-within {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .sm\:focus-within\:shadow-sm:focus-within {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .sm\:focus-within\:shadow:focus-within {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .sm\:focus-within\:shadow-md:focus-within {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .sm\:focus-within\:shadow-lg:focus-within {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .sm\:focus-within\:shadow-xl:focus-within {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .sm\:focus-within\:shadow-2xl:focus-within {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .sm\:focus-within\:shadow-inner:focus-within {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .sm\:focus-within\:shadow-outline:focus-within {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+
+  .sm\:focus-within\:shadow-none:focus-within {
     box-shadow: none;
   }
 
@@ -47749,6 +47829,46 @@ video {
     box-shadow: none;
   }
 
+  .md\:focus-within\:shadow-xs:focus-within {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .md\:focus-within\:shadow-sm:focus-within {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .md\:focus-within\:shadow:focus-within {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .md\:focus-within\:shadow-md:focus-within {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .md\:focus-within\:shadow-lg:focus-within {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .md\:focus-within\:shadow-xl:focus-within {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .md\:focus-within\:shadow-2xl:focus-within {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .md\:focus-within\:shadow-inner:focus-within {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .md\:focus-within\:shadow-outline:focus-within {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+
+  .md\:focus-within\:shadow-none:focus-within {
+    box-shadow: none;
+  }
+
   .md\:fill-current {
     fill: currentColor;
   }
@@ -65011,6 +65131,46 @@ video {
     box-shadow: none;
   }
 
+  .lg\:focus-within\:shadow-xs:focus-within {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .lg\:focus-within\:shadow-sm:focus-within {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .lg\:focus-within\:shadow:focus-within {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .lg\:focus-within\:shadow-md:focus-within {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .lg\:focus-within\:shadow-lg:focus-within {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .lg\:focus-within\:shadow-xl:focus-within {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .lg\:focus-within\:shadow-2xl:focus-within {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .lg\:focus-within\:shadow-inner:focus-within {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .lg\:focus-within\:shadow-outline:focus-within {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+
+  .lg\:focus-within\:shadow-none:focus-within {
+    box-shadow: none;
+  }
+
   .lg\:fill-current {
     fill: currentColor;
   }
@@ -82270,6 +82430,46 @@ video {
   }
 
   .xl\:focus\:shadow-none:focus {
+    box-shadow: none;
+  }
+
+  .xl\:focus-within\:shadow-xs:focus-within {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .xl\:focus-within\:shadow-sm:focus-within {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .xl\:focus-within\:shadow:focus-within {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .xl\:focus-within\:shadow-md:focus-within {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .xl\:focus-within\:shadow-lg:focus-within {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .xl\:focus-within\:shadow-xl:focus-within {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .xl\:focus-within\:shadow-2xl:focus-within {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .xl\:focus-within\:shadow-inner:focus-within {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .xl\:focus-within\:shadow-outline:focus-within {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+
+  .xl\:focus-within\:shadow-none:focus-within {
     box-shadow: none;
   }
 

@@ -42,11 +42,14 @@ export const TrackerActivities = observer(() => {
         >
           <div className="flex items-center justify-between text-base w-full px-4 py-3">
             <Link to={`/user/${name}`}>
-              <i className="fa fa-link mr-1"></i>
+              <i className="fa fa-link no-print mr-1"></i>
               <strong>{name}</strong>
               <span className="small ml-1 text-muted">#user</span>
             </Link>
-            <Dropdown title={<i className="fas fa-cog"></i>}>
+            <Dropdown
+              className="no-print"
+              title={<i className="fas fa-cog"></i>}
+            >
               <button
                 className={
                   "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -91,11 +94,14 @@ export const TrackerActivities = observer(() => {
         >
           <div className="flex items-center justify-between text-base w-full px-4 py-3">
             <Link to={`/team/${name}`}>
-              <i className="fa fa-link mr-1"></i>
+              <i className="fa fa-link no-print mr-1"></i>
               <strong>{name}</strong>
               <span className="small ml-1 text-muted">#team</span>
             </Link>
-            <Dropdown title={<i className="fas fa-cog"></i>}>
+            <Dropdown
+              className="no-print"
+              title={<i className="fas fa-cog"></i>}
+            >
               <button
                 className={
                   "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -140,11 +146,14 @@ export const TrackerActivities = observer(() => {
         >
           <div className="flex items-center justify-between text-base w-full px-4 py-3">
             <Link to={`/repository/${name}`}>
-              <i className="fa fa-link mr-1"></i>
+              <i className="fa fa-link no-print mr-1"></i>
               <strong>{name}</strong>
               <span className="small ml-1 text-muted">#repository</span>
             </Link>
-            <Dropdown title={<i className="fas fa-cog"></i>}>
+            <Dropdown
+              className="no-print"
+              title={<i className="fas fa-cog"></i>}
+            >
               <button
                 className={
                   "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"

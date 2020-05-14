@@ -40,7 +40,7 @@ export const DashboardToolbar = observer(
 
     return (
       <div className="flex flex-wrap justify-end ml-auto">
-        <div className="flex-column pr-4 mt-2 mb-2 text-right">
+        <div className="flex flex-col justify-end pr-4 mt-2 mb-2 text-right">
           <input
             className="no-print mb-2 shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
             placeholder="Activity Max Value"
@@ -54,7 +54,7 @@ export const DashboardToolbar = observer(
             Activity max value: <strong>{state.maxValue || "auto"}</strong>
           </div>
         </div>
-        <div className="flex-column pr-4 mt-2 mb-2 text-right">
+        <div className="flex flex-col justify-end pr-4 mt-2 mb-2 text-right">
           <Dropdown
             className="mb-2"
             title={

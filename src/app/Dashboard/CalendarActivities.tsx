@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import moment from "moment";
 import { ResponsiveCalendar } from "@nivo/calendar";
 
@@ -23,48 +24,38 @@ export const CalendarActivities = ({
   const years = moment().year() - moment().subtract(limit, "days").year() + 1;
   return (
     <div
-      className={className}
+      className={classNames("calendar-activities mx-auto", className)}
       style={{
-        position: "relative",
+        maxWidth: "1000px",
         height: `${height * years}px`,
         maxHeight: `${height * years}px`,
-        overflow: "hidden",
-        width: "100%",
+        minHeight: `${height * years}px`,
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          bottom: 0,
-          right: 0,
-        }}
-      >
-        <ResponsiveCalendar
-          data={data}
-          from={past}
-          to={now}
-          maxValue={maxValue || "auto"}
-          minValue={0}
-          emptyColor="#fff0f0"
-          monthBorderWidth={5}
-          monthBorderColor="#ddd"
-          dayBorderColor="#ddd"
-          colors={[
-            "#e6ffe6",
-            "#99ff99",
-            "#66ff66",
-            "#33ff33",
-            "#00ff00",
-            "#00cc00",
-            "#009900",
-          ]}
-          margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
-          yearSpacing={40}
-          dayBorderWidth={2}
-        />
-      </div>
+      <ResponsiveCalendar
+        data={data}
+        from={past}
+        to={now}
+        maxValue={maxValue || "auto"}
+        minValue={0}
+        emptyColor="#f0eeee"
+        monthBorderWidth={5}
+        monthBorderColor="#fff"
+        dayBorderColor="#fff"
+        colors={[
+          "rgba(0, 153, 0, 0.3)",
+          "rgba(0, 153, 0, 0.4)",
+          "rgba(0, 153, 0, 0.5)",
+          "rgba(0, 153, 0, 0.6)",
+          "rgba(0, 153, 0, 0.7)",
+          "rgba(0, 153, 0, 0.8)",
+          "rgba(0, 153, 0, 0.9)",
+          "rgba(0, 153, 0, 1.0)",
+        ]}
+        margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+        yearSpacing={40}
+        dayBorderWidth={2}
+      />
     </div>
   );
 };

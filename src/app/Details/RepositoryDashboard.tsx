@@ -224,7 +224,7 @@ export const RepositoryDashboard = observer(() => {
         >
           <div className="flex items-center text-base w-full px-4 py-3">
             <Link to={`/team/${team}`}>
-              <i className="fa fa-link mr-1"></i>
+              <i className="fa fa-link no-print mr-1"></i>
               <strong>{team}</strong>
               <span className="text-xs ml-2 text-gray-400">#team</span>
             </Link>
@@ -260,7 +260,7 @@ export const RepositoryDashboard = observer(() => {
         >
           <div className="flex items-center text-base w-full px-4 py-3">
             <Link to={`/user/${user}`}>
-              <i className="fa fa-link mr-1"></i>
+              <i className="fa fa-link no-print mr-1"></i>
               <strong>{user}</strong>
               <span className="small ml-1 text-muted">#user</span>
             </Link>

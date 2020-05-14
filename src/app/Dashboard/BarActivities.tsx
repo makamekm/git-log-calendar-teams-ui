@@ -121,11 +121,11 @@ export const BarActivities = ({
           }}
         />
         <ReferenceLine y={0} stroke="#000" />
-        <Brush dataKey="day" height={30} stroke={colors["primary"]} />
+        <Brush dataKey="day" height={30} stroke={colors["blue"]} />
         <Bar
           dataKey="value"
-          fill={"transparent"}
-          stroke={colors["primary"]}
+          fill={"rgba(30, 183, 255, 0.4)"}
+          stroke={colors["blue"]}
           strokeWidth={2}
         />
       </BarChart>

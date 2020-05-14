@@ -29,10 +29,10 @@ export const ActiveStatsPanel = ({
       </div>
       <div className="w-full">
         {activeRepositories != null && (
-          <div className="flex items-center justify-between border-bottom">
-            <div className="text-inverse">Active Repositories</div>
+          <div className="flex items-center justify-between border-b">
+            <div className="text-gray-700">Active Repositories</div>
             <div className="text-right">
-              <div className="rounded-full py-1 px-2 mx-1 my-2 bg-green-500 text-white rounded leading-none font-semibold flex items-center">
+              <div className="rounded-full text-sm py-1 px-2 mx-1 my-2 bg-green-500 text-white rounded leading-none font-semibold flex items-center">
                 {numberWithCommas(activeRepositoriesToday)} /{" "}
                 {numberWithCommas(activeRepositories)}
               </div>
@@ -40,10 +40,10 @@ export const ActiveStatsPanel = ({
           </div>
         )}
         {activeTeams != null && (
-          <div className="flex items-center justify-between border-bottom">
-            <div className="text-inverse">Active Teams</div>
+          <div className="flex items-center justify-between border-b">
+            <div className="text-gray-700">Active Teams</div>
             <div className="text-right">
-              <div className="rounded-full py-1 px-2 mx-1 my-2 bg-blue-500 text-white rounded leading-none font-semibold flex items-center">
+              <div className="rounded-full text-sm py-1 px-2 mx-1 my-2 bg-blue-500 text-white rounded leading-none font-semibold flex items-center">
                 {numberWithCommas(activeTeamsToday)} /{" "}
                 {numberWithCommas(activeTeams)}
               </div>
@@ -51,10 +51,10 @@ export const ActiveStatsPanel = ({
           </div>
         )}
         {activeUsers != null && (
-          <div className="flex items-center justify-between border-bottom">
-            <div className="text-inverse">Active Users</div>
+          <div className="flex items-center justify-between border-b">
+            <div className="text-gray-700">Active Users</div>
             <div className="text-right">
-              <div className="rounded-full py-1 px-2 mx-1 my-2 bg-orange-500 text-white rounded leading-none font-semibold flex items-center">
+              <div className="rounded-full text-sm py-1 px-2 mx-1 my-2 bg-orange-500 text-white rounded leading-none font-semibold flex items-center">
                 {numberWithCommas(activeUsersToday)} /{" "}
                 {numberWithCommas(activeUsers)}
               </div>

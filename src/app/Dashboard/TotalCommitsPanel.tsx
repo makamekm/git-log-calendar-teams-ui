@@ -22,7 +22,7 @@ export const TotalCommitsPanel = ({
       <div className="grid grid-cols-2 gap-2">
         <div className="text-center">
           <div className="text-center text-gray-800">
-            <i className="fa fa-circle text-primary mr-2"></i>
+            <i className="fa fa-circle color-blue mr-2"></i>
             Today
           </div>
           <div className="mt-2 text-2xl text-gray-900">
@@ -31,7 +31,7 @@ export const TotalCommitsPanel = ({
         </div>
         <div className="text-center">
           <div className="text-center text-gray-800">
-            <i className="fa fa-circle text-info mr-2"></i>
+            <i className="fa fa-circle color-cyan mr-2"></i>
             {periods[limit]}
           </div>
           <div className="mt-2 text-2xl text-gray-900">

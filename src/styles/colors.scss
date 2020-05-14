@@ -1,18 +1,47 @@
-@import "./variables";
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #5d636d !default;
+$gray-800: #3f4651 !default;
+$gray-900: #353c48 !default;
+$black: #1f2d3d !default;
 
-@each $name, $color in $dashboard-colors {
-  .fg-color--#{ $name } {
-    color: $color;
-  }
-  .bg-color--#{ $name } {
-    background-color: $color;
+$colors: (
+  "blue": #1eb7ff,
+  "indigo": #6610f2,
+  "purple": #ca8eff,
+  "pink": #e83e8c,
+  "red": #ed1c24,
+  "orange": #f27212,
+  "yellow": #f7bf47,
+  "green": #1bb934,
+  "teal": #20c997,
+  "cyan": #33ae9a,
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900,
+  "white": $white,
+  "black": $black,
+);
+
+@each $name, $color in $colors {
+  .color-#{ $name } {
+    color: $color !important;
   }
 }
 
 :export {
-  @each $name, $color in $dashboard-colors {
-    fg-color--#{$name}: fg-color--#{$name};
-    bg-color--#{$name}: bg-color--#{$name};
+  @each $name, $color in $colors {
     #{$name}: $color;
   }
 }

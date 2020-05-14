@@ -142,7 +142,7 @@ export const Typeahead: React.FC<{
         state.cacheOptions = options;
       }
     }, [options, state]);
-    useDelay(state, "queryReact", "query", 200);
+    useDelay(state, "queryReact", "query");
     const open = React.useCallback(() => {
       if (!state.isOpen) {
         window.clearTimeout(state.timeout);
@@ -394,7 +394,7 @@ export const Typeahead: React.FC<{
         )}
       >
         <div
-          className="w-full flex items-stretch border border-gray-200 bg-white rounded shadow-sm"
+          className="w-full flex items-stretch border border-gray-200 bg-white rounded shadow-sm focus-within:shadow-outline"
           style={{ minHeight: "38px" }}
         >
           <div ref={selectedRef} className="relative flex flex-auto flex-wrap">
@@ -561,7 +561,7 @@ export const Typeahead: React.FC<{
             item && (
               <animated.div key={key} style={props}>
                 <div
-                  className="no-print shadow border left-0 right-0 w-full my-1 origin-top-right bg-white w-full min-w-64 rounded overflow-y-auto"
+                  className="no-print shadow-lg border left-0 right-0 w-full my-1 origin-top-right bg-white w-full min-w-64 rounded overflow-y-auto"
                   style={{ maxHeight: "300px" }}
                 >
                   <div className="flex flex-col w-full">

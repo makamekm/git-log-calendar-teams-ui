@@ -23,7 +23,7 @@ export const SidebarMenuItem = ({ to, title, icon }) => {
         {
           "bg-gray-200 dark-mode:bg-gray-700": active,
           "px-4": !service.sidebarCollapsed,
-          "px-3": service.sidebarCollapsed,
+          "justify-center px-3": service.sidebarCollapsed,
         },
         "dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
       )}
@@ -81,7 +81,7 @@ const MenuItems = () => {
 const SideMenu: React.FC = observer(() => {
   const service = React.useContext(LayoutService);
   return (
-    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print border-right border-solid border-1 border-gray-300">
+    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print border-r">
       <div
         onClick={() => {
           service.sidebarOpened = !service.sidebarOpened;

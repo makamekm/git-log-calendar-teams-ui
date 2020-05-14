@@ -250,7 +250,7 @@ export const DashboardService = createService<DashboardState>(
     state.messageService = React.useContext(MessageService);
     state.repositoryUserService = React.useContext(RepositoryUserService);
     useOnChange(state, "limit", state.load);
-    useDelay(state, "maxValue", "maxValueDelay");
+    useDelay(state, "maxValue", "maxValueDelay", 1000);
     useSimpleSyncLocalStorage(state, "maxValue", "maxValue");
     useSimpleSyncLocalStorage(state, "maxValueDelay", "maxValueDelay");
     React.useEffect(() => ipc.channels.ON_DRIVE_UPDATE(state.load));

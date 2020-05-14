@@ -92,7 +92,7 @@ export const ConfigurationTable = withResizeDetector(
                                     className="align-middle text-center"
                                     {...providedDraggable.dragHandleProps}
                                   >
-                                    <i className="fas fa-grip-vertical"></i>
+                                    <i className="fas fa-grip-vertical mt-2"></i>
                                   </td>
                                   {render(item)}
                                 </tr>

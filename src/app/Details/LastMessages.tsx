@@ -204,7 +204,7 @@ export const LatestMessages = observer(() => {
     stateDashboard.config &&
     stateDashboard.config.collectMessages && (
       <Accordion
-        className="no-print-break mt-3"
+        className="no-print mt-3"
         title={
           <div className="flex justify-between items-center w-full">
             <div className="flex items-center">

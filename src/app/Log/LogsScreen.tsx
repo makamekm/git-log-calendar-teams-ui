@@ -13,9 +13,9 @@ import { Dropdown } from "~/components/Dropdown/Dropdown";
 const matchLogReg = /\[(\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d\d\d)\] \[(\w*)\] ([\d\w\W]*)/m;
 
 const levelColorMap = {
-  warn: "warning",
-  error: "danger",
-  info: "info",
+  warn: "yellow",
+  error: "red",
+  info: "cyan",
 };
 
 interface LogsState {
@@ -160,11 +160,10 @@ export const LogsScreen = observer(() => {
                     </td>
                     <td className="px-3 py-2">{line.source}</td>
                     <td
-                      className={classNames("px-3 py-2", {
-                        [`text-${levelColorMap[line.level]}`]: levelColorMap[
-                          line.level
-                        ],
-                      })}
+                      className={classNames(
+                        "px-3 py-2",
+                        `color-${levelColorMap[line.level]}`
+                      )}
                     >
                       {line.level}
                     </td>

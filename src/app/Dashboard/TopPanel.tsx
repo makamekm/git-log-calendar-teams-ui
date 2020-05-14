@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { TinyDonutChart } from "./TinyDonutChart";
 import { numberWithCommas } from "~/tools";
 
-const colors = ["success", "primary", "yellow", "info", "purple"];
+const colors = ["green", "blue", "yellow", "cyan", "purple"];
 
 export const TopPanel = ({
   data,
@@ -44,10 +44,10 @@ export const TopPanel = ({
           </div>
           <div>
             {data.map((entry, index) => (
-              <div key={index}>
+              <div key={index} className="text-gray-700">
                 <Link to={`/${type}/${entry.name}`} className="text-secondary">
                   <i
-                    className={`fa fa-circle mr-1 text-${
+                    className={`fa fa-circle mr-1 color-${
                       colors[(index + (colorShift || 0)) % colors.length]
                     }`}
                   ></i>

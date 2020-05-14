@@ -1,0 +1,39 @@
+@media print {
+  *,
+  *::before,
+  *::after {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+
+  .no-print-break {
+    page-break-inside: avoid !important;
+  }
+
+  body,
+  .container {
+    min-width: 1024px !important;
+  }
+
+  a {
+    text-decoration: none !important;
+  }
+
+  .recharts-wrapper,
+  .recharts-surface {
+    width: calc(100%) !important;
+  }
+
+  .calendar-activities {
+    page-break-inside: avoid !important;
+  }
+}
+
+@page {
+  size: A4;
+}

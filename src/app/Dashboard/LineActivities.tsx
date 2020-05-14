@@ -13,7 +13,7 @@ import {
 } from "recharts";
 import colors from "~/colors";
 
-const colorsArr = ["success", "primary", "yellow", "info", "purple"];
+const colorsArr = ["green", "blue", "yellow", "cyan", "purple"];
 
 const addEmptyDays = (
   data: ({
@@ -115,7 +115,7 @@ export const LineActivities = ({
         <Legend />
         {names.map((name, index) => (
           <Line
-            type="monotone"
+            type="linear"
             key={name}
             dataKey={name}
             stroke={colors[colorsArr[index % colorsArr.length]]}

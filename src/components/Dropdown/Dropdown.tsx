@@ -66,7 +66,7 @@ export const Dropdown: React.FC<{
           fill="currentColor"
           viewBox="0 0 20 20"
           className={classNames(
-            "inline w-4 h-4 ml-1 transition-transform duration-200 transform",
+            "inline w-4 h-4 ml-1 transition-transform duration-200 transform no-print",
             { "rotate-180": state.isOpen, "rotate-0": !state.isOpen }
           )}
         >
@@ -81,7 +81,7 @@ export const Dropdown: React.FC<{
         ({ item, key, props }) =>
           item && (
             <animated.div key={key} style={props}>
-              <div className="no-print absolute right-0 w-full mt-2 origin-top-right rounded-md border shadow w-full md:w-48 text-left">
+              <div className="no-print absolute right-0 w-full mt-2 origin-top-right rounded-md border shadow-lg w-full md:w-48 text-left">
                 <div
                   className="flex flex-col w-full px-1 overflow-y-auto bg-white rounded-md dark-mode:bg-gray-800 text-gray-600 dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
                   tabIndex={0}

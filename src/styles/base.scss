@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   background-color: #f9fafc;
+  color: #868e96;
 }
 
 code {
@@ -28,4 +29,13 @@ div,
   flex-direction: column;
   align-items: stretch;
   justify-content: stretch;
+}
+
+a {
+  transition: opacity 0.1s;
+}
+
+a:hover,
+a:focus {
+  opacity: 0.6;
 }
