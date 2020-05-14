@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
 
-import { Container, Row, Col, Card, CardBody, CardTitle } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { DashboardService } from "../DashboardService";
 import { useParams } from "react-router";
@@ -38,35 +37,30 @@ export const UserDashboard = observer(() => {
         url: "/dashboard",
       },
       {
-        name: "User",
-      },
-      {
         name: `${userName}`,
       },
     ],
   });
 
   return (
-    <Container className="pb-4">
-      <Row className="mb-5">
-        <Col lg={12}>
-          <div className="d-flex flex-wrap mb-3">
-            <HeaderMain
-              title={
-                <>
-                  {userName} <small>#user</small>
-                </>
-              }
-              className="mt-0 mb-3"
-            />
-            <DashboardToolbar state={state} />
-          </div>
-        </Col>
+    <>
+      <div className="mb-5">
+        <div className="flex flex-wrap mb-3">
+          <HeaderMain
+            title={
+              <>
+                {userName} <small>#user</small>
+              </>
+            }
+            className="mb-3"
+          />
+          <DashboardToolbar state={state} />
+        </div>
         {state.isLoading ? (
           <List height="300px" />
         ) : (
-          <>
-            <Col lg={4}>
+          <div className="grid grid-cols-6 gap-4">
+            <div className="col-span-6 lg:col-span-2">
               <TotalCommitsPanel
                 className="mt-4"
                 valueToday={state.stats?.commits.todayValue}
@@ -91,8 +85,8 @@ export const UserDashboard = observer(() => {
                 activeTeamsToday={state.stats?.stats.activeTeams?.todayValue}
                 limit={state.limit}
               />
-            </Col>
-            <Col lg={4} md={12}>
+            </div>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
                 className="mt-4"
                 type="repository"
@@ -106,8 +100,8 @@ export const UserDashboard = observer(() => {
                 colorShift={2}
                 data={state.stats?.topTeams?.value}
               />
-            </Col>
-            <Col lg={4} md={12}>
+            </div>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
                 className="mt-4"
                 type="repository"
@@ -121,10 +115,10 @@ export const UserDashboard = observer(() => {
                 colorShift={2}
                 data={state.stats?.topTeams?.todayValue}
               />
-            </Col>
-          </>
+            </div>
+          </div>
         )}
-      </Row>
+      </div>
 
       <LatestMessages />
 
@@ -132,123 +126,107 @@ export const UserDashboard = observer(() => {
         no={"Overall"}
         title="All Stats"
         subTitle="Calendar Activity"
-        className="mb-3"
+        className="my-5"
       />
 
-      <Card className="no-print-break mb-3">
-        <CardBody>
-          <div className="d-flex">
-            <CardTitle tag="h6">
-              <span>
-                Calendar activities of <strong>{userName}</strong>
-              </span>
-              <span className="small ml-1 text-muted">#user</span>
-            </CardTitle>
-          </div>
-          <div>
-            {state.isLoading ? (
-              <List height={"300px"} />
-            ) : (
-              <>
-                <CalendarActivities
-                  maxValue={state.maxValueDelay}
-                  height={200}
-                  limit={state.limit}
-                  data={state.userStats[userName] || []}
-                />
-              </>
-            )}
-          </div>
-        </CardBody>
-      </Card>
+      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
+        <div className="flex items-center text-base w-full px-4 py-3">
+          <span>
+            Calendar activities of <strong>{userName}</strong>
+            <span className="text-xs ml-2 text-gray-400">#user</span>
+          </span>
+        </div>
+        <div>
+          {state.isLoading ? (
+            <List className="p-4" height={"300px"} />
+          ) : (
+            <>
+              <CalendarActivities
+                maxValue={state.maxValueDelay}
+                height={200}
+                limit={state.limit}
+                data={state.userStats[userName] || []}
+              />
+            </>
+          )}
+        </div>
+      </div>
 
-      <Card className="no-print-break mb-3">
-        <CardBody>
-          <div className="d-flex">
-            <CardTitle tag="h6">
-              <span>
-                Detailed activities of <strong>{userName}</strong>
-              </span>
-              <span className="small ml-1 text-muted">#user</span>
-            </CardTitle>
-          </div>
-          <div>
-            {state.isLoading ? (
-              <List height={"300px"} />
-            ) : (
-              <>
-                <BarActivities
-                  height={250}
-                  limit={state.limit}
-                  data={state.userStats[userName] || []}
-                />
-              </>
-            )}
-          </div>
-        </CardBody>
-      </Card>
+      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
+        <div className="flex items-center text-base w-full px-4 py-3">
+          <span>
+            Detailed activities of <strong>{userName}</strong>
+            <span className="text-xs ml-2 text-gray-400">#user</span>
+          </span>
+        </div>
+        <div className="p-4">
+          {state.isLoading ? (
+            <List height={"250px"} />
+          ) : (
+            <BarActivities
+              height={250}
+              limit={state.limit}
+              data={state.userStats[userName] || []}
+            />
+          )}
+        </div>
+      </div>
 
-      <Card className="no-print-break mb-3">
-        <CardBody>
-          <div className="d-flex">
-            <CardTitle tag="h6">
-              <span>
-                Repository activities of <strong>{userName}</strong>
-              </span>
-              <span className="small ml-1 text-muted">#user</span>
-            </CardTitle>
-          </div>
-          <div>
-            {state.isLoading ? (
-              <List height={"300px"} />
-            ) : (
-              <>
-                <LineActivities
-                  names={state.repositories}
-                  height={250}
-                  limit={state.limit}
-                  data={state.repositoryCompareStats || []}
-                />
-              </>
-            )}
-          </div>
-        </CardBody>
-      </Card>
+      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
+        <div className="flex items-center text-base w-full px-4 py-3">
+          <span>
+            Repository activities of <strong>{userName}</strong>
+            <span className="text-xs ml-2 text-gray-400">#user</span>
+          </span>
+        </div>
+        <div className="p-4">
+          {state.isLoading ? (
+            <List height={"250px"} />
+          ) : (
+            <LineActivities
+              names={state.repositories}
+              height={250}
+              limit={state.limit}
+              data={state.repositoryCompareStats || []}
+            />
+          )}
+        </div>
+      </div>
 
       {state.repositories.length > 0 && (
         <HeaderSection
           no={"Repositories"}
           title="User Stats"
           subTitle="Calendar Activity"
+          className="my-5"
         />
       )}
 
       {state.repositories.map((repository, index) => (
-        <Card className="no-print-break mb-3" key={index}>
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                <Link to={`/repository/${repository}`}>
-                  <i className="fa fa-link mr-1"></i>
-                  <strong>{repository}</strong>
-                </Link>
-                <span className="small ml-1 text-muted">#repository</span>
-              </CardTitle>
-            </div>
-            <div>
-              {state.isLoading ? (
-                <List height={"300px"} />
-              ) : (
-                <CalendarActivities
-                  maxValue={state.maxValueDelay}
-                  height={200}
-                  limit={state.limit}
-                  data={state.repositoriesStats[repository] || []}
-                />
-              )}
-            </div>
-          </CardBody>
-        </Card>
+        <div
+          key={index}
+          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+        >
+          <div className="flex items-center text-base w-full px-4 py-3">
+            <Link to={`/repository/${repository}`}>
+              <i className="fa fa-link mr-1"></i>
+              <strong>{repository}</strong>
+              <span className="small ml-1 text-muted">#repository</span>
+            </Link>
+          </div>
+          <div>
+            {state.isLoading ? (
+              <List className="p-4" height={"250px"} />
+            ) : (
+              <CalendarActivities
+                maxValue={state.maxValueDelay}
+                height={200}
+                limit={state.limit}
+                data={state.repositoriesStats[repository] || []}
+              />
+            )}
+          </div>
+        </div>
       ))}
 
       {state.teams.length > 0 && (
@@ -256,37 +234,36 @@ export const UserDashboard = observer(() => {
           no={"Teams"}
           title="User Stats"
           subTitle="Calendar Activity"
-          className="mt-5 mb-3"
+          className="my-5"
         />
       )}
 
       {state.teams.map((team, index) => (
-        <Card className="no-print-break mb-3" key={index}>
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                <Link to={`/team/${team}`}>
-                  <i className="fa fa-link mr-1"></i>
-                  <strong>{team}</strong>
-                </Link>
-                <span className="small ml-1 text-muted">#team</span>
-              </CardTitle>
-            </div>
-            <div>
-              {state.isLoading ? (
-                <List height={"300px"} />
-              ) : (
-                <CalendarActivities
-                  maxValue={state.maxValueDelay}
-                  height={200}
-                  limit={state.limit}
-                  data={state.teamStats[team] || []}
-                />
-              )}
-            </div>
-          </CardBody>
-        </Card>
+        <div
+          key={index}
+          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+        >
+          <div className="flex items-center text-base w-full px-4 py-3">
+            <Link to={`/team/${team}`}>
+              <i className="fa fa-link mr-1"></i>
+              <strong>{team}</strong>
+              <span className="text-xs ml-2 text-gray-400">#team</span>
+            </Link>
+          </div>
+          <div>
+            {state.isLoading ? (
+              <List className="p-4" height={"250px"} />
+            ) : (
+              <CalendarActivities
+                maxValue={state.maxValueDelay}
+                height={200}
+                limit={state.limit}
+                data={state.teamStats[team] || []}
+              />
+            )}
+          </div>
+        </div>
       ))}
-    </Container>
+    </>
   );
 });

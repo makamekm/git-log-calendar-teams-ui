@@ -3,20 +3,12 @@ import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { groupBy } from "lodash";
 
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "~/components";
 import { CalendarActivities } from "./CalendarActivities";
 import { DashboardService } from "../DashboardService";
 import { FavouriteService } from "../FavouriteService";
 import { Link } from "react-router-dom";
 import { HeaderSection } from "../HeaderSection";
+import { Dropdown } from "~/components/Dropdown/Dropdown";
 
 export const TrackerActivities = observer(() => {
   const stateDashboard = React.useContext(DashboardService);
@@ -39,56 +31,48 @@ export const TrackerActivities = observer(() => {
           no="Users"
           title="#user"
           subTitle="Calendar Activity"
-          className="mt-5 mb-3"
+          className="my-5"
         />
       )}
 
       {groupped.user?.map(({ name }, index) => (
-        <Card className="no-print-break mb-3" key={index}>
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                <Link to={`/user/${name}`}>
-                  <i className="fa fa-link mr-1"></i>
-                  <strong>{name}</strong>
-                </Link>
-                <span className="small ml-1 text-muted">#user</span>
-              </CardTitle>
-
-              <UncontrolledButtonDropdown className="ml-auto">
-                <DropdownToggle
-                  color="link"
-                  className="text-decoration-none no-print"
-                >
-                  <i className="fa fa-gear"></i>
-                  <i className="fa fa-angle-down ml-2"></i>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem
-                    onClick={() => {
-                      stateFavourite.removeTracker(name, "user");
-                    }}
-                  >
-                    <i className="fa fa-fw fa-trash mr-2"></i>
-                    Delete
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledButtonDropdown>
-            </div>
-            <div>
-              {stateDashboard.isLoading || stateFavourite.isLoading ? (
-                <List height={"300px"} />
-              ) : (
-                <CalendarActivities
-                  maxValue={stateDashboard.maxValueDelay}
-                  height={200}
-                  limit={stateDashboard.limit}
-                  data={stateDashboard.userStats[name] || []}
-                />
-              )}
-            </div>
-          </CardBody>
-        </Card>
+        <div
+          key={index}
+          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+        >
+          <div className="flex items-center justify-between text-base w-full px-4 py-3">
+            <Link to={`/user/${name}`}>
+              <i className="fa fa-link mr-1"></i>
+              <strong>{name}</strong>
+              <span className="small ml-1 text-muted">#user</span>
+            </Link>
+            <Dropdown title={<i className="fas fa-cog"></i>}>
+              <button
+                className={
+                  "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                }
+                onClick={() => {
+                  stateFavourite.removeTracker(name, "user");
+                }}
+              >
+                <i className="fa fa-trash mr-2"></i>
+                Delete
+              </button>
+            </Dropdown>
+          </div>
+          <div>
+            {stateDashboard.isLoading || stateFavourite.isLoading ? (
+              <List className="p-4" height={"250px"} />
+            ) : (
+              <CalendarActivities
+                maxValue={stateDashboard.maxValueDelay}
+                height={200}
+                limit={stateDashboard.limit}
+                data={stateDashboard.userStats[name] || []}
+              />
+            )}
+          </div>
+        </div>
       ))}
 
       {groupped.team?.length > 0 && (
@@ -96,56 +80,48 @@ export const TrackerActivities = observer(() => {
           no="Teams"
           title="#team"
           subTitle="Calendar Activity"
-          className="mt-5 mb-3"
+          className="my-5"
         />
       )}
 
       {groupped.team?.map(({ name }, index) => (
-        <Card className="no-print-break mb-3" key={index}>
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                <Link to={`/team/${name}`}>
-                  <i className="fa fa-link mr-1"></i>
-                  <strong>{name}</strong>
-                </Link>
-                <span className="small ml-1 text-muted">#team</span>
-              </CardTitle>
-
-              <UncontrolledButtonDropdown className="ml-auto">
-                <DropdownToggle
-                  color="link"
-                  className="text-decoration-none no-print"
-                >
-                  <i className="fa fa-gear"></i>
-                  <i className="fa fa-angle-down ml-2"></i>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem
-                    onClick={() => {
-                      stateFavourite.removeTracker(name, "team");
-                    }}
-                  >
-                    <i className="fa fa-fw fa-trash mr-2"></i>
-                    Delete
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledButtonDropdown>
-            </div>
-            <div>
-              {stateDashboard.isLoading || stateFavourite.isLoading ? (
-                <List height={"300px"} />
-              ) : (
-                <CalendarActivities
-                  maxValue={stateDashboard.maxValueDelay}
-                  height={200}
-                  limit={stateDashboard.limit}
-                  data={stateDashboard.teamStats[name] || []}
-                />
-              )}
-            </div>
-          </CardBody>
-        </Card>
+        <div
+          key={index}
+          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+        >
+          <div className="flex items-center justify-between text-base w-full px-4 py-3">
+            <Link to={`/team/${name}`}>
+              <i className="fa fa-link mr-1"></i>
+              <strong>{name}</strong>
+              <span className="small ml-1 text-muted">#team</span>
+            </Link>
+            <Dropdown title={<i className="fas fa-cog"></i>}>
+              <button
+                className={
+                  "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                }
+                onClick={() => {
+                  stateFavourite.removeTracker(name, "team");
+                }}
+              >
+                <i className="fa fa-trash mr-2"></i>
+                Delete
+              </button>
+            </Dropdown>
+          </div>
+          <div>
+            {stateDashboard.isLoading || stateFavourite.isLoading ? (
+              <List className="p-4" height={"250px"} />
+            ) : (
+              <CalendarActivities
+                maxValue={stateDashboard.maxValueDelay}
+                height={200}
+                limit={stateDashboard.limit}
+                data={stateDashboard.teamStats[name] || []}
+              />
+            )}
+          </div>
+        </div>
       ))}
 
       {groupped.repository?.length > 0 && (
@@ -153,56 +129,48 @@ export const TrackerActivities = observer(() => {
           no="Repositories"
           title="#repository"
           subTitle="Calendar Activity"
-          className="mt-5 mb-3"
+          className="my-5"
         />
       )}
 
       {groupped.repository?.map(({ name }, index) => (
-        <Card className="no-print-break mb-3" key={index}>
-          <CardBody>
-            <div className="d-flex">
-              <CardTitle tag="h6">
-                <Link to={`/repository/${name}`}>
-                  <i className="fa fa-link mr-1"></i>
-                  <strong>{name}</strong>
-                </Link>
-                <span className="small ml-1 text-muted">#repository</span>
-              </CardTitle>
-
-              <UncontrolledButtonDropdown className="ml-auto">
-                <DropdownToggle
-                  color="link"
-                  className="text-decoration-none no-print"
-                >
-                  <i className="fa fa-gear"></i>
-                  <i className="fa fa-angle-down ml-2"></i>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem
-                    onClick={() => {
-                      stateFavourite.removeTracker(name, "repository");
-                    }}
-                  >
-                    <i className="fa fa-fw fa-trash mr-2"></i>
-                    Delete
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledButtonDropdown>
-            </div>
-            <div>
-              {stateDashboard.isLoading || stateFavourite.isLoading ? (
-                <List height={"300px"} />
-              ) : (
-                <CalendarActivities
-                  maxValue={stateDashboard.maxValueDelay}
-                  height={200}
-                  limit={stateDashboard.limit}
-                  data={stateDashboard.repositoriesStats[name] || []}
-                />
-              )}
-            </div>
-          </CardBody>
-        </Card>
+        <div
+          key={index}
+          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+        >
+          <div className="flex items-center justify-between text-base w-full px-4 py-3">
+            <Link to={`/repository/${name}`}>
+              <i className="fa fa-link mr-1"></i>
+              <strong>{name}</strong>
+              <span className="small ml-1 text-muted">#repository</span>
+            </Link>
+            <Dropdown title={<i className="fas fa-cog"></i>}>
+              <button
+                className={
+                  "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                }
+                onClick={() => {
+                  stateFavourite.removeTracker(name, "repository");
+                }}
+              >
+                <i className="fa fa-trash mr-2"></i>
+                Delete
+              </button>
+            </Dropdown>
+          </div>
+          <div>
+            {stateDashboard.isLoading || stateFavourite.isLoading ? (
+              <List className="p-4" height={"250px"} />
+            ) : (
+              <CalendarActivities
+                maxValue={stateDashboard.maxValueDelay}
+                height={200}
+                limit={stateDashboard.limit}
+                data={stateDashboard.repositoriesStats[name] || []}
+              />
+            )}
+          </div>
+        </div>
       ))}
     </>
   );

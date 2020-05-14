@@ -19,7 +19,7 @@ export const SidebarMenuItem = ({ to, title, icon }) => {
   return (
     <Link
       className={classNames(
-        "flex py-2 mt-2 text-sm font-semibold text-gray-700 rounded-lg dark-mode:hover:bg-gray-600",
+        "flex py-2 mt-2 text-sm font-semibold text-gray-700 rounded-lg dark-mode:hover:bg-gray-600 ellipsis",
         {
           "bg-gray-200 dark-mode:bg-gray-700": active,
           "px-4": !service.sidebarCollapsed,
@@ -29,21 +29,21 @@ export const SidebarMenuItem = ({ to, title, icon }) => {
       )}
       to={to}
     >
-      <div
+      <span
         className={classNames({
           "lg:pr-0 pr-2": service.sidebarCollapsed,
           "pr-2": !service.sidebarCollapsed,
         })}
       >
         {icon}
-      </div>
-      <div
+      </span>
+      <span
         className={classNames({
           "lg:hidden": service.sidebarCollapsed,
         })}
       >
         {title}
-      </div>
+      </span>
     </Link>
   );
 };
@@ -93,6 +93,7 @@ const SideMenu: React.FC = observer(() => {
             "lg:w-16": service.sidebarCollapsed,
           }
         )}
+        style={{ transition: "width 0.2s" }}
       >
         <div
           className={classNames(
@@ -168,11 +169,16 @@ const TopMenu: React.FC = observer(() => {
             onClick={() =>
               (service.sidebarCollapsed = !service.sidebarCollapsed)
             }
-            className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            className="hidden lg:block px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
           >
             <i className="fas fa-bars"></i>
           </div>
-          <div>
+          <div
+            className="hidden md:block ellipsis"
+            style={{
+              maxWidth: "300px",
+            }}
+          >
             {service.breadcrumbs.map((breadcrumb, index) => (
               <React.Fragment key={index}>
                 <span className="text-sm px-2 py-2 text-gray-600">
@@ -215,7 +221,7 @@ export const AppLayout: React.FC = observer(({ children }) => {
             {children}
           </div>
           {service.footer && (
-            <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-3 container mx-auto px-4 no-print">
+            <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-5 container mx-auto px-4 no-print">
               <FooterText />
             </div>
           )}

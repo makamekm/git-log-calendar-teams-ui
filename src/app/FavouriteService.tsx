@@ -23,7 +23,7 @@ export interface FavouriteState {
   trackers: Tracker[];
   allTrackers: Tracker[];
   isLoading: boolean;
-  addTracker(item: { name: string; type: TrackerType }): void;
+  addTracker(name: string, type: TrackerType): void;
   removeTracker(name: string, type: TrackerType): void;
   load: () => Promise<void>;
 }
@@ -61,7 +61,7 @@ export const FavouriteService = createService<FavouriteState>(
         }
         return arr;
       },
-      addTracker({ name, type }) {
+      addTracker(name, type) {
         state.removeTracker(name, type);
         state.trackers.unshift({ name, type });
       },

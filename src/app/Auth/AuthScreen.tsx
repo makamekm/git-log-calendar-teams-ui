@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLocalStore, observer } from "mobx-react";
-import { Form, FormGroup, Input, Button, Label, Container } from "~/components";
-import { HeaderAuth } from "./HeaderAuth";
-import { FooterAuth } from "./FooterAuth";
 import { AuthService } from "./AuthService";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
+import { HeaderPanel } from "../HeaderPanel";
 
 export const AuthScreen = observer(() => {
   const store = useLocalStore(() => ({
@@ -38,42 +36,44 @@ export const AuthScreen = observer(() => {
   });
 
   return (
-    <Container>
-      {/* START Header */}
-      <HeaderAuth
-        title="Your Session is Blocked"
-        text="Please provide the correct password to unlock the session"
+    <div className="flex-1 flex flex-col items-center justify-center">
+      <HeaderPanel
+        title="- LOGIN -"
+        text={
+          <>
+            <div>Your Session is Blocked</div>
+            <div className="text-sm mt-3">
+              Please provide the correct password to unlock the session
+            </div>
+          </>
+        }
       />
-      {/* END Header */}
-      {/* START Form */}
-      <Form className="mb-3" onSubmit={onSubmit}>
-        <FormGroup>
-          <Label for="password">Password</Label>
-          <Input
-            value={store.password}
-            onChange={onPasswordChange}
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter the password to continue..."
-            className="bg-white"
-          />
-        </FormGroup>
-        <Button block type="submit">
+
+      <form className="w-full md:w-3/5 lg:w-2/5 mb-3" onSubmit={onSubmit}>
+        <div>Password</div>
+        <input
+          className="w-full mt-2 text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+          value={store.password}
+          onChange={onPasswordChange}
+          type="password"
+          name="password"
+          placeholder="Enter the password to continue..."
+        />
+        <button
+          type="submit"
+          className={
+            "text-base w-full mt-4 font-semibold py-2 px-3 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          }
+        >
           Unlock
-        </Button>
-      </Form>
-      {/* END Form */}
-      {/* START Bottom Links */}
-      <div className="d-flex mb-5">
+        </button>
+      </form>
+
+      <div className="flex mt-3">
         <Link to="/logs" className="ml-auto text-decoration-none">
           <i className="fa fa-file-text-o mr-2"></i> Open Logs
         </Link>
       </div>
-      {/* END Bottom Links */}
-      {/* START Footer */}
-      <FooterAuth />
-      {/* END Footer */}
-    </Container>
+    </div>
   );
 });

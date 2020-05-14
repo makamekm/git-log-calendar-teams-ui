@@ -1,8 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { observer } from "mobx-react";
-import { groupBy } from "lodash";
-import { searchMap, SearchService } from "../SearchService";
+import { SearchService, searchMap } from "../SearchService";
 import { useHistory } from "react-router";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
 
@@ -10,19 +9,9 @@ export const SearchBar = observer(() => {
   const [storage] = React.useState({ timeout: null as number });
   const service = React.useContext(SearchService);
   const history = useHistory();
-  const types = groupBy(service.items, "type");
-  const items = Object.keys(types)
-    .sort()
-    .map((region) => {
-      return {
-        label: searchMap[region],
-        id: region,
-        values: types[region].map((s) => s.name),
-      };
-    });
   return (
     <div
-      className={classNames("mr-2 ml-3", {
+      className={classNames("hidden sm:block mr-2 ml-3", {
         "flex-1": service.isFocus,
       })}
       style={{
@@ -30,10 +19,8 @@ export const SearchBar = observer(() => {
       }}
     >
       <div className="search-bar flex justify-start items-center">
-        <div>
-          <i className="fa fa-search mr-2"></i>
-        </div>
         <Typeahead
+          icon={<i className="fa fa-search"></i>}
           placeholder="Search..."
           selected={[]}
           hideCaret
@@ -53,7 +40,7 @@ export const SearchBar = observer(() => {
               history.push(`/${group.id}/${selected}`);
             }
           }}
-          options={items}
+          options={service.searchItems}
         />
       </div>
     </div>

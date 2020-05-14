@@ -17,7 +17,7 @@ const FooterText = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       Designed and implemented by{" "}
       <a
         href="https://github.com/makamekm"
@@ -30,7 +30,7 @@ const FooterText = () => {
       <div>
         {state.appName} {state.appVersion}
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -38,16 +38,13 @@ export const RepositoryDashboard = observer(() => {
         url: "/dashboard",
       },
       {
-        name: "Repository",
-      },
-      {
         name: `${repositoryName}`,
       },
     ],
   });
 
   return (
-    <div className="pb-4">
+    <>
       <div className="mb-5">
         <div className="flex flex-wrap w-full mb-3">
           <HeaderMain
@@ -56,7 +53,7 @@ export const RepositoryDashboard = observer(() => {
                 {repositoryName} <small>#repository</small>
               </>
             }
-            className="mt-0 mb-3"
+            className="mb-3"
           />
           <DashboardToolbar state={state} />
         </div>
@@ -284,6 +281,6 @@ export const RepositoryDashboard = observer(() => {
       ))}
 
       <RepositoryUsersDashboard />
-    </div>
+    </>
   );
 });

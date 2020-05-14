@@ -4,7 +4,7 @@ import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useOnLoad } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
-import { debounce } from "lodash";
+import { debounce, groupBy } from "lodash";
 
 export type SearchType = "repository" | "team" | "user";
 
@@ -19,22 +19,13 @@ export const searchMap = {
   user: "Users",
 };
 
-export interface SearchState {
-  config: Config;
-  items: SearchItem[];
-  isLoading: boolean;
-  isFocus: boolean;
-  load: () => Promise<void>;
-  reload: () => void;
-}
-
-export const SearchService = createService<SearchState>(
+export const SearchService = createService(
   () => {
-    const state = useLocalStore<SearchState>(() => ({
-      config: null,
+    const state = useLocalStore(() => ({
+      config: null as Config,
       isLoading: false,
       isFocus: false,
-      get items() {
+      get items(): SearchItem[] {
         const arr = [];
         if (state.config) {
           for (const team of state.config.teams) {
@@ -60,6 +51,19 @@ export const SearchService = createService<SearchState>(
           }
         }
         return arr;
+      },
+      get searchItems() {
+        const types = groupBy(state.items, "type");
+        const items = Object.keys(types)
+          .sort()
+          .map((region) => {
+            return {
+              label: searchMap[region],
+              id: region,
+              values: types[region].map((s) => s.name),
+            };
+          });
+        return items;
       },
       load: async () => {
         state.isLoading = true;

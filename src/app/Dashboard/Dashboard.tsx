@@ -2,7 +2,6 @@ import React from "react";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 
-import { Container, Row, Col } from "~/components";
 import { HeaderMain } from "~/app/HeaderMain";
 import { TotalCommitsPanel } from "./TotalCommitsPanel";
 import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
@@ -34,19 +33,17 @@ export const Dashboard = observer(() => {
   });
 
   return (
-    <Container className="pb-4">
-      <Row className="mb-5">
-        <Col lg={12}>
-          <div className="d-flex flex-wrap mb-3">
-            <HeaderMain title="Dashboard" className="mt-0 mb-3" />
-            <DashboardToolbar state={state} />
-          </div>
-        </Col>
+    <>
+      <div className="mb-8">
+        <div className="flex flex-wrap mb-3">
+          <HeaderMain title="Dashboard" className="mb-3" />
+          <DashboardToolbar state={state} />
+        </div>
         {state.isLoading ? (
           <List height="300px" />
         ) : (
-          <>
-            <Col lg={4}>
+          <div className="grid grid-cols-6 gap-4">
+            <div className="col-span-6 lg:col-span-2">
               <TotalCommitsPanel
                 className="mt-4"
                 valueToday={state.stats?.commits.todayValue}
@@ -73,8 +70,8 @@ export const Dashboard = observer(() => {
                 activeUsersToday={state.stats?.stats.activeUsers?.todayValue}
                 limit={state.limit}
               />
-            </Col>
-            <Col lg={4} md={12}>
+            </div>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
                 className="mt-4"
                 type="repository"
@@ -95,8 +92,8 @@ export const Dashboard = observer(() => {
                 colorShift={2}
                 data={state.stats?.topUsers?.value}
               />
-            </Col>
-            <Col lg={4} md={12}>
+            </div>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
                 className="mt-4"
                 type="repository"
@@ -117,18 +114,16 @@ export const Dashboard = observer(() => {
                 colorShift={2}
                 data={state.stats?.topUsers?.todayValue}
               />
-            </Col>
-          </>
+            </div>
+          </div>
         )}
-      </Row>
+      </div>
 
-      <Row className="mb-3 no-print">
-        <Col lg={12}>
-          <TrackersSelector />
-        </Col>
-      </Row>
+      <div className="mb-3 no-print">
+        <TrackersSelector />
+      </div>
 
       <TrackerActivities />
-    </Container>
+    </>
   );
 });

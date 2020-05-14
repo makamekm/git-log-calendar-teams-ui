@@ -103,7 +103,6 @@ const MessagesTable = observer(
         rowHeight={cache.rowHeight}
         rowCount={state.messages.length}
         rowGetter={({ index }) => state.messages[index]}
-        className="mb-0"
         rowClassName={({ index }) => {
           return index % 2 === 0 ? "odd" : "even";
         }}

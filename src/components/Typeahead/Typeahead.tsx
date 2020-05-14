@@ -3,6 +3,7 @@ import { useTransition, animated } from "react-spring";
 import Highlighter from "react-highlight-words";
 import classNames from "classnames";
 import { useLocalStore, observer } from "mobx-react";
+import { isEqual } from "lodash";
 import { useClickOutside, useKeyPress, useDelay } from "~/hooks";
 
 const LIMIT = 15;
@@ -18,6 +19,7 @@ export const Typeahead: React.FC<{
   hideClear?: boolean;
   hideCaret?: boolean;
   selected?: string[];
+  icon?: any;
   onChange?: (
     selected: string[],
     group?: {
@@ -38,18 +40,19 @@ export const Typeahead: React.FC<{
   ({
     className,
     placeholder,
-    options,
     selected,
     autoFocus,
-    showSelected,
-    minQuery,
-    allowNew,
     multiple,
     onChange,
     hideClear,
     hideCaret,
     onOpen,
     onClose,
+    icon,
+    options,
+    showSelected,
+    minQuery,
+    allowNew,
   }) => {
     const selectedRef = React.useRef<HTMLDivElement>(null);
     const ref = React.useRef<HTMLDivElement>(null);
@@ -59,6 +62,7 @@ export const Typeahead: React.FC<{
       isAnimation: false,
       isInputFocused: false,
       timeout: null as number,
+      cacheOptions: [] as any[],
       queryReact: "",
       query: "",
       get queryArr() {
@@ -66,7 +70,7 @@ export const Typeahead: React.FC<{
       },
       get options() {
         let length = 0;
-        const optionsStr: string[] = (options.filter(
+        const optionsStr: string[] = (state.cacheOptions.filter(
           (s) =>
             typeof s === "string" &&
             ((!showSelected && !selected.includes(s)) || showSelected) &&
@@ -76,7 +80,7 @@ export const Typeahead: React.FC<{
         const optionsGroups: {
           label: string;
           values: string[];
-        }[] = (options.filter((s) => typeof s !== "string") as any[])
+        }[] = (state.cacheOptions.filter((s) => typeof s !== "string") as any[])
           .map((g) => {
             let values = g.values.filter(
               (s) =>
@@ -111,7 +115,17 @@ export const Typeahead: React.FC<{
         };
       },
       get hasNew() {
-        return allowNew && !!state.query && !selected.includes(state.query);
+        return (
+          allowNew &&
+          !!state.query &&
+          !selected.includes(state.query) &&
+          !state.options.strings.find(
+            (s) => s.toLowerCase() === state.query.toLowerCase()
+          ) &&
+          !state.options.groups.find(
+            (s) => s.value.toLowerCase() === state.query.toLowerCase()
+          )
+        );
       },
       get isOpenCalc() {
         return (
@@ -123,7 +137,12 @@ export const Typeahead: React.FC<{
         );
       },
     }));
-    useDelay(state, "queryReact", "query");
+    React.useEffect(() => {
+      if (!isEqual(options, state.cacheOptions)) {
+        state.cacheOptions = options;
+      }
+    }, [options, state]);
+    useDelay(state, "queryReact", "query", 200);
     const open = React.useCallback(() => {
       if (!state.isOpen) {
         window.clearTimeout(state.timeout);
@@ -425,27 +444,41 @@ export const Typeahead: React.FC<{
                 )}
               </animated.div>
             ))}
-            <div className="flex-1">
+            <div className="flex-1 flex justify-start items-center">
               {(multiple || selected.length === 0) && (
-                <input
-                  ref={refInput}
-                  onFocus={() => {
-                    open();
-                    state.isInputFocused = true;
-                  }}
-                  onBlur={() => {
-                    state.isInputFocused = false;
-                    tryToCloseTimeout();
-                  }}
-                  value={state.queryReact}
-                  onChange={(e) => {
-                    state.queryReact = e.currentTarget.value;
-                  }}
-                  onKeyDown={onEnterInput}
-                  placeholder={placeholder}
-                  className="no-print bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
-                  style={{ minWidth: "100px" }}
-                />
+                <div className="flex-1 flex justify-start items-center">
+                  {!!icon && (
+                    <div className="absolute pl-3 pointer-events-none text-gray-700">
+                      {icon}
+                    </div>
+                  )}
+                  <input
+                    ref={refInput}
+                    onFocus={() => {
+                      open();
+                      state.isInputFocused = true;
+                    }}
+                    onBlur={() => {
+                      state.isInputFocused = false;
+                      tryToCloseTimeout();
+                    }}
+                    value={state.queryReact}
+                    onChange={(e) => {
+                      state.queryReact = e.currentTarget.value;
+                    }}
+                    onKeyDown={onEnterInput}
+                    placeholder={placeholder}
+                    className={classNames(
+                      "flex-1 no-print bg-transparent py-1 pr-2 appearance-none outline-none h-full w-full text-gray-800",
+                      {
+                        "pl-10": !!icon,
+                        "pl-2": !icon && selected.length > 0,
+                        "pl-3": !icon && selected.length === 0,
+                      }
+                    )}
+                    style={{ minWidth: "100px" }}
+                  />
+                </div>
               )}
             </div>
           </div>
@@ -527,7 +560,10 @@ export const Typeahead: React.FC<{
           ({ item, key, props }) =>
             item && (
               <animated.div key={key} style={props}>
-                <div className="no-print shadow left-0 right-0 w-full my-1 origin-top-right bg-white w-full min-w-64 rounded overflow-y-auto">
+                <div
+                  className="no-print shadow border left-0 right-0 w-full my-1 origin-top-right bg-white w-full min-w-64 rounded overflow-y-auto"
+                  style={{ maxHeight: "300px" }}
+                >
                   <div className="flex flex-col w-full">
                     {hasNewTransitions.map(
                       ({ item, key, props }) =>
@@ -551,7 +587,7 @@ export const Typeahead: React.FC<{
                                   (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
-                            className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
                           >
                             <div
                               className={classNames(
@@ -594,7 +630,7 @@ export const Typeahead: React.FC<{
                                 (document.activeElement as HTMLElement).blur();
                           }}
                           onBlur={tryToCloseTimeout}
-                          className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                          className="item cursor-pointer w-full border-gray-200 border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
                         >
                           <div
                             className={classNames(
@@ -627,9 +663,9 @@ export const Typeahead: React.FC<{
                       if (item.label) {
                         return (
                           <animated.div
-                            style={props}
+                            style={{ ...props, borderLeftColor: "transparent" }}
                             key={key}
-                            className="flex w-full font-semibold items-center justify-left text-xs py-1 px-3 border-transparent border-l-4 text-gray-600 rounded-t border-b"
+                            className="flex w-full font-semibold items-center justify-left text-xs py-1 px-3 border-l-4 border-t-0 border-r-0 border-b-2 border-gray-300 text-gray-800"
                           >
                             {item.label}
                           </animated.div>
@@ -666,7 +702,7 @@ export const Typeahead: React.FC<{
                                   (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
-                            className="item cursor-pointer w-full border-gray-200 rounded-t border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
                           >
                             <div
                               className={classNames(

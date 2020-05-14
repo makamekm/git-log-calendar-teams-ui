@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 
 export const LogoThemed = ({
   className,
@@ -9,7 +10,7 @@ export const LogoThemed = ({
   titleClassName?: string;
   small?: string;
 }) => (
-  <span className={className}>
+  <span className={classNames("ellipsis", className)}>
     <i className="fab fa-git fa-fw fa-lg"></i>
     {!small && (
       <sub className={titleClassName}>
