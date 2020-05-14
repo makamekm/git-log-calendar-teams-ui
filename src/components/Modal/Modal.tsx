@@ -76,9 +76,31 @@ export const Modal: React.FC<{
     },
     from: {
       opacity: 0,
+      position: "fixed",
+      background: "rgba(0, 0, 0, 0.6)",
+      left: 0,
+      bottom: 0,
+      top: 0,
+      right: 0,
     },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    enter: {
+      opacity: 1,
+      position: "fixed",
+      background: "rgba(0, 0, 0, 0.6)",
+      left: 0,
+      bottom: 0,
+      top: 0,
+      right: 0,
+    },
+    leave: {
+      opacity: 0,
+      position: "fixed",
+      background: "rgba(0, 0, 0, 0.6)",
+      left: 0,
+      bottom: 0,
+      top: 0,
+      right: 0,
+    },
   });
   const innerTransitions = useTransition(state.isOpen, null, {
     config: {
@@ -98,7 +120,7 @@ export const Modal: React.FC<{
         transitions.map(
           ({ item, key, props }) =>
             item && (
-              <animated.div key={key} className={"backdrop z-10"} style={props}>
+              <animated.div key={key} className={"z-10"} style={props}>
                 {innerTransitions.map(
                   ({ item, key, props }) =>
                     item && (

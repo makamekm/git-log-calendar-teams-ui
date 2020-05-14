@@ -73,7 +73,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
                 className="text-base font-normal border py-2 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 onClick={state.regnerateKeyPair}
               >
-                Regenerate The Key Pair
+                Regenerate Key Pair
               </button>
             </div>
           </div>

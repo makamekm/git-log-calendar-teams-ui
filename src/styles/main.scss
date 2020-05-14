@@ -47,6 +47,10 @@
   text-overflow: ellipsis;
 }
 
+.ellipsis-optimal {
+  max-width: 100%;
+}
+
 .hyphenate {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -58,9 +62,6 @@
 
 .fixed-table {
   table-layout: fixed;
-}
-
-.ReactVirtualized__Table {
 }
 
 .ReactVirtualized__Grid.ReactVirtualized__Table__Grid {
@@ -110,13 +111,4 @@
     display: block;
     height: auto !important; //OR PUT A HUGE AMOUNT WHERE YOUR LIST WILL ALWAYS FIT (9999999px)
   }
-}
-
-.backdrop {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.6);
-  left: 0;
-  bottom: 0;
-  top: 0;
-  right: 0;
 }
