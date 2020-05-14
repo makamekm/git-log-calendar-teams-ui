@@ -112,3 +112,33 @@
     height: auto !important; //OR PUT A HUGE AMOUNT WHERE YOUR LIST WILL ALWAYS FIT (9999999px)
   }
 }
+
+.s-table {
+  td {
+    padding: 0.5rem 0.5rem;
+    color: #333;
+    min-height: 50px;
+    vertical-align: top;
+  }
+  th {
+    text-transform: capitalize;
+    padding: 0.5rem 1rem;
+    font-size: 12px;
+    font-weight: 300 !important;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+  }
+  td:not(:last-child) {
+    border-right: 1px solid #ddd;
+  }
+  tr:not(:last-child) {
+    td {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+  tr.odd {
+    td {
+      background-color: rgba(173, 181, 189, 0.075);
+    }
+  }
+}

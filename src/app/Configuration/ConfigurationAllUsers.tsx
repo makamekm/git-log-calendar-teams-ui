@@ -9,7 +9,6 @@ import {
   CellMeasurer,
 } from "react-virtualized";
 
-import { Button } from "~/components";
 import { ConfigurationState } from "./ConfigurationState";
 import { numberWithCommas } from "~/tools";
 import { Accordion } from "~/components/Accordion/Accordion";
@@ -109,9 +108,12 @@ const UserActions = observer(
     return (
       <CellRenderer {...props}>
         {!registered && (
-          <Button size="sm" onClick={onRegisterUser}>
-            Register
-          </Button>
+          <button
+            className="text-xs font-normal border py-1 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            onClick={onRegisterUser}
+          >
+            <i className="fa fa-plus mr-2"></i>Add
+          </button>
         )}
       </CellRenderer>
     );

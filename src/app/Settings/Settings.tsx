@@ -36,10 +36,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
       {!state.settings || state.isLoading ? (
         <List className="m-3" height="200px" width="100%" />
       ) : (
-        <div className="px-3 pb-3">
+        <div className="px-3 pb-3 -mt-2">
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 mx-2 mt-3 text-gray-800">Public Key</div>
-            <div className="flex-1 mt-3 flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              Public Key:
+            </div>
+            <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
                 className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                 type="text"
@@ -52,8 +54,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 mx-2 mt-3 text-gray-800">Secret Key</div>
-            <div className="flex-1 mt-3 flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              Secret Key:
+            </div>
+            <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
                 className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                 onChange={(e) => {
@@ -65,10 +69,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 mx-2 mt-3 text-gray-800">
-              Regenerate Key Pair
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              Regenerate Key Pair:
             </div>
-            <div className="flex-1 mt-3 flex flex-col md:flex-row">
+            <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <button
                 className="text-base font-normal border py-2 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 onClick={state.regnerateKeyPair}
@@ -79,10 +83,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <AccordionToggle value={!!state.settings.secretKey}>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                Don't Collect Statistics
+              <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800">
+                Don't Collect Statistics:
               </div>
-              <div className="flex-1 mt-3">
+              <div className="flex-1 mt-3 mx-2">
                 <Toggle
                   checked={!!state.settings.dontCollect}
                   onChange={() => {
@@ -94,10 +98,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </AccordionToggle>
           <AccordionToggle value={!state.settings.dontCollect}>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                Parallel Job Collecting Limit
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                Parallel Job Collecting Limit:
               </div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="number"
@@ -113,10 +117,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                Local Collecting Interval (0 is from Configuration) [Minutes]
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                Local Collecting Interval (0 is from Configuration) [Minutes]:
               </div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="number"
@@ -132,10 +136,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                Limit Repositories Per Try (0 is unlimited)
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                Limit Repositories Per Try (0 is unlimited):
               </div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="number"
@@ -154,10 +158,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                Repositories to Collect (If empty then collect from all)
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                Repositories to Collect (If empty then collect from all):
               </div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <Typeahead
                   placeholder="Add repositories..."
                   autoFocus
@@ -175,8 +179,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 mx-2 mt-3 text-gray-800">Use Swarm</div>
-            <div className="flex-1 mt-3">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800">
+              Use Swarm:
+            </div>
+            <div className="flex-1 mt-3 mx-2">
               <Toggle
                 checked={!!state.settings.useDriveSwarm}
                 onChange={() => {
@@ -186,8 +192,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 mx-2 mt-3 text-gray-800">Use S3</div>
-            <div className="flex-1 mt-3">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800">
+              Use S3:
+            </div>
+            <div className="flex-1 mt-3 mx-2">
               <Toggle
                 checked={!!state.settings.useDriveS3}
                 onChange={() => {
@@ -198,10 +206,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <AccordionToggle value={!!state.settings.useDriveS3}>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                S3 Access Key ID
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                S3 Access Key ID:
               </div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
@@ -214,10 +222,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                S3 Secret Access Key
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                S3 Secret Access Key:
               </div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
@@ -230,10 +238,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">
-                S3 Bucket Name
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                S3 Bucket Name:
               </div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
@@ -246,8 +254,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="w-2/5 mx-2 mt-3 text-gray-800">S3 Drive Path</div>
-              <div className="flex-1 mt-3 flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+                S3 Drive Path:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
                   className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
@@ -261,10 +271,10 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
-            <div className="w-2/5 mx-2 mt-3 text-gray-800">
-              Remount Drive & Reload All
+            <div className="md:w-2/5 md:text-right pt-1 mx-2 mt-3 text-gray-800">
+              Drive Actions:
             </div>
-            <div className="flex-1 mt-1 -mx-2 -mb-2 flex flex-row flex-wrap">
+            <div className="flex-1 mt-1 -mb-2 flex flex-row flex-wrap">
               <AlertModal
                 accept={state.remount}
                 title="Remount Drive"

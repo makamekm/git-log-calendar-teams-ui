@@ -1,10 +1,9 @@
 import React from "react";
-import ReactResizeDetector from "react-resize-detector";
 import { useTransition, animated } from "react-spring";
 import Highlighter from "react-highlight-words";
 import classNames from "classnames";
 import { useLocalStore, observer } from "mobx-react";
-import { useClickOutside, useKeyPress } from "~/hooks";
+import { useClickOutside, useKeyPress, useDelay } from "~/hooks";
 
 const LIMIT = 15;
 
@@ -52,18 +51,83 @@ export const Typeahead: React.FC<{
     onOpen,
     onClose,
   }) => {
+    const selectedRef = React.useRef<HTMLDivElement>(null);
     const ref = React.useRef<HTMLDivElement>(null);
     const refInput = React.useRef<HTMLInputElement>(null);
     const state = useLocalStore(() => ({
       isOpen: false,
+      isAnimation: false,
       isInputFocused: false,
+      timeout: null as number,
+      queryReact: "",
       query: "",
       get queryArr() {
         return state.query.split(/\W/gi);
       },
+      get options() {
+        let length = 0;
+        const optionsStr: string[] = (options.filter(
+          (s) =>
+            typeof s === "string" &&
+            ((!showSelected && !selected.includes(s)) || showSelected) &&
+            s.toLowerCase().includes(state.query.toLowerCase())
+        ) as any[]).slice(0, LIMIT);
+        length = optionsStr.length;
+        const optionsGroups: {
+          label: string;
+          values: string[];
+        }[] = (options.filter((s) => typeof s !== "string") as any[])
+          .map((g) => {
+            let values = g.values.filter(
+              (s) =>
+                ((!showSelected && !selected.includes(s)) || showSelected) &&
+                s.toLowerCase().includes(state.query.toLowerCase())
+            );
+            values = values.slice(0, Math.max(0, values.length - length));
+            length += values.length;
+            return {
+              ...g,
+              values,
+            };
+          })
+          .filter((g) => g.values.length > 0);
+        const optionsGroupsReduced = optionsGroups.reduce((arr, group) => {
+          arr.push({
+            key: "_g_" + group.label,
+            label: group.label,
+          });
+          group.values.forEach((item) => {
+            arr.push({
+              key: "_g_" + group.label + "__" + item,
+              value: item,
+              group,
+            });
+          });
+          return arr;
+        }, []);
+        return {
+          strings: optionsStr,
+          groups: optionsGroupsReduced,
+        };
+      },
+      get hasNew() {
+        return allowNew && !!state.query && !selected.includes(state.query);
+      },
+      get isOpenCalc() {
+        return (
+          state.isOpen &&
+          (!minQuery || (minQuery && state.query.length >= minQuery)) &&
+          (state.options.strings.length > 0 ||
+            state.options.groups.length > 0 ||
+            state.hasNew)
+        );
+      },
     }));
+    useDelay(state, "queryReact", "query");
     const open = React.useCallback(() => {
       if (!state.isOpen) {
+        window.clearTimeout(state.timeout);
+        state.isAnimation = true;
         state.isOpen = true;
         onOpen && onOpen();
       }
@@ -71,6 +135,9 @@ export const Typeahead: React.FC<{
     const tryToClose = React.useCallback(() => {
       if (ref.current && ref.current.querySelectorAll(":focus").length === 0) {
         state.isOpen = false;
+        state.timeout = window.setTimeout(() => {
+          state.isAnimation = false;
+        }, 200);
         onClose && onClose();
       }
     }, [state, ref, onClose]);
@@ -148,51 +215,20 @@ export const Typeahead: React.FC<{
         }
       }
     });
-    let length = 0;
-    const optionsStr: string[] = (options.filter(
-      (s) =>
-        typeof s === "string" &&
-        ((!showSelected && !selected.includes(s)) || showSelected) &&
-        s.toLowerCase().includes(state.query.toLowerCase())
-    ) as any[]).slice(0, LIMIT);
-    length = optionsStr.length;
-    const optionsGroups: {
-      label: string;
-      values: string[];
-    }[] = (options.filter((s) => typeof s !== "string") as any[])
-      .map((g) => {
-        let values = g.values.filter(
-          (s) =>
-            ((!showSelected && !selected.includes(s)) || showSelected) &&
-            s.toLowerCase().includes(state.query.toLowerCase())
-        );
-        values = values.slice(0, Math.max(0, values.length - length));
-        length += values.length;
-        return {
-          ...g,
-          values,
-        };
-      })
-      .filter((g) => g.values.length > 0);
-    const hasNew = allowNew && !!state.query && !selected.includes(state.query);
     const isHighlitedByEnter = React.useCallback(
       (index?: number) => {
         if (state.isInputFocused) {
           if (index == null) {
-            return hasNew;
+            return state.hasNew;
           } else {
-            return !hasNew && index === 0;
+            return !state.hasNew && index === 0;
           }
         }
         return false;
       },
-      [state, hasNew]
+      [state]
     );
-    const isOpen =
-      state.isOpen &&
-      (!minQuery || (minQuery && state.query.length >= minQuery)) &&
-      (optionsStr.length > 0 || optionsGroups.length > 0 || hasNew);
-    const transitions = useTransition(isOpen, null, {
+    const transitions = useTransition(state.isOpenCalc, null, {
       config: {
         duration: 100,
       },
@@ -256,47 +292,12 @@ export const Typeahead: React.FC<{
         transform: "scale(0.9)",
       },
     });
-    const optionsStrTransitions = useTransition(optionsStr, (item) => item, {
-      config: (item) =>
-        !optionsStr.includes(item)
-          ? { duration: 0 }
-          : {
-              duration: 100,
-            },
-      from: {
-        opacity: 0,
-        transform: "scale(0.9)",
-      },
-      enter: {
-        opacity: 1,
-        transform: "scale(1)",
-      },
-      leave: {
-        opacity: 0,
-        transform: "scale(0.9)",
-      },
-    });
-    const optionsGroupsReduced = optionsGroups.reduce((arr, group) => {
-      arr.push({
-        key: "_g_" + group.label,
-        label: group.label,
-      });
-      group.values.forEach((item) => {
-        arr.push({
-          key: "_g_" + group.label + "__" + item,
-          value: item,
-          group,
-        });
-      });
-      return arr;
-    }, []);
-
-    const optionsGroupTransitions = useTransition(
-      optionsGroupsReduced,
-      (item) => item.key,
+    const optionsStrTransitions = useTransition(
+      state.options.strings,
+      (item) => item,
       {
         config: (item) =>
-          !optionsGroupsReduced.includes(item)
+          !state.options.strings.includes(item)
             ? { duration: 0 }
             : {
                 duration: 100,
@@ -315,9 +316,33 @@ export const Typeahead: React.FC<{
         },
       }
     );
-    const hasNewTransitions = useTransition(hasNew, null, {
+    const optionsGroupTransitions = useTransition(
+      state.options.groups,
+      (item) => item.key,
+      {
+        config: (item) =>
+          !state.options.groups.includes(item)
+            ? { duration: 0 }
+            : {
+                duration: 100,
+              },
+        from: {
+          opacity: 0,
+          transform: "scale(0.9)",
+        },
+        enter: {
+          opacity: 1,
+          transform: "scale(1)",
+        },
+        leave: {
+          opacity: 0,
+          transform: "scale(0.9)",
+        },
+      }
+    );
+    const hasNewTransitions = useTransition(state.hasNew, null, {
       config: () =>
-        !hasNew
+        !state.hasNew
           ? { duration: 0 }
           : {
               duration: 100,
@@ -341,83 +366,89 @@ export const Typeahead: React.FC<{
         ref={ref}
         className={classNames(
           className,
-          "w-full flex flex-col items-center relative z-10"
+          "w-full flex flex-col items-center relative",
+          {
+            "z-10": !state.isOpen,
+            "z-20": state.isAnimation,
+            "z-30": state.isOpen,
+          }
         )}
       >
         <div
           className="w-full flex items-stretch border border-gray-200 bg-white rounded shadow-sm"
-          style={{ minHeight: "2.5rem" }}
+          style={{ minHeight: "38px" }}
         >
-          <ReactResizeDetector handleWidth>
-            {({ width }) => (
-              <div className="relative flex flex-auto flex-wrap p-1">
-                {selectedTransitions.map(({ item, props, key }) => (
-                  <animated.div
-                    style={{ ...props, maxWidth: `${width - 110}px` }}
-                    key={key}
-                    className="flex justify-center items-center max-w-xs m-1 font-medium py-1 px-2 bg-white rounded-full text-gray-700 bg-gray-100 border border-gray-300"
-                  >
-                    <div className="px-1 text-xs font-normal leading-none flex-initial ellipsis">
-                      {item}
-                    </div>
-                    {multiple && (
-                      <div className="-ml-2 flex flex-auto flex-row-reverse">
-                        <button
-                          onClick={() => {
-                            onChange(selected.filter((s) => s !== item));
-                            autoFocus &&
-                              refInput.current &&
-                              refInput.current.focus();
-                          }}
-                          onBlur={tryToCloseTimeout}
-                          className="hover:text-red-400 focus:text-red-400 outline-none focus:outline-none"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="100%"
-                            height="100%"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="feather feather-x cursor-pointer rounded-full w-4 h-4 ml-2"
-                          >
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                          </svg>
-                        </button>
-                      </div>
-                    )}
-                  </animated.div>
-                ))}
-                <div className="flex-1">
-                  {(multiple || selected.length === 0) && (
-                    <input
-                      ref={refInput}
-                      onFocus={() => {
-                        open();
-                        state.isInputFocused = true;
-                      }}
-                      onBlur={() => {
-                        state.isInputFocused = false;
-                        tryToCloseTimeout();
-                      }}
-                      value={state.query}
-                      onChange={(e) => {
-                        state.query = e.currentTarget.value;
-                      }}
-                      onKeyDown={onEnterInput}
-                      placeholder={placeholder}
-                      className="no-print bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
-                      style={{ minWidth: "100px" }}
-                    />
-                  )}
+          <div ref={selectedRef} className="relative flex flex-auto flex-wrap">
+            {selectedTransitions.map(({ item, props, key }) => (
+              <animated.div
+                style={{
+                  ...props,
+                  maxWidth: selectedRef.current
+                    ? `${selectedRef.current.clientWidth - 10}px`
+                    : undefined,
+                }}
+                key={key}
+                className="flex justify-center items-center max-w-xs m-1 font-medium py-1 px-2 bg-white rounded-full text-gray-700 bg-gray-100 border border-gray-300"
+              >
+                <div className="px-1 text-xs font-normal leading-none flex-initial ellipsis">
+                  {item}
                 </div>
-              </div>
-            )}
-          </ReactResizeDetector>
+                {multiple && (
+                  <div className="-ml-2 flex flex-auto flex-row-reverse">
+                    <button
+                      onClick={() => {
+                        onChange(selected.filter((s) => s !== item));
+                        autoFocus &&
+                          refInput.current &&
+                          refInput.current.focus();
+                      }}
+                      onBlur={tryToCloseTimeout}
+                      className="hover:text-red-400 focus:text-red-400 outline-none focus:outline-none"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        height="100%"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="feather feather-x cursor-pointer rounded-full w-4 h-4 ml-2"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </animated.div>
+            ))}
+            <div className="flex-1">
+              {(multiple || selected.length === 0) && (
+                <input
+                  ref={refInput}
+                  onFocus={() => {
+                    open();
+                    state.isInputFocused = true;
+                  }}
+                  onBlur={() => {
+                    state.isInputFocused = false;
+                    tryToCloseTimeout();
+                  }}
+                  value={state.queryReact}
+                  onChange={(e) => {
+                    state.queryReact = e.currentTarget.value;
+                  }}
+                  onKeyDown={onEnterInput}
+                  placeholder={placeholder}
+                  className="no-print bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
+                  style={{ minWidth: "100px" }}
+                />
+              )}
+            </div>
+          </div>
 
           {!hideClear &&
             hasSelectionTransitions.map(
@@ -479,7 +510,10 @@ export const Typeahead: React.FC<{
                   strokeLinejoin="round"
                   className={classNames(
                     "feather feather-chevron-up w-4 h-4 transition-transform duration-200 transform",
-                    { "rotate-180": isOpen, "rotate-0": !isOpen }
+                    {
+                      "rotate-180": state.isOpenCalc,
+                      "rotate-0": !state.isOpenCalc,
+                    }
                   )}
                 >
                   <polyline points="18 15 12 9 6 15"></polyline>
@@ -503,7 +537,7 @@ export const Typeahead: React.FC<{
                             style={props}
                             onClick={() => {
                               const item = state.query;
-                              if (hasNew) {
+                              if (state.hasNew) {
                                 onChange(
                                   multiple ? [...selected, item] : [item]
                                 );

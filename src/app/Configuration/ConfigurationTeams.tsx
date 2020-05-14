@@ -2,22 +2,14 @@ import React from "react";
 import Toggle from "react-toggle";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
-import { Typeahead } from "react-bootstrap-typeahead";
-
-import {
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownItem,
-  Button,
-  Input,
-  DropdownMenu,
-} from "~/components";
 import { ConfigurationState } from "./ConfigurationState";
 import {
   ConfigurationTable,
   ConfigurationTableProps,
 } from "./ConfigurationTable";
 import { Accordion } from "~/components/Accordion/Accordion";
+import { Typeahead } from "~/components/Typeahead/Typeahead";
+import { Dropdown } from "~/components/Dropdown/Dropdown";
 
 const ConfigurationTableTeams = ConfigurationTable as React.FC<
   ConfigurationTableProps<ConfigurationState["config"]["teams"][0]>
@@ -35,10 +27,9 @@ export const ConfigurationTeams = observer(
               Teams
               <span className="text-sm ml-2 text-gray-600">#1.01</span>
             </div>
-            <Button
-              outline
-              size="sm"
-              className="ml-auto align-self-end"
+
+            <button
+              className="text-xs font-normal border py-1 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
               onClick={(e) => {
                 e.stopPropagation();
                 state.config.teams.unshift({
@@ -51,7 +42,7 @@ export const ConfigurationTeams = observer(
               }}
             >
               <i className="fa fa-plus mr-2"></i>Add
-            </Button>
+            </button>
           </div>
         }
       >
@@ -62,16 +53,17 @@ export const ConfigurationTeams = observer(
             items={state.config.teams}
             header={
               <>
-                <th className="bt-0">Name</th>
-                <th className="bt-0">Inverted</th>
-                <th className="bt-0">Users</th>
-                <th className="text-right bt-0">Actions</th>
+                <th>Name</th>
+                <th className="text-center">Inverted</th>
+                <th>Users</th>
+                <th className="text-right">Actions</th>
               </>
             }
             render={(team) => (
               <>
                 <td className="align-middle">
-                  <Input
+                  <input
+                    className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
                       team.name = e.currentTarget.value;
@@ -80,8 +72,9 @@ export const ConfigurationTeams = observer(
                     placeholder="Name (Required & Unique)..."
                   />
                 </td>
-                <td className="align-middle">
+                <td className="align-middle text-center">
                   <Toggle
+                    className="mt-2"
                     checked={team.invert}
                     onChange={() => {
                       team.invert = !team.invert;
@@ -95,61 +88,50 @@ export const ConfigurationTeams = observer(
                   className="align-middle"
                   style={{
                     maxWidth: "300px",
-                    overflow: "hidden",
                   }}
                 >
                   {!team.invert && (
                     <Typeahead
-                      id="exclusions"
                       placeholder="Add users..."
                       multiple
                       allowNew
+                      autoFocus
                       selected={team.users}
                       onChange={(selected) => {
-                        selected = selected.map((s: any) =>
-                          typeof s === "string" ? s : s.label
-                        );
                         (team.users as any).replace(selected);
                       }}
                       options={state.users}
-                      positionFixed
                     />
                   )}
                 </td>
                 <td className="align-middle text-right">
-                  <UncontrolledButtonDropdown>
-                    <DropdownToggle
-                      color="link"
-                      className="text-decoration-none"
+                  <Dropdown title={<i className="fas fa-cog"></i>}>
+                    <button
+                      className={
+                        "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                      }
+                      onClick={() => {
+                        state.config.teams.splice(
+                          state.config.teams.indexOf(team),
+                          1
+                        );
+                      }}
                     >
-                      <i className="fa fa-gear"></i>
-                      <i className="fa fa-angle-down ml-2"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem
-                        onClick={() => {
-                          state.config.teams.splice(
-                            state.config.teams.indexOf(team),
-                            1
-                          );
-                        }}
-                      >
-                        <i className="fa fa-fw fa-trash mr-2"></i>
-                        Delete
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledButtonDropdown>
+                      <i className="fa fa-fw fa-trash mr-2"></i>
+                      Delete
+                    </button>
+                  </Dropdown>
                 </td>
               </>
             )}
-            renderAdditional={(team, style) => (
-              <tr style={{ ...style }}>
+            renderAdditional={(team, style, className) => (
+              <tr style={{ ...style }} className={className}>
                 <td colSpan={5}>
                   <Typeahead
-                    id="exclusions"
                     placeholder="Add repositories..."
                     multiple
                     allowNew
+                    autoFocus
                     selected={team.repositories}
                     onChange={(selected) => {
                       selected = selected.map((s: any) =>
@@ -158,7 +140,6 @@ export const ConfigurationTeams = observer(
                       (team.repositories as any).replace(selected);
                     }}
                     options={state.repositories}
-                    positionFixed
                   />
                 </td>
               </tr>

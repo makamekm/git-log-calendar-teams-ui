@@ -11,10 +11,22 @@ export const Dropdown: React.FC<{
   const ref = React.useRef<HTMLDivElement>(null);
   const state = useLocalStore(() => ({
     isOpen: false,
+    isAnimation: false,
+    timeout: null as number,
   }));
+  const open = React.useCallback(() => {
+    if (!state.isOpen) {
+      window.clearTimeout(state.timeout);
+      state.isAnimation = true;
+      state.isOpen = true;
+    }
+  }, [state]);
   const tryToClose = React.useCallback(() => {
     if (ref.current && ref.current.querySelectorAll(":focus").length === 0) {
       state.isOpen = false;
+      state.timeout = window.setTimeout(() => {
+        state.isAnimation = false;
+      }, 200);
     }
   }, [state, ref]);
   const tryToCloseTimeout = React.useCallback(() => {
@@ -37,13 +49,15 @@ export const Dropdown: React.FC<{
   return (
     <div
       ref={ref}
-      className={classNames(className, "relative z-10")}
+      className={classNames(className, "relative", {
+        "z-10": !state.isOpen,
+        "z-20": state.isAnimation,
+        "z-30": state.isOpen,
+      })}
       onMouseLeave={tryToCloseTimeout}
     >
       <button
-        onClick={() => {
-          state.isOpen = !state.isOpen;
-        }}
+        onClick={open}
         onBlur={tryToCloseTimeout}
         className="flex-inline flex-row items-center px-3 py-2 text-sm rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
       >
@@ -67,14 +81,13 @@ export const Dropdown: React.FC<{
         ({ item, key, props }) =>
           item && (
             <animated.div key={key} style={props}>
-              <div className="no-print absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48 text-left">
+              <div className="no-print absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg w-full md:w-48 text-left">
                 <div
-                  className="flex flex-col w-full px-1 overflow-y-auto h-64 bg-white rounded-md shadow dark-mode:bg-gray-800 text-gray-600 dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
+                  className="flex flex-col w-full px-1 overflow-y-auto bg-white rounded-md shadow dark-mode:bg-gray-800 text-gray-600 dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
                   tabIndex={0}
+                  style={{ maxHeight: "300px" }}
                 >
-                  <div className="flex flex-col -my-1 w-full py-1">
-                    {children}
-                  </div>
+                  <div className="flex flex-col w-full py-1">{children}</div>
                 </div>
               </div>
             </animated.div>
