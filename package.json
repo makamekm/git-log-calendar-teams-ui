@@ -1,6 +1,6 @@
 {
   "name": "git-activity-team-tracker",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": false,
   "description": "The tool visualize git activities, for teams, users, repositories",
   "author": "Maxim Karpov <makame@mail.ru>",
