@@ -14,7 +14,7 @@ const HeaderMain = ({
     {/* START H1 Header */}
     <div
       className={classNames(
-        "text-5xl font-light text-gray-900 dark-mode:text-gray-300",
+        "no-print-break text-5xl font-light text-gray-900 dark-mode:text-gray-300",
         className
       )}
     >

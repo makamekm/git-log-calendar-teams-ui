@@ -99,6 +99,28 @@
         transform-origin: 50% 50%;
         animation: spin 0.75s linear infinite;
       }
+      .printing {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: white;
+        color: #999;
+        font-size: 3rem;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.1s;
+      }
+      @media screen and (prefers-color-scheme: dark) {
+        .printing {
+          background-color: rgb(15, 19, 26);
+          color: rgb(237, 242, 247);
+        }
+      }
     </style>
   </head>
   <body>
@@ -147,6 +169,10 @@
 
     <!-- END Loader -->
     <div id="root"></div>
+
+    <div class="printing no-print">
+      ... PRINTING ...
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

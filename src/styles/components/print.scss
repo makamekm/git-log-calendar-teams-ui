@@ -1,8 +1,4 @@
 @media print {
-  body {
-    opacity: 1 !important;
-  }
-
   *,
   *::before,
   *::after {
@@ -16,10 +12,19 @@
   }
 
   .no-print-break {
-    display: block !important;
-    position: relative;
+    // display: block !important;
+    position: relative !important;
     page-break-inside: avoid !important;
+    -webkit-column-break-inside: avoid !important;
     page-break-before: auto !important;
+    page-break-after: auto !important;
+    break-inside: avoid !important;
+  }
+
+  .no-print-break:after {
+    display: block;
+    height: 0px;
+    visibility: hidden;
   }
 
   a {
@@ -28,14 +33,12 @@
 
   .recharts-wrapper,
   .recharts-surface {
-    page-break-inside: avoid !important;
     width: 100% !important;
   }
 
-  .calendar-activities {
-    page-break-inside: avoid !important;
-    width: 100% !important;
-  }
+  // .calendar-activities {
+  //   width: 100% !important;
+  // }
 }
 
 @page {

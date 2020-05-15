@@ -19,12 +19,13 @@ export const NavbarPrint = observer(({ className }: { className?: string }) => {
       <i className="fa fa-print"></i>
       <style global jsx>{`
         body {
-          opacity: ${state.isPrinting ? "0" : "1"};
-        }
-        body {
           ${state.isPrinting ? "min-width: 1024px !important;" : ""}
           ${state.isPrinting ? "width: 1024px !important;" : ""}
           ${state.isPrinting ? "max-width: 1024px !important;" : ""}
+        }
+        .printing {
+          ${state.isPrinting ? "display: flex;" : ""}
+          opacity: 1;
         }
       `}</style>
     </div>

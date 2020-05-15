@@ -15,7 +15,10 @@ const HeaderSection = ({
   className?: string;
 }) => (
   <div
-    className={classNames("flex items-center text-5xl font-light", className)}
+    className={classNames(
+      "no-print-break flex items-center text-5xl font-light",
+      className
+    )}
   >
     <div>
       <div className="mr-3 display-4 text-muted">{no}.</div>

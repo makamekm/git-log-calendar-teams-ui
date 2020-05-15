@@ -37,7 +37,7 @@ export const CalendarActivities = ({
         className
       )}
       style={{
-        maxWidth: isPrint ? "1000px" : "1000px",
+        maxWidth: "1000px",
         height: `${height * years}px`,
         maxHeight: `${height * years}px`,
         minHeight: `${height * years}px`,

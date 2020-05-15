@@ -64,7 +64,11 @@ export const BarActivities = ({
     print: true,
   });
   return (
-    <ResponsiveContainer width="100%" minHeight={height} className={className}>
+    <ResponsiveContainer
+      width={isPrint ? 900 : "100%"}
+      minHeight={height}
+      className={className}
+    >
       <BarChart
         data={data}
         margin={{

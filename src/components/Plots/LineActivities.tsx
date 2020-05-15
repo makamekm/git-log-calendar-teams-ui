@@ -69,7 +69,11 @@ export const LineActivities = ({
     print: true,
   });
   return (
-    <ResponsiveContainer width="100%" minHeight={height} className={className}>
+    <ResponsiveContainer
+      width={isPrint ? 900 : "100%"}
+      minHeight={height}
+      className={className}
+    >
       <LineChart
         data={data}
         margin={{
