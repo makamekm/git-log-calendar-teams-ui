@@ -33,6 +33,13 @@ const isWin = process.platform !== "darwin";
 
 powerSaveBlocker.start("prevent-app-suspension");
 
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+  process.exit(1);
+}
+
 let isQuiting;
 
 app.on("before-quit", function () {
