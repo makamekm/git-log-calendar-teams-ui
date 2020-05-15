@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import moment from "moment";
 import { ResponsiveCalendar } from "@nivo/calendar";
+import { useMediaQuery } from "react-responsive";
 
 export const CalendarActivities = ({
   height,
@@ -22,11 +23,14 @@ export const CalendarActivities = ({
   const now = moment().format("YYYY-MM-DD");
   const past = moment().subtract(limit, "days").format("YYYY-MM-DD");
   const years = moment().year() - moment().subtract(limit, "days").year() + 1;
+  const isPrint = useMediaQuery({
+    print: true,
+  });
   return (
     <div
       className={classNames("calendar-activities mx-auto", className)}
       style={{
-        maxWidth: "1000px",
+        maxWidth: isPrint && "1000px",
         height: `${height * years}px`,
         maxHeight: `${height * years}px`,
         minHeight: `${height * years}px`,

@@ -28,7 +28,7 @@ export const Accordion: React.FC<{
     <div
       className={classNames(
         className,
-        "no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+        "mt-3 bg-white rounded-lg shadow-md text-gray-700"
       )}
     >
       <div className="flex items-center w-full font-semibold px-4 py-3 text-lg">

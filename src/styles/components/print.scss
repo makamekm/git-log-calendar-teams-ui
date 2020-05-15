@@ -12,12 +12,10 @@
   }
 
   .no-print-break {
+    display: block !important;
+    position: relative;
     page-break-inside: avoid !important;
-  }
-
-  body,
-  .container {
-    min-width: 1024px !important;
+    page-break-before: auto !important;
   }
 
   a {
@@ -26,11 +24,13 @@
 
   .recharts-wrapper,
   .recharts-surface {
-    width: calc(100%) !important;
+    page-break-inside: avoid !important;
+    width: 100% !important;
   }
 
   .calendar-activities {
     page-break-inside: avoid !important;
+    width: 100% !important;
   }
 }
 

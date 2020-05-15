@@ -60,7 +60,7 @@ export const RepositoryDashboard = observer(() => {
         {state.isLoading ? (
           <List height="300px" />
         ) : (
-          <div className="grid grid-cols-6 gap-4">
+          <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6 lg:col-span-2">
               <TotalCommitsPanel
                 valueToday={state.stats?.commits.todayValue}
@@ -68,13 +68,13 @@ export const RepositoryDashboard = observer(() => {
                 limit={state.limit}
               />
               <TotalChangedLinesPanel
-                className="mt-4"
+                className="mt-6"
                 valueToday={state.stats?.changes.todayValue}
                 valueLimited={state.stats?.changes.value}
                 limit={state.limit}
               />
               <ActiveStatsPanel
-                className="mt-4"
+                className="mt-6"
                 activeUsers={state.stats?.stats.activeUsers?.value}
                 activeTeams={state.stats?.stats.activeTeams?.value}
                 activeUsersToday={state.stats?.stats.activeUsers?.todayValue}
@@ -89,7 +89,7 @@ export const RepositoryDashboard = observer(() => {
                 data={state.stats?.topUsers?.value}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="team"
                 name={`Teams ${periods[state.limit]}`}
                 colorShift={2}
@@ -103,7 +103,7 @@ export const RepositoryDashboard = observer(() => {
                 data={state.stats?.topUsers?.todayValue}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="team"
                 name="Teams Today"
                 colorShift={2}

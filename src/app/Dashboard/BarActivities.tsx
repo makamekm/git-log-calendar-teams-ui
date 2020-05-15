@@ -12,6 +12,7 @@ import {
   Bar,
 } from "recharts";
 import colors from "~/colors";
+import { useMediaQuery } from "react-responsive";
 
 const addEmptyDays = (
   data: {
@@ -59,6 +60,9 @@ export const BarActivities = ({
   const now = moment();
   const past = moment().subtract(limit, "days");
   data = addEmptyDays(data, past, now);
+  const isPrint = useMediaQuery({
+    print: true,
+  });
   return (
     <ResponsiveContainer width="100%" minHeight={height} className={className}>
       <BarChart
@@ -106,6 +110,7 @@ export const BarActivities = ({
           }}
         />
         <Tooltip
+          isAnimationActive={!isPrint}
           content={(props) => {
             return (
               <div
@@ -121,8 +126,14 @@ export const BarActivities = ({
           }}
         />
         <ReferenceLine y={0} stroke="#000" />
-        <Brush dataKey="day" height={30} stroke={colors["blue"]} />
+        <Brush
+          dataKey="day"
+          height={30}
+          stroke={colors["blue"]}
+          isAnimationActive={!isPrint}
+        />
         <Bar
+          isAnimationActive={!isPrint}
           dataKey="value"
           fill={"rgba(30, 183, 255, 0.4)"}
           stroke={colors["blue"]}

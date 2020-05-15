@@ -12,6 +12,7 @@ import {
   Line,
 } from "recharts";
 import colors from "~/colors";
+import { useMediaQuery } from "react-responsive";
 
 const colorsArr = ["green", "blue", "yellow", "cyan", "purple"];
 
@@ -64,6 +65,9 @@ export const LineActivities = ({
   const now = moment();
   const past = moment().subtract(limit, "days");
   data = addEmptyDays(data, names, past, now);
+  const isPrint = useMediaQuery({
+    print: true,
+  });
   return (
     <ResponsiveContainer width="100%" minHeight={height} className={className}>
       <LineChart
@@ -110,11 +114,12 @@ export const LineActivities = ({
             fill: colors["900"],
           }}
         />
-        <Tooltip />
+        <Tooltip isAnimationActive={!isPrint} />
         <ReferenceLine y={0} stroke="#000" />
         <Legend />
         {names.map((name, index) => (
           <Line
+            isAnimationActive={!isPrint}
             type="linear"
             key={name}
             dataKey={name}

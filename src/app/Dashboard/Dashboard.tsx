@@ -42,22 +42,22 @@ export const Dashboard = observer(() => {
         {state.isLoading ? (
           <List height="300px" />
         ) : (
-          <div className="grid grid-cols-6 gap-4">
+          <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6 lg:col-span-2">
               <TotalCommitsPanel
-                className="mt-4"
+                className="mt-6"
                 valueToday={state.stats?.commits.todayValue}
                 valueLimited={state.stats?.commits.value}
                 limit={state.limit}
               />
               <TotalChangedLinesPanel
-                className="mt-4"
+                className="mt-6"
                 valueToday={state.stats?.changes.todayValue}
                 valueLimited={state.stats?.changes.value}
                 limit={state.limit}
               />
               <ActiveStatsPanel
-                className="mt-4"
+                className="mt-6"
                 activeRepositories={
                   state.stats?.stats.activeRepositories?.value
                 }
@@ -73,20 +73,20 @@ export const Dashboard = observer(() => {
             </div>
             <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="repository"
                 name={`Repositories ${periods[state.limit]}`}
                 data={state.stats?.topRepositories?.value}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="team"
                 name={`Teams ${periods[state.limit]}`}
                 colorShift={1}
                 data={state.stats?.topTeams?.value}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="user"
                 name={`Users ${periods[state.limit]}`}
                 colorShift={2}
@@ -95,20 +95,20 @@ export const Dashboard = observer(() => {
             </div>
             <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="repository"
                 name="Repositories Today"
                 data={state.stats?.topRepositories?.todayValue}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="team"
                 name="Teams Today"
                 colorShift={1}
                 data={state.stats?.topTeams?.todayValue}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="user"
                 name="Users Today"
                 colorShift={2}
