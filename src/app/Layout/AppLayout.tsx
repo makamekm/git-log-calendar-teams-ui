@@ -58,13 +58,13 @@ const MenuItems = () => {
       />
 
       <SidebarMenuItem
-        icon={<i className="fa fa-cog"></i>}
+        icon={<i className="fa fa-cogs"></i>}
         title="Configuration"
         to="/configuration"
       />
 
       <SidebarMenuItem
-        icon={<i className="fas fa-cogs"></i>}
+        icon={<i className="fas fa-cog"></i>}
         title="Settings"
         to="/settings"
       />
@@ -220,7 +220,7 @@ export const AppLayout: React.FC = observer(({ children }) => {
       <div className="lg:flex">
         <SideMenu />
         <div className="relative flex-1 flex flex-col min-h-screen">
-          <div className="max-w-full content container mx-auto flex-1">
+          <div className="content container mx-auto flex-1">
             <TopMenu />
             {children}
             {service.footer && (

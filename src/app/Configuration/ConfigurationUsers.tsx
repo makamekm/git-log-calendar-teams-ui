@@ -19,6 +19,7 @@ export const ConfigurationUsers = observer(
   ({ state }: { state: ConfigurationState }) => {
     return (
       <Accordion
+        syncStorageName="configurationUsersAccordion"
         className="mb-3"
         title={
           <div className="flex justify-between items-center w-full">

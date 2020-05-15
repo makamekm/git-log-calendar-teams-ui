@@ -19,6 +19,7 @@ export const ConfigurationRepositories = observer(
   ({ state }: { state: ConfigurationState }) => {
     return (
       <Accordion
+        syncStorageName="configurationRepositoriesAccordion"
         className="mb-3"
         title={
           <div className="flex justify-between items-center w-full">

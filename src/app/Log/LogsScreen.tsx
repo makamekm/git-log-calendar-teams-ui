@@ -146,34 +146,41 @@ export const LogsScreen = observer(() => {
         />
       </div>
 
-      <div className="border mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
+      <div className="max-w-full border mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
         {state.isLoading ? (
           <List height={"300px"} className="m-4" />
         ) : state.aggregatedLogs.length > 0 ? (
-          <table className="s-table">
-            <tbody>
-              {state.aggregatedLogs.map((line, index) => {
-                return (
-                  <tr key={index}>
-                    <td className="text-nowrap px-3 py-2">
-                      {line.date.format("YYYY-MM-DD hh:mm:ss")}
-                    </td>
-                    <td className="px-3 py-2">{line.source}</td>
-                    <td
-                      className={classNames(
-                        "px-3 py-2",
-                        `color-${levelColorMap[line.level]}`
-                      )}
-                    >
-                      {line.level}
-                    </td>
-                    <td className="px-3 py-2">
-                      <code>{line.message}</code>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+          <table className="grid grid-cols-6 max-w-full">
+            {state.aggregatedLogs.map((line, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <div className="whitespace-no-wrap px-3 py-2 col-span-2 border-b dark-mode:border-gray-700">
+                    {line.date.format("YYYY-MM-DD hh:mm:ss:SSS")}
+                  </div>
+                  <div className="whitespace-no-wrap font-semibold text-center px-3 py-2 col-span-2 border-b border-l border-r dark-mode:border-gray-700">
+                    {line.source}
+                  </div>
+                  <div
+                    className={classNames(
+                      "whitespace-no-wrap font-semibold px-3 py-2 col-span-2 text-right border-b dark-mode:border-gray-700",
+                      `color-${levelColorMap[line.level]}`
+                    )}
+                  >
+                    {line.level}
+                  </div>
+                  <div className="px-3 py-2 hyphenate col-span-6 border-b dark-mode:border-gray-700 last:border-0">
+                    <code className="hyphenate max-w-full">
+                      {line.message.split("\n").map((text, index) => (
+                        <React.Fragment key={`${text}-${index}`}>
+                          {text}
+                          <br />
+                        </React.Fragment>
+                      ))}
+                    </code>
+                  </div>
+                </React.Fragment>
+              );
+            })}
           </table>
         ) : (
           <div className="text-center py-3">There are no logs...</div>

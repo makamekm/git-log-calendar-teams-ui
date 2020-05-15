@@ -20,6 +20,7 @@ export const ConfigurationTeams = observer(
     return (
       <Accordion
         className="mb-3"
+        syncStorageName="configurationTeamsAccordion"
         initialOpen
         title={
           <div className="flex justify-between items-center w-full">

@@ -237,6 +237,7 @@ export const ConfigurationAllUsers = observer(
     }));
     return (
       <Accordion
+        syncStorageName="configurationAllUsersAccordion"
         className="mb-3 no-print"
         initialOpen
         title={

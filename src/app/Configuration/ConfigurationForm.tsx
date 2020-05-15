@@ -11,6 +11,7 @@ export const ConfigurationForm = observer(
     return (
       <Accordion
         className="mb-3"
+        syncStorageName="configurationFormAccordion"
         title={
           <div className="flex justify-between items-center w-full">
             <div>

@@ -104,11 +104,15 @@ export const useSimpleSyncLocalStorage = <T, K extends keyof T>(
   state: T,
   name: K,
   storageName?: string,
-  delay = 0
+  delay = 0,
+  disable?: boolean
 ) => {
   const key = storageName || (name as string);
 
   React.useEffect(() => {
+    if (disable) {
+      return;
+    }
     return reaction(
       () => [state[name]],
       ([value]) => {
@@ -118,9 +122,12 @@ export const useSimpleSyncLocalStorage = <T, K extends keyof T>(
         }
       }
     );
-  }, [state, name, key, delay]);
+  }, [state, name, key, delay, disable]);
 
   React.useEffect(() => {
+    if (disable) {
+      return;
+    }
     const localValue = localStorage.getItem(key);
     setObservable(state, name, toJS(localValue));
     return reaction(
@@ -132,7 +139,7 @@ export const useSimpleSyncLocalStorage = <T, K extends keyof T>(
         }
       }, delay)
     );
-  }, [state, name, key, delay]);
+  }, [state, name, key, delay, disable]);
 };
 
 export const useSyncLocalStorage = <T, K extends keyof T>(

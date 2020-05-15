@@ -1,9 +1,17 @@
 .s-table {
+  display: flex;
+  table-layout: auto;
   td {
     padding: 0.5rem 0.5rem;
     color: currentColor;
     min-height: 50px;
     vertical-align: top;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
   }
   th {
     text-transform: capitalize;

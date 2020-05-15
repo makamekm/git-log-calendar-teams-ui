@@ -1,6 +1,7 @@
 module.exports = {
   variants: {
     boxShadow: ["responsive", "hover", "focus", "focus-within"],
+    borderWidth: ["responsive", "first", "last", "hover", "focus"],
   },
   theme: {
     container: {
