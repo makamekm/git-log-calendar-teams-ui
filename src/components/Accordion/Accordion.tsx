@@ -68,9 +68,7 @@ export const Accordion: React.FC<{
           .accordion-title
             > :global(.flex.justify-between:not(:first-child)
               > *:not(:first-child)) {
-            transform: ${state.isOpen ? "scale(1)" : "scale(0.9)"};
-            opacity: ${state.isOpen ? "1" : "0"};
-            transition: opacity 0.1s, transform 0.1s;
+            ${state.isOpen ? "" : "display: none;"}
           }
         `}</style>
         {transitions.map(
