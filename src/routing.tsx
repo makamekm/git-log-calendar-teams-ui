@@ -4,14 +4,14 @@ import { Route, Switch, Redirect } from "react-router";
 import { ProtectedRoute } from "./app/Auth/ProtectedRoute";
 import { AuthScreen } from "./app/Auth/AuthScreen";
 import { LogoutRoute } from "./app/Auth/LogoutRoute";
-import { Dashboard } from "./app/Details/Dashboard";
-import { Error404 } from "./app/Error404";
+import { Dashboard } from "./app/Dashboard/Dashboard";
+import { Error404 } from "./app/Layout/Error404";
 import { Configuration } from "./app/Configuration/Configuration";
 import { LogsScreen } from "./app/Log/LogsScreen";
-import { TeamDashboard } from "./app/Details/TeamDashboard";
-import { UserDashboard } from "./app/Details/UserDashboard";
+import { TeamDashboard } from "./app/Dashboard/TeamDashboard";
+import { UserDashboard } from "./app/Dashboard/UserDashboard";
 import { Settings } from "./app/Settings/Settings";
-import { RepositoryDashboard } from "./app/Details/RepositoryDashboard";
+import { RepositoryDashboard } from "./app/Dashboard/RepositoryDashboard";
 
 export const RoutedContent = () => {
   return (

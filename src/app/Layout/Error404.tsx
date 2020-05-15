@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { HeaderPanel } from "./HeaderPanel";
+import { HeaderPanel } from "~/components/Blocks/HeaderPanel";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const Error404 = () => {

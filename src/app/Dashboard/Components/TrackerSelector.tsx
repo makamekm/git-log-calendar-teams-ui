@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { groupBy } from "lodash";
-import { FavouriteService, trackerMap } from "../../FavouriteService";
+import { FavouriteService, trackerMap } from "../FavouriteService";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
 
 export const TrackersSelector = observer(() => {

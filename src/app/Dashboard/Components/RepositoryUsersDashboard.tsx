@@ -15,8 +15,8 @@ import { numberWithCommas } from "~/tools";
 import {
   RepositoryUserService,
   RepositoryUserState,
-} from "../../RepositoryUserService";
-import { DashboardState } from "../../DashboardService";
+} from "../RepositoryUserService";
+import { DashboardState } from "../DashboardService";
 import { Accordion } from "~/components/Accordion/Accordion";
 
 const UserKey = observer(

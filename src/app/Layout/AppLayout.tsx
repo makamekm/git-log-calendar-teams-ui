@@ -4,12 +4,12 @@ import { LayoutService } from "~/components/Layout/LayoutService";
 import { observer } from "mobx-react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
-import { LogoThemed } from "./LogoThemed";
+import { LogoThemed } from "../LogoThemed";
 import { NavbarCollect } from "./NavbarCollect";
 import { NavbarPrint } from "./NavbarPrint";
 import { NavbarUser } from "./NavbarUser";
 import { FooterText } from "./FooterText";
-import { SearchBar } from "./SearchBar/SearchBar";
+import { SearchBar } from "../SearchBar/SearchBar";
 
 export const SidebarMenuItem = ({ to, title, icon }) => {
   const active = !!useRouteMatch({

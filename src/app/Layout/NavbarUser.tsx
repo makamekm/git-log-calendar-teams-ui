@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { getEncapsulatedPath } from "./Auth/AuthService";
+import { getEncapsulatedPath } from "../Auth/AuthService";
 
 const NavbarUser = ({ className }: { className?: string }) => {
   const { pathname } = useLocation();

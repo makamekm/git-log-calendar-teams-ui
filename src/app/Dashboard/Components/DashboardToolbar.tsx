@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { observer } from "mobx-react";
 import moment from "moment";
 import { periods } from "./Periods";
-import { DashboardState } from "../../DashboardService";
+import { DashboardState } from "../DashboardService";
 import { Dropdown } from "~/components/Dropdown/Dropdown";
 
 const PeriodValues = observer(({ state }: { state: DashboardState }) => {

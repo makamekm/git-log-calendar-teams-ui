@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { LogoThemed } from "./LogoThemed";
+import { LogoThemed } from "../../app/LogoThemed";
 
 const HeaderPanel = (props: { icon?: string; title?: any; text?: any }) => (
   <div className="mb-4">

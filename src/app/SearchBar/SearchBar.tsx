@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { observer } from "mobx-react";
-import { SearchService } from "../SearchService";
+import { SearchService } from "../Layout/SearchService";
 import { useHistory } from "react-router";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
 

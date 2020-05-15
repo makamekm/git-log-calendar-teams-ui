@@ -4,7 +4,7 @@ import { toJS } from "mobx";
 import { useLocalStore, observer } from "mobx-react";
 import { List } from "react-content-loader";
 
-import { HeaderMain } from "../HeaderMain";
+import { HeaderMain } from "~/components/Blocks/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useOnLoad } from "~/hooks";
 import { ApplicationSettings } from "~/shared/Settings";

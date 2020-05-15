@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useLocalStore, observer } from "mobx-react";
 import { AuthService } from "./AuthService";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
-import { HeaderPanel } from "../HeaderPanel";
+import { HeaderPanel } from "~/components/Blocks/HeaderPanel";
 
 export const AuthScreen = observer(() => {
   const store = useLocalStore(() => ({
