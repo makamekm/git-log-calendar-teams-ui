@@ -19,14 +19,16 @@ const AlertModalContent: React.FC<{
   });
   return (
     <FocusTrap>
-      <div className="window bg-red-100 rounded-lg shadow-md text-gray-700 p-10 flex flex-col items-center">
-        <i className="fas fa-exclamation-triangle fa-4x modal-icon text-red-600"></i>
-        <div className="text-3xl mt-4 text-red-600">{title}</div>
+      <div className="window rounded-lg shadow-md bg-red-100 text-gray-700 dark-mode:bg-red-700 dark-mode:text-gray-200 p-10 flex flex-col items-center">
+        <i className="fas fa-exclamation-triangle fa-4x modal-icon text-red-600 dark-mode:text-red-300"></i>
+        <div className="text-3xl mt-4 text-red-600 dark-mode:text-red-300">
+          {title}
+        </div>
         <div className="text-xl mt-3">{text}</div>
-        <div className="flex-1 mt-3 -mx-2 -mb-2 flex flex-row flex-wrap items-center justify-around w-full">
+        <div className="flex-1 mt-6 -mx-2 -mb-2 flex flex-row flex-wrap items-center justify-around w-full">
           <button
             className={
-              "accept text-base font-semibold py-2 px-3 m-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              "accept text-lg font-semibold py-3 px-6 m-3 rounded-lg bg-red-600 dark-mode:bg-red-600 active:bg-red-700 text-white hover:text-white rounded focus:outline-none focus:shadow-outline"
             }
             onClick={onAccept}
           >
@@ -34,7 +36,7 @@ const AlertModalContent: React.FC<{
           </button>
           <button
             className={
-              "cancel text-base font-normal border py-2 px-3 m-2 rounded-lg text-gray-700 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+              "cancel text-lg font-semibold py-3 px-6 m-3 rounded-lg bg-orange-100 dark-mode:bg-red-800 border dark-mode:border-gray-500 text-gray-700 dark-mode:text-gray-300 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             }
             onClick={close}
           >

@@ -8,6 +8,10 @@ body {
   line-height: 1.5;
   background-color: #f9fafc;
   color: #868e96;
+  @media screen and (prefers-color-scheme: dark) {
+    background-color: rgb(15, 19, 26);
+    color: rgb(237, 242, 247);
+  }
 }
 
 code {

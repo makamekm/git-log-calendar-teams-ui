@@ -1,7 +1,7 @@
 .s-table {
   td {
     padding: 0.5rem 0.5rem;
-    color: #333;
+    color: currentColor;
     min-height: 50px;
     vertical-align: top;
   }
@@ -10,15 +10,27 @@
     padding: 0.5rem 1rem;
     font-size: 12px;
     font-weight: 300 !important;
-    color: #333;
+    color: currentColor;
     border-bottom: 2px solid #ddd;
+
+    @media screen and (prefers-color-scheme: dark) {
+      border-color: $gray-700;
+    }
   }
   td:not(:last-child) {
     border-right: 1px solid #ddd;
+
+    @media screen and (prefers-color-scheme: dark) {
+      border-color: $gray-700;
+    }
   }
   tr:not(:last-child) {
     td {
       border-bottom: 1px solid #ddd;
+
+      @media screen and (prefers-color-scheme: dark) {
+        border-color: $gray-700;
+      }
     }
   }
   tr.odd {

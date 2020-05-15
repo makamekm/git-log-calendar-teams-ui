@@ -129,7 +129,7 @@ export const UserDashboard = observer(() => {
         className="my-5"
       />
 
-      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
+      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
         <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Calendar activities of <strong>{userName}</strong>
@@ -152,7 +152,7 @@ export const UserDashboard = observer(() => {
         </div>
       </div>
 
-      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
+      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
         <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Detailed activities of <strong>{userName}</strong>
@@ -172,7 +172,7 @@ export const UserDashboard = observer(() => {
         </div>
       </div>
 
-      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
+      <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
         <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Repository activities of <strong>{userName}</strong>
@@ -205,7 +205,7 @@ export const UserDashboard = observer(() => {
       {state.repositories.map((repository, index) => (
         <div
           key={index}
-          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner"
         >
           <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/repository/${repository}`}>
@@ -241,7 +241,7 @@ export const UserDashboard = observer(() => {
       {state.teams.map((team, index) => (
         <div
           key={index}
-          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
+          className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner"
         >
           <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/team/${team}`}>

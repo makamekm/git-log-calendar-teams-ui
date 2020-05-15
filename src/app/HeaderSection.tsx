@@ -22,7 +22,7 @@ const HeaderSection = ({
     </div>
     {(title || children || subTitle) && (
       <div className="text-xl">
-        <h4 className="mt-1 text-gray-900">{title}</h4>
+        <h4 className="mt-1 text-gray-900 dark-mode:text-gray-300">{title}</h4>
         {(children || subTitle) && (
           <div className="text-sm">{children || subTitle}</div>
         )}

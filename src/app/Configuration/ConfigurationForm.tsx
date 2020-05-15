@@ -25,12 +25,12 @@ export const ConfigurationForm = observer(
         ) : (
           <div className="px-3 pb-3 -mt-2">
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 md:text-right">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Password:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="password"
                   onChange={(e) => {
                     state.config.password = e.currentTarget.value;
@@ -41,12 +41,12 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 md:text-right">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Default Branch:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.config.branch = e.currentTarget.value;
@@ -57,12 +57,12 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 md:text-right">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Collect Function:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.config.evaluateStr = e.currentTarget.value;
@@ -73,12 +73,12 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 md:text-right">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Collect Interval:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.config.collectInterval = Number(
@@ -91,7 +91,7 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 md:text-right">
+              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Only Registered Users:
               </div>
               <div className="flex-1 mt-3 mx-2">
@@ -104,7 +104,7 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 md:text-right">
+              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Collect Messages:
               </div>
               <div className="flex-1 mt-3 mx-2">

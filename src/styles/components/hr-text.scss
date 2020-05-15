@@ -5,6 +5,9 @@
   &:after {
     flex: 1 1 auto;
     border-top: 1px solid $gray-300;
+    @media screen and (prefers-color-scheme: dark) {
+      border-top: 1px solid $gray-700;
+    }
   }
   &:after {
     content: " ";

@@ -145,7 +145,7 @@ export const Configuration = observer(() => {
           </button>
           <button
             className={classNames(
-              "text-base font-normal border py-2 px-3 mx-2 rounded-lg text-gray-700 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+              "text-base font-normal py-2 px-3 mx-2 rounded-lg border dark-mode:border-gray-500 text-gray-700 dark-mode:text-gray-300 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             )}
             onClick={state.load}
           >

@@ -92,7 +92,7 @@ export const BarActivities = ({
           }}
           tick={{
             fontSize: "12px",
-            fill: colors["900"],
+            fill: "currentColor",
           }}
         />
         <YAxis
@@ -106,7 +106,7 @@ export const BarActivities = ({
           }}
           tick={{
             fontSize: "12px",
-            fill: colors["900"],
+            fill: "currentColor",
           }}
         />
         <Tooltip
@@ -115,7 +115,11 @@ export const BarActivities = ({
             return (
               <div
                 className="p-2"
-                style={{ border: "solid 1px #ccc", background: "white" }}
+                style={{
+                  border: "solid 1px #ccc",
+                  background: "white",
+                  color: "#333",
+                }}
               >
                 {props.label} -{" "}
                 <strong>
@@ -135,7 +139,7 @@ export const BarActivities = ({
         <Bar
           isAnimationActive={!isPrint}
           dataKey="value"
-          fill={"rgba(30, 183, 255, 0.4)"}
+          fill={"rgba(30, 183, 255, 0.7)"}
           stroke={colors["blue"]}
           strokeWidth={2}
         />

@@ -81,9 +81,9 @@ export const Dropdown: React.FC<{
         ({ item, key, props }) =>
           item && (
             <animated.div key={key} style={props}>
-              <div className="no-print absolute right-0 w-full mt-2 origin-top-right rounded-md border shadow-lg w-full md:w-48 text-left">
+              <div className="no-print absolute right-0 w-full mt-2 origin-top-right rounded-md border dark-mode:border-gray-700 shadow-lg w-full md:w-48 text-left">
                 <div
-                  className="flex flex-col w-full px-1 overflow-y-auto bg-white rounded-md dark-mode:bg-gray-800 text-gray-600 dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
+                  className="flex flex-col w-full px-1 overflow-y-auto bg-white rounded-md dark-mode:bg-gray-900 text-gray-600 dark-mode:text-gray-200 focus:outline-none focus:shadow-outline"
                   tabIndex={0}
                   style={{ maxHeight: "300px" }}
                 >

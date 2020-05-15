@@ -26,9 +26,16 @@ export const CalendarActivities = ({
   const isPrint = useMediaQuery({
     print: true,
   });
+  const isDarkModeRaw = useMediaQuery({
+    query: "(prefers-color-scheme: dark)",
+  });
+  const isDarkMode = !isPrint && isDarkModeRaw;
   return (
     <div
-      className={classNames("calendar-activities mx-auto", className)}
+      className={classNames(
+        "calendar-activities mx-auto text-gray-900",
+        className
+      )}
       style={{
         maxWidth: isPrint && "1000px",
         height: `${height * years}px`,
@@ -43,23 +50,41 @@ export const CalendarActivities = ({
         maxValue={maxValue || "auto"}
         minValue={0}
         emptyColor="#f0eeee"
-        monthBorderWidth={5}
-        monthBorderColor="#fff"
-        dayBorderColor="#fff"
-        colors={[
-          "rgba(0, 153, 0, 0.3)",
-          "rgba(0, 153, 0, 0.4)",
-          "rgba(0, 153, 0, 0.5)",
-          "rgba(0, 153, 0, 0.6)",
-          "rgba(0, 153, 0, 0.7)",
-          "rgba(0, 153, 0, 0.8)",
-          "rgba(0, 153, 0, 0.9)",
-          "rgba(0, 153, 0, 1.0)",
-        ]}
+        monthBorderWidth={3}
+        monthBorderColor={isDarkMode ? "#aaa" : "#ccc"}
+        dayBorderColor={"#fff"}
+        colors={
+          isDarkMode
+            ? [
+                "rgba(115, 205, 97, 0.3)",
+                "rgba(115, 205, 97, 0.4)",
+                "rgba(115, 205, 97, 0.5)",
+                "rgba(115, 205, 97, 0.6)",
+                "rgba(115, 205, 97, 0.7)",
+                "rgba(115, 205, 97, 0.8)",
+                "rgba(115, 205, 97, 0.9)",
+                "rgba(115, 205, 97, 1.0)",
+              ]
+            : [
+                "rgba(0, 153, 0, 0.3)",
+                "rgba(0, 153, 0, 0.4)",
+                "rgba(0, 153, 0, 0.5)",
+                "rgba(0, 153, 0, 0.6)",
+                "rgba(0, 153, 0, 0.7)",
+                "rgba(0, 153, 0, 0.8)",
+                "rgba(0, 153, 0, 0.9)",
+                "rgba(0, 153, 0, 1.0)",
+              ]
+        }
         margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
         yearSpacing={40}
         dayBorderWidth={2}
       />
+      <style jsx>{`
+        .calendar-activities :global(text) {
+          fill: ${isDarkMode ? "#fff" : "#333"} !important;
+        }
+      `}</style>
     </div>
   );
 };

@@ -385,7 +385,7 @@ export const Typeahead: React.FC<{
         ref={ref}
         className={classNames(
           className,
-          "w-full flex flex-col items-center relative",
+          "w-full flex flex-col items-center relative text-gray-800 dark-mode:text-gray-200",
           {
             "z-10": !state.isOpen,
             "z-20": state.isAnimation,
@@ -394,7 +394,7 @@ export const Typeahead: React.FC<{
         )}
       >
         <div
-          className="w-full flex flex-col md:flex-row items-stretch border border-gray-200 bg-white rounded shadow-sm focus-within:shadow-outline"
+          className="w-full flex flex-col md:flex-row items-stretch border border-gray-200 bg-white dark-mode:text-white dark-mode:border-gray-700 dark-mode:bg-gray-800 rounded shadow-sm focus-within:shadow-outline"
           style={{ minHeight: "36px" }}
         >
           <div ref={selectedRef} className="relative flex flex-auto flex-wrap">
@@ -407,7 +407,7 @@ export const Typeahead: React.FC<{
                     : undefined,
                 }}
                 key={key}
-                className="flex justify-center items-center max-w-xs m-1 font-medium py-1 px-2 bg-white rounded-full text-gray-700 bg-gray-100 border border-gray-300"
+                className="flex justify-center items-center max-w-xs m-1 font-medium py-1 px-2 bg-white rounded-full text-gray-700 bg-gray-100 border border-gray-300 dark-mode:border-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-800"
               >
                 <div className="px-1 text-xs font-normal leading-none flex-initial ellipsis">
                   {item}
@@ -448,7 +448,7 @@ export const Typeahead: React.FC<{
               {(multiple || selected.length === 0) && (
                 <div className="flex-1 flex justify-start items-center">
                   {!!icon && (
-                    <div className="absolute pl-3 pointer-events-none text-gray-700">
+                    <div className="absolute pl-3 pointer-events-none text-gray-700 dark-mode:text-gray-300">
                       {icon}
                     </div>
                   )}
@@ -469,7 +469,7 @@ export const Typeahead: React.FC<{
                     onKeyDown={onEnterInput}
                     placeholder={placeholder}
                     className={classNames(
-                      "ellipsis flex-1 no-print bg-transparent py-1 pr-2 appearance-none outline-none h-full w-full text-gray-800",
+                      "ellipsis flex-1 no-print bg-transparent py-1 pr-2 appearance-none outline-none h-full w-full text-gray-800 dark-mode:text-white",
                       {
                         "pl-10": !!icon,
                         "pl-3 md:pl-2": !icon && selected.length > 0,
@@ -490,7 +490,7 @@ export const Typeahead: React.FC<{
                   <animated.div
                     key={key}
                     style={props}
-                    className="flex flex-col items-stretch justify-center text-gray-600"
+                    className="flex flex-col items-stretch justify-center text-gray-600 dark-mode:text-gray-400"
                   >
                     <button
                       onClick={() => {
@@ -498,7 +498,7 @@ export const Typeahead: React.FC<{
                       }}
                       onBlur={tryToCloseTimeout}
                       style={{ minWidth: "40px", minHeight: "36px" }}
-                      className="h-full border-l border-t md:border-t-0 flex flex-col items-stretch justify-center border-gray-200 cursor-pointer outline-none hover:bg-red-100 focus:bg-red-100 hover:text-red-400 focus:text-red-400 focus:outline-none"
+                      className="h-full border-l border-t md:border-t-0 flex flex-col items-stretch justify-center border-gray-200 dark-mode:border-gray-700 cursor-pointer outline-none hover:bg-red-100 focus:bg-red-100 hover:text-red-400 hover:text-red-400 focus:text-red-400 dark-mode:hover:text-red-200 dark-mode:focus:text-red-200 dark-mode:hover:bg-red-800 dark-mode:focus:bg-red-800 focus:outline-none"
                     >
                       <div className="flex-1 h-full flex items-center justify-center transition-transform duration-200 transform rotate-0 hover:rotate-180">
                         <svg
@@ -528,7 +528,7 @@ export const Typeahead: React.FC<{
               onClick={open}
               onBlur={tryToCloseTimeout}
               style={{ minWidth: "40px", minHeight: "36px" }}
-              className="text-gray-300 border-l border-t md:border-t-0 flex items-center justify-center border-gray-200 cursor-pointer text-gray-600 outline-none hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
+              className="text-gray-300 border-l border-t md:border-t-0 flex items-center justify-center border-gray-200 cursor-pointer text-gray-600 dark-mode:border-gray-700 dark-mode:text-gray-400 outline-none hover:bg-blue-100 focus:bg-blue-100 dark-mode:hover:bg-blue-700 dark-mode:focus:bg-blue-700 focus:outline-none"
             >
               <div>
                 <svg
@@ -561,7 +561,7 @@ export const Typeahead: React.FC<{
             item && (
               <animated.div key={key} style={props}>
                 <div
-                  className="no-print shadow-lg border left-0 right-0 w-full my-1 origin-top-right bg-white w-full min-w-64 rounded overflow-y-auto"
+                  className="no-print shadow-lg border left-0 right-0 w-full my-1 origin-top-right bg-white dark-mode:border-gray-700 dark-mode:bg-gray-900 w-full min-w-64 rounded overflow-y-auto"
                   style={{ maxHeight: "300px" }}
                 >
                   <div className="flex flex-col w-full">
@@ -587,13 +587,13 @@ export const Typeahead: React.FC<{
                                   (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
-                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
+                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 dark-mode:border-gray-700 dark-mode:hover:bg-blue-900 dark-mode:focus:bg-blue-900 focus:outline-none"
                           >
                             <div
                               className={classNames(
                                 "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-blue-300",
                                 {
-                                  "border-gray-100 bg-gray-100": isHighlitedByEnter(),
+                                  "border-gray-100 bg-gray-100 dark-mode:border-gray-700 dark-mode:bg-gray-700": isHighlitedByEnter(),
                                 }
                               )}
                             >
@@ -630,13 +630,13 @@ export const Typeahead: React.FC<{
                                 (document.activeElement as HTMLElement).blur();
                           }}
                           onBlur={tryToCloseTimeout}
-                          className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
+                          className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 dark-mode:border-gray-700 dark-mode:hover:bg-blue-900 dark-mode:focus:bg-blue-900 focus:outline-none"
                         >
                           <div
                             className={classNames(
                               "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-blue-300",
                               {
-                                "border-gray-100 bg-gray-100": isHighlitedByEnter(
+                                "border-gray-100 bg-gray-100 dark-mode:border-gray-700 dark-mode:bg-gray-700": isHighlitedByEnter(
                                   index
                                 ),
                                 "border-blue-300": !!selected.find(
@@ -665,7 +665,7 @@ export const Typeahead: React.FC<{
                           <animated.div
                             style={{ ...props, borderLeftColor: "transparent" }}
                             key={key}
-                            className="flex w-full font-semibold items-center justify-left text-xs py-1 px-3 border-l-4 border-t-0 border-r-0 border-b-2 border-gray-300 text-gray-800"
+                            className="flex w-full font-semibold items-center justify-left text-xs py-1 px-3 border-l-4 border-t-0 border-r-0 border-b-2 border-gray-300 dark-mode:border-gray-600 text-gray-800 dark-mode:text-gray-200"
                           >
                             {item.label}
                           </animated.div>
@@ -702,13 +702,13 @@ export const Typeahead: React.FC<{
                                   (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
-                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
+                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 dark-mode:border-gray-700 dark-mode:hover:bg-blue-900 dark-mode:focus:bg-blue-900 focus:outline-none"
                           >
                             <div
                               className={classNames(
                                 "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-blue-300",
                                 {
-                                  "border-gray-100 bg-gray-100": isHighlitedByEnter(
+                                  "border-gray-100 bg-gray-100 dark-mode:border-gray-700 dark-mode:bg-gray-700": isHighlitedByEnter(
                                     index
                                   ),
                                   "border-blue-300": !!selected.find(

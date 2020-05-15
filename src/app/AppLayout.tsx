@@ -81,13 +81,13 @@ const MenuItems = () => {
 const SideMenu: React.FC = observer(() => {
   const service = React.useContext(LayoutService);
   return (
-    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print border-r mb-2 lg:mb-0 border-b lg:border-b-0">
+    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print border-r mb-2 lg:mb-0 border-b lg:border-b-0 dark-mode:border-gray-800">
       <div
         onClick={() => {
           service.sidebarOpened = !service.sidebarOpened;
         }}
         className={classNames(
-          "flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0",
+          "flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-900 flex-shrink-0",
           {
             "lg:w-64": !service.sidebarCollapsed,
             "lg:w-16": service.sidebarCollapsed,
@@ -162,8 +162,8 @@ const SideMenu: React.FC = observer(() => {
 const TopMenu: React.FC = observer(() => {
   const service = React.useContext(LayoutService);
   return (
-    <div className="w-full antialiased bg-gray-100 dark-mode:bg-gray-900 no-print mb-3 py-2 -mx-2">
-      <div className="w-full text-gray-700 dark-mode:text-gray-200 dark-mode:bg-gray-800 flex flex-row items-center justify-between">
+    <div className="w-full antialiased no-print mb-3 py-2 -mx-2">
+      <div className="w-full text-gray-700 dark-mode:text-gray-200 flex flex-row items-center justify-between">
         <div className="flex flex-row items-center">
           <div
             onClick={() =>

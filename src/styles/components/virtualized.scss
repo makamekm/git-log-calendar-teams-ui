@@ -9,7 +9,7 @@
   padding: 1rem 0.5rem;
   font-size: 12px;
   font-weight: 300;
-  color: #333;
+  color: currentColor;
   display: flex;
   align-items: center;
   justify-content: stretch;
@@ -17,6 +17,10 @@
 
 .ReactVirtualized__Table__headerRow {
   border-bottom: 2px solid #ddd;
+
+  @media screen and (prefers-color-scheme: dark) {
+    border-color: $gray-700;
+  }
 }
 
 .ReactVirtualized__Table__row.odd {
@@ -25,15 +29,23 @@
 
 .ReactVirtualized__Table__row:not(:last-child) {
   border-bottom: 1px solid #ddd;
+
+  @media screen and (prefers-color-scheme: dark) {
+    border-color: $gray-700;
+  }
 }
 
 .ReactVirtualized__Table__rowColumn {
   padding: 1rem 0.5rem;
-  color: #333;
+  color: currentColor;
 }
 
 .ReactVirtualized__Table__rowColumn:not(:last-child) {
   border-right: 1px solid #ddd;
+
+  @media screen and (prefers-color-scheme: dark) {
+    border-color: $gray-700;
+  }
 }
 
 @media print {

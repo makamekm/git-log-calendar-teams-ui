@@ -97,7 +97,7 @@ export const LineActivities = ({
           }}
           tick={{
             fontSize: "12px",
-            fill: colors["900"],
+            fill: "currentColor",
           }}
         />
         <YAxis
@@ -111,10 +111,15 @@ export const LineActivities = ({
           }}
           tick={{
             fontSize: "12px",
-            fill: colors["900"],
+            fill: "currentColor",
           }}
         />
-        <Tooltip isAnimationActive={!isPrint} />
+        <Tooltip
+          isAnimationActive={!isPrint}
+          contentStyle={{
+            color: "#333",
+          }}
+        />
         <ReferenceLine y={0} stroke="#000" />
         <Legend />
         {names.map((name, index) => (

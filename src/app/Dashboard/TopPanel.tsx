@@ -44,7 +44,10 @@ export const TopPanel = ({
           </div>
           <div>
             {data.map((entry, index) => (
-              <div key={index} className="text-gray-700">
+              <div
+                key={index}
+                className="text-gray-700 dark-mode:text-gray-500"
+              >
                 <Link to={`/${type}/${entry.name}`} className="text-secondary">
                   <i
                     className={`fa fa-circle mr-1 color-${

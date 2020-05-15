@@ -12,7 +12,12 @@ const HeaderMain = ({
 }) => (
   <React.Fragment>
     {/* START H1 Header */}
-    <div className={classNames("text-5xl font-light text-gray-900", className)}>
+    <div
+      className={classNames(
+        "text-5xl font-light text-gray-900 dark-mode:text-gray-300",
+        className
+      )}
+    >
       {title} {subTitle && <span className="text-xs">{subTitle}</span>}
     </div>
     {/* END H1 Header */}

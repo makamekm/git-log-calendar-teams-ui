@@ -38,12 +38,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
       ) : (
         <div className="px-3 pb-3 -mt-2">
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Public Key:
             </div>
             <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
-                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                 type="text"
                 onChange={(e) => {
                   state.settings.publicKey = e.currentTarget.value;
@@ -54,12 +54,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Secret Key:
             </div>
             <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
-                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                 onChange={(e) => {
                   state.settings.secretKey = e.currentTarget.value;
                 }}
@@ -69,12 +69,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Regenerate Key Pair:
             </div>
             <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <button
-                className="text-base font-normal border py-2 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                className="text-base font-normal py-2 px-3 rounded-lg border dark-mode:border-gray-500 text-gray-700 dark-mode:text-gray-300 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 onClick={state.regnerateKeyPair}
               >
                 Regenerate Key Pair
@@ -83,7 +83,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <AccordionToggle value={!!state.settings.secretKey}>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 Don't Collect Statistics:
               </div>
               <div className="flex-1 mt-3 mx-2">
@@ -98,12 +98,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </AccordionToggle>
           <AccordionToggle value={!state.settings.dontCollect}>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 Parallel Job Collecting Limit:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.settings.parallelCollectingJobLimit = Math.max(
@@ -117,12 +117,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 Local Collecting Interval (0 is from Configuration) [Minutes]:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.settings.forceCollectingInterval = Math.max(
@@ -136,12 +136,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 Limit Repositories Per Try (0 is unlimited):
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.settings.limitCollectingRepositoriesPerTry = Math.max(
@@ -158,7 +158,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 Repositories to Collect (If empty then collect from all):
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
@@ -179,7 +179,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Use Swarm:
             </div>
             <div className="flex-1 mt-3 mx-2">
@@ -192,7 +192,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Use S3:
             </div>
             <div className="flex-1 mt-3 mx-2">
@@ -206,12 +206,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <AccordionToggle value={!!state.settings.useDriveS3}>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 S3 Access Key ID:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3AccessKeyId = e.currentTarget.value;
@@ -222,12 +222,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 S3 Secret Access Key:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3SecretAccessKey = e.currentTarget.value;
@@ -238,12 +238,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 S3 Bucket Name:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3Bucket = e.currentTarget.value;
@@ -254,12 +254,12 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
                 S3 Drive Path:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3DrivePath = e.currentTarget.value;
@@ -271,7 +271,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-2/5 md:text-right pt-1 mx-2 mt-3 text-gray-800">
+            <div className="md:w-2/5 md:text-right pt-1 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Drive Actions:
             </div>
             <div className="flex-1 mt-1 -mb-2 flex flex-row flex-wrap">
@@ -407,7 +407,7 @@ export const Settings = observer(() => {
           </button>
           <button
             className={classNames(
-              "text-base font-normal border py-2 px-3 mx-2 rounded-lg text-gray-700 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+              "text-base font-normal py-2 px-3 mx-2 rounded-lg border dark-mode:border-gray-500 text-gray-700 dark-mode:text-gray-300 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             )}
             onClick={state.load}
           >

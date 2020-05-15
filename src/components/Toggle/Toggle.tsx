@@ -13,15 +13,18 @@ export const Toggle = ({
       <div
         className={classNames(
           "relative rounded-full w-12 h-6 transition duration-200 ease-linear",
-          { "bg-green-400": checked, "bg-gray-400": !checked }
+          {
+            "bg-green-400 dark-mode:border-green-200": checked,
+            "bg-gray-400 dark-mode:border-gray-200": !checked,
+          }
         )}
       >
         <label
           className={classNames(
-            "absolute left-0 bg-white border-2 mb-2 w-6 h-6 rounded-full transition transform duration-100 ease-linear pointer-events-none",
+            "absolute left-0 bg-white dark-mode:bg-gray-700 border-2 mb-2 w-6 h-6 rounded-full transition transform duration-100 ease-linear pointer-events-none",
             {
-              "translate-x-full border-green-400": checked,
-              "translate-x-0 border-gray-400": !checked,
+              "translate-x-full border-green-400 dark-mode:border-green-200": checked,
+              "translate-x-0 border-gray-400 dark-mode:border-gray-200": !checked,
             }
           )}
         ></label>

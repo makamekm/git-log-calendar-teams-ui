@@ -29,8 +29,10 @@ export const ActiveStatsPanel = ({
       </div>
       <div className="w-full">
         {activeRepositories != null && (
-          <div className="flex items-center justify-between border-b">
-            <div className="text-gray-700">Active Repositories</div>
+          <div className="flex items-center justify-between border-b dark-mode:border-gray-700">
+            <div className="text-gray-700 dark-mode:text-gray-400">
+              Active Repositories
+            </div>
             <div className="text-right">
               <div className="rounded-full text-sm py-1 px-2 mx-1 my-2 bg-green-500 text-white rounded leading-none font-semibold flex items-center">
                 {numberWithCommas(activeRepositoriesToday)} /{" "}
@@ -40,8 +42,10 @@ export const ActiveStatsPanel = ({
           </div>
         )}
         {activeTeams != null && (
-          <div className="flex items-center justify-between border-b">
-            <div className="text-gray-700">Active Teams</div>
+          <div className="flex items-center justify-between border-b dark-mode:border-gray-700">
+            <div className="text-gray-700 dark-mode:text-gray-400">
+              Active Teams
+            </div>
             <div className="text-right">
               <div className="rounded-full text-sm py-1 px-2 mx-1 my-2 bg-blue-500 text-white rounded leading-none font-semibold flex items-center">
                 {numberWithCommas(activeTeamsToday)} /{" "}
@@ -51,8 +55,10 @@ export const ActiveStatsPanel = ({
           </div>
         )}
         {activeUsers != null && (
-          <div className="flex items-center justify-between border-b">
-            <div className="text-gray-700">Active Users</div>
+          <div className="flex items-center justify-between border-b dark-mode:border-gray-700">
+            <div className="text-gray-700 dark-mode:text-gray-400">
+              Active Users
+            </div>
             <div className="text-right">
               <div className="rounded-full text-sm py-1 px-2 mx-1 my-2 bg-orange-500 text-white rounded leading-none font-semibold flex items-center">
                 {numberWithCommas(activeUsersToday)} /{" "}
