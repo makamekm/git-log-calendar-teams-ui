@@ -50,7 +50,7 @@ export const RepositoryDashboard = observer(() => {
           <HeaderMain
             title={
               <>
-                {repositoryName} <small>#repository</small>
+                {repositoryName} <span className="text-sm">#repository</span>
               </>
             }
             className="mb-3"
@@ -124,7 +124,7 @@ export const RepositoryDashboard = observer(() => {
       />
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Calendar activities of <strong>{repositoryName}</strong>
             <span className="text-xs ml-2 text-gray-400">#repository</span>
@@ -147,7 +147,7 @@ export const RepositoryDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Detailed activities of <strong>{repositoryName}</strong>
             <span className="text-xs ml-2 text-gray-400">#repository</span>
@@ -167,7 +167,7 @@ export const RepositoryDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             User activities of <strong>{repositoryName}</strong>
             <span className="text-xs ml-2 text-gray-400">#repository</span>
@@ -188,7 +188,7 @@ export const RepositoryDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Team activities of <strong>{repositoryName}</strong>
             <span className="text-xs ml-2 text-gray-400">#repository</span>
@@ -222,7 +222,7 @@ export const RepositoryDashboard = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center text-base w-full px-4 py-3">
+          <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/team/${team}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{team}</strong>
@@ -258,7 +258,7 @@ export const RepositoryDashboard = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center text-base w-full px-4 py-3">
+          <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/user/${user}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{user}</strong>

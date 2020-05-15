@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
@@ -192,13 +193,22 @@ export const RepositoryUsersDashboard = observer(() => {
       title={
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center">Repository Users</div>
-          <input
-            placeholder="Search..."
-            className="no-print text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
-            onClick={(e) => e.stopPropagation()}
-            value={state.usersQuery}
-            onChange={onSearchChange}
-          />
+
+          <div className="flex justify-start items-center">
+            <div
+              className={classNames("absolute pl-3 pointer-events-none", {
+                "text-gray-500": !state.usersQuery,
+              })}
+            >
+              <i className="fa fa-search"></i>
+            </div>
+            <input
+              placeholder="Search..."
+              className="ellipsis no-print text-base shadow-sm appearance-none border rounded py-2 pr-3 pl-10 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+              value={state.usersQuery}
+              onChange={onSearchChange}
+            />
+          </div>
         </div>
       }
     >

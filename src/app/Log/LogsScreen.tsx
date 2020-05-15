@@ -137,7 +137,7 @@ export const LogsScreen = observer(() => {
           <i className="fa fa-search"></i>
         </div>
         <input
-          className="w-full text-base shadow-sm appearance-none border rounded py-2 pr-3 pl-10 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+          className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 pr-3 pl-10 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
           placeholder="Search Messages..."
           value={state.search}
           onChange={(e) => {

@@ -394,8 +394,8 @@ export const Typeahead: React.FC<{
         )}
       >
         <div
-          className="w-full flex items-stretch border border-gray-200 bg-white rounded shadow-sm focus-within:shadow-outline"
-          style={{ minHeight: "38px" }}
+          className="w-full flex flex-col md:flex-row items-stretch border border-gray-200 bg-white rounded shadow-sm focus-within:shadow-outline"
+          style={{ minHeight: "36px" }}
         >
           <div ref={selectedRef} className="relative flex flex-auto flex-wrap">
             {selectedTransitions.map(({ item, props, key }) => (
@@ -444,7 +444,7 @@ export const Typeahead: React.FC<{
                 )}
               </animated.div>
             ))}
-            <div className="flex-1 flex justify-start items-center">
+            <div className="flex-2 md:flex-1 flex justify-start items-center">
               {(multiple || selected.length === 0) && (
                 <div className="flex-1 flex justify-start items-center">
                   {!!icon && (
@@ -469,14 +469,14 @@ export const Typeahead: React.FC<{
                     onKeyDown={onEnterInput}
                     placeholder={placeholder}
                     className={classNames(
-                      "flex-1 no-print bg-transparent py-1 pr-2 appearance-none outline-none h-full w-full text-gray-800",
+                      "ellipsis flex-1 no-print bg-transparent py-1 pr-2 appearance-none outline-none h-full w-full text-gray-800",
                       {
                         "pl-10": !!icon,
-                        "pl-2": !icon && selected.length > 0,
+                        "pl-3 md:pl-2": !icon && selected.length > 0,
                         "pl-3": !icon && selected.length === 0,
                       }
                     )}
-                    style={{ minWidth: "100px" }}
+                    style={{ minWidth: "100px", minHeight: "36px" }}
                   />
                 </div>
               )}
@@ -497,8 +497,8 @@ export const Typeahead: React.FC<{
                         onChange([]);
                       }}
                       onBlur={tryToCloseTimeout}
-                      style={{ minWidth: "40px" }}
-                      className="h-full border-l flex flex-col items-stretch justify-center border-gray-200 cursor-pointer outline-none hover:bg-red-100 focus:bg-red-100 hover:text-red-400 focus:text-red-400 focus:outline-none"
+                      style={{ minWidth: "40px", minHeight: "36px" }}
+                      className="h-full border-l border-t md:border-t-0 flex flex-col items-stretch justify-center border-gray-200 cursor-pointer outline-none hover:bg-red-100 focus:bg-red-100 hover:text-red-400 focus:text-red-400 focus:outline-none"
                     >
                       <div className="flex-1 h-full flex items-center justify-center transition-transform duration-200 transform rotate-0 hover:rotate-180">
                         <svg
@@ -527,8 +527,8 @@ export const Typeahead: React.FC<{
             <button
               onClick={open}
               onBlur={tryToCloseTimeout}
-              style={{ minWidth: "40px" }}
-              className="text-gray-300 border-l flex items-center justify-center border-gray-200 cursor-pointer text-gray-600 outline-none hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+              style={{ minWidth: "40px", minHeight: "36px" }}
+              className="text-gray-300 border-l border-t md:border-t-0 flex items-center justify-center border-gray-200 cursor-pointer text-gray-600 outline-none hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
             >
               <div>
                 <svg
@@ -587,11 +587,11 @@ export const Typeahead: React.FC<{
                                   (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
-                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
                           >
                             <div
                               className={classNames(
-                                "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-teal-300",
+                                "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-blue-300",
                                 {
                                   "border-gray-100 bg-gray-100": isHighlitedByEnter(),
                                 }
@@ -630,16 +630,16 @@ export const Typeahead: React.FC<{
                                 (document.activeElement as HTMLElement).blur();
                           }}
                           onBlur={tryToCloseTimeout}
-                          className="item cursor-pointer w-full border-gray-200 border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                          className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
                         >
                           <div
                             className={classNames(
-                              "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-teal-300",
+                              "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-blue-300",
                               {
                                 "border-gray-100 bg-gray-100": isHighlitedByEnter(
                                   index
                                 ),
-                                "border-teal-300": !!selected.find(
+                                "border-blue-300": !!selected.find(
                                   (s) => item === s
                                 ),
                               }
@@ -702,16 +702,16 @@ export const Typeahead: React.FC<{
                                   (document.activeElement as HTMLElement).blur();
                             }}
                             onBlur={tryToCloseTimeout}
-                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-teal-100 focus:bg-teal-100 focus:outline-none"
+                            className="item cursor-pointer w-full border-gray-200 border-b hover:bg-blue-100 focus:bg-blue-100 focus:outline-none"
                           >
                             <div
                               className={classNames(
-                                "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-teal-300",
+                                "flex w-full items-center p-2 pl-2 border-transparent border-l-4 relative hover:border-blue-300",
                                 {
                                   "border-gray-100 bg-gray-100": isHighlitedByEnter(
                                     index
                                   ),
-                                  "border-teal-300": !!selected.find(
+                                  "border-blue-300": !!selected.find(
                                     (s) => item.value === s
                                   ),
                                 }

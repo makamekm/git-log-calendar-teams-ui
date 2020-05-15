@@ -59,7 +59,7 @@ export const Dropdown: React.FC<{
       <button
         onClick={open}
         onBlur={tryToCloseTimeout}
-        className="flex-inline flex-row items-center px-3 py-2 text-sm rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+        className="whitespace-no-wrap	flex-inline flex-row items-center px-3 py-2 text-sm rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
       >
         <span>{title}</span>
         <svg

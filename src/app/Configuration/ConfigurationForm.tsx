@@ -1,10 +1,10 @@
 import React from "react";
-import Toggle from "react-toggle";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 
 import { ConfigurationState } from "./ConfigurationState";
 import { Accordion } from "~/components/Accordion/Accordion";
+import { Toggle } from "~/components/Toggle/Toggle";
 
 export const ConfigurationForm = observer(
   ({ state }: { state: ConfigurationState }) => {
@@ -30,7 +30,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="password"
                   onChange={(e) => {
                     state.config.password = e.currentTarget.value;
@@ -46,7 +46,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.config.branch = e.currentTarget.value;
@@ -62,7 +62,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.config.evaluateStr = e.currentTarget.value;
@@ -78,7 +78,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.config.collectInterval = Number(

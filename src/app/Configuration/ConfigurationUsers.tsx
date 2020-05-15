@@ -29,7 +29,6 @@ export const ConfigurationUsers = observer(
             <button
               className="text-xs font-normal border py-1 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
               onClick={(e) => {
-                e.stopPropagation();
                 state.config.users.unshift({
                   id: String(Math.random() * 10000),
                   name: "",
@@ -51,14 +50,14 @@ export const ConfigurationUsers = observer(
               <>
                 <th>Name</th>
                 <th>Associations</th>
-                <th className="text-right">Actions</th>
+                <th className="text-right w-20">Actions</th>
               </>
             }
             render={(user) => (
               <>
                 <td>
                   <input
-                    className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                    className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
                       user.name = e.currentTarget.value;
@@ -80,7 +79,7 @@ export const ConfigurationUsers = observer(
                     options={state.associations}
                   />
                 </td>
-                <td className="text-right">
+                <td className="text-right w-20">
                   <Dropdown title={<i className="fas fa-cog"></i>}>
                     <button
                       className={

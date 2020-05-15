@@ -49,7 +49,7 @@ export const UserDashboard = observer(() => {
           <HeaderMain
             title={
               <>
-                {userName} <small>#user</small>
+                {userName} <span className="text-sm">#user</span>
               </>
             }
             className="mb-3"
@@ -130,7 +130,7 @@ export const UserDashboard = observer(() => {
       />
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Calendar activities of <strong>{userName}</strong>
             <span className="text-xs ml-2 text-gray-400">#user</span>
@@ -153,7 +153,7 @@ export const UserDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Detailed activities of <strong>{userName}</strong>
             <span className="text-xs ml-2 text-gray-400">#user</span>
@@ -173,7 +173,7 @@ export const UserDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Repository activities of <strong>{userName}</strong>
             <span className="text-xs ml-2 text-gray-400">#user</span>
@@ -207,7 +207,7 @@ export const UserDashboard = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center text-base w-full px-4 py-3">
+          <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/repository/${repository}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{repository}</strong>
@@ -243,7 +243,7 @@ export const UserDashboard = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center text-base w-full px-4 py-3">
+          <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/team/${team}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{team}</strong>

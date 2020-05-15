@@ -134,10 +134,11 @@ export const Configuration = observer(() => {
             className={classNames(
               "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
               {
-                "pointer-events-none opacity-50": !state.isDirty,
+                "pointer-events-none opacity-50":
+                  !state.isDirty || state.isLoading,
               }
             )}
-            disabled={!state.isDirty}
+            disabled={!state.isDirty || state.isLoading}
             onClick={state.save}
           >
             Apply

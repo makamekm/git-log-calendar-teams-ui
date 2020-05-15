@@ -1,5 +1,4 @@
 import React from "react";
-import Toggle from "react-toggle";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { ConfigurationState } from "./ConfigurationState";
@@ -10,6 +9,7 @@ import {
 import { Accordion } from "~/components/Accordion/Accordion";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
 import { Dropdown } from "~/components/Dropdown/Dropdown";
+import { Toggle } from "~/components/Toggle/Toggle";
 
 const ConfigurationTableTeams = ConfigurationTable as React.FC<
   ConfigurationTableProps<ConfigurationState["config"]["teams"][0]>
@@ -31,7 +31,6 @@ export const ConfigurationTeams = observer(
             <button
               className="text-xs font-normal border py-1 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
               onClick={(e) => {
-                e.stopPropagation();
                 state.config.teams.unshift({
                   id: String(Math.random() * 10000),
                   name: "",
@@ -53,17 +52,17 @@ export const ConfigurationTeams = observer(
             items={state.config.teams}
             header={
               <>
-                <th>Name</th>
-                <th className="text-center">Inverted</th>
-                <th>Users</th>
-                <th className="text-right">Actions</th>
+                <th className="w-4/12">Name</th>
+                <th className="text-center w-10">Inverted</th>
+                <th className="w-6/12">Users</th>
+                <th className="text-right w-20">Actions</th>
               </>
             }
             render={(team) => (
               <>
-                <td className="align-middle">
+                <td className="align-middle w-4/12">
                   <input
-                    className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                    className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
                       team.name = e.currentTarget.value;
@@ -72,9 +71,8 @@ export const ConfigurationTeams = observer(
                     placeholder="Name (Required & Unique)..."
                   />
                 </td>
-                <td className="align-middle text-center">
+                <td className="align-middle text-center w-10">
                   <Toggle
-                    className="mt-2"
                     checked={team.invert}
                     onChange={() => {
                       team.invert = !team.invert;
@@ -85,7 +83,7 @@ export const ConfigurationTeams = observer(
                   />
                 </td>
                 <td
-                  className="align-middle"
+                  className="align-middle w-6/12"
                   style={{
                     maxWidth: "300px",
                   }}
@@ -104,7 +102,7 @@ export const ConfigurationTeams = observer(
                     />
                   )}
                 </td>
-                <td className="align-middle text-right">
+                <td className="align-middle text-right w-20">
                   <Dropdown title={<i className="fas fa-cog"></i>}>
                     <button
                       className={

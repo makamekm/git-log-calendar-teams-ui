@@ -40,14 +40,14 @@ export const TrackerActivities = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center justify-between text-base w-full px-4 py-3">
+          <div className="flex items-center justify-between text-base w-full px-6 py-4">
             <Link to={`/user/${name}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{name}</strong>
               <span className="small ml-1 text-muted">#user</span>
             </Link>
             <Dropdown
-              className="no-print"
+              className="no-print -my-2 -mx-3"
               title={<i className="fas fa-cog"></i>}
             >
               <button
@@ -92,14 +92,14 @@ export const TrackerActivities = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center justify-between text-base w-full px-4 py-3">
+          <div className="flex items-center justify-between text-base w-full px-6 py-4">
             <Link to={`/team/${name}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{name}</strong>
               <span className="small ml-1 text-muted">#team</span>
             </Link>
             <Dropdown
-              className="no-print"
+              className="no-print -my-2 -mx-3"
               title={<i className="fas fa-cog"></i>}
             >
               <button
@@ -144,14 +144,14 @@ export const TrackerActivities = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center justify-between text-base w-full px-4 py-3">
+          <div className="flex items-center justify-between text-base w-full px-6 py-4">
             <Link to={`/repository/${name}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{name}</strong>
               <span className="small ml-1 text-muted">#repository</span>
             </Link>
             <Dropdown
-              className="no-print"
+              className="no-print -my-2 -mx-3"
               title={<i className="fas fa-cog"></i>}
             >
               <button

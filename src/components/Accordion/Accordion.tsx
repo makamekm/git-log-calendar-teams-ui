@@ -20,9 +20,10 @@ export const Accordion: React.FC<{
     },
     from: {
       opacity: 0,
+      transform: "scale(0.99)",
     },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    enter: { opacity: 1, transform: "scale(1)" },
+    leave: { opacity: 0, transform: "scale(0.99)" },
   });
   return (
     <div
@@ -31,7 +32,7 @@ export const Accordion: React.FC<{
         "mt-3 bg-white rounded-lg shadow-md text-gray-700"
       )}
     >
-      <div className="flex items-center w-full font-semibold px-4 py-3 text-lg">
+      <div className="accordion-title flex items-center w-full font-semibold px-4 py-3 text-lg">
         <button
           onClick={toggle}
           className="mr-2 flex items-center justify-center w-8 h-8 rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -53,6 +54,15 @@ export const Accordion: React.FC<{
         </button>
         {title}
       </div>
+      <style jsx>{`
+        .accordion-title
+          > :global(.flex.justify-between:not(:first-child)
+            > *:not(:first-child)) {
+          transform: ${state.isOpen ? "scale(1)" : "scale(0.9)"};
+          opacity: ${state.isOpen ? "1" : "0"};
+          transition: opacity 0.1s, transform 0.1s;
+        }
+      `}</style>
       {transitions.map(
         ({ item, key, props }) =>
           item && (

@@ -81,7 +81,7 @@ const MenuItems = () => {
 const SideMenu: React.FC = observer(() => {
   const service = React.useContext(LayoutService);
   return (
-    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print border-r">
+    <div className="lg:flex flex-none flex-col lg:flex-row lg:min-h-screen no-print border-r mb-2 lg:mb-0 border-b lg:border-b-0">
       <div
         onClick={() => {
           service.sidebarOpened = !service.sidebarOpened;
@@ -162,7 +162,7 @@ const SideMenu: React.FC = observer(() => {
 const TopMenu: React.FC = observer(() => {
   const service = React.useContext(LayoutService);
   return (
-    <div className="w-full antialiased bg-gray-100 dark-mode:bg-gray-900 no-print mb-3 py-2 px-2">
+    <div className="w-full antialiased bg-gray-100 dark-mode:bg-gray-900 no-print mb-3 py-2 -mx-2">
       <div className="w-full text-gray-700 dark-mode:text-gray-200 dark-mode:bg-gray-800 flex flex-row items-center justify-between">
         <div className="flex flex-row items-center">
           <div
@@ -181,7 +181,11 @@ const TopMenu: React.FC = observer(() => {
           >
             {service.breadcrumbs.map((breadcrumb, index) => (
               <React.Fragment key={index}>
-                <span className="text-sm px-2 py-2 text-gray-600">
+                <span
+                  className={classNames("text-sm px-2 py-2 text-gray-600", {
+                    "hidden lg:inline-block": index === 0,
+                  })}
+                >
                   <i className="fa fa-angle-right"></i>
                 </span>
                 {breadcrumb.url ? (
@@ -216,8 +220,8 @@ export const AppLayout: React.FC = observer(({ children }) => {
       <div className="lg:flex">
         <SideMenu />
         <div className="flex-1 flex flex-col min-h-screen">
-          <TopMenu />
           <div className="container flex flex-col mx-auto px-4 flex-1">
+            <TopMenu />
             {children}
           </div>
           {service.footer && (

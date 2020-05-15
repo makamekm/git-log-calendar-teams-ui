@@ -1,4 +1,8 @@
 @media print {
+  body {
+    opacity: 1 !important;
+  }
+
   *,
   *::before,
   *::after {

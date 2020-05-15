@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import { toJS } from "mobx";
-import Toggle from "react-toggle";
 import { useLocalStore, observer } from "mobx-react";
 import { List } from "react-content-loader";
 
@@ -15,6 +14,7 @@ import { useLayoutConfig } from "~/components/Layout/LayoutService";
 import { Accordion } from "~/components/Accordion/Accordion";
 import { AccordionToggle } from "~/components/Accordion/AccordionToggle";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
+import { Toggle } from "~/components/Toggle/Toggle";
 import { AlertModal } from "~/components/Modal/AlertModal";
 
 interface SettingsState {
@@ -43,7 +43,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
             <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
-                className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                 type="text"
                 onChange={(e) => {
                   state.settings.publicKey = e.currentTarget.value;
@@ -59,7 +59,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
             <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
-                className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                 onChange={(e) => {
                   state.settings.secretKey = e.currentTarget.value;
                 }}
@@ -89,8 +89,8 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               <div className="flex-1 mt-3 mx-2">
                 <Toggle
                   checked={!!state.settings.dontCollect}
-                  onChange={() => {
-                    state.settings.dontCollect = !state.settings.dontCollect;
+                  onChange={(value) => {
+                    state.settings.dontCollect = value;
                   }}
                 />
               </div>
@@ -103,7 +103,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.settings.parallelCollectingJobLimit = Math.max(
@@ -122,7 +122,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.settings.forceCollectingInterval = Math.max(
@@ -141,7 +141,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {
                     state.settings.limitCollectingRepositoriesPerTry = Math.max(
@@ -198,8 +198,8 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             <div className="flex-1 mt-3 mx-2">
               <Toggle
                 checked={!!state.settings.useDriveS3}
-                onChange={() => {
-                  state.settings.useDriveS3 = !state.settings.useDriveS3;
+                onChange={(value) => {
+                  state.settings.useDriveS3 = value;
                 }}
               />
             </div>
@@ -211,7 +211,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3AccessKeyId = e.currentTarget.value;
@@ -227,7 +227,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3SecretAccessKey = e.currentTarget.value;
@@ -243,7 +243,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3Bucket = e.currentTarget.value;
@@ -259,7 +259,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
-                  className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
                     state.settings.s3DrivePath = e.currentTarget.value;
@@ -396,10 +396,11 @@ export const Settings = observer(() => {
             className={classNames(
               "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
               {
-                "pointer-events-none opacity-50": !state.isDirty,
+                "pointer-events-none opacity-50":
+                  !state.isDirty || state.isLoading,
               }
             )}
-            disabled={!state.isDirty}
+            disabled={!state.isDirty || state.isLoading}
             onClick={state.save}
           >
             Apply

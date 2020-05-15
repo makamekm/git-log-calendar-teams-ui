@@ -30,7 +30,6 @@ export const ConfigurationRepositories = observer(
             <button
               className="text-xs font-normal border py-1 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
               onClick={(e) => {
-                e.stopPropagation();
                 state.config.repositories.unshift({
                   id: String(Math.random() * 10000),
                   url: "",
@@ -56,14 +55,14 @@ export const ConfigurationRepositories = observer(
                 <th>Url</th>
                 <th>Branch</th>
                 <th>Excludes</th>
-                <th className="text-right">Actions</th>
+                <th className="text-right w-20">Actions</th>
               </>
             }
             render={(repository) => (
               <>
                 <td className="align-middle">
                   <input
-                    className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                    className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
                       repository.name = e.currentTarget.value;
@@ -74,7 +73,7 @@ export const ConfigurationRepositories = observer(
                 </td>
                 <td className="align-middle">
                   <input
-                    className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                    className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
                       repository.url = e.currentTarget.value;
@@ -85,7 +84,7 @@ export const ConfigurationRepositories = observer(
                 </td>
                 <td className="align-middle">
                   <input
-                    className="w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+                    className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
                       repository.branch = e.currentTarget.value;
@@ -107,7 +106,7 @@ export const ConfigurationRepositories = observer(
                     options={state.excludes}
                   />
                 </td>
-                <td className="align-middle text-right">
+                <td className="align-middle text-right w-20">
                   <Dropdown title={<i className="fas fa-cog"></i>}>
                     <button
                       className={

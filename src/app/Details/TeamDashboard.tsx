@@ -49,7 +49,7 @@ export const TeamDashboard = observer(() => {
           <HeaderMain
             title={
               <>
-                {teamName} <small>#team</small>
+                {teamName} <span className="text-sm">#team</span>
               </>
             }
             className="mt-0 mb-3"
@@ -130,7 +130,7 @@ export const TeamDashboard = observer(() => {
       />
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Calendar activities of <strong>{teamName}</strong>
             <span className="text-xs ml-2 text-gray-400">#team</span>
@@ -153,7 +153,7 @@ export const TeamDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Detailed activities of <strong>{teamName}</strong>
             <span className="text-xs ml-2 text-gray-400">#team</span>
@@ -173,7 +173,7 @@ export const TeamDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             User activities of <strong>{teamName}</strong>
             <span className="text-xs ml-2 text-gray-400">#team</span>
@@ -194,7 +194,7 @@ export const TeamDashboard = observer(() => {
       </div>
 
       <div className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700">
-        <div className="flex items-center text-base w-full px-4 py-3">
+        <div className="flex items-center text-base w-full px-6 py-4">
           <span>
             Repository activities of <strong>{teamName}</strong>
             <span className="text-xs ml-2 text-gray-400">#team</span>
@@ -228,7 +228,7 @@ export const TeamDashboard = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center text-base w-full px-4 py-3">
+          <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/user/${user}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{user}</strong>
@@ -264,7 +264,7 @@ export const TeamDashboard = observer(() => {
           key={index}
           className="no-print-break mt-3 bg-white rounded-lg shadow-md text-gray-700"
         >
-          <div className="flex items-center text-base w-full px-4 py-3">
+          <div className="flex items-center text-base w-full px-6 py-4">
             <Link to={`/repository/${repository}`}>
               <i className="fa fa-link no-print mr-1"></i>
               <strong>{repository}</strong>
