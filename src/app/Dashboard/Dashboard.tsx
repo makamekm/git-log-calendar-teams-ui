@@ -43,7 +43,7 @@ export const Dashboard = observer(() => {
           <List height="300px" />
         ) : (
           <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6 lg:col-span-2">
+            <div className="col-span-6 xl:col-span-2">
               <TotalCommitsPanel
                 className="mt-6"
                 valueToday={state.stats?.commits.todayValue}

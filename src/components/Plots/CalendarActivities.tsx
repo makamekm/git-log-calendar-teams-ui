@@ -33,14 +33,15 @@ export const CalendarActivities = ({
   return (
     <div
       className={classNames(
-        "calendar-activities mx-auto text-gray-900",
+        "calendar-activities relative mx-auto text-gray-900",
         className
       )}
       style={{
-        maxWidth: isPrint && "1000px",
+        maxWidth: isPrint ? "1000px" : "1000px",
         height: `${height * years}px`,
         maxHeight: `${height * years}px`,
         minHeight: `${height * years}px`,
+        overflow: "hidden",
       }}
     >
       <ResponsiveCalendar

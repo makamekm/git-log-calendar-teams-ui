@@ -137,7 +137,7 @@ export const LogsScreen = observer(() => {
           <i className="fa fa-search"></i>
         </div>
         <input
-          className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 pr-3 pl-10 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+          className="flex-1 ellipsis no-print text-base shadow-sm appearance-none border rounded py-2 pr-3 pl-10 text-grey-darker leading-none focus:outline-none  dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800"
           placeholder="Search Messages..."
           value={state.search}
           onChange={(e) => {
@@ -146,7 +146,7 @@ export const LogsScreen = observer(() => {
         />
       </div>
 
-      <div className="bg-white rounded-lg shadow-md text-gray-700 mt-3">
+      <div className="border mt-3 bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
         {state.isLoading ? (
           <List height={"300px"} className="m-4" />
         ) : state.aggregatedLogs.length > 0 ? (

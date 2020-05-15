@@ -21,11 +21,10 @@ export const NavbarPrint = observer(({ className }: { className?: string }) => {
         body {
           opacity: ${state.isPrinting ? "0" : "1"};
         }
-        body,
-        .container {
-          min-width: ${state.isPrinting ? "1024px !important" : "undefined"};
-          width: ${state.isPrinting ? "1024px !important" : "undefined"};
-          max-width: ${state.isPrinting ? "1024px !important" : "undefined"};
+        body {
+          ${state.isPrinting ? "min-width: 1024px !important;" : ""}
+          ${state.isPrinting ? "width: 1024px !important;" : ""}
+          ${state.isPrinting ? "max-width: 1024px !important;" : ""}
         }
       `}</style>
     </div>

@@ -648,7 +648,7 @@ export const Typeahead: React.FC<{
                             <div className="w-full items-center flex">
                               <div className="mx-2 leading-6 ellipsis ellipsis-optimal">
                                 <Highlighter
-                                  highlightClassName="font-semibold bg-transparent p-0"
+                                  highlightClassName="font-semibold bg-transparent p-0 dark-mode:text-white"
                                   searchWords={state.queryArr}
                                   autoEscape
                                   textToHighlight={item}
@@ -720,7 +720,7 @@ export const Typeahead: React.FC<{
                               <div className="w-full items-center flex">
                                 <div className="mx-2 leading-6 ellipsis ellipsis-optimal">
                                   <Highlighter
-                                    highlightClassName="font-semibold bg-transparent p-0"
+                                    highlightClassName="font-semibold bg-transparent p-0 dark-mode:text-white"
                                     searchWords={state.queryArr}
                                     autoEscape
                                     textToHighlight={item.value}

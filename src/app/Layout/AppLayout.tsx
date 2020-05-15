@@ -219,16 +219,16 @@ export const AppLayout: React.FC = observer(({ children }) => {
     <div className="min-h-screen">
       <div className="lg:flex">
         <SideMenu />
-        <div className="flex-1 flex flex-col min-h-screen">
-          <div className="container flex flex-col mx-auto px-4 flex-1">
+        <div className="relative flex-1 flex flex-col min-h-screen">
+          <div className="max-w-full content container flex flex-col mx-auto px-4 flex-1">
             <TopMenu />
             {children}
+            {service.footer && (
+              <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-5 mx-auto no-print">
+                <FooterText />
+              </div>
+            )}
           </div>
-          {service.footer && (
-            <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-5 container mx-auto px-4 no-print">
-              <FooterText />
-            </div>
-          )}
         </div>
       </div>
       <style jsx>{`
