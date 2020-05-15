@@ -4,7 +4,7 @@ import { List } from "react-content-loader";
 import moment from "moment";
 import classNames from "classnames";
 
-import { HeaderMain } from "~/app/HeaderMain";
+import { HeaderMain } from "../HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useOnChange, useOnLoad } from "~/hooks";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";

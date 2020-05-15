@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from "react-router";
 import { ProtectedRoute } from "./app/Auth/ProtectedRoute";
 import { AuthScreen } from "./app/Auth/AuthScreen";
 import { LogoutRoute } from "./app/Auth/LogoutRoute";
-import { Dashboard } from "./app/Dashboard/Dashboard";
+import { Dashboard } from "./app/Details/Dashboard";
 import { Error404 } from "./app/Error404";
 import { Configuration } from "./app/Configuration/Configuration";
 import { LogsScreen } from "./app/Log/LogsScreen";

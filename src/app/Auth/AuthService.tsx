@@ -3,7 +3,7 @@ import md5 from "md5";
 import { useLocalStore } from "mobx-react";
 import { useHistory, useLocation } from "react-router";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
-import { LoadingService } from "~/app/Loading/LoadingService";
+import { LoadingService } from "../Loading/LoadingService";
 import { useOnChange } from "~/hooks";
 import { ipc } from "~/shared/ipc";
 

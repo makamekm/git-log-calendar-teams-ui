@@ -2,16 +2,16 @@ import React from "react";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 
-import { HeaderMain } from "~/app/HeaderMain";
-import { TotalCommitsPanel } from "./TotalCommitsPanel";
-import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
-import { TopPanel } from "./TopPanel";
-import { ActiveStatsPanel } from "./ActiveStatsPanel";
-import { DashboardToolbar } from "./DashboardToolbar";
+import { HeaderMain } from "../HeaderMain";
+import { TotalCommitsPanel } from "./Components/TotalCommitsPanel";
+import { TotalChangedLinesPanel } from "./Components/TotalChangedLinesPanel";
+import { TopPanel } from "./Components/TopPanel";
+import { ActiveStatsPanel } from "./Components/ActiveStatsPanel";
+import { DashboardToolbar } from "./Components/DashboardToolbar";
 import { DashboardService } from "../DashboardService";
-import { TrackersSelector } from "./TrackerSelector";
-import { TrackerActivities } from "./TrackerActivities";
-import { periods } from "./Periods";
+import { TrackersSelector } from "./Components/TrackerSelector";
+import { TrackerActivities } from "./Components/TrackerActivities";
+import { periods } from "./Components/Periods";
 import { useOnLoad } from "~/hooks";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
 

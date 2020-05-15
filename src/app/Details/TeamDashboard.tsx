@@ -3,21 +3,21 @@ import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { Link } from "react-router-dom";
 
-import { HeaderMain } from "~/app/HeaderMain";
+import { HeaderMain } from "../HeaderMain";
 import { DashboardService } from "../DashboardService";
 import { useParams } from "react-router";
 import { useOnLoad } from "~/hooks";
-import { DashboardToolbar } from "../Dashboard/DashboardToolbar";
-import { TopPanel } from "../Dashboard/TopPanel";
-import { periods } from "../Dashboard/Periods";
-import { TotalChangedLinesPanel } from "../Dashboard/TotalChangedLinesPanel";
-import { TotalCommitsPanel } from "../Dashboard/TotalCommitsPanel";
-import { ActiveStatsPanel } from "../Dashboard/ActiveStatsPanel";
-import { CalendarActivities } from "../Dashboard/CalendarActivities";
+import { DashboardToolbar } from "./Components/DashboardToolbar";
+import { TopPanel } from "./Components/TopPanel";
+import { periods } from "./Components/Periods";
+import { TotalChangedLinesPanel } from "./Components/TotalChangedLinesPanel";
+import { TotalCommitsPanel } from "./Components/TotalCommitsPanel";
+import { ActiveStatsPanel } from "./Components/ActiveStatsPanel";
+import { CalendarActivities } from "~/components/Plots/CalendarActivities";
 import { HeaderSection } from "../HeaderSection";
-import { LatestMessages } from "./LastMessages";
-import { BarActivities } from "../Dashboard/BarActivities";
-import { LineActivities } from "../Dashboard/LineActivities";
+import { LatestMessages } from "./Components/LastMessages";
+import { BarActivities } from "~/components/Plots/BarActivities";
+import { LineActivities } from "~/components/Plots/LineActivities";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const TeamDashboard = observer(() => {

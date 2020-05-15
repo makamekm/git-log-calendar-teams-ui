@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import { TinyDonutChart } from "./TinyDonutChart";
+import { TinyDonutChart } from "~/components/Plots/TinyDonutChart";
 import { numberWithCommas } from "~/tools";
 
 const colors = ["green", "blue", "yellow", "cyan", "purple"];

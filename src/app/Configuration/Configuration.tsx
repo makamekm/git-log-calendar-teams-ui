@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { toJS } from "mobx";
 import { useLocalStore, observer } from "mobx-react";
 
-import { HeaderMain } from "~/app/HeaderMain";
+import { HeaderMain } from "../HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useDelay, useOnLoad } from "~/hooks";
 import { ConfigurationState } from "./ConfigurationState";

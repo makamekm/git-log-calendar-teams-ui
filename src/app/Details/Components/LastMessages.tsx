@@ -13,8 +13,8 @@ import {
 } from "react-virtualized";
 
 import { numberWithCommas } from "~/tools";
-import { DashboardService } from "../DashboardService";
-import { MessageService, MessageState } from "../MessageService";
+import { DashboardService } from "../../DashboardService";
+import { MessageService, MessageState } from "../../MessageService";
 import { Accordion } from "~/components/Accordion/Accordion";
 
 const UserKey = observer(

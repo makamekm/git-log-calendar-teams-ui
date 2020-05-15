@@ -3,11 +3,11 @@ import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import { groupBy } from "lodash";
 
-import { CalendarActivities } from "./CalendarActivities";
-import { DashboardService } from "../DashboardService";
-import { FavouriteService } from "../FavouriteService";
+import { CalendarActivities } from "~/components/Plots/CalendarActivities";
+import { DashboardService } from "../../DashboardService";
+import { FavouriteService } from "../../FavouriteService";
 import { Link } from "react-router-dom";
-import { HeaderSection } from "../HeaderSection";
+import { HeaderSection } from "../../HeaderSection";
 import { Dropdown } from "~/components/Dropdown/Dropdown";
 
 export const TrackerActivities = observer(() => {

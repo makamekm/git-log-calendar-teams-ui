@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { LayoutService } from "../components/Layout/LayoutService";
+import { LayoutService } from "~/components/Layout/LayoutService";
 import { observer } from "mobx-react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
