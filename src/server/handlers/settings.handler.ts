@@ -31,10 +31,15 @@ ipcBus.handle(
       collectingRepositoryNames: process.env.REPO_NAMES
         ? JSON.parse(process.env.REPO_NAMES)
         : [],
+      useDriveSwarm: process.env.USE_DRIVE_SWARM || false,
+      useDriveS3: process.env.USE_DRIVE_S3 || false,
+      s3AccessKeyId: process.env.S3_ACCESS_KEY_ID,
+      s3SecretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+      s3DrivePath: process.env.S3_DRIVE_PATH,
+      s3Bucket: process.env.S3_BUCKET,
       drivePath: process.env.DRIVE_PATH || "./drive",
       tempPath: process.env.TEMP_PATH || "./temp",
       ...config,
-      useDriveSwarm: true,
       dontCollect: false,
     };
   }

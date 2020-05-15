@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 import {
@@ -9,15 +10,9 @@ import {
   CellMeasurer,
 } from "react-virtualized";
 
-import {
-  Input,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  Button,
-} from "~/components";
 import { ConfigurationState } from "./ConfigurationState";
 import { numberWithCommas } from "~/tools";
+import { Accordion } from "~/components/Accordion/Accordion";
 
 const UserKey = observer(
   ({
@@ -114,9 +109,12 @@ const UserActions = observer(
     return (
       <CellRenderer {...props}>
         {!registered && (
-          <Button size="sm" onClick={onRegisterUser}>
-            Register
-          </Button>
+          <button
+            className="text-xs font-normal border py-1 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            onClick={onRegisterUser}
+          >
+            <i className="fa fa-plus mr-2"></i>Add
+          </button>
         )}
       </CellRenderer>
     );
@@ -238,44 +236,50 @@ export const ConfigurationAllUsers = observer(
       }),
     }));
     return (
-      <Accordion className="mb-3 no-print" initialOpen>
-        <AccordionHeader className="h6 cursor-pointer">
-          <div className="d-flex justify-content-center align-items-center">
+      <Accordion
+        className="mb-3 no-print"
+        initialOpen
+        title={
+          <div className="flex justify-between items-center w-full">
             <div>
               All Repository Users
-              <span className="small ml-1 text-muted">#1.04</span>
+              <span className="text-sm ml-2 text-gray-600">#1.04</span>
             </div>
-            <div style={{ flex: 1 }}>
-              <Input
-                style={{ width: "150px" }}
+
+            <div className="flex justify-start items-center">
+              <div
+                className={classNames("absolute pl-3 pointer-events-none", {
+                  "text-gray-500": !state.usersQuery,
+                })}
+              >
+                <i className="fa fa-search"></i>
+              </div>
+              <input
                 placeholder="Search..."
-                bsSize="sm"
-                className="ml-auto align-self-end no-print"
-                onClick={(e) => e.stopPropagation()}
+                className="ellipsis no-print text-base shadow-sm appearance-none border rounded py-2 pr-3 pl-10 text-grey-darker leading-none focus:outline-none  dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800"
                 value={state.usersQuery}
                 onChange={onSearchChange}
               />
             </div>
           </div>
-        </AccordionHeader>
-        <AccordionBody className="p-0">
-          {!state.config || state.isLoading || !storage.cache ? (
-            <List className="m-4" height="200px" width="100%" />
-          ) : (
-            <div style={{ height: "450px" }}>
-              <AutoSizer>
-                {({ width, height }) => (
-                  <UserTable
-                    width={width}
-                    height={height}
-                    state={state}
-                    cache={storage.cache}
-                  />
-                )}
-              </AutoSizer>
-            </div>
-          )}
-        </AccordionBody>
+        }
+      >
+        {!state.config || state.isLoading || !storage.cache ? (
+          <List className="m-4" height="200px" width="100%" />
+        ) : (
+          <div style={{ height: "450px" }}>
+            <AutoSizer>
+              {({ width, height }) => (
+                <UserTable
+                  width={width}
+                  height={height}
+                  state={state}
+                  cache={storage.cache}
+                />
+              )}
+            </AutoSizer>
+          </div>
+        )}
       </Accordion>
     );
   }

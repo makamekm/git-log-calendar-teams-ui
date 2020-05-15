@@ -1,5 +1,4 @@
 import GitRepository from "./git-tools";
-import { app } from "electron";
 import YAML from "yaml";
 import safeEval from "safe-eval";
 import PromisePool from "es6-promise-pool";
@@ -16,7 +15,6 @@ import {
   stat,
 } from "./drive";
 import { Config } from "~/shared/Config";
-import { DEV_CONFIG } from "@env/config";
 
 // Collect Stats
 const STATS_FILE_POSTFIX = ".stats.json";
@@ -31,20 +29,15 @@ const DEFAULT_EVALUATE = (item) => item.linesChanged;
 
 // Read data & config
 export async function readData(config) {
-  config = config || (await getConfig());
-
   const fileMap = await readStatsFolder();
   await readStats(fileMap, config);
 
   return { fileMap, config };
 }
 
-const getDefaultConfig = (): Config => {
-  if (app) {
-    const homeConfigPath = path.resolve(app.getPath("home"), DEV_CONFIG);
-    if (fs.existsSync(homeConfigPath)) {
-      return YAML.parse(fs.readFileSync(homeConfigPath, "utf-8"));
-    }
+const getDefaultConfig = (homeConfigPath: string): Config => {
+  if (homeConfigPath && fs.existsSync(homeConfigPath)) {
+    return YAML.parse(fs.readFileSync(homeConfigPath, "utf-8"));
   }
   return {
     branch: "master",
@@ -59,7 +52,7 @@ const getDefaultConfig = (): Config => {
 };
 
 // Load Config from YAML
-export async function getConfig(tempDir?: string) {
+export async function getConfig(tempDir: string, homeConfigPath?: string) {
   await waitForDrive();
   let config: Config;
 
@@ -67,17 +60,10 @@ export async function getConfig(tempDir?: string) {
     const file = await readFile(CONFIG_PATH);
     config = YAML.parse(file);
   } else {
-    config = getDefaultConfig();
+    config = getDefaultConfig(homeConfigPath);
   }
 
-  if (tempDir) {
-    config.tmpDir = path.resolve(tempDir);
-  } else if (app) {
-    config.tmpDir = path.resolve(app.getPath("temp"), "repositories");
-  } else {
-    throw new Error("No temp folder set!");
-  }
-
+  config.tmpDir = tempDir;
   config.evaluate = safeEval(config.evaluateStr || DEFAULT_EVALUATE);
 
   collectUnusedUsers(config);
@@ -88,7 +74,7 @@ export async function getConfig(tempDir?: string) {
 // Save Config from YAML
 export async function saveConfig(newConfig: Config) {
   await waitForDrive();
-  const oldConfig = await getConfig();
+  const oldConfig = await getConfig(null);
 
   newConfig = pick(
     {
@@ -188,7 +174,6 @@ export async function collect(
   repositoryNames: string[],
   limitRepositoriesPerCollect: number
 ) {
-  config = config || (await getConfig());
   fsExtra.ensureDirSync(config.tmpDir);
 
   const fileTimeMap: {

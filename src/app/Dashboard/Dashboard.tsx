@@ -2,18 +2,18 @@ import React from "react";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 
-import { Container, Row, Col, WithLayoutMeta } from "~/components";
-import { HeaderMain } from "~/app/HeaderMain";
-import { TotalCommitsPanel } from "./TotalCommitsPanel";
-import { TotalChangedLinesPanel } from "./TotalChangedLinesPanel";
-import { TopPanel } from "./TopPanel";
-import { ActiveStatsPanel } from "./ActiveStatsPanel";
-import { DashboardToolbar } from "./DashboardToolbar";
-import { DashboardService } from "../DashboardService";
-import { TrackersSelector } from "./TrackerSelector";
-import { TrackerActivities } from "./TrackerActivities";
-import { periods } from "./Periods";
+import { HeaderMain } from "~/components/Blocks/HeaderMain";
+import { TotalCommitsPanel } from "./Components/TotalCommitsPanel";
+import { TotalChangedLinesPanel } from "./Components/TotalChangedLinesPanel";
+import { TopPanel } from "./Components/TopPanel";
+import { ActiveStatsPanel } from "./Components/ActiveStatsPanel";
+import { DashboardToolbar } from "./Components/DashboardToolbar";
+import { DashboardService } from "./DashboardService";
+import { TrackersSelector } from "./Components/TrackerSelector";
+import { TrackerActivities } from "./Components/TrackerActivities";
+import { periods } from "./Components/Periods";
 import { useOnLoad } from "~/hooks";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const Dashboard = observer(() => {
   const state = React.useContext(DashboardService);
@@ -23,45 +23,41 @@ export const Dashboard = observer(() => {
     state.load();
   }, [state]);
   useOnLoad(onLoad);
+  useLayoutConfig({
+    pageTitle: "Dashboard",
+    breadcrumbs: [
+      {
+        name: "Dashboard",
+      },
+    ],
+  });
 
   return (
-    <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: "Dashboard",
-          breadcrumbs: [
-            {
-              name: "Dashboard",
-            },
-          ],
-        }}
-      />
-      <Row className="mb-5">
-        <Col lg={12}>
-          <div className="d-flex flex-wrap mb-3">
-            <HeaderMain title="Dashboard" className="mt-0 mb-3" />
-            <DashboardToolbar state={state} />
-          </div>
-        </Col>
+    <>
+      <div className="mb-8">
+        <div className="flex flex-wrap mb-3">
+          <HeaderMain title="Dashboard" className="mb-3" />
+          <DashboardToolbar state={state} />
+        </div>
         {state.isLoading ? (
           <List height="300px" />
         ) : (
-          <>
-            <Col lg={4}>
+          <div className="grid grid-cols-6 gap-6">
+            <div className="col-span-6 xl:col-span-2">
               <TotalCommitsPanel
-                className="mt-4"
+                className="mt-6"
                 valueToday={state.stats?.commits.todayValue}
                 valueLimited={state.stats?.commits.value}
                 limit={state.limit}
               />
               <TotalChangedLinesPanel
-                className="mt-4"
+                className="mt-6"
                 valueToday={state.stats?.changes.todayValue}
                 valueLimited={state.stats?.changes.value}
                 limit={state.limit}
               />
               <ActiveStatsPanel
-                className="mt-4"
+                className="mt-6"
                 activeRepositories={
                   state.stats?.stats.activeRepositories?.value
                 }
@@ -74,62 +70,60 @@ export const Dashboard = observer(() => {
                 activeUsersToday={state.stats?.stats.activeUsers?.todayValue}
                 limit={state.limit}
               />
-            </Col>
-            <Col lg={4} md={12}>
+            </div>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="repository"
                 name={`Repositories ${periods[state.limit]}`}
                 data={state.stats?.topRepositories?.value}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="team"
                 name={`Teams ${periods[state.limit]}`}
                 colorShift={1}
                 data={state.stats?.topTeams?.value}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="user"
                 name={`Users ${periods[state.limit]}`}
                 colorShift={2}
                 data={state.stats?.topUsers?.value}
               />
-            </Col>
-            <Col lg={4} md={12}>
+            </div>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="repository"
                 name="Repositories Today"
                 data={state.stats?.topRepositories?.todayValue}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="team"
                 name="Teams Today"
                 colorShift={1}
                 data={state.stats?.topTeams?.todayValue}
               />
               <TopPanel
-                className="mt-4"
+                className="mt-6"
                 type="user"
                 name="Users Today"
                 colorShift={2}
                 data={state.stats?.topUsers?.todayValue}
               />
-            </Col>
-          </>
+            </div>
+          </div>
         )}
-      </Row>
+      </div>
 
-      <Row className="mb-3 no-print">
-        <Col lg={12}>
-          <TrackersSelector />
-        </Col>
-      </Row>
+      <div className="mb-3 no-print">
+        <TrackersSelector />
+      </div>
 
       <TrackerActivities />
-    </Container>
+    </>
   );
 });

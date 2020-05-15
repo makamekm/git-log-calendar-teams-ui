@@ -28,7 +28,7 @@ export const useDelay: <T>(
   name: keyof T,
   newName: keyof T,
   delay?: number
-) => void = (state, name, newName, delay = 500) => {
+) => void = (state, name, newName, delay = 200) => {
   React.useEffect(() => {
     const setValue = debounce((value) => (state[newName] = value), delay);
     return autorun(() => {
@@ -167,3 +167,46 @@ export const useSyncLocalStorage = <T, K extends keyof T>(
     );
   }, [state, name, key, delay]);
 };
+
+export function useClickOutside(ref, fn) {
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        fn();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, fn]);
+}
+
+export function useKeyPress(targetKey, down?, up?) {
+  const downHandler = React.useCallback(
+    (e) => {
+      if (e.key === targetKey) {
+        down && down(e);
+      }
+    },
+    [targetKey, down]
+  );
+
+  const upHandler = React.useCallback(
+    (e) => {
+      if (e.key === targetKey) {
+        up && up(e);
+      }
+    },
+    [targetKey, up]
+  );
+
+  React.useEffect(() => {
+    window.addEventListener("keydown", downHandler);
+    window.addEventListener("keyup", upHandler);
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+      window.removeEventListener("keyup", upHandler);
+    };
+  }, [downHandler, upHandler]);
+}

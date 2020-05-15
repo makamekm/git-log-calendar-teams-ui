@@ -1,0 +1,42 @@
+.hr-text {
+  display: flex;
+  align-items: center;
+  &:before,
+  &:after {
+    flex: 1 1 auto;
+    border-top: 1px solid $gray-300;
+    @media screen and (prefers-color-scheme: dark) {
+      border-top: 1px solid $gray-700;
+    }
+  }
+  &:after {
+    content: " ";
+  }
+  > *:first-child {
+    padding-left: 0;
+    padding-right: 1rem;
+    text-align: left;
+  }
+  &.hr-text-center {
+    &:before {
+      content: " ";
+    }
+    > *:first-child {
+      text-align: center;
+      padding-left: 1rem;
+    }
+  }
+  &.hr-text-right {
+    &:before {
+      content: " ";
+    }
+    &:after {
+      content: none;
+    }
+    > *:first-child {
+      text-align: right;
+      padding-left: 1rem;
+      padding-right: 0;
+    }
+  }
+}

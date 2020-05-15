@@ -1,24 +1,15 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
-import { Typeahead } from "react-bootstrap-typeahead";
 
-import {
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownItem,
-  Button,
-  Input,
-  DropdownMenu,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "~/components";
 import { ConfigurationState } from "./ConfigurationState";
 import {
   ConfigurationTable,
   ConfigurationTableProps,
 } from "./ConfigurationTable";
+import { Accordion } from "~/components/Accordion/Accordion";
+import { Typeahead } from "~/components/Typeahead/Typeahead";
+import { Dropdown } from "~/components/Dropdown/Dropdown";
 
 const ConfigurationTableUsers = ConfigurationTable as React.FC<
   ConfigurationTableProps<ConfigurationState["config"]["users"][0]>
@@ -27,19 +18,17 @@ const ConfigurationTableUsers = ConfigurationTable as React.FC<
 export const ConfigurationUsers = observer(
   ({ state }: { state: ConfigurationState }) => {
     return (
-      <Accordion className="mb-3">
-        <AccordionHeader className="h6 cursor-pointer">
-          <div className="d-flex justify-content-center align-items-center">
+      <Accordion
+        className="mb-3"
+        title={
+          <div className="flex justify-between items-center w-full">
             <div>
               Users
-              <span className="small ml-1 text-muted">#1.03</span>
+              <span className="text-sm ml-2 text-gray-600">#1.03</span>
             </div>
-            <Button
-              outline
-              size="sm"
-              className="ml-auto align-self-end"
+            <button
+              className="text-xs font-normal border py-1 px-3 rounded-lg dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
               onClick={(e) => {
-                e.stopPropagation();
                 state.config.users.unshift({
                   id: String(Math.random() * 10000),
                   name: "",
@@ -48,83 +37,70 @@ export const ConfigurationUsers = observer(
               }}
             >
               <i className="fa fa-plus mr-2"></i>Add
-            </Button>
+            </button>
           </div>
-        </AccordionHeader>
-        <AccordionBody className="p-0">
-          {!state.config || state.isLoading ? (
-            <List className="m-4" height="200px" width="100%" />
-          ) : (
-            <ConfigurationTableUsers
-              items={state.config.users}
-              header={
-                <>
-                  <th className="bt-0">Name</th>
-                  <th className="bt-0">Associations</th>
-                  <th className="text-right bt-0">Actions</th>
-                </>
-              }
-              render={(user) => (
-                <>
-                  <td className="align-middle">
-                    <Input
-                      type="text"
-                      onChange={(e) => {
-                        user.name = e.currentTarget.value;
-                      }}
-                      value={user.name}
-                      placeholder="Name (Required & Unique)..."
-                    />
-                  </td>
-                  <td
-                    className="align-middle"
-                    style={{ maxWidth: "300px", overflow: "hidden" }}
-                  >
-                    <Typeahead
-                      id="exclusions"
-                      placeholder="Add associations..."
-                      multiple
-                      allowNew
-                      selected={user.associations as any}
-                      onChange={(selected) => {
-                        selected = selected.map((s: any) =>
-                          typeof s === "string" ? s : s.label
+        }
+      >
+        {!state.config || state.isLoading ? (
+          <List className="m-4" height="200px" width="100%" />
+        ) : (
+          <ConfigurationTableUsers
+            items={state.config.users}
+            header={
+              <>
+                <th>Name</th>
+                <th>Associations</th>
+                <th className="text-right w-20">Actions</th>
+              </>
+            }
+            render={(user) => (
+              <>
+                <td>
+                  <input
+                    className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                    type="text"
+                    onChange={(e) => {
+                      user.name = e.currentTarget.value;
+                    }}
+                    value={user.name}
+                    placeholder="Name (Required & Unique)..."
+                  />
+                </td>
+                <td style={{ maxWidth: "300px" }}>
+                  <Typeahead
+                    placeholder="Add associations..."
+                    multiple
+                    allowNew
+                    autoFocus
+                    selected={user.associations as any}
+                    onChange={(selected) => {
+                      (user.associations as any).replace(selected);
+                    }}
+                    options={state.associations}
+                  />
+                </td>
+                <td className="text-right w-20">
+                  <Dropdown title={<i className="fas fa-cog"></i>}>
+                    <button
+                      className={
+                        "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                      }
+                      onClick={() => {
+                        state.config.users.splice(
+                          state.config.users.indexOf(user),
+                          1
                         );
-                        (user.associations as any).replace(selected);
                       }}
-                      options={state.associations}
-                      positionFixed
-                    />
-                  </td>
-                  <td className="align-middle text-right">
-                    <UncontrolledButtonDropdown>
-                      <DropdownToggle
-                        color="link"
-                        className="text-decoration-none"
-                      >
-                        <i className="fa fa-gear"></i>
-                        <i className="fa fa-angle-down ml-2"></i>
-                      </DropdownToggle>
-                      <DropdownMenu right>
-                        <DropdownItem
-                          onClick={() => {
-                            state.config.users.splice(
-                              state.config.users.indexOf(user),
-                              1
-                            );
-                          }}
-                        >
-                          <i className="fa fa-fw fa-trash mr-2"></i>
-                          Delete
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledButtonDropdown>
-                  </td>
-                </>
-              )}
-            />
-          )}
-        </AccordionBody>
+                    >
+                      <i className="fa fa-fw fa-trash mr-2"></i>
+                      Delete
+                    </button>
+                  </Dropdown>
+                </td>
+              </>
+            )}
+          />
+        )}
       </Accordion>
     );
   }

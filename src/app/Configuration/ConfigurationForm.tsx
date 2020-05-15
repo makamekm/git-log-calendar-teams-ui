@@ -1,114 +1,124 @@
 import React from "react";
-import Toggle from "react-toggle";
 import { observer } from "mobx-react";
 import { List } from "react-content-loader";
 
-import {
-  Col,
-  Input,
-  Form,
-  FormGroup,
-  Label,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "~/components";
 import { ConfigurationState } from "./ConfigurationState";
+import { Accordion } from "~/components/Accordion/Accordion";
+import { Toggle } from "~/components/Toggle/Toggle";
 
 export const ConfigurationForm = observer(
   ({ state }: { state: ConfigurationState }) => {
     return (
-      <Accordion className="mb-3">
-        <AccordionHeader className="h6 cursor-pointer">
-          Preferences
-          <span className="small ml-1 text-muted">#1.00</span>
-        </AccordionHeader>
-        <AccordionBody className="pb-0">
-          {!state.config || state.isLoading ? (
-            <List className="m-3" height="200px" width="100%" />
-          ) : (
-            <Form className="mt-3 mb-3">
-              <FormGroup row>
-                <Label sm={4}>Password</Label>
-                <Col sm={8}>
-                  <Input
-                    type="password"
-                    onChange={(e) => {
-                      state.config.password = e.currentTarget.value;
-                    }}
-                    value={state.config.password}
-                    placeholder="Enter Password..."
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label sm={4}>Default Branch</Label>
-                <Col sm={8}>
-                  <Input
-                    type="text"
-                    onChange={(e) => {
-                      state.config.branch = e.currentTarget.value;
-                    }}
-                    value={state.config.branch}
-                    placeholder="Enter Default Branch..."
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label sm={4}>Collect Function</Label>
-                <Col sm={8}>
-                  <Input
-                    type="text"
-                    onChange={(e) => {
-                      state.config.evaluateStr = e.currentTarget.value;
-                    }}
-                    value={String(state.config.evaluateStr)}
-                    placeholder="Enter JS function..."
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label sm={4}>Collect Interval</Label>
-                <Col sm={8}>
-                  <Input
-                    type="number"
-                    onChange={(e) => {
-                      state.config.collectInterval = Number(
-                        e.currentTarget.value
-                      );
-                    }}
-                    value={state.config.collectInterval}
-                    placeholder="Enter Minutes..."
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label sm={4}>Only Registered Users</Label>
-                <Col sm={8}>
-                  <Toggle
-                    checked={state.config.onlyRegistered}
-                    onChange={() => {
-                      state.config.onlyRegistered = !state.config
-                        .onlyRegistered;
-                    }}
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label sm={4}>Collect Messages</Label>
-                <Col sm={8}>
-                  <Toggle
-                    checked={state.config.collectMessages}
-                    onChange={() => {
-                      state.config.collectMessages = !state.config
-                        .collectMessages;
-                    }}
-                  />
-                </Col>
-              </FormGroup>
-            </Form>
-          )}
-        </AccordionBody>
+      <Accordion
+        className="mb-3"
+        title={
+          <div className="flex justify-between items-center w-full">
+            <div>
+              Preferences
+              <span className="text-sm ml-2 text-gray-600">#1.00</span>
+            </div>
+          </div>
+        }
+      >
+        {!state.config || state.isLoading ? (
+          <List className="m-3" height="200px" width="100%" />
+        ) : (
+          <div className="px-3 pb-3 -mt-2">
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Password:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="password"
+                  onChange={(e) => {
+                    state.config.password = e.currentTarget.value;
+                  }}
+                  value={state.config.password || ""}
+                  placeholder="Enter Password..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Default Branch:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="text"
+                  onChange={(e) => {
+                    state.config.branch = e.currentTarget.value;
+                  }}
+                  value={state.config.branch || ""}
+                  placeholder="Enter Default Branch..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Collect Function:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="text"
+                  onChange={(e) => {
+                    state.config.evaluateStr = e.currentTarget.value;
+                  }}
+                  value={String(state.config.evaluateStr)}
+                  placeholder="Enter JS function..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Collect Interval:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="number"
+                  onChange={(e) => {
+                    state.config.collectInterval = Number(
+                      e.currentTarget.value
+                    );
+                  }}
+                  value={state.config.collectInterval || ""}
+                  placeholder="Enter Minutes..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Only Registered Users:
+              </div>
+              <div className="flex-1 mt-3 mx-2">
+                <Toggle
+                  checked={!!state.config.onlyRegistered}
+                  onChange={() => {
+                    state.config.onlyRegistered = !state.config.onlyRegistered;
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Collect Messages:
+              </div>
+              <div className="flex-1 mt-3 mx-2">
+                <Toggle
+                  checked={state.config.collectMessages}
+                  onChange={() => {
+                    state.config.collectMessages = !state.config
+                      .collectMessages;
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </Accordion>
     );
   }

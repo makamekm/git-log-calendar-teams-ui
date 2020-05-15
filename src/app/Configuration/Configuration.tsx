@@ -1,17 +1,9 @@
 import React from "react";
+import classNames from "classnames";
 import { toJS } from "mobx";
 import { useLocalStore, observer } from "mobx-react";
 
-import {
-  Container,
-  Row,
-  Col,
-  ButtonToolbar,
-  ButtonGroup,
-  Button,
-  WithLayoutMeta,
-} from "~/components";
-import { HeaderMain } from "~/app/HeaderMain";
+import { HeaderMain } from "~/components/Blocks/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useDelay, useOnLoad } from "~/hooks";
 import { ConfigurationState } from "./ConfigurationState";
@@ -20,6 +12,7 @@ import { ConfigurationUsers } from "./ConfigurationUsers";
 import { ConfigurationRepositories } from "./ConfigurationRepositories";
 import { ConfigurationForm } from "./ConfigurationForm";
 import { ConfigurationAllUsers } from "./ConfigurationAllUsers";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
 
 export const Configuration = observer(() => {
   const state = useLocalStore<ConfigurationState>(() => ({
@@ -123,53 +116,49 @@ export const Configuration = observer(() => {
   useOnLoad(state.load);
   useIsDirty(state, "config");
   useDelay(state, "usersQuery", "usersQueryDelay");
+  useLayoutConfig({
+    pageTitle: "Configuration",
+    breadcrumbs: [
+      {
+        name: "Configuration",
+      },
+    ],
+  });
 
   return (
-    <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: "Configuration",
-          breadcrumbs: [
-            {
-              name: "Configuration",
-            },
-          ],
-        }}
-      />
-      <Row className="mb-2">
-        <Col lg={12}>
-          <div className="d-flex flex-wrap mb-4 pb-2">
-            <HeaderMain title="Configuration" className="mt-0 mb-3" />
-            <ButtonToolbar className="ml-auto">
-              <ButtonGroup className="align-self-start mt-0 mb-3">
-                <Button
-                  disabled={!state.isDirty}
-                  color="primary"
-                  className="mb-2 mr-2 px-3"
-                  onClick={state.save}
-                >
-                  Apply
-                </Button>
-              </ButtonGroup>
-              <ButtonGroup className="mt-0 mb-3">
-                <Button
-                  color="link"
-                  className="mb-2 align-self-start"
-                  onClick={state.load}
-                >
-                  Reset
-                </Button>
-              </ButtonGroup>
-            </ButtonToolbar>
-          </div>
-        </Col>
-      </Row>
+    <>
+      <div className="flex flex-wrap items-center justify-between mb-4 md:pb-4">
+        <HeaderMain title="Configuration" />
+        <div className="ml-auto my-3">
+          <button
+            className={classNames(
+              "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+              {
+                "pointer-events-none opacity-50":
+                  !state.isDirty || state.isLoading,
+              }
+            )}
+            disabled={!state.isDirty || state.isLoading}
+            onClick={state.save}
+          >
+            Apply
+          </button>
+          <button
+            className={classNames(
+              "text-base font-normal py-2 px-3 mx-2 rounded-lg border dark-mode:border-gray-500 text-gray-700 dark-mode:text-gray-300 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            )}
+            onClick={state.load}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
 
       <ConfigurationForm state={state} />
       <ConfigurationTeams state={state} />
       <ConfigurationRepositories state={state} />
       <ConfigurationUsers state={state} />
       <ConfigurationAllUsers state={state} />
-    </Container>
+    </>
   );
 });

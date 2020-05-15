@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { withResizeDetector } from "react-resize-detector";
 import { observer, useObserver } from "mobx-react";
 import {
@@ -17,7 +18,7 @@ export interface ConfigurationTableProps<T = any> {
   } & T)[];
   header: any;
   render: (item: T) => any;
-  renderAdditional?: (item: T, style: React.CSSProperties) => any;
+  renderAdditional?: (item: T, style: React.CSSProperties, className) => any;
 }
 
 export const ConfigurationTable = withResizeDetector(
@@ -47,7 +48,7 @@ export const ConfigurationTable = withResizeDetector(
               useObserver(() => (
                 <table
                   ref={provided.innerRef}
-                  className="table table-striped mb-0"
+                  className="s-table"
                   style={{
                     maxWidth: "100%",
                     width: "100%",
@@ -55,7 +56,7 @@ export const ConfigurationTable = withResizeDetector(
                 >
                   <thead>
                     <tr>
-                      <th className="bt-0">#</th>
+                      <th className="w-10">#</th>
                       {header}
                     </tr>
                   </thead>
@@ -73,6 +74,10 @@ export const ConfigurationTable = withResizeDetector(
                                 <tr
                                   ref={providedDraggable.innerRef}
                                   {...providedDraggable.draggableProps}
+                                  className={classNames({
+                                    odd: index % 2 === 0,
+                                    even: index % 2 === 1,
+                                  })}
                                   style={{
                                     ...providedDraggable.draggableProps.style,
                                     width: snapshot.isDragging
@@ -84,20 +89,27 @@ export const ConfigurationTable = withResizeDetector(
                                   }}
                                 >
                                   <td
-                                    className="align-middle"
+                                    className="align-middle text-center w-10"
                                     {...providedDraggable.dragHandleProps}
                                   >
-                                    <i className="fas fa-grip-vertical"></i>
+                                    <i className="fas fa-grip-vertical mt-2"></i>
                                   </td>
                                   {render(item)}
                                 </tr>
                                 {renderAdditional &&
-                                  renderAdditional(item, {
-                                    ...providedDraggable.draggableProps.style,
-                                    display: snapshot.isDragging
-                                      ? "none"
-                                      : undefined,
-                                  })}
+                                  renderAdditional(
+                                    item,
+                                    {
+                                      ...providedDraggable.draggableProps.style,
+                                      display: snapshot.isDragging
+                                        ? "none"
+                                        : undefined,
+                                    },
+                                    classNames({
+                                      odd: index % 2 === 0,
+                                      even: index % 2 === 1,
+                                    })
+                                  )}
                               </>
                             ))
                           }

@@ -1,34 +1,21 @@
 import React from "react";
+import classNames from "classnames";
 import { toJS } from "mobx";
-import Toggle from "react-toggle";
 import { useLocalStore, observer } from "mobx-react";
 import { List } from "react-content-loader";
-import { Typeahead } from "react-bootstrap-typeahead";
 
-import {
-  Container,
-  Row,
-  Col,
-  ButtonToolbar,
-  ButtonGroup,
-  Button,
-  Input,
-  FormGroup,
-  Label,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  WithLayoutMeta,
-  UncontrolledModal,
-  ModalBody,
-  UncontrolledModalClose,
-} from "~/components";
-import { HeaderMain } from "~/app/HeaderMain";
+import { HeaderMain } from "~/components/Blocks/HeaderMain";
 import { ipc } from "~/shared/ipc";
 import { useIsDirty, useOnLoad } from "~/hooks";
 import { ApplicationSettings } from "~/shared/Settings";
 import { generateDriveKeys } from "~/tools";
 import { Config } from "~/shared/Config";
+import { useLayoutConfig } from "~/components/Layout/LayoutService";
+import { Accordion } from "~/components/Accordion/Accordion";
+import { AccordionToggle } from "~/components/Accordion/AccordionToggle";
+import { Typeahead } from "~/components/Typeahead/Typeahead";
+import { Toggle } from "~/components/Toggle/Toggle";
+import { AlertModal } from "~/components/Modal/AlertModal";
 
 interface SettingsState {
   isDirty: boolean;
@@ -45,240 +32,295 @@ interface SettingsState {
 
 const SettingsForm = observer(({ state }: { state: SettingsState }) => {
   return (
-    <Accordion className="mb-3" initialOpen>
-      <AccordionHeader className="h6 cursor-pointer">
-        Application Preferences
-      </AccordionHeader>
-      <AccordionBody className="pb-0">
-        {!state.settings || state.isLoading ? (
-          <List className="m-3" height="200px" width="100%" />
-        ) : (
-          <div className="form mt-3 mb-3">
-            <FormGroup row>
-              <Label sm={4}>Public Key</Label>
-              <Col sm={8}>
-                <Input
-                  type="text"
-                  onChange={(e) => {
-                    state.settings.publicKey = e.currentTarget.value;
-                  }}
-                  value={state.settings.publicKey}
-                  placeholder="Enter Public Key..."
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label sm={4}>Secret Key</Label>
-              <Col sm={8}>
-                <Input
-                  type="text"
-                  onChange={(e) => {
-                    state.settings.secretKey = e.currentTarget.value;
-                  }}
-                  value={state.settings.secretKey}
-                  placeholder="Enter Secret Key..."
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label sm={4}>Regenerate Key Pair</Label>
-              <Col sm={8}>
-                <ButtonGroup className="align-self-start mt-0">
-                  <Button color="info" onClick={state.regnerateKeyPair}>
-                    Regenerate The Key Pair
-                  </Button>
-                </ButtonGroup>
-              </Col>
-            </FormGroup>
-            {!!state.settings.secretKey && (
-              <FormGroup row>
-                <Label sm={4}>Don't Collect Statistics</Label>
-                <Col sm={8}>
-                  <Toggle
-                    checked={state.settings.dontCollect}
-                    onChange={() => {
-                      state.settings.dontCollect = !state.settings.dontCollect;
-                    }}
-                  />
-                </Col>
-              </FormGroup>
-            )}
-            {!state.settings.dontCollect && (
-              <FormGroup row>
-                <Label sm={4}>Parallel Job Collecting Limit</Label>
-                <Col sm={8}>
-                  <Input
-                    type="number"
-                    onChange={(e) => {
-                      state.settings.parallelCollectingJobLimit = Math.max(
-                        Number(e.currentTarget.value),
-                        1
-                      );
-                    }}
-                    value={Math.max(
-                      state.settings.parallelCollectingJobLimit,
-                      1
-                    )}
-                    placeholder="Enter Number..."
-                  />
-                </Col>
-              </FormGroup>
-            )}
-            {!state.settings.dontCollect && (
-              <FormGroup row>
-                <Label sm={4}>
-                  Local Collecting Interval (0 is from Configuration) [Minutes]
-                </Label>
-                <Col sm={8}>
-                  <Input
-                    type="number"
-                    onChange={(e) => {
-                      state.settings.forceCollectingInterval = Math.max(
-                        Number(e.currentTarget.value),
-                        0
-                      );
-                    }}
-                    value={Math.max(state.settings.forceCollectingInterval, 0)}
-                    placeholder="Enter Number..."
-                  />
-                </Col>
-              </FormGroup>
-            )}
-            {!state.settings.dontCollect && (
-              <FormGroup row>
-                <Label sm={4}>
-                  Limit Repositories Per Try (0 is unlimited)
-                </Label>
-                <Col sm={8}>
-                  <Input
-                    type="number"
-                    onChange={(e) => {
-                      state.settings.limitCollectingRepositoriesPerTry = Math.max(
-                        Number(e.currentTarget.value),
-                        0
-                      );
-                    }}
-                    value={Math.max(
-                      state.settings.limitCollectingRepositoriesPerTry,
-                      0
-                    )}
-                    placeholder="Enter Number..."
-                  />
-                </Col>
-              </FormGroup>
-            )}
-            {!state.settings.dontCollect && (
-              <FormGroup row>
-                <Label sm={4}>
-                  Repositories to Collect (If empty then collect from all)
-                </Label>
-                <Col sm={8}>
-                  <Typeahead
-                    id="exclusions"
-                    placeholder="Add repositories..."
-                    multiple
-                    allowNew
-                    selected={state.settings.collectingRepositoryNames || []}
-                    onChange={(selected) => {
-                      selected = selected.map((s: any) =>
-                        typeof s === "string" ? s : s.label
-                      );
-                      (state.settings.collectingRepositoryNames as any).replace(
-                        selected
-                      );
-                    }}
-                    options={state.repositories}
-                    positionFixed
-                  />
-                </Col>
-              </FormGroup>
-            )}
-            <FormGroup row>
-              <Label sm={4}>Use Swarm</Label>
-              <Col sm={8}>
+    <Accordion className="mb-3" initialOpen title={"Application Preferences"}>
+      {!state.settings || state.isLoading ? (
+        <List className="m-3" height="200px" width="100%" />
+      ) : (
+        <div className="px-3 pb-3 -mt-2">
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Public Key:
+            </div>
+            <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+              <input
+                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                type="text"
+                onChange={(e) => {
+                  state.settings.publicKey = e.currentTarget.value;
+                }}
+                value={state.settings.publicKey}
+                placeholder="Enter Public Key..."
+              />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Secret Key:
+            </div>
+            <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+              <input
+                className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                onChange={(e) => {
+                  state.settings.secretKey = e.currentTarget.value;
+                }}
+                value={state.settings.secretKey}
+                placeholder="Enter Secret Key..."
+              />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Regenerate Key Pair:
+            </div>
+            <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+              <button
+                className="text-base font-normal py-2 px-3 rounded-lg border dark-mode:border-gray-500 text-gray-700 dark-mode:text-gray-300 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                onClick={state.regnerateKeyPair}
+              >
+                Regenerate Key Pair
+              </button>
+            </div>
+          </div>
+          <AccordionToggle value={!!state.settings.secretKey}>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                Don't Collect Statistics:
+              </div>
+              <div className="flex-1 mt-3 mx-2">
                 <Toggle
-                  checked={state.settings.useDriveSwarm}
-                  onChange={() => {
-                    state.settings.useDriveSwarm = !state.settings
-                      .useDriveSwarm;
+                  checked={!!state.settings.dontCollect}
+                  onChange={(value) => {
+                    state.settings.dontCollect = value;
                   }}
                 />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label sm={4}>Remount Drive & Reload All</Label>
-              <Col sm={8}>
-                <ButtonGroup className="align-self-start mt-0">
-                  <Button
-                    id="remountDriveModal"
+              </div>
+            </div>
+          </AccordionToggle>
+          <AccordionToggle value={!state.settings.dontCollect}>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                Parallel Job Collecting Limit:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="number"
+                  onChange={(e) => {
+                    state.settings.parallelCollectingJobLimit = Math.max(
+                      Number(e.currentTarget.value),
+                      1
+                    );
+                  }}
+                  value={Math.max(state.settings.parallelCollectingJobLimit, 1)}
+                  placeholder="Enter Number..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                Local Collecting Interval (0 is from Configuration) [Minutes]:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="number"
+                  onChange={(e) => {
+                    state.settings.forceCollectingInterval = Math.max(
+                      Number(e.currentTarget.value),
+                      0
+                    );
+                  }}
+                  value={Math.max(state.settings.forceCollectingInterval, 0)}
+                  placeholder="Enter Number..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                Limit Repositories Per Try (0 is unlimited):
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="number"
+                  onChange={(e) => {
+                    state.settings.limitCollectingRepositoriesPerTry = Math.max(
+                      Number(e.currentTarget.value),
+                      0
+                    );
+                  }}
+                  value={Math.max(
+                    state.settings.limitCollectingRepositoriesPerTry,
+                    0
+                  )}
+                  placeholder="Enter Number..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                Repositories to Collect (If empty then collect from all):
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <Typeahead
+                  placeholder="Add repositories..."
+                  autoFocus
+                  multiple
+                  allowNew
+                  selected={state.settings.collectingRepositoryNames || []}
+                  onChange={(selected) => {
+                    (state.settings.collectingRepositoryNames as any).replace(
+                      selected
+                    );
+                  }}
+                  options={state.repositories}
+                />
+              </div>
+            </div>
+          </AccordionToggle>
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Use Swarm:
+            </div>
+            <div className="flex-1 mt-3 mx-2">
+              <Toggle
+                checked={!!state.settings.useDriveSwarm}
+                onChange={() => {
+                  state.settings.useDriveSwarm = !state.settings.useDriveSwarm;
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Use S3:
+            </div>
+            <div className="flex-1 mt-3 mx-2">
+              <Toggle
+                checked={!!state.settings.useDriveS3}
+                onChange={(value) => {
+                  state.settings.useDriveS3 = value;
+                }}
+              />
+            </div>
+          </div>
+          <AccordionToggle value={!!state.settings.useDriveS3}>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                S3 Access Key ID:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="text"
+                  onChange={(e) => {
+                    state.settings.s3AccessKeyId = e.currentTarget.value;
+                  }}
+                  value={state.settings.s3AccessKeyId}
+                  placeholder="Enter S3 Access Key ID..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                S3 Secret Access Key:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="text"
+                  onChange={(e) => {
+                    state.settings.s3SecretAccessKey = e.currentTarget.value;
+                  }}
+                  value={state.settings.s3SecretAccessKey}
+                  placeholder="Enter S3 Secret Access Key..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                S3 Bucket Name:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="text"
+                  onChange={(e) => {
+                    state.settings.s3Bucket = e.currentTarget.value;
+                  }}
+                  value={state.settings.s3Bucket}
+                  placeholder="Enter S3 Bucket Name..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                S3 Drive Path:
+              </div>
+              <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
+                <input
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="text"
+                  onChange={(e) => {
+                    state.settings.s3DrivePath = e.currentTarget.value;
+                  }}
+                  value={state.settings.s3DrivePath}
+                  placeholder="Enter S3 Drive Path..."
+                />
+              </div>
+            </div>
+          </AccordionToggle>
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right pt-1 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Drive Actions:
+            </div>
+            <div className="flex-1 mt-1 -mb-2 flex flex-row flex-wrap">
+              <AlertModal
+                accept={state.remount}
+                title="Remount Drive"
+                text="This operation is irreversible, please accept it."
+              >
+                {({ open }) => (
+                  <button
+                    className={classNames(
+                      "text-base font-semibold py-2 px-3 m-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+                      {
+                        "pointer-events-none opacity-50": state.isDirty,
+                      }
+                    )}
                     disabled={state.isDirty}
                     color="danger"
+                    onClick={open}
                   >
                     Remount Drive
-                  </Button>
-                  <Button
-                    id="emptyDriveModal"
+                  </button>
+                )}
+              </AlertModal>
+              <AlertModal
+                accept={state.empty}
+                title="Empty Drive"
+                text="This operation is irreversible, please accept it."
+              >
+                {({ open }) => (
+                  <button
+                    className={classNames(
+                      "text-base font-semibold py-2 px-3 m-2 rounded-lg bg-red-600 active:bg-red-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+                      {
+                        "pointer-events-none opacity-50": state.isDirty,
+                      }
+                    )}
                     disabled={state.isDirty}
                     color="danger"
+                    onClick={open}
                   >
                     Empty Drive
-                  </Button>
-                </ButtonGroup>
-                <UncontrolledModal
-                  target="remountDriveModal"
-                  className="modal-danger"
-                >
-                  <ModalBody className="table-danger text-center px-5 py-5">
-                    <i className="fas fa-exclamation-triangle fa-4x modal-icon mb-4"></i>
-                    <h6>Remount Drive</h6>
-                    <p className="modal-text mb-5">
-                      This operation is irreversible, please accept it.
-                    </p>
-                    <UncontrolledModalClose
-                      color="danger"
-                      className="mr-2"
-                      onClick={state.remount}
-                    >
-                      OK, Process
-                    </UncontrolledModalClose>
-                    <UncontrolledModalClose
-                      color="link"
-                      className="text-danger"
-                    >
-                      Cancel
-                    </UncontrolledModalClose>
-                  </ModalBody>
-                </UncontrolledModal>
-                <UncontrolledModal
-                  target="emptyDriveModal"
-                  className="modal-danger"
-                >
-                  <ModalBody className="table-danger text-center px-5 py-5">
-                    <i className="fas fa-exclamation-triangle fa-4x modal-icon mb-4"></i>
-                    <h6>Empty Drive</h6>
-                    <p className="modal-text mb-5">
-                      This operation is irreversible, please accept it.
-                    </p>
-                    <UncontrolledModalClose
-                      color="danger"
-                      className="mr-2"
-                      onClick={state.empty}
-                    >
-                      OK, Process
-                    </UncontrolledModalClose>
-                    <UncontrolledModalClose
-                      color="link"
-                      className="text-danger"
-                    >
-                      Cancel
-                    </UncontrolledModalClose>
-                  </ModalBody>
-                </UncontrolledModal>
-              </Col>
-            </FormGroup>
+                  </button>
+                )}
+              </AlertModal>
+            </div>
           </div>
-        )}
-      </AccordionBody>
+        </div>
+      )}
     </Accordion>
   );
 });
@@ -336,49 +378,45 @@ export const Settings = observer(() => {
 
   useOnLoad(state.load);
   useIsDirty(state, "settings");
+  useLayoutConfig({
+    pageTitle: "Settings",
+    breadcrumbs: [
+      {
+        name: "Settings",
+      },
+    ],
+  });
 
   return (
-    <Container className="pb-4">
-      <WithLayoutMeta
-        meta={{
-          pageTitle: "Settings",
-          breadcrumbs: [
-            {
-              name: "Settings",
-            },
-          ],
-        }}
-      />
-      <Row className="mb-2">
-        <Col lg={12}>
-          <div className="d-flex flex-wrap mb-4 pb-2">
-            <HeaderMain title="Settings" className="mt-0 mb-3" />
-            <ButtonToolbar className="ml-auto">
-              <ButtonGroup className="align-self-start mt-0 mb-3">
-                <Button
-                  disabled={!state.isDirty}
-                  color="primary"
-                  className="mb-2 mr-2 px-3"
-                  onClick={state.save}
-                >
-                  Apply
-                </Button>
-              </ButtonGroup>
-              <ButtonGroup className="mt-0 mb-3">
-                <Button
-                  color="link"
-                  className="mb-2 align-self-start"
-                  onClick={state.load}
-                >
-                  Reset
-                </Button>
-              </ButtonGroup>
-            </ButtonToolbar>
-          </div>
-        </Col>
-      </Row>
+    <>
+      <div className="flex flex-wrap items-center justify-between mb-4 md:pb-4">
+        <HeaderMain title="Settings" />
+        <div className="ml-auto my-3">
+          <button
+            className={classNames(
+              "text-base font-semibold py-2 px-3 mx-2 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+              {
+                "pointer-events-none opacity-50":
+                  !state.isDirty || state.isLoading,
+              }
+            )}
+            disabled={!state.isDirty || state.isLoading}
+            onClick={state.save}
+          >
+            Apply
+          </button>
+          <button
+            className={classNames(
+              "text-base font-normal py-2 px-3 mx-2 rounded-lg border dark-mode:border-gray-500 text-gray-700 dark-mode:text-gray-300 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            )}
+            onClick={state.load}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
 
       <SettingsForm state={state} />
-    </Container>
+    </>
   );
 });
