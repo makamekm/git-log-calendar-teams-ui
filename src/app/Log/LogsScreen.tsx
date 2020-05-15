@@ -124,7 +124,7 @@ export const LogsScreen = observer(() => {
             className={
               "block w-full my-1 px-4 py-1 text-left text-sm rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
             }
-            onClick={state.load}
+            onClick={state.clear}
           >
             <i className="fa fa-trash mr-2"></i>
             Clear Logs
