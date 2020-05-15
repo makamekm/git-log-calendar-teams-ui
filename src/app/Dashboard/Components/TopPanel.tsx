@@ -48,16 +48,15 @@ export const TopPanel = ({
                 key={index}
                 className="text-gray-700 dark-mode:text-gray-500"
               >
-                <Link to={`/${type}/${entry.name}`} className="text-secondary">
+                <Link to={`/${type}/${entry.name}`}>
                   <i
-                    className={`fa fa-circle mr-1 color-${
+                    className={`fa fa-circle mr-2 color-${
                       colors[(index + (colorShift || 0)) % colors.length]
                     }`}
                   ></i>
-                  <span className="text-inverse">
-                    {numberWithCommas(entry.value)}
-                  </span>{" "}
-                  {entry.name}
+                  <span className="mr-2">{numberWithCommas(entry.value)}</span>
+                  <span className="mr-2">-</span>
+                  <span>{entry.name}</span>
                 </Link>
               </div>
             ))}

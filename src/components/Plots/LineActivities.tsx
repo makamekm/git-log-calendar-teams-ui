@@ -70,7 +70,7 @@ export const LineActivities = ({
   });
   return (
     <ResponsiveContainer
-      width={isPrint ? 900 : "100%"}
+      width={isPrint ? 920 : "100%"}
       minHeight={height}
       className={className}
     >

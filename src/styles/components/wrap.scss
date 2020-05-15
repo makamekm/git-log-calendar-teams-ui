@@ -17,10 +17,21 @@
 }
 
 .ellipsis-optimal {
-  max-width: 100%;
+  max-width: 100px;
 }
 
 .hyphenate {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+div,
+span,
+a {
   overflow-wrap: break-word;
   word-wrap: break-word;
   -webkit-hyphens: auto;

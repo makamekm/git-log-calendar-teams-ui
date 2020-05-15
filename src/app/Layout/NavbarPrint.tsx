@@ -18,6 +18,11 @@ export const NavbarPrint = observer(({ className }: { className?: string }) => {
     >
       <i className="fa fa-print"></i>
       <style global jsx>{`
+        .container {
+          ${state.isPrinting ? "min-width: 1024px !important;" : ""}
+          ${state.isPrinting ? "width: 1024px !important;" : ""}
+          ${state.isPrinting ? "max-width: 1024px !important;" : ""}
+        }
         body {
           ${state.isPrinting ? "min-width: 1024px !important;" : ""}
           ${state.isPrinting ? "width: 1024px !important;" : ""}

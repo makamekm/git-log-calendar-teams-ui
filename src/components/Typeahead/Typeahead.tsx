@@ -598,7 +598,7 @@ export const Typeahead: React.FC<{
                               )}
                             >
                               <div className="w-full items-center flex">
-                                <div className="mx-2 leading-6 ellipsis ellipsis-optimal">
+                                <div className="mx-2 leading-6 ellipsis max-w-full">
                                   Add New:{" "}
                                   <span className="font-semibold">
                                     {state.query}
@@ -646,7 +646,7 @@ export const Typeahead: React.FC<{
                             )}
                           >
                             <div className="w-full items-center flex">
-                              <div className="mx-2 leading-6 ellipsis ellipsis-optimal">
+                              <div className="mx-2 leading-6 ellipsis max-w-full">
                                 <Highlighter
                                   highlightClassName="font-semibold bg-transparent p-0 dark-mode:text-white"
                                   searchWords={state.queryArr}
@@ -718,7 +718,7 @@ export const Typeahead: React.FC<{
                               )}
                             >
                               <div className="w-full items-center flex">
-                                <div className="mx-2 leading-6 ellipsis ellipsis-optimal">
+                                <div className="mx-2 leading-6 ellipsis max-w-full">
                                   <Highlighter
                                     highlightClassName="font-semibold bg-transparent p-0 dark-mode:text-white"
                                     searchWords={state.queryArr}
