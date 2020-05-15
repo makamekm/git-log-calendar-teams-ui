@@ -220,7 +220,7 @@ export const AppLayout: React.FC = observer(({ children }) => {
       <div className="lg:flex">
         <SideMenu />
         <div className="relative flex-1 flex flex-col min-h-screen">
-          <div className="max-w-full content container flex flex-col mx-auto px-4 flex-1">
+          <div className="max-w-full content container mx-auto px-4 flex-1">
             <TopMenu />
             {children}
             {service.footer && (
