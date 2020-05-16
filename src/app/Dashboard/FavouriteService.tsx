@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import React from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
-import { useSyncLocalStorage, useOnLoadPathname } from "~/hooks";
+import { useSyncLocalStorage, useOnLoadPathname, useOnChange } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
+import { AuthState, AuthService } from "../Auth/AuthService";
 
 export type TrackerType = "repository" | "team" | "user";
 
@@ -19,6 +20,7 @@ export const trackerMap = {
 };
 
 export interface FavouriteState {
+  authService?: AuthState;
   config: Config;
   trackers: Tracker[];
   allTrackers: Tracker[];
@@ -74,6 +76,9 @@ export const FavouriteService = createService<FavouriteState>(
         }
       },
       load: async () => {
+        if (!state.authService.isAuthenticated) {
+          return;
+        }
         state.isLoading = true;
         state.config = await ipc.handlers.GET_CONFIG();
         state.isLoading = false;
@@ -81,9 +86,9 @@ export const FavouriteService = createService<FavouriteState>(
     }));
     return state;
   },
-  () => {
-    const state = useContext(FavouriteService);
-
+  (state) => {
+    state.authService = React.useContext(AuthService);
+    useOnChange(state.authService, "isAuthenticated", state.load);
     useOnLoadPathname(state.load);
     useSyncLocalStorage(state, "trackers");
   }

@@ -9,8 +9,10 @@ import {
   RepositoryUserState,
   RepositoryUserService,
 } from "./RepositoryUserService";
+import { AuthService, AuthState } from "../Auth/AuthService";
 
 export interface DashboardState {
+  authService?: AuthState;
   messageService?: MessageState;
   repositoryUserService?: RepositoryUserState;
   config: Config;
@@ -211,6 +213,9 @@ export const DashboardService = createService<DashboardState>(
           : [];
       },
       load: async () => {
+        if (!state.authService.isAuthenticated) {
+          return;
+        }
         state.isLoading = true;
         state.config = await ipc.handlers.GET_CONFIG();
         state.stats = await ipc.handlers.GET_STATS_DATA({
@@ -247,9 +252,11 @@ export const DashboardService = createService<DashboardState>(
     return state;
   },
   (state) => {
+    state.authService = React.useContext(AuthService);
     state.messageService = React.useContext(MessageService);
     state.repositoryUserService = React.useContext(RepositoryUserService);
     useOnChange(state, "limit", state.load);
+    useOnChange(state.authService, "isAuthenticated", state.load);
     useDelay(state, "maxValue", "maxValueDelay", 1000);
     useSimpleSyncLocalStorage(state, "maxValue", "maxValue");
     useSimpleSyncLocalStorage(state, "maxValueDelay", "maxValueDelay");

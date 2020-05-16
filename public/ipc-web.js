@@ -4,10 +4,18 @@ if (!window.isElectron) {
 
   window.WebSocket = window.WebSocket || window.MozWebSocket;
 
-  const connection = new WebSocket(`ws://${window.location.host}`);
+  const connection = new WebSocket(
+    `ws://${"localhost:8080" || window.location.host}`
+  );
+
+  let resolveConnection;
+  const awaitConnection = new Promise((r) => {
+    resolveConnection = r;
+  });
 
   connection.onopen = () => {
     console.log("connected with a server!");
+    resolveConnection();
   };
 
   connection.onerror = (error) => {
@@ -37,7 +45,10 @@ if (!window.isElectron) {
   };
 
   const genId = () => String(Math.random() * 10000);
-  const sendMessage = (obj) => connection.send(JSON.stringify(obj));
+  const sendMessage = async (obj) => {
+    await awaitConnection;
+    connection.send(JSON.stringify(obj));
+  };
 
   window.ipcBus.handle = async (channel, fn) => {
     throw new Error("You cannot handle from Renderer thread");
@@ -45,7 +56,7 @@ if (!window.isElectron) {
   window.ipcBus.send = (channel, ...args) => {
     throw new Error("You cannot send from Renderer thread");
   };
-  window.ipcBus.invoke = (channel, ...args) => {
+  window.ipcBus.invoke = async (channel, ...args) => {
     let resolve = () => {};
     let reject = () => {};
     const promise = new Promise((r, e) => {

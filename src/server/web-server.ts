@@ -18,15 +18,21 @@ export const runWebServer = (port = 8080) => {
 
   const wsServer = new webSocketServer({
     httpServer: server,
+    autoAcceptConnections: false,
   });
+
+  const unauthorizedChannels = [
+    nameofHandler("APP_INFO"),
+    nameofHandler("IS_COLLECTING_STATS"),
+  ];
 
   wsServer.on("request", (request) => {
     console.log("connection from origin", request.origin);
+
     const connection = request.accept(null, request.origin);
     const index = clients.push(connection) - 1;
-    console.log("connection accepted");
-    let isAuth = false;
 
+    let isAuth = false;
     const subscriptions = {};
 
     connection.on("message", async (message) => {
@@ -53,13 +59,7 @@ export const runWebServer = (port = 8080) => {
             );
           }
         } else if (data.type === "invoke") {
-          if (
-            !isAuth &&
-            ![
-              nameofHandler("APP_INFO"),
-              nameofHandler("IS_COLLECTING_STATS"),
-            ].includes(data.channel)
-          ) {
+          if (!isAuth && !unauthorizedChannels.includes(data.channel)) {
             connection.sendUTF(
               JSON.stringify({
                 type: "invoke_error",
@@ -103,7 +103,7 @@ export const runWebServer = (port = 8080) => {
 
     connection.on("close", (connection) => {
       clients.splice(index, 1);
-      console.log("peer disconnected", connection.remoteAddress);
+      console.log("peer disconnected");
     });
   });
 

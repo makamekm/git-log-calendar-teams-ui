@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import React from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
-import { useOnLoad } from "~/hooks";
+import { useOnLoad, useOnChange } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
 import { debounce, groupBy } from "lodash";
+import { AuthState, AuthService } from "../Auth/AuthService";
 
 export type SearchType = "repository" | "team" | "user";
 
@@ -22,6 +23,7 @@ export const searchMap = {
 export const SearchService = createService(
   () => {
     const state = useLocalStore(() => ({
+      authService: null as AuthState,
       config: null as Config,
       isLoading: false,
       isFocus: false,
@@ -66,6 +68,9 @@ export const SearchService = createService(
         return items;
       },
       load: async () => {
+        if (!state.authService.isAuthenticated) {
+          return;
+        }
         state.isLoading = true;
         state.config = await ipc.handlers.GET_CONFIG();
         state.isLoading = false;
@@ -74,8 +79,9 @@ export const SearchService = createService(
     }));
     return state;
   },
-  () => {
-    const state = useContext(SearchService);
+  (state) => {
+    state.authService = React.useContext(AuthService);
     useOnLoad(state.load);
+    useOnChange(state.authService, "isAuthenticated", state.load);
   }
 );
