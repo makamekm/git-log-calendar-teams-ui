@@ -38,6 +38,20 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
       ) : (
         <div className="px-3 pb-3 -mt-2">
           <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Open Window on Start:
+            </div>
+            <div className="flex-1 mt-3 mx-2">
+              <Toggle
+                checked={!!state.settings.openWindowOnStart}
+                onChange={() => {
+                  state.settings.openWindowOnStart = !state.settings
+                    .openWindowOnStart;
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row">
             <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Public Key:
             </div>

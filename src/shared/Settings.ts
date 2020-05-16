@@ -14,4 +14,5 @@ export interface ApplicationSettings {
   s3SecretAccessKey?: string;
   s3DrivePath?: string;
   s3Bucket?: string;
+  openWindowOnStart?: boolean;
 }

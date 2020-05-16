@@ -220,7 +220,7 @@ app.on("ready", () => {
       createDrive();
       createTray();
       createUpdater();
-      if (OPEN_MAIN_WINDOW_ON_LOAD) {
+      if (OPEN_MAIN_WINDOW_ON_LOAD || settings.get("openWindowOnStart")) {
         createWindow();
       }
       if (!process.env.ELECTRON_START_URL) {

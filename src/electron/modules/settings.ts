@@ -23,6 +23,7 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     s3SecretAccessKey: settings.get("s3SecretAccessKey"),
     s3DrivePath: settings.get("s3DrivePath"),
     s3Bucket: settings.get("s3Bucket"),
+    openWindowOnStart: settings.get("openWindowOnStart"),
   };
 };
 
@@ -40,6 +41,7 @@ export const saveSettings = ({
   s3Bucket,
   s3DrivePath,
   s3SecretAccessKey,
+  openWindowOnStart,
 }: ApplicationSettings) => {
   if (!publicKey) {
     const keyPair = generateDriveKeys();
@@ -65,6 +67,7 @@ export const saveSettings = ({
   settings.set("s3Bucket", s3Bucket);
   settings.set("s3DrivePath", s3DrivePath);
   settings.set("s3SecretAccessKey", s3SecretAccessKey);
+  settings.set("openWindowOnStart", openWindowOnStart);
 };
 
 export const generateKeysSettings = () => {
