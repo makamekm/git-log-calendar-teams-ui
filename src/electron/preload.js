@@ -7,6 +7,7 @@ const { ipcRenderer } = require("electron");
 global.ipcBus.handle = async (channel, fn) => {
   throw new Error("You cannot handle from Renderer thread");
 };
+
 global.ipcBus.send = (channel, ...args) => {
   throw new Error("You cannot send from Renderer thread");
 };
@@ -32,3 +33,5 @@ require("./git-log.hooks");
 const log = require("electron-log");
 window.log = log.functions;
 window.console = log.functions;
+
+window.isElectron = true;

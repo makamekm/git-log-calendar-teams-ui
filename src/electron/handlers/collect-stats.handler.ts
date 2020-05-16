@@ -1,4 +1,3 @@
-import { app } from "electron";
 import { nameofHandler, IpcHandler, ipc } from "~/shared/ipc";
 import { RUN_COLLECT_INTERVAL } from "@env/config";
 
@@ -13,7 +12,7 @@ let collectingPromise = Promise.resolve();
 export const getCollectPromise = () => collectingPromise;
 
 if (RUN_COLLECT_INTERVAL) {
-  app.on("ready", () => {
+  ipcBus.on("ready", () => {
     let inited = false;
     const runTimeout = async () => {
       let interval: number;

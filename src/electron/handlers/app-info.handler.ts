@@ -7,8 +7,8 @@ ipcBus.handle(
     ...args: Parameters<IpcHandler["APP_INFO"]>
   ): Promise<ReturnType<IpcHandler["APP_INFO"]>> => {
     return {
-      appName: app.getName(),
-      appVersion: app.getVersion(),
+      appName: app && app.getName(),
+      appVersion: app && app.getVersion(),
     };
   }
 );

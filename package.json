@@ -35,7 +35,8 @@
     "package": "electron-builder build --mac --win -c.extraMetadata.main=build/src/electron/index.js --publish always",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "dist": "run-s build-tailwind build build-electron package",
+    "dist": "run-s dist:web build-electron package",
+    "dist:web": "run-s build-tailwind build",
     "server": "ts-node -r tsconfig-paths/register --project tsconfig.electron.json ./src/server/index.ts"
   },
   "build": {
@@ -89,6 +90,7 @@
     "moment": "^2.24.0",
     "ndjson": "^1.5.0",
     "node-fetch": "^2.6.0",
+    "node-static": "^0.7.11",
     "numeral": "^2.0.6",
     "pump": "^3.0.0",
     "query-string": "^6.12.1",
@@ -113,6 +115,7 @@
     "tailwindcss": "^1.4.6",
     "text-mask-addons": "^3.8.0",
     "uuid": "^7.0.3",
+    "websocket": "^1.0.31",
     "yaml": "^1.8.3",
     "yargs": "^15.3.1"
   },

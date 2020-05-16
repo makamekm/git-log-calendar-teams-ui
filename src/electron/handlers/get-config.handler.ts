@@ -11,7 +11,7 @@ import { isDriveWritable } from "../modules/drive";
 let config: Config = null;
 let date = +new Date();
 
-app.on("ready", () => {
+ipcBus.on("ready", () => {
   ipcBus.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     config = null;
   });
@@ -27,10 +27,13 @@ ipcBus.handle(
   ): Promise<ReturnType<IpcHandler["GET_CONFIG"]>> => {
     const [force] = args;
     if (force || !config || +new Date() > CACHE_LIFETIME + date) {
-      config = await getConfig(
-        path.resolve(app.getPath("temp"), "repositories"),
-        path.resolve(app.getPath("home"), DEV_CONFIG)
-      );
+      const settings = await ipc.handlers.GET_SETTINGS();
+      config = settings.tempPath
+        ? await getConfig(settings.tempPath)
+        : await getConfig(
+            path.resolve(app.getPath("temp"), "repositories"),
+            path.resolve(app.getPath("home"), DEV_CONFIG)
+          );
 
       config.repositories.forEach((repository) => {
         repository.id = String(Math.random() * 10000);

@@ -4,6 +4,7 @@ import { useLocalStore, observer } from "mobx-react";
 import { AuthService } from "./AuthService";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
 import { HeaderPanel } from "~/components/Blocks/HeaderPanel";
+import { FooterText } from "../Layout/FooterText";
 
 export const AuthScreen = observer(() => {
   const store = useLocalStore(() => ({
@@ -28,6 +29,9 @@ export const AuthScreen = observer(() => {
   );
   useLayoutConfig({
     pageTitle: "Login",
+    sidebar: window.isElectron,
+    topbar: false,
+    footer: false,
     breadcrumbs: [
       {
         name: "Login",
@@ -36,7 +40,7 @@ export const AuthScreen = observer(() => {
   });
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center">
+    <div className="flex-1 flex flex-col items-center justify-center py-6 min-h-screen">
       <HeaderPanel
         title="- LOGIN -"
         text={
@@ -49,10 +53,10 @@ export const AuthScreen = observer(() => {
         }
       />
 
-      <form className="w-full md:w-3/5 lg:w-2/5 mb-3" onSubmit={onSubmit}>
+      <form className="w-full md:w-3/5 lg:w-2/5 mb-6 mt-6" onSubmit={onSubmit}>
         <div>Password</div>
         <input
-          className="ellipsis w-full mt-2 text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker leading-none focus:outline-none focus:shadow-outline"
+          className="ellipsis no-print text-base shadow-sm appearance-none border rounded py-2 px-3 mt-3 w-full text-grey-darker leading-none focus:outline-none  dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800"
           value={store.password}
           onChange={onPasswordChange}
           type="password"
@@ -62,17 +66,23 @@ export const AuthScreen = observer(() => {
         <button
           type="submit"
           className={
-            "text-base w-full mt-4 font-semibold py-2 px-3 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            "text-base w-full mt-6 font-semibold py-2 px-3 rounded-lg bg-blue-500 active:bg-blue-700 text-white hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           }
         >
           Unlock
         </button>
       </form>
 
-      <div className="flex mt-3">
-        <Link to="/logs" className="ml-auto text-decoration-none">
-          <i className="fa fa-file-text-o mr-2"></i> Open Logs
-        </Link>
+      {!!window.isElectron && (
+        <div className="flex mt-3">
+          <Link to="/logs" className="ml-auto text-decoration-none">
+            <i className="fa fa-file-text-o mr-2"></i> Open Logs
+          </Link>
+        </div>
+      )}
+
+      <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-5 mx-auto mt-6">
+        <FooterText />
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export const SidebarMenuItem = ({ to, title, icon }) => {
   return (
     <Link
       className={classNames(
-        "flex py-2 mt-2 text-sm font-semibold text-gray-700 rounded-lg dark-mode:hover:bg-gray-600 ellipsis",
+        "button flex py-2 mt-2 text-sm font-semibold text-gray-700 rounded-lg dark-mode:hover:bg-gray-600 ellipsis",
         {
           "bg-gray-200 dark-mode:bg-gray-700": active,
           "px-4": !service.sidebarCollapsed,
@@ -64,17 +64,21 @@ const MenuItems = () => {
         to="/configuration"
       />
 
-      <SidebarMenuItem
-        icon={<i className="fas fa-cog"></i>}
-        title="Settings"
-        to="/settings"
-      />
+      {!!window.isElectron && (
+        <SidebarMenuItem
+          icon={<i className="fas fa-cog"></i>}
+          title="Settings"
+          to="/settings"
+        />
+      )}
 
-      <SidebarMenuItem
-        icon={<i className="fas fa-file"></i>}
-        title="Logs"
-        to="/logs"
-      />
+      {!!window.isElectron && (
+        <SidebarMenuItem
+          icon={<i className="fas fa-file"></i>}
+          title="Logs"
+          to="/logs"
+        />
+      )}
     </>
   );
 };
@@ -205,7 +209,9 @@ const TopMenu: React.FC = observer(() => {
         <nav className="flex-1 flex flex-row items-center justify-end">
           <SearchBar />
           <NavbarCollect className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
-          <NavbarPrintPDF className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
+          {!!window.isElectron && (
+            <NavbarPrintPDF className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
+          )}
           <NavbarPrint className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
           <NavbarUser className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
         </nav>
@@ -220,10 +226,10 @@ export const AppLayout: React.FC = observer(({ children }) => {
   return (
     <div className="min-h-screen">
       <div className="lg:flex">
-        <SideMenu />
+        {service.sidebar && <SideMenu />}
         <div className="relative flex-1 flex flex-col min-h-screen">
           <div className="content container mx-auto flex-1">
-            <TopMenu />
+            {service.topbar && <TopMenu />}
             {children}
             {service.footer && (
               <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-5 mx-auto no-print">

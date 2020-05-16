@@ -11,6 +11,9 @@ export class IPCBus extends EventEmitter {
   };
   invoke = async (channel: string, ...args): Promise<any> => {
     const fn = this.fnMap.get(channel);
+    if (!fn) {
+      throw Error("Handler has not been registered; " + channel);
+    }
     return await fn(...args);
   };
   send = (channel: string, ...args) => {

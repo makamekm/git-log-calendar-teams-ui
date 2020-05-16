@@ -12,7 +12,13 @@ export const NavbarPrint = observer(({ className }: { className?: string }) => {
       className={classNames(className)}
       onClick={async () => {
         state.isPrinting = true;
-        await ipc.handlers.PRINT();
+        if (window.isElectron) {
+          await ipc.handlers.PRINT();
+        } else {
+          await new Promise((r) => setTimeout(r, 1000));
+          await window.print();
+          await new Promise((r) => setTimeout(r, 1000));
+        }
         state.isPrinting = false;
       }}
     >

@@ -9,6 +9,8 @@ const defaultState = {
   pageTitle: null,
   pageDescription: "Git Activity Team Tracker",
   pageKeywords: "git team manager dashboard",
+  sidebar: true,
+  topbar: true,
   footer: true,
   scrollable: true,
   sidebarOpened: false,
@@ -22,6 +24,8 @@ export interface LayoutConfig {
   pageTitle?: string;
   pageDescription?: string;
   pageKeywords?: string;
+  sidebar?: boolean;
+  topbar?: boolean;
   footer?: boolean;
   scrollable?: boolean;
   nonScrollableStack?: number;

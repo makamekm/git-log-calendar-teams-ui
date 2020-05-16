@@ -28,7 +28,7 @@ a {
   transition: opacity 0.1s;
 }
 
-a:hover,
-a:focus {
+a:not(.button):hover,
+a:not(.button):focus {
   opacity: 0.6;
 }

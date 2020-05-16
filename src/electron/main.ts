@@ -237,6 +237,7 @@ app.on("ready", () => {
           }
         );
       }
+      ipcBus.emit("ready");
     }
   });
 });

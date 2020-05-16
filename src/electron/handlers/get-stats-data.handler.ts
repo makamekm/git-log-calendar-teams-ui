@@ -1,4 +1,3 @@
-import { app } from "electron";
 import { nameofHandler, IpcHandler, ipc, nameofSends } from "~/shared/ipc";
 
 import {
@@ -25,7 +24,7 @@ let cache: {
   };
 } = {};
 
-app.on("ready", () => {
+ipcBus.on("ready", () => {
   ipcBus.on(nameofSends("ON_SETTINGS_UPDATE_FINISH"), () => {
     cache = {};
   });

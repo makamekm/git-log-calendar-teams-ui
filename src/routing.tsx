@@ -33,8 +33,12 @@ export const RoutedContent = () => {
       />
 
       <ProtectedRoute path="/configuration" exact component={Configuration} />
-      <Route path="/settings" exact component={Settings} />
-      <Route path="/logs" exact component={LogsScreen} />
+      {!!window.isElectron && (
+        <Route path="/settings" exact component={Settings} />
+      )}
+      {!!window.isElectron && (
+        <Route path="/logs" exact component={LogsScreen} />
+      )}
 
       <Route component={Error404} />
     </Switch>
