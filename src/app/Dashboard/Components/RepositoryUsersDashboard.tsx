@@ -214,6 +214,10 @@ export const RepositoryUsersDashboard = observer(() => {
     >
       {state.isLoading || !storage.cache ? (
         <List className="m-4" height="200px" width="100%" />
+      ) : state.tableRepositoryUsers.length === 0 ? (
+        <div className="text-center py-3 border-t dark-mode:border-gray-800">
+          {"<"} No Data {">"}
+        </div>
       ) : (
         <div className="w-full" style={{ height: "450px" }}>
           <AutoSizer>

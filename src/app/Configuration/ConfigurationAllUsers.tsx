@@ -267,6 +267,10 @@ export const ConfigurationAllUsers = observer(
       >
         {!state.config || state.isLoading || !storage.cache ? (
           <List className="m-4" height="200px" width="100%" />
+        ) : state.allUsersQueryed.length === 0 ? (
+          <div className="text-center py-3 border-t dark-mode:border-gray-800">
+            {"<"} No Data {">"}
+          </div>
         ) : (
           <div style={{ height: "450px" }}>
             <AutoSizer>

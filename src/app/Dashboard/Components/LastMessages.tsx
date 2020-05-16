@@ -211,7 +211,7 @@ export const LatestMessages = observer(() => {
             <div className="flex items-center">
               Messages
               <span className="text-sm ml-2 text-gray-600">
-                limit:{" "}
+                limited:{" "}
                 {Math.min(
                   stateMessage.maxMessages,
                   stateMessage.messages.length
@@ -239,6 +239,10 @@ export const LatestMessages = observer(() => {
       >
         {stateDashboard.isLoading || stateMessage.isLoading ? (
           <List className="m-4" height="200px" width="100%" />
+        ) : stateMessage.messages.length === 0 ? (
+          <div className="text-center py-3 border-t dark-mode:border-gray-800">
+            {"<"} No Data {">"}
+          </div>
         ) : (
           <div className="w-full" style={{ height: "450px" }}>
             <AutoSizer>

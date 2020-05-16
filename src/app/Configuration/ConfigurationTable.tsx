@@ -41,7 +41,11 @@ export const ConfigurationTable = withResizeDetector(
         },
         [items]
       );
-      return (
+      return items.length === 0 ? (
+        <div className="text-center py-3 border-t dark-mode:border-gray-800">
+          {"<"} No Data {">"}
+        </div>
+      ) : (
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided, snapshot) =>
