@@ -18,8 +18,19 @@ if (!window.isElectron) {
     resolveConnection();
   };
 
-  connection.onerror = (error) => {
-    console.error("ws error", error);
+  connection.onclose = (e) => {
+    console.log(
+      "Socket is closed. Reconnect will be attempted in 1 second.",
+      e.reason
+    );
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
+  connection.onerror = function (err) {
+    console.error("Socket encountered error: ", err.message, "Closing socket");
+    connection.close();
   };
 
   connection.onmessage = (message) => {
