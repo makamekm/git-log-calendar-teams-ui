@@ -10,6 +10,7 @@ import { NavbarPrint } from "./NavbarPrint";
 import { NavbarUser } from "./NavbarUser";
 import { FooterText } from "./FooterText";
 import { SearchBar } from "../SearchBar/SearchBar";
+import { NavbarPrintPDF } from "./NavbarPrintPDF";
 
 export const SidebarMenuItem = ({ to, title, icon }) => {
   const active = !!useRouteMatch({
@@ -204,6 +205,7 @@ const TopMenu: React.FC = observer(() => {
         <nav className="flex-1 flex flex-row items-center justify-end">
           <SearchBar />
           <NavbarCollect className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
+          <NavbarPrintPDF className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
           <NavbarPrint className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
           <NavbarUser className="px-3 py-2 cursor-pointer text-sm font-semibold rounded-lg dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" />
         </nav>

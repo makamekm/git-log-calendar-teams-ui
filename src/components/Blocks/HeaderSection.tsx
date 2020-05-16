@@ -16,7 +16,7 @@ const HeaderSection = ({
 }) => (
   <div
     className={classNames(
-      "no-print-break flex items-center text-5xl font-light",
+      "no-print-break no-print-break-after flex items-center text-5xl font-light",
       className
     )}
   >

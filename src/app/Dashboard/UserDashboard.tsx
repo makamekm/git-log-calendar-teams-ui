@@ -30,7 +30,7 @@ export const UserDashboard = observer(() => {
   }, [state, userName]);
   useOnLoad(onLoad);
   useLayoutConfig({
-    pageTitle: `${userName} #user`,
+    pageTitle: `${userName} - User`,
     breadcrumbs: [
       {
         name: "Dashboard",

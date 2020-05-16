@@ -16,8 +16,6 @@
     position: relative !important;
     page-break-inside: avoid !important;
     -webkit-column-break-inside: avoid !important;
-    page-break-before: auto !important;
-    page-break-after: auto !important;
     break-inside: avoid !important;
   }
 
@@ -25,6 +23,16 @@
     display: block;
     height: 0px;
     visibility: hidden;
+  }
+
+  .no-print-break-after {
+    position: relative !important;
+    page-break-after: avoid !important;
+  }
+
+  .no-print-break-before {
+    position: relative !important;
+    page-break-before: avoid !important;
   }
 
   a {

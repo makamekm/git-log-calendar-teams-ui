@@ -30,7 +30,7 @@ export const TeamDashboard = observer(() => {
   }, [state, teamName]);
   useOnLoad(onLoad);
   useLayoutConfig({
-    pageTitle: `${teamName} #team`,
+    pageTitle: `${teamName} - Team`,
     breadcrumbs: [
       {
         name: "Dashboard",

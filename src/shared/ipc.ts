@@ -16,6 +16,7 @@ export interface IpcHandler {
     appVersion: string;
   };
   PRINT: () => void;
+  PRINT_PDF: (title?: string) => void;
   COLLECT_STATS: () => void;
   IS_COLLECTING_STATS: () => boolean;
   GET_CALENDAR_DATA: (
@@ -199,6 +200,10 @@ export const ipc = {
       ...args: Parameters<IpcHandler["PRINT"]>
     ): Promise<ReturnType<IpcHandler["PRINT"]>> =>
       ipcBus.invoke(nameofHandler("PRINT"), ...args),
+    PRINT_PDF: (
+      ...args: Parameters<IpcHandler["PRINT_PDF"]>
+    ): Promise<ReturnType<IpcHandler["PRINT_PDF"]>> =>
+      ipcBus.invoke(nameofHandler("PRINT_PDF"), ...args),
     GET_REPOSITORY_USERS: (
       ...args: Parameters<IpcHandler["GET_REPOSITORY_USERS"]>
     ): Promise<ReturnType<IpcHandler["GET_REPOSITORY_USERS"]>> =>

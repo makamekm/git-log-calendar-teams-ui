@@ -31,7 +31,7 @@ export const RepositoryDashboard = observer(() => {
   }, [state, repositoryName]);
   useOnLoad(onLoad);
   useLayoutConfig({
-    pageTitle: `${repositoryName} #repository`,
+    pageTitle: `${repositoryName} - Repository`,
     breadcrumbs: [
       {
         name: "Dashboard",
