@@ -54,9 +54,13 @@ export const AuthService = createService<AuthState>(
         state.error = "";
         state.isLoading = true;
         try {
-          const config = await ipc.handlers.GET_CONFIG();
-          state.isAuthenticated =
-            !config.password || config.password === md5(password);
+          if (window.isElectron) {
+            const config = await ipc.handlers.GET_CONFIG();
+            state.isAuthenticated =
+              !config.password || config.password === md5(password);
+          } else {
+            state.isAuthenticated = await ipc.handlers.AUTH(md5(password));
+          }
         } catch (error) {
           state.error = error.message;
         }
@@ -80,13 +84,15 @@ export const AuthService = createService<AuthState>(
         }
       },
       initAuthorize: async () => {
-        state.isLoading = true;
-        const config = await ipc.handlers.GET_CONFIG();
-        if (!config.password) {
-          await state.authorize(config.password);
-          state.redirectToFrom();
+        if (window.isElectron) {
+          state.isLoading = true;
+          const config = await ipc.handlers.GET_CONFIG();
+          if (!config.password) {
+            await state.authorize(config.password);
+            state.redirectToFrom();
+          }
+          state.isLoading = false;
         }
-        state.isLoading = false;
       },
     }));
     return state;

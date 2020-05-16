@@ -137,6 +137,7 @@ export interface IpcHandler {
   EMPTY_DRIVE: () => void;
   REGENERATE_KEY_PAIR: () => void;
   REGISTER_USER: (email: string, username: string) => void;
+  AUTH: (password: string) => boolean;
 }
 
 export const ipc = {
@@ -236,6 +237,10 @@ export const ipc = {
       ...args: Parameters<IpcHandler["REGISTER_USER"]>
     ): Promise<ReturnType<IpcHandler["REGISTER_USER"]>> =>
       ipcBus.invoke(nameofHandler("REGISTER_USER"), ...args),
+    AUTH: (
+      ...args: Parameters<IpcHandler["AUTH"]>
+    ): Promise<ReturnType<IpcHandler["AUTH"]>> =>
+      ipcBus.invoke(nameofHandler("AUTH"), ...args),
   },
   sends: {
     ON_COLLECT_STATS: (value: boolean) =>
