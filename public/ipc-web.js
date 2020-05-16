@@ -2,35 +2,38 @@ if (!window.isElectron) {
   const invokes = {};
   const subscriptions = {};
 
-  window.WebSocket = window.WebSocket || window.MozWebSocket;
+  window.ipcBus.send("CONNECTION_LOADING");
 
-  const connection = new WebSocket(
-    `ws://${"localhost:8080" || window.location.host}`
-  );
+  window.WebSocket = window.WebSocket || window.MozWebSocket;
 
   let resolveConnection;
   const awaitConnection = new Promise((r) => {
     resolveConnection = r;
   });
 
+  window.isConnecting = true;
+
+  window.ipcBus.on("CONNECTION_START", () => {
+    resolveConnection();
+  });
+
+  const connection = new WebSocket(`ws://${window.location.host}`);
+
   connection.onopen = () => {
     console.log("connected with a server!");
-    resolveConnection();
+    window.ipcBus.send("CONNECTION_START");
+    window.isConnecting = false;
   };
 
   connection.onclose = (e) => {
-    console.log(
-      "Socket is closed. Reconnect will be attempted in 1 second.",
-      e.reason
-    );
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    console.log("cocket is closed", e.reason);
+    window.ipcBus.send("CONNECTION_CLOSE");
   };
 
-  connection.onerror = function (err) {
+  connection.onerror = (err) => {
     console.error("Socket encountered error: ", err.message, "Closing socket");
     connection.close();
+    window.ipcBus.send("CONNECTION_ERROR");
   };
 
   connection.onmessage = (message) => {
@@ -64,9 +67,6 @@ if (!window.isElectron) {
   window.ipcBus.handle = async (channel, fn) => {
     throw new Error("You cannot handle from Renderer thread");
   };
-  window.ipcBus.send = (channel, ...args) => {
-    throw new Error("You cannot send from Renderer thread");
-  };
   window.ipcBus.invoke = async (channel, ...args) => {
     let resolve = () => {};
     let reject = () => {};
@@ -84,7 +84,9 @@ if (!window.isElectron) {
     });
     return promise;
   };
+  window.ipcBus._subscribe = window.ipcBus.subscribe;
   window.ipcBus.subscribe = (channel, callback) => {
+    const _unsibscribe = window.ipcBus._subscribe(channel, callback);
     const listener = (...args) => {
       callback(...args);
     };
@@ -97,6 +99,7 @@ if (!window.isElectron) {
     }
     subscriptions[channel].push(listener);
     return () => {
+      _unsibscribe();
       if (subscriptions[channel]) {
         const index = subscriptions[channel].indexOf(listener);
         if (index >= 0) {

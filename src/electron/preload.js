@@ -8,10 +8,6 @@ global.ipcBus.handle = async (channel, fn) => {
   throw new Error("You cannot handle from Renderer thread");
 };
 
-global.ipcBus.send = (channel, ...args) => {
-  throw new Error("You cannot send from Renderer thread");
-};
-
 global.ipcBus.invoke = (channel, ...args) => {
   return ipcRenderer.invoke(channel, ...args);
 };

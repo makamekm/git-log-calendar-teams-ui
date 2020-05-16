@@ -1,9 +1,11 @@
+import React from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useOnLoad, useOnChange } from "~/hooks";
 
 export interface LoadingStore {
   inited: boolean;
+  isDisconnected: boolean;
   loaders: {
     [name: string]: boolean;
   };
@@ -11,7 +13,7 @@ export interface LoadingStore {
   setLoading: (value: boolean, name: string) => void;
 }
 
-const removeLoadinghandler = () => {
+const removeLoadingHandler = () => {
   const bodyElement = document.querySelector("body");
   const loaderElement = document.querySelector("#initializer");
   if (loaderElement) {
@@ -25,6 +27,7 @@ export const LoadingService = createService<LoadingStore>(
   () => {
     const store = useLocalStore<LoadingStore>(() => ({
       inited: false,
+      isDisconnected: false,
       loaders: {
         initial: true,
       },
@@ -42,7 +45,7 @@ export const LoadingService = createService<LoadingStore>(
   },
   (state) => {
     useOnLoad(() => {
-      removeLoadinghandler();
+      removeLoadingHandler();
     });
     useOnLoad(() => {
       delete state.loaders["initial"];
@@ -52,5 +55,20 @@ export const LoadingService = createService<LoadingStore>(
         state.inited = true;
       }
     });
+    React.useEffect(
+      () =>
+        window.ipcBus.subscribe("CONNECTION_CLOSE", () => {
+          state.isDisconnected = true;
+        }),
+      [state]
+    );
+    React.useEffect(() => {
+      if (window.isConnecting) {
+        state.setLoading(true, "connecting");
+        return window.ipcBus.subscribe("CONNECTION_START", () => {
+          state.setLoading(false, "connecting");
+        });
+      }
+    }, [state]);
   }
 );

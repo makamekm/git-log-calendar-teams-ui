@@ -1,3 +1,4 @@
+import { argv } from "yargs";
 import { server as webSocketServer } from "websocket";
 import http from "http";
 import { Server as StaticServer } from "node-static";
@@ -15,10 +16,11 @@ export const runWebServer = (port = 8080) => {
   server.listen(port, () => {
     console.log("Server is listening on port", port);
   });
+  console.log(argv, !argv["ignore-cors"]);
 
   const wsServer = new webSocketServer({
     httpServer: server,
-    autoAcceptConnections: false,
+    autoAcceptConnections: !argv["ignore-cors"],
   });
 
   const unauthorizedChannels = [
