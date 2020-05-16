@@ -175,7 +175,7 @@ const TopMenu: React.FC = observer(() => {
             <i className="fas fa-bars"></i>
           </div>
           <div
-            className="hidden md:block ellipsis"
+            className="hidden md:block ellipsis text-gray-600"
             style={{
               maxWidth: "300px",
             }}
