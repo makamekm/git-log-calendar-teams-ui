@@ -42,6 +42,7 @@ export const DashboardToolbar = observer(
       <div className="flex flex-wrap justify-end ml-auto">
         <div className="flex flex-col justify-end pr-4 mt-2 mb-2 text-right">
           <input
+            autoComplete={"off"}
             className="ellipsis no-print mb-2 shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
             placeholder="Activity Max Value"
             type="number"

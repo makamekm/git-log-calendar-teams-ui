@@ -56,6 +56,7 @@ export const AuthScreen = observer(() => {
       <form className="w-full md:w-3/5 lg:w-2/5 mb-6 mt-6" onSubmit={onSubmit}>
         <div>Password</div>
         <input
+          autoComplete={"new-password"}
           className="ellipsis no-print text-base shadow-sm appearance-none border rounded py-2 px-3 mt-3 w-full text-grey-darker leading-none focus:outline-none  dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800"
           value={store.password}
           onChange={onPasswordChange}

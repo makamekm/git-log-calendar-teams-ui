@@ -63,6 +63,7 @@ export const ConfigurationRepositories = observer(
               <>
                 <td className="align-middle">
                   <input
+                    autoComplete={"off"}
                     className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
@@ -74,6 +75,7 @@ export const ConfigurationRepositories = observer(
                 </td>
                 <td className="align-middle">
                   <input
+                    autoComplete={"off"}
                     className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {
@@ -85,6 +87,7 @@ export const ConfigurationRepositories = observer(
                 </td>
                 <td className="align-middle">
                   <input
+                    autoComplete={"off"}
                     className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                     type="text"
                     onChange={(e) => {

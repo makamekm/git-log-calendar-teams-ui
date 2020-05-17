@@ -31,6 +31,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
+                  autoComplete={"off"}
                   className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="password"
                   onChange={(e) => {
@@ -47,6 +48,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
+                  autoComplete={"off"}
                   className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
@@ -63,6 +65,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
+                  autoComplete={"off"}
                   className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => {
@@ -79,6 +82,7 @@ export const ConfigurationForm = observer(
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
+                  autoComplete={"off"}
                   className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
                   type="number"
                   onChange={(e) => {

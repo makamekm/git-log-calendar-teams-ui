@@ -454,6 +454,7 @@ export const Typeahead: React.FC<{
                   )}
                   <input
                     ref={refInput}
+                    autoComplete={"off"}
                     onFocus={() => {
                       open();
                       state.isInputFocused = true;

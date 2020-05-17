@@ -203,6 +203,7 @@ export const RepositoryUsersDashboard = observer(() => {
               <i className="fa fa-search"></i>
             </div>
             <input
+              autoComplete={"off"}
               placeholder="Search..."
               className="ellipsis no-print text-base shadow-sm appearance-none border rounded py-2 pr-3 pl-10 text-grey-darker leading-none focus:outline-none  dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800"
               value={state.usersQuery}

@@ -3,20 +3,25 @@ import { server as webSocketServer } from "websocket";
 import http from "http";
 import { Server as StaticServer } from "node-static";
 import { ipc, nameofHandler } from "~/shared/ipc";
+import httpProxy from "http-proxy";
 
 export const runWebServer = (port = 8080) => {
   const clients = [];
 
   const file = new StaticServer("./build");
+  const proxy = httpProxy.createProxyServer();
 
   const server = http.createServer((req, res) => {
-    file.serve(req, res);
+    if (argv["proxy"]) {
+      proxy.web(req, res, { target: argv["proxy"] });
+    } else {
+      file.serve(req, res);
+    }
   });
 
   server.listen(port, () => {
     console.log("Server is listening on port", port);
   });
-  console.log(argv, !argv["ignore-cors"]);
 
   const wsServer = new webSocketServer({
     httpServer: server,

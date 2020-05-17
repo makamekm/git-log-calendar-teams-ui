@@ -37,6 +37,9 @@
     "eject": "react-scripts eject",
     "dist": "run-s dist:web build-electron package",
     "dist:web": "run-s build-tailwind build",
+    "server:dev": "run-p start server:dev:web:wait",
+    "server:dev:web:wait": "run-s wait server:dev:web",
+    "server:dev:web": "ts-node -r tsconfig-paths/register --project tsconfig.electron.json ./src/server/index.ts --web --ignore-cors --proxy=http://localhost:3000",
     "server": "ts-node -r tsconfig-paths/register --project tsconfig.electron.json ./src/server/index.ts"
   },
   "build": {
@@ -79,6 +82,7 @@
     "faker": "^4.1.0",
     "focus-trap-react": "^6.0.0",
     "fs-extra": "^9.0.0",
+    "http-proxy": "^1.18.0",
     "hyperdrive": "^9.16.0",
     "hyperswarm": "^2.13.0",
     "lodash": "^4.17.15",
