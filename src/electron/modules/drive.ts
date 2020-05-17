@@ -203,6 +203,10 @@ export const remountDrive = async () => {
   createDrive();
 };
 
+ipcBus.on("ready", () => {
+  createDrive();
+});
+
 export const createDrive = async () => {
   inited = false;
 

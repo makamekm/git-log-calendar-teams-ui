@@ -52,6 +52,55 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Start Web Server:
+            </div>
+            <div className="flex-1 mt-3 mx-2">
+              <Toggle
+                checked={!!state.settings.useWebServer}
+                onChange={() => {
+                  state.settings.useWebServer = !state.settings.useWebServer;
+                }}
+              />
+            </div>
+          </div>
+          <AccordionToggle value={!!state.settings.useWebServer}>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                Web Server Hostname:
+              </div>
+              <div className="flex-1 mt-3 mx-2">
+                <input
+                  autoComplete={"off"}
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="text"
+                  onChange={(e) => {
+                    state.settings.webHostname = e.currentTarget.value;
+                  }}
+                  value={state.settings.webHostname || "0.0.0.0"}
+                  placeholder="Enter Hostname..."
+                />
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+                Web Server Port:
+              </div>
+              <div className="flex-1 mt-3 mx-2">
+                <input
+                  autoComplete={"off"}
+                  className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
+                  type="number"
+                  onChange={(e) => {
+                    state.settings.webPort = Number(e.currentTarget.value) || 0;
+                  }}
+                  value={state.settings.webPort || 8080}
+                  placeholder="Enter Port..."
+                />
+              </div>
+            </div>
+          </AccordionToggle>
+          <div className="flex flex-col md:flex-row">
             <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Public Key:
             </div>

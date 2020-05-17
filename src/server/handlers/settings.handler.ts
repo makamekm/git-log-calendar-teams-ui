@@ -16,6 +16,8 @@ ipcBus.handle(
     const config = fs.existsSync(configPath)
       ? YAML.parse(fs.readFileSync(configPath, "utf-8"))
       : {};
+    let port = Number(argv.web);
+    port = port === 1 ? 8080 : port || 8080;
     return {
       publicKey: process.env.PUBLIC_KEY,
       secretKey: process.env.SECRET_KEY,
@@ -39,6 +41,14 @@ ipcBus.handle(
       s3Bucket: process.env.S3_BUCKET,
       drivePath: process.env.DRIVE_PATH || "./drive",
       tempPath: process.env.TEMP_PATH || "./temp",
+      useWebServer: process.env.USE_WEB || argv["web"],
+      webHostname: process.env.WEB_HOSTNAME || argv["web-hostname"],
+      webPort: process.env.WEB_PORT || argv["web-port"],
+      webIgnoreCors: process.env.WEB_IGNORE_CORS || argv["web-ignore-cors"],
+      webProxy: process.env.WEB_PROXY || argv["web-proxy"],
+      webStaticPath: argv["web-static"]
+        ? path.resolve(String(argv["web-static"]))
+        : "./build",
       ...config,
       dontCollect: false,
     };

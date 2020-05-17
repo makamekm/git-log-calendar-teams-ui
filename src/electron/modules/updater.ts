@@ -6,6 +6,7 @@ const UPDATE_INTERVAL = 30;
 
 if (USE_AUTO_UPDATER) {
   ipcBus.on("ready", () => {
+    createUpdater();
     const runTimeout = async () => {
       setTimeout(() => {
         autoUpdater.checkForUpdatesAndNotify();
@@ -16,12 +17,10 @@ if (USE_AUTO_UPDATER) {
   });
 }
 
-export class AppUpdater {
-  constructor() {
-    autoUpdater.logger = log;
+function createUpdater() {
+  autoUpdater.logger = log;
 
-    if (USE_AUTO_UPDATER) {
-      autoUpdater.checkForUpdatesAndNotify();
-    }
+  if (USE_AUTO_UPDATER) {
+    autoUpdater.checkForUpdatesAndNotify();
   }
 }

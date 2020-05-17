@@ -7,6 +7,12 @@ export interface ApplicationSettings {
   forceCollectingInterval: number;
   limitCollectingRepositoriesPerTry: number;
   collectingRepositoryNames: string[];
+  useWebServer: boolean;
+  webPort: number;
+  webHostname: string;
+  webIgnoreCors?: boolean;
+  webProxy?: string;
+  webStaticPath?: string;
   drivePath?: string;
   tempPath?: string;
   initConfigPath?: string;

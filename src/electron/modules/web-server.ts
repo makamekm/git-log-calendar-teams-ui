@@ -1,34 +1,72 @@
-import { argv } from "yargs";
 import { server as webSocketServer } from "websocket";
 import http from "http";
-import path from "path";
 import { Server as StaticServer } from "node-static";
 import { ipc, nameofHandler } from "~/shared/ipc";
 import httpProxy from "http-proxy";
 
-export const runWebServer = (port = 8080) => {
+let server: http.Server;
+
+ipcBus.on("ready", () => {
+  start();
+});
+
+ipcBus.on("ON_SETTINGS_UPDATE_FINISH", () => {
+  start();
+});
+
+const start = async () => {
+  if (server) {
+    server.close();
+    server = null;
+  }
+
+  try {
+    const settings = await ipc.handlers.GET_SETTINGS();
+    if (settings.useWebServer) {
+      let port = Number(settings.webPort);
+      port = port === 1 ? 8080 : port || 8080;
+      runWebServer(
+        settings.webHostname || "0.0.0.0",
+        port,
+        settings.webStaticPath,
+        !!settings.webIgnoreCors,
+        settings.webProxy
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const runWebServer = (
+  hostname: string,
+  port: number,
+  staticPath: string,
+  ignoreCors?: boolean,
+  proxyAddress?: string
+) => {
   const clients = [];
 
-  const file = new StaticServer(
-    argv["static"] ? path.resolve(String(argv["static"])) : "./build"
-  );
+  const file = new StaticServer(staticPath);
   const proxy = httpProxy.createProxyServer();
 
-  const server = http.createServer((req, res) => {
-    if (argv["proxy"]) {
-      proxy.web(req, res, { target: argv["proxy"] });
+  server = http.createServer((req, res) => {
+    console.log("request caught!", staticPath);
+
+    if (proxyAddress) {
+      proxy.web(req, res, { target: proxyAddress });
     } else {
       file.serve(req, res);
     }
   });
 
-  server.listen(port, () => {
+  server.listen(port, hostname, () => {
     console.log("Server is listening on port", port);
   });
 
   const wsServer = new webSocketServer({
     httpServer: server,
-    autoAcceptConnections: !argv["ignore-cors"],
+    autoAcceptConnections: !ignoreCors,
   });
 
   const unauthorizedChannels = [

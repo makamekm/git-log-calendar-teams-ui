@@ -8,6 +8,7 @@ import {
   protocol,
   dialog,
 } from "electron";
+import settings from "electron-settings";
 import contextMenu from "electron-context-menu";
 import path from "path";
 import url from "url";
@@ -17,9 +18,10 @@ import {
   OPEN_MAIN_WINDOW_DEV_TOOLS,
 } from "@env/config";
 import commandExists from "command-exists";
-import { AppUpdater } from "./modules/updater";
-import { createDrive } from "./modules/drive";
-import settings from "electron-settings";
+
+import "./modules/updater";
+import "./modules/drive";
+import "./modules/web-server";
 
 declare global {
   namespace NodeJS {
@@ -56,10 +58,6 @@ let tray: Tray;
 export const getWindow = () => {
   return mainWindow;
 };
-
-function createUpdater() {
-  new AppUpdater();
-}
 
 contextMenu({
   showSearchWithGoogle: false,
@@ -217,9 +215,7 @@ app.on("ready", () => {
     } else {
       await gatherAccess();
       settings.setPath(path.resolve(app.getPath("userData"), "settings.json"));
-      createDrive();
       createTray();
-      createUpdater();
       if (OPEN_MAIN_WINDOW_ON_LOAD || settings.get("openWindowOnStart")) {
         createWindow();
       }

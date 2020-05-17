@@ -24,6 +24,12 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     s3DrivePath: settings.get("s3DrivePath"),
     s3Bucket: settings.get("s3Bucket"),
     openWindowOnStart: settings.get("openWindowOnStart"),
+    useWebServer: settings.get("useWebServer"),
+    webHostname: settings.get("webHostname"),
+    webPort: settings.get("webServerPort"),
+    webIgnoreCors: true,
+    webStaticPath: path.resolve(__dirname, "../../../../"),
+    webProxy: process.env.NODE_ENV === "development" && "http://localhost:3000",
   };
 };
 
@@ -42,6 +48,9 @@ export const saveSettings = ({
   s3DrivePath,
   s3SecretAccessKey,
   openWindowOnStart,
+  useWebServer,
+  webHostname,
+  webPort,
 }: ApplicationSettings) => {
   if (!publicKey) {
     const keyPair = generateDriveKeys();
@@ -68,6 +77,9 @@ export const saveSettings = ({
   settings.set("s3DrivePath", s3DrivePath);
   settings.set("s3SecretAccessKey", s3SecretAccessKey);
   settings.set("openWindowOnStart", openWindowOnStart);
+  settings.set("useWebServer", useWebServer);
+  settings.set("webHostname", webHostname);
+  settings.set("webPort", webPort);
 };
 
 export const generateKeysSettings = () => {
