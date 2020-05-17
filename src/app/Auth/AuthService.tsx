@@ -84,15 +84,10 @@ export const AuthService = createService<AuthState>(
         }
       },
       initAuthorize: async () => {
-        if (window.isElectron) {
-          state.isLoading = true;
-          const config = await ipc.handlers.GET_CONFIG();
-          if (!config.password) {
-            await state.authorize(config.password);
-            state.redirectToFrom();
-          }
-          state.isLoading = false;
-        }
+        state.isLoading = true;
+        await state.authorize("");
+        state.redirectToFrom();
+        state.isLoading = false;
       },
     }));
     return state;

@@ -9,6 +9,7 @@ export interface ApplicationSettings {
   collectingRepositoryNames: string[];
   drivePath?: string;
   tempPath?: string;
+  initConfigPath?: string;
   useDriveS3: boolean;
   s3AccessKeyId?: string;
   s3SecretAccessKey?: string;

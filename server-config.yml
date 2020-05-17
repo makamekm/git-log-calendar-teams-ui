@@ -6,3 +6,4 @@ limitCollectingRepositoriesPerTry: 0
 collectingRepositoryNames: []
 drivePath: ./drive
 tempPath: ./temp
+initConfigPath: ./git-log-config.yml
