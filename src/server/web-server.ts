@@ -103,7 +103,7 @@ export const runWebServer = (port = 8080) => {
       }
     });
 
-    connection.on("close", (connection) => {
+    connection.on("close", () => {
       for (const key in subscriptions) {
         subscriptions[key]();
       }
