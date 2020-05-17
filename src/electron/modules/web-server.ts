@@ -51,8 +51,6 @@ const runWebServer = (
   const proxy = httpProxy.createProxyServer();
 
   server = http.createServer((req, res) => {
-    console.log("request caught!", staticPath);
-
     if (proxyAddress) {
       proxy.web(req, res, { target: proxyAddress });
     } else {
@@ -133,15 +131,15 @@ const runWebServer = (
             }
           }
         } else if (data.type === "subscribe" && !subscriptions[data.channel]) {
+          const channel = data.channel;
           const onMessage = (...args) => {
             if (isAuth) {
-              connection.sendUTF(JSON.stringify({ type: "on", result: args }));
+              connection.sendUTF(
+                JSON.stringify({ type: "on", channel, result: args })
+              );
             }
           };
-          subscriptions[data.channel] = ipcBus.subscribe(
-            data.channel,
-            onMessage
-          );
+          subscriptions[channel] = ipcBus.subscribe(channel, onMessage);
         } else if (data.type === "unsubscribe" && subscriptions[data.channel]) {
           subscriptions[data.channel]();
           delete subscriptions[data.channel];
