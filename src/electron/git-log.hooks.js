@@ -4,6 +4,8 @@ const ignoreLines = [
   "password",
   "DeprecationWarning",
   "deprecated",
+  "ProtocolDeprecateCallback:",
+  "UnhandledPromiseRejectionWarning: Unhandled promise rejection.",
   "Electron Security Warning (Insecure Content-Security-Policy)",
   "Warning: Using UNSAFE_componentWillMount",
   "Warning: validateDOMNesting(...)",

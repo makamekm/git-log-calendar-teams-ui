@@ -28,7 +28,7 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     webHostname: settings.get("webHostname"),
     webPort: settings.get("webServerPort"),
     webIgnoreCors: true,
-    webStaticPath: path.resolve(__dirname, "../../../../"),
+    webStaticPath: path.normalize(`${__dirname}/../../../`),
     webProxy: process.env.NODE_ENV === "development" && "http://localhost:3000",
   };
 };

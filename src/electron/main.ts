@@ -73,7 +73,7 @@ contextMenu({
     const createUser =
       str && /user\/.*\*$/gi.test(decodeURIComponent(params.linkURL));
     if (createUser) {
-      const arr = /user\/([a-zA-Z0-9_\-\.]+@[a-zA-Z0-9_\-\.]+) (.*)\*$/gi.exec(
+      const arr = /user\/([a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+) (.*)\*$/gi.exec(
         str
       );
       const email = arr[1];
@@ -100,7 +100,7 @@ function createTray() {
       : path.join(__dirname, "../assets/iconTemplate.png")
   );
   const collectButton = new MenuItem({
-    label: "Collect Logs",
+    label: "Collect Stats",
     type: "normal",
     click: async () => {
       try {
@@ -117,7 +117,7 @@ function createTray() {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "Open Stats Manager",
+      label: "Open Manager",
       type: "normal",
       click: () => createWindow(),
     },
