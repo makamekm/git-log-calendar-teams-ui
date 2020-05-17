@@ -454,6 +454,7 @@ export const Typeahead: React.FC<{
                   )}
                   <input
                     ref={refInput}
+                    type="text"
                     autoComplete={"off"}
                     onFocus={() => {
                       open();

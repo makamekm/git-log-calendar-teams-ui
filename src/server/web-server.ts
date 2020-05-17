@@ -1,6 +1,7 @@
 import { argv } from "yargs";
 import { server as webSocketServer } from "websocket";
 import http from "http";
+import path from "path";
 import { Server as StaticServer } from "node-static";
 import { ipc, nameofHandler } from "~/shared/ipc";
 import httpProxy from "http-proxy";
@@ -8,7 +9,9 @@ import httpProxy from "http-proxy";
 export const runWebServer = (port = 8080) => {
   const clients = [];
 
-  const file = new StaticServer("./build");
+  const file = new StaticServer(
+    argv["static"] ? path.resolve(String(argv["static"])) : "./build"
+  );
   const proxy = httpProxy.createProxyServer();
 
   const server = http.createServer((req, res) => {
