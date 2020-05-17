@@ -32,7 +32,7 @@ export const runWebServer = (port = 8080) => {
     console.log("connection from origin", request.origin);
 
     const connection = request.accept(null, request.origin);
-    const index = clients.push(connection) - 1;
+    clients.push(connection);
 
     let isAuth = false;
     const subscriptions = {};
@@ -104,6 +104,10 @@ export const runWebServer = (port = 8080) => {
     });
 
     connection.on("close", (connection) => {
+      for (const key in subscriptions) {
+        subscriptions[key]();
+      }
+      const index = clients.indexOf(connection);
       clients.splice(index, 1);
       console.log("peer disconnected");
     });
