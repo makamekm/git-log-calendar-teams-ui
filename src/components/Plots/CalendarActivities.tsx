@@ -4,6 +4,17 @@ import moment from "moment";
 import { ResponsiveCalendar, Calendar } from "@nivo/calendar";
 import { useMediaQuery } from "react-responsive";
 
+const getColorNumber = (o, n) => (o + (255 - o) * (1 - n)).toFixed(0);
+
+const colors = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1].map(
+  (n) =>
+    `rgb(${getColorNumber(0, n)}, ${getColorNumber(175, n)}, ${getColorNumber(
+      0,
+      n
+    )})`
+);
+console.log(colors);
+
 export const CalendarActivities = ({
   height,
   className,
@@ -58,29 +69,7 @@ export const CalendarActivities = ({
             monthBorderWidth={3}
             monthBorderColor={isDarkMode ? "#aaa" : "#ccc"}
             dayBorderColor={"#fff"}
-            colors={
-              isDarkMode
-                ? [
-                    "rgba(115, 205, 97, 0.3)",
-                    "rgba(115, 205, 97, 0.4)",
-                    "rgba(115, 205, 97, 0.5)",
-                    "rgba(115, 205, 97, 0.6)",
-                    "rgba(115, 205, 97, 0.7)",
-                    "rgba(115, 205, 97, 0.8)",
-                    "rgba(115, 205, 97, 0.9)",
-                    "rgba(115, 205, 97, 1.0)",
-                  ]
-                : [
-                    "rgba(0, 153, 0, 0.3)",
-                    "rgba(0, 153, 0, 0.4)",
-                    "rgba(0, 153, 0, 0.5)",
-                    "rgba(0, 153, 0, 0.6)",
-                    "rgba(0, 153, 0, 0.7)",
-                    "rgba(0, 153, 0, 0.8)",
-                    "rgba(0, 153, 0, 0.9)",
-                    "rgba(0, 153, 0, 1.0)",
-                  ]
-            }
+            colors={colors}
             margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
             yearSpacing={40}
             dayBorderWidth={2}
@@ -97,29 +86,7 @@ export const CalendarActivities = ({
             monthBorderWidth={3}
             monthBorderColor={isDarkMode ? "#aaa" : "#ccc"}
             dayBorderColor={"#fff"}
-            colors={
-              isDarkMode
-                ? [
-                    "rgba(115, 205, 97, 0.3)",
-                    "rgba(115, 205, 97, 0.4)",
-                    "rgba(115, 205, 97, 0.5)",
-                    "rgba(115, 205, 97, 0.6)",
-                    "rgba(115, 205, 97, 0.7)",
-                    "rgba(115, 205, 97, 0.8)",
-                    "rgba(115, 205, 97, 0.9)",
-                    "rgba(115, 205, 97, 1.0)",
-                  ]
-                : [
-                    "rgba(0, 153, 0, 0.3)",
-                    "rgba(0, 153, 0, 0.4)",
-                    "rgba(0, 153, 0, 0.5)",
-                    "rgba(0, 153, 0, 0.6)",
-                    "rgba(0, 153, 0, 0.7)",
-                    "rgba(0, 153, 0, 0.8)",
-                    "rgba(0, 153, 0, 0.9)",
-                    "rgba(0, 153, 0, 1.0)",
-                  ]
-            }
+            colors={colors}
             margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
             yearSpacing={40}
             dayBorderWidth={2}
