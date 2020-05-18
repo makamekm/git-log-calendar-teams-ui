@@ -98,6 +98,7 @@ const SideMenu: React.FC = observer(() => {
             "lg:w-16": service.sidebarCollapsed,
           }
         )}
+        style={{ transition: "width 0.2s" }}
       >
         <div
           className={classNames(
