@@ -102,7 +102,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
-              Public Key:
+              Drive Public Key:
             </div>
             <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
@@ -119,7 +119,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
-              Secret Key:
+              Drive Secret Key:
             </div>
             <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
               <input
@@ -149,7 +149,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           <AccordionToggle value={!!state.settings.secretKey}>
             <div className="flex flex-col md:flex-row">
               <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
-                Don't Collect Statistics:
+                Don't Collect Statistics (Local):
               </div>
               <div className="flex-1 mt-3 mx-2">
                 <Toggle
@@ -164,7 +164,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           <AccordionToggle value={!state.settings.dontCollect}>
             <div className="flex flex-col md:flex-row">
               <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
-                Parallel Job Collecting Limit:
+                Parallel Job Collecting Limit (Concurrency):
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
@@ -227,7 +227,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
             <div className="flex flex-col md:flex-row">
               <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
-                Repositories to Collect (If empty then collect from all):
+                Repositories to Collect (Empty to collect from all):
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <Typeahead
@@ -248,7 +248,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
-              Use Swarm:
+              Use Distributive Drive:
             </div>
             <div className="flex-1 mt-3 mx-2">
               <Toggle
@@ -261,7 +261,7 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
           </div>
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
-              Use S3:
+              Use Amazon S3 Drive:
             </div>
             <div className="flex-1 mt-3 mx-2">
               <Toggle

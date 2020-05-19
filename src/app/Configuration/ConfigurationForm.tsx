@@ -26,7 +26,7 @@ export const ConfigurationForm = observer(
         ) : (
           <div className="px-3 pb-3 -mt-2">
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+              <div className="md:w-2/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Password:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
@@ -43,7 +43,7 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+              <div className="md:w-2/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
                 Default Branch:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
@@ -60,8 +60,8 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
-                Collect Function:
+              <div className="md:w-2/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Analyze Function [JavaScript]:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
@@ -77,8 +77,8 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
-                Collect Interval:
+              <div className="md:w-2/5 mx-2 mt-3 pt-2 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Collect Interval [Minutes]:
               </div>
               <div className="flex-1 mt-3 mx-2 flex flex-col md:flex-row">
                 <input
@@ -96,8 +96,8 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
-                Only Registered Users:
+              <div className="md:w-2/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Only Registered Users (Hide unregistered):
               </div>
               <div className="flex-1 mt-3 mx-2">
                 <Toggle
@@ -109,8 +109,8 @@ export const ConfigurationForm = observer(
               </div>
             </div>
             <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
-                Collect Messages:
+              <div className="md:w-2/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Collect Messages (Messages will not be displayed):
               </div>
               <div className="flex-1 mt-3 mx-2">
                 <Toggle

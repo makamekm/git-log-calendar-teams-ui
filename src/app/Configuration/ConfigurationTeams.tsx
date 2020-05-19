@@ -9,7 +9,6 @@ import {
 import { Accordion } from "~/components/Accordion/Accordion";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
 import { Dropdown } from "~/components/Dropdown/Dropdown";
-import { Toggle } from "~/components/Toggle/Toggle";
 
 const ConfigurationTableTeams = ConfigurationTable as React.FC<
   ConfigurationTableProps<ConfigurationState["config"]["teams"][0]>
@@ -53,15 +52,14 @@ export const ConfigurationTeams = observer(
             items={state.config.teams}
             header={
               <>
-                <th className="w-4/12">Name</th>
-                <th className="text-center w-10">Inverted</th>
-                <th className="w-6/12">Users</th>
-                <th className="text-right w-20">Actions</th>
+                <th className="w-5/12">Name</th>
+                <th className="">Users</th>
+                <th className="text-right w-10">Actions</th>
               </>
             }
             render={(team) => (
               <>
-                <td className="align-middle w-4/12">
+                <td className="align-middle w-5/12">
                   <input
                     autoComplete={"off"}
                     className="ellipsis w-full text-base shadow-sm appearance-none border rounded py-2 px-3 text-grey-darker dark-mode:border-gray-700 dark-mode:text-white dark-mode:bg-gray-800 leading-none focus:outline-none focus:shadow-outline"
@@ -73,38 +71,25 @@ export const ConfigurationTeams = observer(
                     placeholder="Name (Required & Unique)..."
                   />
                 </td>
-                <td className="align-middle text-center w-10">
-                  <Toggle
-                    checked={team.invert}
-                    onChange={() => {
-                      team.invert = !team.invert;
-                      if (team.invert) {
-                        (team.users as any).replace([]);
-                      }
-                    }}
-                  />
-                </td>
                 <td
-                  className="align-middle w-6/12"
+                  className="align-middle"
                   style={{
                     maxWidth: "300px",
                   }}
                 >
-                  {!team.invert && (
-                    <Typeahead
-                      placeholder="Add users..."
-                      multiple
-                      allowNew
-                      autoFocus
-                      selected={team.users}
-                      onChange={(selected) => {
-                        (team.users as any).replace(selected);
-                      }}
-                      options={state.users}
-                    />
-                  )}
+                  <Typeahead
+                    placeholder="Add repositories..."
+                    multiple
+                    allowNew
+                    autoFocus
+                    selected={team.repositories}
+                    onChange={(selected) => {
+                      (team.repositories as any).replace(selected);
+                    }}
+                    options={state.repositories}
+                  />
                 </td>
-                <td className="align-middle text-right w-20">
+                <td className="align-middle text-right w-10">
                   <Dropdown title={<i className="fas fa-cog"></i>}>
                     <button
                       className={
@@ -126,20 +111,17 @@ export const ConfigurationTeams = observer(
             )}
             renderAdditional={(team, style, className) => (
               <tr style={{ ...style }} className={className}>
-                <td colSpan={5}>
+                <td colSpan={4}>
                   <Typeahead
-                    placeholder="Add repositories..."
+                    placeholder="Add users..."
                     multiple
                     allowNew
                     autoFocus
-                    selected={team.repositories}
+                    selected={team.users}
                     onChange={(selected) => {
-                      selected = selected.map((s: any) =>
-                        typeof s === "string" ? s : s.label
-                      );
-                      (team.repositories as any).replace(selected);
+                      (team.users as any).replace(selected);
                     }}
-                    options={state.repositories}
+                    options={state.users}
                   />
                 </td>
               </tr>
