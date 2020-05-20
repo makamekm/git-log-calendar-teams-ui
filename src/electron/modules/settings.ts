@@ -10,6 +10,7 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     secretKey: settings.get("secretKey"),
     useDriveSwarm: settings.get("useDriveSwarm"),
     dontCollect: settings.get("dontCollect"),
+    ignoreSSLCertificate: settings.get("ignoreSSLCertificate"),
     parallelCollectingJobLimit: settings.get("parallelCollectingJobLimit") || 1,
     forceCollectingInterval: settings.get("forceCollectingInterval") || 0,
     limitCollectingRepositoriesPerTry:
@@ -51,6 +52,7 @@ export const saveSettings = ({
   useWebServer,
   webHostname,
   webPort,
+  ignoreSSLCertificate,
 }: ApplicationSettings) => {
   if (!publicKey) {
     const keyPair = generateDriveKeys();
@@ -80,6 +82,7 @@ export const saveSettings = ({
   settings.set("useWebServer", useWebServer);
   settings.set("webHostname", webHostname);
   settings.set("webPort", webPort);
+  settings.set("ignoreSSLCertificate", ignoreSSLCertificate);
 };
 
 export const generateKeysSettings = () => {

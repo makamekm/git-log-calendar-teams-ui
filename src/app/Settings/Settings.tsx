@@ -101,6 +101,19 @@ const SettingsForm = observer(({ state }: { state: SettingsState }) => {
             </div>
           </AccordionToggle>
           <div className="flex flex-col md:flex-row">
+            <div className="md:w-2/5 md:text-right mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
+              Ignore SSL Certificate:
+            </div>
+            <div className="flex-1 mt-3 mx-2">
+              <Toggle
+                checked={!!state.settings.ignoreSSLCertificate}
+                onChange={(value) => {
+                  state.settings.ignoreSSLCertificate = value;
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row">
             <div className="md:w-2/5 md:text-right pt-2 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300">
               Drive Public Key:
             </div>

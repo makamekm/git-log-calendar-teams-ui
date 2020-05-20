@@ -11,10 +11,15 @@ function GitRepository(path) {
 GitRepository.clone = async function (options) {
   const repo = new GitRepository(options.dir);
 
-  const args = ["clone", options.repo];
+  const args = [
+    ...(options.ignoreSSLCertificate ? ["-c", "http.sslVerify=false"] : []),
+    "clone",
+    options.repo,
+  ];
   options = { ...options };
   delete options.repo;
   delete options.dir;
+  delete options.ignoreSSLCertificate;
 
   Object.keys(options).forEach((option) => {
     args.push("--" + option);

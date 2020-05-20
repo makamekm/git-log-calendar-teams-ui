@@ -1,5 +1,6 @@
 export interface Config {
   collectInterval: number;
+  ignoreSSLCertificate?: boolean;
   evaluateStr?: string;
   tmpDir?: string;
   evaluate?: Function;

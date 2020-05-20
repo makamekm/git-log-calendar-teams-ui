@@ -1,6 +1,7 @@
 export interface ApplicationSettings {
   publicKey: string;
   secretKey: string;
+  ignoreSSLCertificate: boolean;
   useDriveSwarm: boolean;
   dontCollect: boolean;
   parallelCollectingJobLimit: number;

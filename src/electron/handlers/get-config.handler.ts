@@ -29,10 +29,15 @@ ipcBus.handle(
     if (force || !config || +new Date() > CACHE_LIFETIME + date) {
       const settings = await ipc.handlers.GET_SETTINGS();
       config = settings.tempPath
-        ? await getConfig(settings.tempPath, settings.initConfigPath)
+        ? await getConfig(
+            settings.tempPath,
+            settings.initConfigPath,
+            settings.ignoreSSLCertificate
+          )
         : await getConfig(
             path.resolve(app.getPath("temp"), "repositories"),
-            path.resolve(app.getPath("home"), DEV_CONFIG)
+            path.resolve(app.getPath("home"), DEV_CONFIG),
+            settings.ignoreSSLCertificate
           );
 
       config.repositories.forEach((repository) => {

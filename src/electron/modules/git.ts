@@ -48,11 +48,16 @@ const getDefaultConfig = (homeConfigPath: string): Config => {
     repositories: [],
     teams: [],
     users: [],
+    ignoreSSLCertificate: false,
   };
 };
 
 // Load Config from YAML
-export async function getConfig(tempDir: string, homeConfigPath?: string) {
+export async function getConfig(
+  tempDir: string,
+  homeConfigPath?: string,
+  ignoreSSLCertificate?: boolean
+) {
   await waitForDrive();
   let config: Config;
 
@@ -65,6 +70,7 @@ export async function getConfig(tempDir: string, homeConfigPath?: string) {
 
   config.tmpDir = tempDir;
   config.evaluate = safeEval(config.evaluateStr || DEFAULT_EVALUATE);
+  config.ignoreSSLCertificate = ignoreSSLCertificate;
 
   collectUnusedUsers(config);
 
@@ -159,8 +165,14 @@ async function loadRepository(repository, config) {
       repo: repository.url,
       dir: repositoryPath,
       branch: getBranchName(repository, config),
+      ignoreSSLCertificate: config.ignoreSSLCertificate,
     });
   } else {
+    await gitRepository.exec(
+      "config",
+      "http.sslVerify",
+      config.ignoreSSLCertificate ? "false" : "true"
+    );
     await gitRepository.checkout(getBranchName(repository, config));
   }
 

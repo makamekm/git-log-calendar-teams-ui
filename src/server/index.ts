@@ -11,11 +11,17 @@ import "~/electron/handlers/collect-stats.handler";
 
 import { getDrive } from "~/electron/modules/drive";
 import "~/electron/modules/web-server";
+import { ipc } from "~/shared/ipc";
 
 run();
 
 async function run() {
   console.log("started!");
+  const settings = await ipc.handlers.GET_SETTINGS();
+
+  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = settings.ignoreSSLCertificate
+    ? "0"
+    : "1";
 
   setInterval(() => {
     const drive = getDrive();

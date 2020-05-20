@@ -33,6 +33,12 @@ declare global {
 
 const isWin = process.platform !== "darwin";
 
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = settings.get(
+  "ignoreSSLCertificate"
+)
+  ? "0"
+  : "1";
+
 powerSaveBlocker.start("prevent-app-suspension");
 
 const gotTheLock = app.requestSingleInstanceLock();

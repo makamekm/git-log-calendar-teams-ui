@@ -31,6 +31,9 @@ ipcBus.handle(
     await getCollectPromise();
     closeDrive();
     saveSettings(newConfig);
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = newConfig.ignoreSSLCertificate
+      ? "0"
+      : "1";
     await createDrive();
     ipc.sends.ON_SETTINGS_UPDATE_FINISH();
   }

@@ -49,6 +49,7 @@ ipcBus.handle(
       webStaticPath: argv["web-static"]
         ? path.resolve(String(argv["web-static"]))
         : "./build",
+      ignoreSSLCertificate: process.env.IGNORE_SSL || argv["ignore-ssl"],
       ...config,
       dontCollect: false,
     };
