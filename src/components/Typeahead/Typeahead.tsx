@@ -579,7 +579,7 @@ export const Typeahead: React.FC<{
                                 onChange(
                                   multiple ? [...selected, item] : [item]
                                 );
-                                state.query = "";
+                                state.queryReact = "";
                               }
                               autoFocus
                                 ? refInput.current && refInput.current.focus()
@@ -624,7 +624,7 @@ export const Typeahead: React.FC<{
                             } else {
                               onChange(multiple ? [...selected, item] : [item]);
                             }
-                            state.query = "";
+                            state.queryReact = "";
                             autoFocus
                               ? refInput.current && refInput.current.focus()
                               : document.activeElement &&
@@ -695,7 +695,7 @@ export const Typeahead: React.FC<{
                                   item.group
                                 );
                               }
-                              state.query = "";
+                              state.queryReact = "";
                               autoFocus
                                 ? refInput.current && refInput.current.focus()
                                 : document.activeElement &&
