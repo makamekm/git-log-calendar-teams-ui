@@ -92,7 +92,7 @@ const SideMenu: React.FC = observer(() => {
           service.sidebarOpened = !service.sidebarOpened;
         }}
         className={classNames(
-          "flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-900 flex-shrink-0",
+          "relative flex flex-col w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-900 flex-shrink-0",
           {
             "lg:w-64": !service.sidebarCollapsed,
             "lg:w-16": service.sidebarCollapsed,
@@ -102,63 +102,73 @@ const SideMenu: React.FC = observer(() => {
       >
         <div
           className={classNames(
-            "flex-shrink-0 py-3 flex flex-row items-center justify-between",
+            "lg:fixed lg:max-h-screen lg:overflow-y-auto lg:overflow-x-hidden lg:max-w-screen",
             {
-              "px-8": !service.sidebarCollapsed,
-              "lg:px-4 px-8": service.sidebarCollapsed,
+              "lg:w-64": !service.sidebarCollapsed,
+              "lg:w-16": service.sidebarCollapsed,
             }
           )}
         >
-          <Link
+          <div
             className={classNames(
-              "text-lg font-semibold text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+              "flex-shrink-0 py-3 flex flex-row items-center justify-between",
+              {
+                "px-8": !service.sidebarCollapsed,
+                "lg:px-4 px-8": service.sidebarCollapsed,
+              }
             )}
-            to="/"
           >
-            <LogoThemed
-              titleClassName={classNames({
-                "lg:hidden": service.sidebarCollapsed,
-              })}
-            />
-          </Link>
-          <button
-            className="rounded-lg lg:hidden rounded-lg focus:outline-none focus:shadow-outline"
-            onClick={(e) => {
-              e.stopPropagation();
-              service.sidebarOpened = !service.sidebarOpened;
-            }}
+            <Link
+              className={classNames(
+                "text-lg font-semibold text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+              )}
+              to="/"
+            >
+              <LogoThemed
+                titleClassName={classNames({
+                  "lg:hidden": service.sidebarCollapsed,
+                })}
+              />
+            </Link>
+            <button
+              className="rounded-lg lg:hidden rounded-lg focus:outline-none focus:shadow-outline"
+              onClick={(e) => {
+                e.stopPropagation();
+                service.sidebarOpened = !service.sidebarOpened;
+              }}
+            >
+              <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
+                {!service.sidebarOpened && (
+                  <path
+                    fillRule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
+                    clipRule="evenodd"
+                  ></path>
+                )}
+                {service.sidebarOpened && (
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                )}
+              </svg>
+            </button>
+          </div>
+          <nav
+            className={classNames(
+              "flex-grow lg:block pb-4 lg:pb-0 lg:overflow-y-auto",
+              {
+                block: service.sidebarOpened,
+                hidden: !service.sidebarOpened,
+                "px-4": !service.sidebarCollapsed,
+                "px-2": service.sidebarCollapsed,
+              }
+            )}
           >
-            <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
-              {!service.sidebarOpened && (
-                <path
-                  fillRule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-                  clipRule="evenodd"
-                ></path>
-              )}
-              {service.sidebarOpened && (
-                <path
-                  fillRule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                ></path>
-              )}
-            </svg>
-          </button>
+            <MenuItems />
+          </nav>
         </div>
-        <nav
-          className={classNames(
-            "flex-grow lg:block pb-4 lg:pb-0 lg:overflow-y-auto",
-            {
-              block: service.sidebarOpened,
-              hidden: !service.sidebarOpened,
-              "px-4": !service.sidebarCollapsed,
-              "px-2": service.sidebarCollapsed,
-            }
-          )}
-        >
-          <MenuItems />
-        </nav>
       </div>
     </div>
   );
