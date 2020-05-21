@@ -82,17 +82,31 @@ contextMenu({
       const arr = /user\/([a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+) (.*)\*$/gi.exec(
         str
       );
-      const email = arr[1];
-      const username = arr[2];
-      return [
-        {
-          label: "Register user",
-          visible: /user\/.*\*$/gi.test(decodeURIComponent(params.linkURL)),
-          click: async () => {
-            await ipc.handlers.REGISTER_USER(email, username);
+      if (arr && arr[1] && arr[2]) {
+        const email = arr[1];
+        const username = arr[2];
+        return [
+          {
+            label: "Register user",
+            visible: /user\/.*\*$/gi.test(decodeURIComponent(params.linkURL)),
+            click: async () => {
+              await ipc.handlers.REGISTER_USER(email, username);
+            },
           },
-        },
-      ];
+        ];
+      } else {
+        const email = str.trim();
+        const username = email.split("@")[0];
+        return [
+          {
+            label: "Register user",
+            visible: /user\/.*\*$/gi.test(decodeURIComponent(params.linkURL)),
+            click: async () => {
+              await ipc.handlers.REGISTER_USER(email, username);
+            },
+          },
+        ];
+      }
     }
     return [];
   },
