@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { ToastContainer } from "react-toastify";
 import { LayoutService } from "~/components/Layout/LayoutService";
 import { observer } from "mobx-react";
 import { useRouteMatch } from "react-router";
@@ -234,27 +235,40 @@ export const AppLayout: React.FC = observer(({ children }) => {
   const service = React.useContext(LayoutService);
   const scrollable = service.scrollable && service.nonScrollableStack === 0;
   return (
-    <div className="min-h-screen">
-      <div className="lg:flex">
-        {service.sidebar && <SideMenu />}
-        <div className="relative flex-1 flex flex-col min-h-screen">
-          <div className="content container mx-auto flex-1">
-            {service.topbar && <TopMenu />}
-            {children}
-            {service.footer && (
-              <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-5 mx-auto no-print">
-                <FooterText />
-              </div>
-            )}
+    <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <div className="min-h-screen">
+        <div className="lg:flex">
+          {service.sidebar && <SideMenu />}
+          <div className="relative flex-1 flex flex-col min-h-screen">
+            <div className="content container mx-auto flex-1">
+              {service.topbar && <TopMenu />}
+              {children}
+              {service.footer && (
+                <div className="text-gray-600 dark-mode:text-gray-300 text-center text-xs pb-2 pt-5 mx-auto no-print">
+                  <FooterText />
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        <style jsx>{`
+          :global(body) {
+            max-height: ${scrollable ? "unset" : "100vh"};
+            overflow-y: ${scrollable ? "visible" : "hidden"};
+          }
+        `}</style>
       </div>
-      <style jsx>{`
-        :global(body) {
-          max-height: ${scrollable ? "unset" : "100vh"};
-          overflow-y: ${scrollable ? "visible" : "hidden"};
-        }
-      `}</style>
-    </div>
+    </>
   );
 });

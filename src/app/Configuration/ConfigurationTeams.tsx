@@ -80,7 +80,6 @@ export const ConfigurationTeams = observer(
                   <Typeahead
                     placeholder="Add repositories..."
                     multiple
-                    allowNew
                     autoFocus
                     selected={team.repositories}
                     onChange={(selected) => {

@@ -12,11 +12,13 @@ export interface Config {
     id: string;
     url: string;
     name: string;
+    refName?: string;
     branch?: string;
     exclude?: string[];
   }[];
   users: {
     id: string;
+    refName?: string;
     name: string;
     associations: string[];
   }[];

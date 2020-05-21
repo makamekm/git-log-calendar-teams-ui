@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { toJS } from "mobx";
 import { useLocalStore, observer } from "mobx-react";
+import { toast } from "react-toastify";
 
 import { HeaderMain } from "~/components/Blocks/HeaderMain";
 import { ipc } from "~/shared/ipc";
@@ -13,6 +14,7 @@ import { ConfigurationRepositories } from "./ConfigurationRepositories";
 import { ConfigurationForm } from "./ConfigurationForm";
 import { ConfigurationAllUsers } from "./ConfigurationAllUsers";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
+import { Config } from "~/shared/Config";
 
 export const Configuration = observer(() => {
   const state = useLocalStore<ConfigurationState>(() => ({
@@ -93,9 +95,79 @@ export const Configuration = observer(() => {
       });
       return arr;
     },
+    prepareConfig(config: Config) {
+      config.users.forEach((u) => {
+        u.refName = u.name;
+      });
+      config.repositories.forEach((u) => {
+        u.refName = u.name;
+      });
+      return config;
+    },
+    verify(config: Config) {
+      let errors: string[] = [];
+      const usedTeamDuplicates: string[] = [];
+      config.teams.forEach((t) => {
+        if (
+          config.teams.filter((tt) => tt.name === t.name).length > 1 &&
+          !usedTeamDuplicates.includes(t.name)
+        ) {
+          errors.push("The team name has duplicates: " + t.name);
+          usedTeamDuplicates.push(t.name);
+        }
+      });
+      const usedUserDuplicates: string[] = [];
+      config.users.forEach((t) => {
+        if (
+          config.users.filter((tt) => tt.name === t.name).length > 1 &&
+          !usedUserDuplicates.includes(t.name)
+        ) {
+          errors.push("The user name has duplicates: " + t.name);
+          usedUserDuplicates.push(t.name);
+        }
+      });
+      const usedRepositoryDuplicates: string[] = [];
+      config.repositories.forEach((t) => {
+        if (
+          config.repositories.filter((tt) => tt.name === t.name).length > 1 &&
+          !usedRepositoryDuplicates.includes(t.name)
+        ) {
+          errors.push("The repository name has duplicates: " + t.name);
+          usedRepositoryDuplicates.push(t.name);
+        }
+      });
+      return errors;
+    },
+    prepareSaveConfig(config: Config) {
+      config.teams.forEach((t) => {
+        t.users = t.users.map((name) => {
+          const u = config.users.find((u) => u.refName === name);
+          if (u) {
+            return u.name;
+          } else {
+            return name;
+          }
+        });
+        t.repositories = t.repositories.map((name) => {
+          const u = config.repositories.find((u) => u.refName === name);
+          if (u) {
+            return u.name;
+          } else {
+            return name;
+          }
+        });
+      });
+      config.users.forEach((u) => {
+        delete u.refName;
+      });
+      config.repositories.forEach((u) => {
+        delete u.refName;
+      });
+      return config;
+    },
     load: async () => {
       state.isLoading = true;
-      state.config = await ipc.handlers.GET_CONFIG(true);
+      state.config = state.prepareConfig(await ipc.handlers.GET_CONFIG(true));
       state.allUsers = await ipc.handlers.GET_REPOSITORY_USERS();
       state.isDirty = false;
       state.isLoading = false;
@@ -104,12 +176,23 @@ export const Configuration = observer(() => {
       if (!state.isDirty) {
         return;
       }
-      state.isLoading = true;
-      await ipc.handlers.SAVE_CONFIG(toJS(state.config));
-      state.config = await ipc.handlers.GET_CONFIG(true);
-      state.allUsers = await ipc.handlers.GET_REPOSITORY_USERS();
-      state.isDirty = false;
-      state.isLoading = false;
+      const errors = state.verify(toJS(state.config));
+      if (errors.length === 0) {
+        state.isLoading = true;
+        await ipc.handlers.SAVE_CONFIG(
+          state.prepareSaveConfig(toJS(state.config))
+        );
+        state.config = state.prepareConfig(await ipc.handlers.GET_CONFIG(true));
+        state.allUsers = await ipc.handlers.GET_REPOSITORY_USERS();
+        state.isDirty = false;
+        state.isLoading = false;
+      } else {
+        errors.forEach((error) => {
+          toast(error, {
+            type: "error",
+          });
+        });
+      }
     },
   }));
 
