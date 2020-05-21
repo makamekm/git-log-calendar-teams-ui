@@ -16,8 +16,6 @@ ipcBus.handle(
     const config = fs.existsSync(configPath)
       ? YAML.parse(fs.readFileSync(configPath, "utf-8"))
       : {};
-    let port = Number(argv.web);
-    port = port === 1 ? 8080 : port || 8080;
     return {
       publicKey: process.env.PUBLIC_KEY,
       secretKey: process.env.SECRET_KEY,

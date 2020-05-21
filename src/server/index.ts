@@ -1,7 +1,7 @@
 import "~/shared/Bus";
+import "./handlers/app-info.handler";
 import "./handlers/settings.handler";
 import "~/electron/handlers/get-config.handler";
-import "~/electron/handlers/app-info.handler";
 import "~/electron/handlers/get-calendar-data.handler";
 import "~/electron/handlers/get-data.handler";
 import "~/electron/handlers/get-messages.handler";

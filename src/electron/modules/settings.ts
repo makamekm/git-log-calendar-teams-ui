@@ -3,6 +3,7 @@ import path from "path";
 import settings from "electron-settings";
 import { ApplicationSettings } from "~/shared/Settings";
 import { generateDriveKeys } from "~/tools";
+import { DEV_CONFIG } from "@env/config";
 
 export const getSettings = async (): Promise<ApplicationSettings> => {
   return {
@@ -31,6 +32,8 @@ export const getSettings = async (): Promise<ApplicationSettings> => {
     webIgnoreCors: true,
     webStaticPath: path.normalize(`${__dirname}/../../../`),
     webProxy: process.env.NODE_ENV === "development" && "http://localhost:3000",
+    tempPath: path.resolve(app.getPath("temp"), "repositories"),
+    initConfigPath: path.resolve(app.getPath("home"), DEV_CONFIG),
   };
 };
 
