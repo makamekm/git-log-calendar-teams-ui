@@ -32,3 +32,8 @@ a:not(.button):hover,
 a:not(.button):focus {
   opacity: 0.6;
 }
+
+*:focus-within {
+  position: relative;
+  z-index: 100;
+}
