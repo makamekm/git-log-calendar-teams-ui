@@ -15,7 +15,7 @@ const HeaderPanel = (props: { icon?: string; title?: any; text?: any }) => (
       </Link>
     </div>
     <h5 className="text-center mb-4 text-5xl">{props.title}</h5>
-    <p className="text-center text-2xl">{props.text}</p>
+    <div className="text-center text-2xl">{props.text}</div>
   </div>
 );
 

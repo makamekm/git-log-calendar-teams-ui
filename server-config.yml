@@ -4,6 +4,7 @@ parallelCollectingJobLimit: 5
 forceCollectingInterval: 0
 limitCollectingRepositoriesPerTry: 0
 webIgnoreCors: true
+initConfigPath: true
 collectingRepositoryNames: []
 drivePath: ./drive
 tempPath: ./temp
