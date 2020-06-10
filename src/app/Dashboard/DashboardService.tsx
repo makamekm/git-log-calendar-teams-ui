@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalStore } from "mobx-react";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
-import { useOnChange, useDelay, useSimpleSyncLocalStorage } from "~/hooks";
+import { useOnChange, useDelay } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc, IpcHandler } from "~/shared/ipc";
 import { MessageState, MessageService } from "./MessageService";
