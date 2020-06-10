@@ -164,6 +164,7 @@ export const UserDashboard = observer(() => {
             <List height={"250px"} />
           ) : (
             <BarActivities
+              maxValue={state.maxValueDelay}
               height={250}
               limit={state.limit}
               data={state.userStats[userName] || []}
@@ -184,6 +185,7 @@ export const UserDashboard = observer(() => {
             <List height={"250px"} />
           ) : (
             <LineActivities
+              maxValue={state.maxValueDelay}
               names={state.repositories}
               height={250}
               limit={state.limit}

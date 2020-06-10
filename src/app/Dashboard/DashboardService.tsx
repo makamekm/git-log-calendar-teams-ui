@@ -59,6 +59,7 @@ export interface DashboardState {
   stats: ReturnType<IpcHandler["GET_STATS_DATA"]>;
   isLoading: boolean;
   limit: number;
+  calcMaxValue: () => void;
   load: () => Promise<void>;
 }
 
@@ -212,6 +213,34 @@ export const DashboardService = createService<DashboardState>(
             )
           : [];
       },
+      calcMaxValue() {
+        let data: typeof state.repositoriesStats[0] = [];
+        if (state.mode === "repository") {
+          data = state.repositoriesStats[state.name];
+        } else if (state.mode === "team") {
+          data = state.teamStats[state.name];
+        } else if (state.mode === "user") {
+          data = state.userStats[state.name];
+        }
+        let max = 0;
+        let total = 0;
+        const sorted = data
+          .map(({ value }) => {
+            max = max > value ? max : value;
+            total += value;
+            return value;
+          })
+          .sort((a, b) => b - a);
+        const avg = total / data.length;
+        let result = 0;
+        sorted.forEach((value) => {
+          if (!result && value < avg) {
+            result = value * 1.1;
+          }
+        });
+        state.maxValue = result;
+        state.maxValueDelay = state.maxValue;
+      },
       load: async () => {
         if (!state.authService.isAuthenticated) {
           return;
@@ -246,6 +275,7 @@ export const DashboardService = createService<DashboardState>(
         );
         await state.repositoryUserService.load();
         await state.messageService.load();
+        state.calcMaxValue();
         state.isLoading = false;
       },
     }));
@@ -258,8 +288,8 @@ export const DashboardService = createService<DashboardState>(
     useOnChange(state, "limit", state.load);
     useOnChange(state.authService, "isAuthenticated", state.load);
     useDelay(state, "maxValue", "maxValueDelay", 1000);
-    useSimpleSyncLocalStorage(state, "maxValue", "maxValue");
-    useSimpleSyncLocalStorage(state, "maxValueDelay", "maxValueDelay");
+    // useSimpleSyncLocalStorage(state, "maxValue", "maxValue");
+    // useSimpleSyncLocalStorage(state, "maxValueDelay", "maxValueDelay");
     React.useEffect(() => ipc.channels.ON_DRIVE_UPDATE(state.load));
     React.useEffect(() => ipc.channels.ON_COLLECT_FINISH(state.load));
     React.useEffect(() => ipc.channels.ON_CONFIG_UPDATE_FINISHED(state.load));

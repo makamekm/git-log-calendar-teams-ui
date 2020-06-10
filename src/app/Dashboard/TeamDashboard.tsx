@@ -164,6 +164,7 @@ export const TeamDashboard = observer(() => {
             <List height={"250px"} />
           ) : (
             <BarActivities
+              maxValue={state.maxValueDelay}
               height={250}
               limit={state.limit}
               data={state.teamStats[teamName] || []}
@@ -184,6 +185,7 @@ export const TeamDashboard = observer(() => {
             <List height={"250px"} />
           ) : (
             <LineActivities
+              maxValue={state.maxValueDelay}
               names={state.users}
               height={250}
               limit={state.limit}

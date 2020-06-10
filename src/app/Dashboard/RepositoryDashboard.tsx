@@ -158,6 +158,7 @@ export const RepositoryDashboard = observer(() => {
             <List height={"250px"} />
           ) : (
             <BarActivities
+              maxValue={state.maxValueDelay}
               height={250}
               limit={state.limit}
               data={state.repositoriesStats[repositoryName] || []}
@@ -178,6 +179,7 @@ export const RepositoryDashboard = observer(() => {
             <List height={"250px"} />
           ) : (
             <LineActivities
+              maxValue={state.maxValueDelay}
               names={state.users}
               height={250}
               limit={state.limit}

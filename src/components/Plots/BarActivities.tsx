@@ -48,10 +48,12 @@ export const BarActivities = ({
   className,
   data,
   limit,
+  maxValue,
 }: {
   height?: number;
   limit: number;
   className?: string;
+  maxValue?: number;
   data: {
     day: string;
     value: number;
@@ -100,6 +102,7 @@ export const BarActivities = ({
           }}
         />
         <YAxis
+          domain={maxValue ? [0, (max) => Math.min(max, maxValue)] : undefined}
           tickLine={{
             fill: colors["500"],
             strokeWidth: 1,

@@ -53,11 +53,13 @@ export const LineActivities = ({
   names,
   data,
   limit,
+  maxValue,
 }: {
   height?: number;
   limit: number;
   className?: string;
   names: string[];
+  maxValue?: number;
   data: ({
     day: string;
   } & any)[];
@@ -105,6 +107,7 @@ export const LineActivities = ({
           }}
         />
         <YAxis
+          domain={maxValue ? [0, (max) => Math.min(max, maxValue)] : undefined}
           tickLine={{
             fill: colors["500"],
             strokeWidth: 1,
