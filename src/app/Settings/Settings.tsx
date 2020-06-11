@@ -16,6 +16,7 @@ import { AccordionToggle } from "~/components/Accordion/AccordionToggle";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
 import { Toggle } from "~/components/Toggle/Toggle";
 import { AlertModal } from "~/components/Modal/AlertModal";
+import { useChangeRouteAlertModal } from "~/components/Modal/ChangeRouteAlertModal";
 
 interface SettingsState {
   isDirty: boolean;
@@ -460,6 +461,7 @@ export const Settings = observer(() => {
       state.settings.secretKey = keyPair.secretKey;
     },
   }));
+  const changeRouteModal = useChangeRouteAlertModal(state.isDirty);
 
   useOnLoad(state.load);
   useIsDirty(state, "settings");
@@ -474,6 +476,7 @@ export const Settings = observer(() => {
 
   return (
     <>
+      {changeRouteModal}
       <div className="flex flex-wrap items-center justify-between mb-4 md:pb-4">
         <HeaderMain title="Settings" />
         <div className="ml-auto my-3">

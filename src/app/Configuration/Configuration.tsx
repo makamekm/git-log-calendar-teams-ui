@@ -15,6 +15,7 @@ import { ConfigurationForm } from "./ConfigurationForm";
 import { ConfigurationAllUsers } from "./ConfigurationAllUsers";
 import { useLayoutConfig } from "~/components/Layout/LayoutService";
 import { Config } from "~/shared/Config";
+import { useChangeRouteAlertModal } from "~/components/Modal/ChangeRouteAlertModal";
 
 export const Configuration = observer(() => {
   const state = useLocalStore<ConfigurationState>(() => ({
@@ -195,6 +196,7 @@ export const Configuration = observer(() => {
       }
     },
   }));
+  const changeRouteModal = useChangeRouteAlertModal(state.isDirty);
 
   useOnLoad(state.load);
   useIsDirty(state, "config");
@@ -210,6 +212,7 @@ export const Configuration = observer(() => {
 
   return (
     <>
+      {changeRouteModal}
       <div className="flex flex-wrap items-center justify-between mb-4 md:pb-4">
         <HeaderMain title="Configuration" />
         <div className="ml-auto my-3">

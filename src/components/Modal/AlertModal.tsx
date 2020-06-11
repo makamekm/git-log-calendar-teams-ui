@@ -4,7 +4,7 @@ import FocusTrap from "focus-trap-react";
 import { Modal } from "./Modal";
 import { useKeyPress } from "~/hooks";
 
-const AlertModalContent: React.FC<{
+export const AlertModalContent: React.FC<{
   accept: () => void;
   close: () => void;
   title: any;
