@@ -238,6 +238,7 @@ export const DashboardService = createService<DashboardState>(
             result = value * 1.1;
           }
         });
+        result = Math.ceil(result);
         state.maxValue = result;
         state.maxValueDelay = state.maxValue;
       },
