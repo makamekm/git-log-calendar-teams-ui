@@ -86,7 +86,7 @@ export const DashboardService = createService<DashboardState>(
       repositoriesStats: {},
       stats: null,
       isLoading: false,
-      limit: 30,
+      limit: 90,
       get repositoryCompareStats() {
         const result: {
           [day: string]: {
