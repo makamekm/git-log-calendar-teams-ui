@@ -200,6 +200,7 @@ export const RepositoryDashboard = observer(() => {
             <List height={"250px"} />
           ) : (
             <LineActivities
+              maxValue={state.maxValueDelay}
               names={state.teams}
               height={250}
               limit={state.limit}

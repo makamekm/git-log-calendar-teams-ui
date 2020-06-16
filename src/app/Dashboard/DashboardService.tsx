@@ -221,6 +221,12 @@ export const DashboardService = createService<DashboardState>(
           data = state.teamStats[state.name];
         } else if (state.mode === "user") {
           data = state.userStats[state.name];
+        } else {
+          data = [
+            ...Object.values(state.repositoriesStats).flatMap((s) => s),
+            ...Object.values(state.teamStats).flatMap((s) => s),
+            ...Object.values(state.userStats).flatMap((s) => s),
+          ];
         }
         let max = 0;
         let total = 0;

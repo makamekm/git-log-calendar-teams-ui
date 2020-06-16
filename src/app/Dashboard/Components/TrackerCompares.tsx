@@ -10,6 +10,7 @@ import { HeaderSection } from "~/components/Blocks/HeaderSection";
 import { Dropdown } from "~/components/Dropdown/Dropdown";
 import { TopPanel } from "./TopPanel";
 import { ActiveStatsPanel } from "./ActiveStatsPanel";
+import { LineActivities } from "~/components/Plots/LineActivities";
 
 export const TrackerCompares = observer(() => {
   const stateDashboard = React.useContext(DashboardService);
@@ -37,6 +38,23 @@ export const TrackerCompares = observer(() => {
               activeUsersToday={stateFavourite.activeUsersToday}
               limit={stateDashboard.limit}
             />
+          </div>
+          <div className="no-print-break border bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
+            <div className="flex items-center text-base w-full px-6 py-4">
+              <span>
+                User activities
+                <span className="text-xs ml-2 text-gray-400">#user</span>
+              </span>
+            </div>
+            <div className="p-4">
+              <LineActivities
+                maxValue={stateDashboard.maxValueDelay}
+                names={stateFavourite.groupped.user.map(({ name }) => name)}
+                height={250}
+                limit={stateDashboard.limit}
+                data={stateFavourite.userCompareStats || []}
+              />
+            </div>
           </div>
         </>
       )}
@@ -105,6 +123,23 @@ export const TrackerCompares = observer(() => {
               limit={stateDashboard.limit}
             />
           </div>
+          <div className="no-print-break border bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
+            <div className="flex items-center text-base w-full px-6 py-4">
+              <span>
+                Team activities
+                <span className="text-xs ml-2 text-gray-400">#team</span>
+              </span>
+            </div>
+            <div className="p-4">
+              <LineActivities
+                maxValue={stateDashboard.maxValueDelay}
+                names={stateFavourite.groupped.team.map(({ name }) => name)}
+                height={250}
+                limit={stateDashboard.limit}
+                data={stateFavourite.teamCompareStats || []}
+              />
+            </div>
+          </div>
         </>
       )}
 
@@ -171,6 +206,25 @@ export const TrackerCompares = observer(() => {
               activeRepositoriesToday={stateFavourite.activeRepositoriesToday}
               limit={stateDashboard.limit}
             />
+          </div>
+          <div className="no-print-break border bg-white rounded-lg shadow-md text-gray-700 dark-mode:text-gray-300 dark-mode:bg-gray-900 dark-mode:border dark-mode:border-gray-800 dark-mode:shadow-inner">
+            <div className="flex items-center text-base w-full px-6 py-4">
+              <span>
+                Repository activities
+                <span className="text-xs ml-2 text-gray-400">#repository</span>
+              </span>
+            </div>
+            <div className="p-4">
+              <LineActivities
+                maxValue={stateDashboard.maxValueDelay}
+                names={stateFavourite.groupped.repository.map(
+                  ({ name }) => name
+                )}
+                height={250}
+                limit={stateDashboard.limit}
+                data={stateFavourite.repositoryCompareStats || []}
+              />
+            </div>
           </div>
         </>
       )}

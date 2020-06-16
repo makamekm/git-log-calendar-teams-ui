@@ -61,6 +61,21 @@ export interface FavouriteState {
       name: string;
     }[];
   };
+  teamCompareStats: ({
+    day: string;
+  } & {
+    [name: string]: number;
+  })[];
+  userCompareStats: ({
+    day: string;
+  } & {
+    [name: string]: number;
+  })[];
+  repositoryCompareStats: ({
+    day: string;
+  } & {
+    [name: string]: number;
+  })[];
 }
 
 export const FavouriteService = createService<FavouriteState>(
@@ -72,6 +87,75 @@ export const FavouriteService = createService<FavouriteState>(
       isLoading: false,
       get groupped() {
         return state.trackers ? groupBy(state.trackers, "type") : {};
+      },
+      get repositoryCompareStats() {
+        const result: {
+          [day: string]: {
+            day: string;
+          } & any;
+        } = {};
+        state.groupped.repository.forEach(({ name }) => {
+          const date = state.service.repositoriesStats[name];
+          if (date) {
+            date.forEach((data) => {
+              if (!result[data.day]) {
+                result[data.day] = {
+                  day: data.day,
+                  [name]: data.value,
+                };
+              } else {
+                result[data.day][name] = data.value;
+              }
+            });
+          }
+        });
+        return Object.values(result);
+      },
+      get userCompareStats() {
+        const result: {
+          [day: string]: {
+            day: string;
+          } & any;
+        } = {};
+        state.groupped.user.forEach(({ name }) => {
+          const date = state.service.userStats[name];
+          if (date) {
+            date.forEach((data) => {
+              if (!result[data.day]) {
+                result[data.day] = {
+                  day: data.day,
+                  [name]: data.value,
+                };
+              } else {
+                result[data.day][name] = data.value;
+              }
+            });
+          }
+        });
+        return Object.values(result);
+      },
+      get teamCompareStats() {
+        const result: {
+          [day: string]: {
+            day: string;
+          } & any;
+        } = {};
+        state.groupped.team.forEach(({ name }) => {
+          const date = state.service.teamStats[name];
+          if (date) {
+            date.forEach((data) => {
+              if (!result[data.day]) {
+                result[data.day] = {
+                  day: data.day,
+                  [name]: data.value,
+                };
+              } else {
+                result[data.day][name] = data.value;
+              }
+            });
+          }
+        });
+        return Object.values(result);
       },
       get activeUsers() {
         return (
