@@ -32,7 +32,7 @@ export const TrackerCompares = observer(() => {
               data={stateFavourite.topUsers || []}
             />
             <ActiveStatsPanel
-              className="w-full"
+              className="w-full mt-4"
               activeUsers={stateFavourite.activeUsers}
               activeUsersToday={stateFavourite.activeUsersToday}
               limit={stateDashboard.limit}
@@ -99,7 +99,7 @@ export const TrackerCompares = observer(() => {
               data={stateFavourite.topTeams || []}
             />
             <ActiveStatsPanel
-              className="w-full"
+              className="w-full mt-4"
               activeTeams={stateFavourite.activeTeams}
               activeTeamsToday={stateFavourite.activeTeamsToday}
               limit={stateDashboard.limit}
@@ -166,7 +166,7 @@ export const TrackerCompares = observer(() => {
               data={stateFavourite.topRepositories || []}
             />
             <ActiveStatsPanel
-              className="w-full"
+              className="w-full mt-4"
               activeRepositories={stateFavourite.activeRepositories}
               activeRepositoriesToday={stateFavourite.activeRepositoriesToday}
               limit={stateDashboard.limit}
