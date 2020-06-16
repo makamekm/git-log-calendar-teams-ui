@@ -10,6 +10,7 @@ import {
 import { Accordion } from "~/components/Accordion/Accordion";
 import { Typeahead } from "~/components/Typeahead/Typeahead";
 import { Dropdown } from "~/components/Dropdown/Dropdown";
+import { Toggle } from "~/components/Toggle/Toggle";
 
 const ConfigurationTableRepositories = ConfigurationTable as React.FC<
   ConfigurationTableProps<ConfigurationState["config"]["repositories"][0]>
@@ -55,6 +56,7 @@ export const ConfigurationRepositories = observer(
                 <th>Name</th>
                 <th>Url</th>
                 <th>Branch</th>
+                <th>Hard Reset</th>
                 <th>Excludes</th>
                 <th className="text-right w-20">Actions</th>
               </>
@@ -95,6 +97,17 @@ export const ConfigurationRepositories = observer(
                     }}
                     value={repository.branch}
                     placeholder="Branch (Optional)..."
+                  />
+                </td>
+                <td
+                  className="align-middle text-center"
+                  style={{ maxWidth: "300px" }}
+                >
+                  <Toggle
+                    checked={!!repository.cleanTmp}
+                    onChange={() => {
+                      repository.cleanTmp = !repository.cleanTmp;
+                    }}
                   />
                 </td>
                 <td className="align-middle" style={{ maxWidth: "300px" }}>

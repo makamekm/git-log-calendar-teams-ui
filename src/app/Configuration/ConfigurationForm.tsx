@@ -122,6 +122,19 @@ export const ConfigurationForm = observer(
                 />
               </div>
             </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 mx-2 mt-3 text-gray-800 dark-mode:text-gray-300 md:text-right">
+                Hard Reset Repositories when Clonning:
+              </div>
+              <div className="flex-1 mt-3 mx-2">
+                <Toggle
+                  checked={!!state.config.cleanTmp}
+                  onChange={() => {
+                    state.config.cleanTmp = !state.config.cleanTmp;
+                  }}
+                />
+              </div>
+            </div>
           </div>
         )}
       </Accordion>

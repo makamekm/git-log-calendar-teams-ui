@@ -8,6 +8,7 @@ export interface Config {
   branch?: string;
   password?: string;
   collectMessages?: boolean;
+  cleanTmp?: boolean;
   repositories: {
     id: string;
     url: string;
@@ -15,6 +16,7 @@ export interface Config {
     refName?: string;
     branch?: string;
     exclude?: string[];
+    cleanTmp?: boolean;
   }[];
   users: {
     id: string;
