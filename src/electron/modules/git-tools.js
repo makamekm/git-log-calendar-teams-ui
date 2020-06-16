@@ -13,6 +13,8 @@ GitRepository.clone = async function (options) {
 
   const args = [
     ...(options.ignoreSSLCertificate ? ["-c", "http.sslVerify=false"] : []),
+    "-c",
+    "core.longpaths=true",
     "clone",
     options.repo,
   ];
