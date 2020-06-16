@@ -243,7 +243,7 @@ export const ConfigurationAllUsers = observer(
         title={
           <div className="flex justify-between items-center w-full">
             <div>
-              All Repository Users
+              All Users
               <span className="text-sm ml-2 text-gray-600">#1.04</span>
             </div>
 
