@@ -60,6 +60,12 @@ const MenuItems = () => {
       />
 
       <SidebarMenuItem
+        icon={<i className="fas fa-star"></i>}
+        title="Favourites"
+        to="/favourites"
+      />
+
+      <SidebarMenuItem
         icon={<i className="fa fa-cogs"></i>}
         title="Configuration"
         to="/configuration"

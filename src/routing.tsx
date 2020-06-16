@@ -12,6 +12,7 @@ import { TeamDashboard } from "./app/Dashboard/TeamDashboard";
 import { UserDashboard } from "./app/Dashboard/UserDashboard";
 import { Settings } from "./app/Settings/Settings";
 import { RepositoryDashboard } from "./app/Dashboard/RepositoryDashboard";
+import { DashboardCompare } from "./app/Dashboard/DashboardCompare";
 
 export const RoutedContent = () => {
   return (
@@ -24,6 +25,7 @@ export const RoutedContent = () => {
       <Route component={Error404} path="/404" />
 
       <ProtectedRoute path="/dashboard" exact component={Dashboard} />
+      <ProtectedRoute path="/favourites" exact component={DashboardCompare} />
       <ProtectedRoute path="/team/:teamName" exact component={TeamDashboard} />
       <ProtectedRoute path="/user/:userName" exact component={UserDashboard} />
       <ProtectedRoute

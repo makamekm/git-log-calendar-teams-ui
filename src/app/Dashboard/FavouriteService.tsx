@@ -1,10 +1,13 @@
 import React from "react";
 import { useLocalStore } from "mobx-react";
+import moment from "moment";
 import { createService } from "~/components/ServiceProvider/ServiceProvider";
 import { useSyncLocalStorage, useOnLoadPathname, useOnChange } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
 import { AuthState, AuthService } from "../Auth/AuthService";
+import { DashboardService, DashboardState } from "./DashboardService";
+import { groupBy } from "lodash";
 
 export type TrackerType = "repository" | "team" | "user";
 
@@ -20,6 +23,7 @@ export const trackerMap = {
 };
 
 export interface FavouriteState {
+  service: DashboardState;
   authService?: AuthState;
   config: Config;
   trackers: Tracker[];
@@ -28,14 +32,152 @@ export interface FavouriteState {
   addTracker(name: string, type: TrackerType): void;
   removeTracker(name: string, type: TrackerType): void;
   load: () => Promise<void>;
+  activeUsersToday: number;
+  activeUsers: number;
+  activeRepositoriesToday: number;
+  activeRepositories: number;
+  activeTeamsToday: number;
+  activeTeams: number;
+  topUsers: {
+    name: string;
+    value: number;
+  }[];
+  topRepositories: {
+    name: string;
+    value: number;
+  }[];
+  topTeams: {
+    name: string;
+    value: number;
+  }[];
+  groupped: {
+    user?: {
+      name: string;
+    }[];
+    repository?: {
+      name: string;
+    }[];
+    team?: {
+      name: string;
+    }[];
+  };
 }
 
 export const FavouriteService = createService<FavouriteState>(
   () => {
-    const state = useLocalStore<FavouriteState>(() => ({
+    const state: FavouriteState = useLocalStore<FavouriteState>(() => ({
+      service: null,
       config: null,
       trackers: [],
       isLoading: false,
+      get groupped() {
+        return state.trackers ? groupBy(state.trackers, "type") : {};
+      },
+      get activeUsers() {
+        return (
+          state.groupped.user?.reduce((a, { name }) => {
+            const value = state.service?.userStats[name]?.reduce(
+              (a, v) => a + v.value,
+              0
+            );
+            return value ? a + 1 : a;
+          }, 0) || 0
+        );
+      },
+      get activeUsersToday() {
+        const today = moment().format("YYYY-MM-DD");
+        return (
+          state.groupped.user?.reduce((a, { name }) => {
+            const value = state.service?.userStats[name]?.reduce((a, v) => {
+              return today === v.day ? a + v.value : a;
+            }, 0);
+            return value ? a + 1 : a;
+          }, 0) || 0
+        );
+      },
+      get activeRepositories() {
+        return (
+          state.groupped.repository?.reduce((a, { name }) => {
+            const value = state.service?.repositoriesStats[name]?.reduce(
+              (a, v) => a + v.value,
+              0
+            );
+            return value ? a + 1 : a;
+          }, 0) || 0
+        );
+      },
+      get activeRepositoriesToday() {
+        const today = moment().format("YYYY-MM-DD");
+        return (
+          state.groupped.repository?.reduce((a, { name }) => {
+            const value = state.service?.repositoriesStats[name]?.reduce(
+              (a, v) => {
+                return today === v.day ? a + v.value : a;
+              },
+              0
+            );
+            return value ? a + 1 : a;
+          }, 0) || 0
+        );
+      },
+      get activeTeams() {
+        return (
+          state.groupped.team?.reduce((a, { name }) => {
+            const value = state.service?.teamStats[name]?.reduce(
+              (a, v) => a + v.value,
+              0
+            );
+            return value ? a + 1 : a;
+          }, 0) || 0
+        );
+      },
+      get activeTeamsToday() {
+        const today = moment().format("YYYY-MM-DD");
+        return (
+          state.groupped.team?.reduce((a, { name }) => {
+            const value = state.service?.teamStats[name]?.reduce((a, v) => {
+              return today === v.day ? a + v.value : a;
+            }, 0);
+            return value ? a + 1 : a;
+          }, 0) || 0
+        );
+      },
+      get topUsers() {
+        const result = state.groupped.user?.map(({ name }) => {
+          return {
+            name,
+            value: state.service?.userStats[name]?.reduce(
+              (a, v) => a + v.value,
+              0
+            ),
+          };
+        });
+        return result || [];
+      },
+      get topRepositories() {
+        const result = state.groupped.repository?.map(({ name }) => {
+          return {
+            name,
+            value: state.service?.repositoriesStats[name]?.reduce(
+              (a, v) => a + v.value,
+              0
+            ),
+          };
+        });
+        return result || [];
+      },
+      get topTeams() {
+        const result = state.groupped.team?.map(({ name }) => {
+          return {
+            name,
+            value: state.service?.teamStats[name]?.reduce(
+              (a, v) => a + v.value,
+              0
+            ),
+          };
+        });
+        return result || [];
+      },
       get allTrackers() {
         const arr = [];
         if (state.config) {
@@ -88,6 +230,7 @@ export const FavouriteService = createService<FavouriteState>(
   },
   (state) => {
     state.authService = React.useContext(AuthService);
+    state.service = React.useContext(DashboardService);
     useOnChange(state.authService, "isAuthenticated", state.load);
     useOnLoadPathname(state.load);
     useSyncLocalStorage(state, "trackers");
