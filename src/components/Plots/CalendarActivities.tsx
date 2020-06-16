@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import moment from "moment";
 import Chart from "react-google-charts";
+import { useMediaQuery } from "react-responsive";
 
 export const CalendarActivities = ({
   className,
@@ -18,6 +19,9 @@ export const CalendarActivities = ({
   }[];
 }) => {
   const years = moment().year() - moment().subtract(limit, "days").year() + 1;
+  const isPrint = useMediaQuery({
+    print: true,
+  });
   return (
     <div
       className={classNames(
@@ -27,10 +31,10 @@ export const CalendarActivities = ({
     >
       <Chart
         chartType="Calendar"
-        width="100%"
         height={150 * years + 50}
         style={{
           maxWidth: "950px",
+          width: isPrint ? "950px" : "calc(100% - 20px)",
         }}
         data={[
           [
