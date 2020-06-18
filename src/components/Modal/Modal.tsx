@@ -28,7 +28,6 @@ export const Modal: React.FC<{
   }));
   const open = React.useCallback(() => {
     state.isOpen = true;
-    service.nonScrollableStack++;
     setTimeout(() => {
       if (focusEl && ref.current) {
         const element = Array.from(ref.current.querySelectorAll(focusEl))[0];
@@ -41,13 +40,12 @@ export const Modal: React.FC<{
         ref.current.focus();
       }
     }, 100);
-  }, [state, service, focusEl]);
+  }, [state, focusEl]);
   const close = React.useCallback(() => {
     if (state.isOpen) {
       state.isOpen = false;
-      service.nonScrollableStack--;
     }
-  }, [state, service]);
+  }, [state]);
   const closeBackdrop = React.useCallback(
     (e) => {
       if (ref.current && e.target && ref.current === e.target) {
@@ -68,6 +66,8 @@ export const Modal: React.FC<{
   React.useEffect(() => {
     return () => {
       if (isOpenState) {
+        service.nonScrollableStack++;
+      } else {
         service.nonScrollableStack--;
       }
     };
