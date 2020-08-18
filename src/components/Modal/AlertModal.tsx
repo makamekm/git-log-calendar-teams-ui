@@ -32,7 +32,7 @@ export const AlertModalContent: React.FC<{
             }
             onClick={onAccept}
           >
-            Apply
+            Continue
           </button>
           <button
             className={

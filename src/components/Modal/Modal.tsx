@@ -25,6 +25,7 @@ export const Modal: React.FC<{
   const ref = React.useRef<HTMLDivElement>(null);
   const state = useLocalStore(() => ({
     isOpen: false,
+    prevIsOpenState: false,
   }));
   const open = React.useCallback(() => {
     state.isOpen = true;
@@ -63,15 +64,28 @@ export const Modal: React.FC<{
     }
   });
   const isOpenState = isOpen || state.isOpen;
-  React.useEffect(() => {
-    return () => {
+  const checkScroll = React.useCallback(() => {
+    if (state.prevIsOpenState !== isOpenState) {
+      state.prevIsOpenState = isOpenState;
       if (isOpenState) {
         service.nonScrollableStack++;
-      } else {
+      } else if (service.nonScrollableStack > 0) {
         service.nonScrollableStack--;
       }
-    };
-  }, [isOpenState, service]);
+    }
+  }, [isOpenState, service, state]);
+  const unmountCheckScroll = React.useCallback(() => {
+    if (state.prevIsOpenState) {
+      state.prevIsOpenState = false;
+      if (service.nonScrollableStack > 0) {
+        service.nonScrollableStack--;
+      }
+    }
+  }, [service, state]);
+  React.useEffect(() => {
+    checkScroll();
+    return unmountCheckScroll;
+  }, [checkScroll, unmountCheckScroll]);
   const transitions = useTransition(isOpenState, null, {
     config: {
       duration: 100,
