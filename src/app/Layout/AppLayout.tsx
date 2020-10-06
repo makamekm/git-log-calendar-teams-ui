@@ -239,7 +239,7 @@ const TopMenu: React.FC = observer(() => {
 
 export const AppLayout: React.FC = observer(({ children }) => {
   const service = React.useContext(LayoutService);
-  const scrollable = service.scrollable && service.nonScrollableStack === 0;
+  const scrollable = service.scrollable;
   return (
     <>
       <ToastContainer

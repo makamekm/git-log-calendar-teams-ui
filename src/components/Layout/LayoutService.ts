@@ -28,7 +28,6 @@ export interface LayoutConfig {
   topbar?: boolean;
   footer?: boolean;
   scrollable?: boolean;
-  nonScrollableStack?: number;
   sidebarCollapsed?: boolean;
   sidebarOpened?: boolean;
   change?: (config: LayoutConfig) => void;
@@ -37,7 +36,6 @@ export interface LayoutConfig {
 export const LayoutService = createService(
   () => {
     const state = useLocalStore<LayoutConfig>(() => ({
-      nonScrollableStack: 0,
       ...defaultState,
       change: (config: LayoutConfig) => {
         const newObj = {

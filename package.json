@@ -1,6 +1,6 @@
 {
   "name": "git-activity-team-tracker",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "private": false,
   "description": "The tool visualize git activities, for teams, users, repositories",
   "author": "Maxim Karpov <makame@mail.ru>",
@@ -113,6 +113,7 @@
     "react-spring": "^8.0.27",
     "react-toastify": "^6.0.5",
     "react-virtualized": "^9.21.2",
+    "@reach/dialog": "^0.11.2",
     "recharts": "^2.0.0-beta.5",
     "safe-eval": "^0.4.1",
     "simple-peer": "^9.7.0",

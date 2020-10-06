@@ -1,9 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { useTransition, animated } from "react-spring";
+import { useTransition, animated, interpolate, config } from "react-spring";
 import classNames from "classnames";
 import { observer, useLocalStore } from "mobx-react";
-import { LayoutService } from "../Layout/LayoutService";
+import { DialogOverlay, DialogContent } from "@reach/dialog";
+import "@reach/dialog/styles.css";
 import { useKeyPress } from "~/hooks";
 
 export const Modal: React.FC<{
@@ -21,11 +21,11 @@ export const Modal: React.FC<{
     isOpen: boolean;
   }) => JSX.Element;
 }> = observer(({ content, isOpen, children, className, focusEl }) => {
-  const service = React.useContext(LayoutService);
+  const AnimatedDialogOverlay = animated(DialogOverlay);
+  const AnimatedDialogContent = animated(DialogContent);
   const ref = React.useRef<HTMLDivElement>(null);
   const state = useLocalStore(() => ({
     isOpen: false,
-    prevIsOpenState: false,
   }));
   const open = React.useCallback(() => {
     state.isOpen = true;
@@ -49,11 +49,11 @@ export const Modal: React.FC<{
   }, [state]);
   const closeBackdrop = React.useCallback(
     (e) => {
-      if (ref.current && e.target && ref.current === e.target) {
+      if (e.target === e.currentTarget) {
         close();
       }
     },
-    [close, ref]
+    [close]
   );
   useKeyPress("Escape", () => {
     if (
@@ -64,102 +64,57 @@ export const Modal: React.FC<{
     }
   });
   const isOpenState = isOpen || state.isOpen;
-  const checkScroll = React.useCallback(() => {
-    if (state.prevIsOpenState !== isOpenState) {
-      state.prevIsOpenState = isOpenState;
-      if (isOpenState) {
-        service.nonScrollableStack++;
-      } else if (service.nonScrollableStack > 0) {
-        service.nonScrollableStack--;
-      }
-    }
-  }, [isOpenState, service, state]);
-  const unmountCheckScroll = React.useCallback(() => {
-    if (state.prevIsOpenState) {
-      state.prevIsOpenState = false;
-      if (service.nonScrollableStack > 0) {
-        service.nonScrollableStack--;
-      }
-    }
-  }, [service, state]);
-  React.useEffect(() => {
-    checkScroll();
-    return unmountCheckScroll;
-  }, [checkScroll, unmountCheckScroll]);
+
   const transitions = useTransition(isOpenState, null, {
-    config: {
-      duration: 100,
-    },
-    from: {
-      opacity: 0,
-      position: "fixed",
-      background: "rgba(0, 0, 0, 0.6)",
-      left: 0,
-      bottom: 0,
-      top: 0,
-      right: 0,
-    },
-    enter: {
-      opacity: 1,
-      position: "fixed",
-      background: "rgba(0, 0, 0, 0.6)",
-      left: 0,
-      bottom: 0,
-      top: 0,
-      right: 0,
-    },
-    leave: {
-      opacity: 0,
-      position: "fixed",
-      background: "rgba(0, 0, 0, 0.6)",
-      left: 0,
-      bottom: 0,
-      top: 0,
-      right: 0,
-    },
+    from: { opacity: 0, top: -50, scale: 0.9 },
+    enter: { opacity: 1, top: 0, scale: 1.0 },
+    leave: { opacity: 0, scale: 0.9 },
+    config: config.stiff,
   });
-  const innerTransitions = useTransition(isOpenState, null, {
-    config: {
-      duration: 100,
-    },
-    from: {
-      transform: "scale(0.9)",
-    },
-    enter: { transform: "scale(1)" },
-    leave: { transform: "scale(0.9)" },
-  });
+
   const controller = { open, close, isOpen: isOpenState };
   return (
     <>
       {!!children && children(controller)}
-      {ReactDOM.createPortal(
-        transitions.map(
-          ({ item, key, props }) =>
-            item && (
-              <animated.div key={key} className={"z-10"} style={props}>
-                {innerTransitions.map(
-                  ({ item, key, props }) =>
-                    item && (
-                      <animated.div
-                        tabIndex={0}
-                        ref={ref}
-                        key={key}
-                        className={classNames(
-                          className,
-                          "min-h-screen max-h-screen overflow-y-auto min-w-full flex flex-col items-center xs:p-2 sm:p-4 md:p-6 lg:p-8 xl:p-10 focus:outline-none"
-                        )}
-                        style={props}
-                        onClick={closeBackdrop}
-                      >
-                        <div>{!!content && content(controller)}</div>
-                      </animated.div>
-                    )
+
+      {transitions.map(
+        ({ item, key, props: styles }) =>
+          item && (
+            <AnimatedDialogOverlay
+              key={key}
+              style={{ opacity: styles.opacity }}
+              className="overlay"
+              onDismiss={close}
+              onClick={closeBackdrop}
+            >
+              <AnimatedDialogContent
+                aria-label="Dialog"
+                onClick={closeBackdrop}
+                style={{
+                  transform: interpolate(
+                    [styles.scale, styles.top] as any,
+                    (s, y) => `translateY(${y}px) scale(${s})`
+                  ),
+                }}
+                className={classNames(
+                  className,
+                  "modal overflow-y-auto min-w-full flex flex-col items-center focus:outline-none"
                 )}
-              </animated.div>
-            )
-        ),
-        document.getElementById("root")
+              >
+                {!!content && content(controller)}
+              </AnimatedDialogContent>
+            </AnimatedDialogOverlay>
+          )
       )}
+      <style global jsx>{`
+        .overlay[data-reach-dialog-overlay] {
+          background-color: rgba(0, 0, 0, 0.6);
+          overflow-x: hidden;
+        }
+        .modal[data-reach-dialog-content] {
+          background-color: transparent;
+        }
+      `}</style>
     </>
   );
 });
