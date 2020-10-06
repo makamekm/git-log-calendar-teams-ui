@@ -113,6 +113,7 @@
     "react-spring": "^8.0.27",
     "react-toastify": "^6.0.5",
     "react-virtualized": "^9.21.2",
+    "react-service-provider": "^1.2.0",
     "@reach/dialog": "^0.11.2",
     "recharts": "^2.0.0-beta.5",
     "safe-eval": "^0.4.1",

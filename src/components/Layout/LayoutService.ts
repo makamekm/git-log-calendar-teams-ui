@@ -1,5 +1,5 @@
 import React from "react";
-import { createService } from "~/components/ServiceProvider/ServiceProvider";
+import { createService } from "react-service-provider";
 import { useLocalStore } from "mobx-react";
 import { isEqual } from "lodash";
 import { useSimpleSyncLocalStorage } from "~/hooks";

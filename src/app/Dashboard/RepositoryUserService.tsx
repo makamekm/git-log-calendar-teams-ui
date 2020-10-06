@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocalStore } from "mobx-react";
-import { createService } from "~/components/ServiceProvider/ServiceProvider";
+import { createService } from "react-service-provider";
 import { useDelay } from "~/hooks";
 import { ipc } from "~/shared/ipc";
 import { DashboardService, DashboardState } from "./DashboardService";

@@ -2,10 +2,7 @@ import React from "react";
 import { HashRouter as Router } from "react-router-dom";
 import { RoutedContent } from "./routing";
 import { AppLayout } from "./app/Layout/AppLayout";
-import {
-  ServiceProviderFactory,
-  ServiceProviderHook,
-} from "./components/ServiceProvider/ServiceProvider";
+import { useServiceProvider } from "react-service-provider";
 import { AuthService } from "./app/Auth/AuthService";
 import { LoadingScreen } from "./app/Loading/LoadingScreen";
 import { LoadingService } from "./app/Loading/LoadingService";
@@ -20,18 +17,16 @@ import { LayoutService } from "./components/Layout/LayoutService";
 const basePath = process.env.BASE_PATH || "/";
 
 export const App = () => {
-  const [ServiceProvider] = React.useState<React.FC>(() =>
-    ServiceProviderFactory(
-      AuthService,
-      LayoutService,
-      LoadingService,
-      FavouriteService,
-      DashboardService,
-      SearchService,
-      MessageService,
-      RepositoryUserService,
-      ConfigService
-    )
+  const [ServiceProvider, ServiceProviderHook] = useServiceProvider(
+    AuthService,
+    LayoutService,
+    LoadingService,
+    FavouriteService,
+    DashboardService,
+    SearchService,
+    MessageService,
+    RepositoryUserService,
+    ConfigService
   );
 
   return (

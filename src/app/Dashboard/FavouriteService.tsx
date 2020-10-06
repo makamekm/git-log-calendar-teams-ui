@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalStore } from "mobx-react";
 import moment from "moment";
-import { createService } from "~/components/ServiceProvider/ServiceProvider";
+import { createService } from "react-service-provider";
 import { useSyncLocalStorage, useOnLoadPathname, useOnChange } from "~/hooks";
 import { Config } from "~/shared/Config";
 import { ipc } from "~/shared/ipc";
