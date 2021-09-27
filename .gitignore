@@ -1,15 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
+.pnp
 .pnp.js
 
 # testing
-/coverage
-
-# production
-/build
+coverage
 
 # misc
 .DS_Store
@@ -22,10 +18,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.now
+.nuxt
+dist
+build/*
+!build/icons
+node_modules
+.eslintcache
+
 /repositories
 *.stats.json
-/dist
 /test
 /test*
 /temp
